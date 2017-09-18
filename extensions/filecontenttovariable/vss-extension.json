@@ -2,7 +2,7 @@
   "manifestVersion": 1,
   "id": "maikvandergaag-file-to-variable",
   "name": "File Content to Variable",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "publisher": "maikvandergaag",
   "targets": [
     {
@@ -11,7 +11,18 @@
   ],
   "repository": {
     "type": "git",
-    "uri": "https://github.com/fabrikam-fiber-inc/myextension"
+    "uri": "https://github.com/MaikvanderGaag/msft-vsts-extensions/tree/master/extensions/filecontenttovariable"
+  },
+  "links": {
+    "getstarted": {
+      "uri": "https://github.com/MaikvanderGaag/msft-vsts-extensions/wiki"
+    },
+    "repository": {
+      "uri": "https://github.com/MaikvanderGaag/msft-vsts-extensions/"
+    },
+    "issues": {
+      "uri": "https://github.com/MaikvanderGaag/msft-vsts-extensions/issues"
+    }
   },
   "scope": [
     "vso.build"
@@ -24,9 +35,9 @@
     "Release",
     "Build",
     "Variable",
-    "File"
+    "File",
+    "Motion10"
   ],
-  "screenshots": [],
   "content": {
     "license": {
       "path": "license.txt"
@@ -34,8 +45,6 @@
     "details": {
       "path": "readme.md"
     }
-  },
-  "links": {
   },
   "icons": {
     "default": "icon.png"
@@ -52,19 +61,18 @@
       }
     }
   ],
-
   "files": [
     {
-      "path": "filecontenttovariable.ps1"
+      "path": "filecontenttovariable/filecontenttovariable.ps1"
     },
     {
-      "path": "task.json"
+      "path": "filecontenttovariable/task.json"
     },
     {
-      "path": "icon.png"
+      "path": "filecontenttovariable/icon.png"
     },
     {
-      "path": "ps_modules/vststasksdk"
+      "path": "filecontenttovariable/ps_modules/vststasksdk"
     }
   ]
 }
