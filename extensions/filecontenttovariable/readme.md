@@ -4,8 +4,6 @@ With this tasks you can save the content of a file to a variable.
 
 This extension can be used to save the content of a specific file within your artifact or source control into a variable.
 
-![File Content to Variable Task](https://github.com/MaikvanderGaag/msft-vsts-extensions/blob/develop/docs/images/tasks.png)
-
 Within the task two parameters can be specified:
 * Source File: The file from which the content needs to be read.
 * Variable Name: The name of the variable specify it without $(..)
