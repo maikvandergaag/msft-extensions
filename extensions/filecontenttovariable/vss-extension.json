@@ -1,0 +1,70 @@
+{
+  "manifestVersion": 1,
+  "id": "maikvandergaag-file-to-variable",
+  "name": "File Content to Variable",
+  "version": "1.0.0",
+  "publisher": "maikvandergaag",
+  "targets": [
+    {
+      "id": "Microsoft.VisualStudio.Services"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "uri": "https://github.com/fabrikam-fiber-inc/myextension"
+  },
+  "scope": [
+    "vso.build"
+  ],
+  "description": "Build and Release Management tasks for setting variables to specific file content.",
+  "categories": [
+    "Build and release"
+  ],
+  "tags": [
+    "Release",
+    "Build",
+    "Variable",
+    "File"
+  ],
+  "screenshots": [],
+  "content": {
+    "license": {
+      "path": "license.txt"
+    },
+    "details": {
+      "path": "readme.md"
+    }
+  },
+  "links": {
+  },
+  "icons": {
+    "default": "icon.png"
+  },
+  "contributions": [
+    {
+      "id": "FileContentToVariable",
+      "type": "ms.vss-distributed-task.task",
+      "targets": [
+        "ms.vss-distributed-task.tasks"
+      ],
+      "properties": {
+        "name": "filecontenttovariable"
+      }
+    }
+  ],
+
+  "files": [
+    {
+      "path": "filecontenttovariable.ps1"
+    },
+    {
+      "path": "task.json"
+    },
+    {
+      "path": "icon.png"
+    },
+    {
+      "path": "ps_modules/vststasksdk"
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "id": "C5A801B9-2053-450B-A723-2D0CAE7A65F0",
+  "name": "FileContenttoVariable",
+  "friendlyName": "File Content to Variable",
+  "description": "Reading File Content into a Variable",
+  "author": "Maik van der Gaag",
+  "helpMarkDown": "",
+  "category": "Utility",
+  "visibility": [
+    "Build",
+    "Release"
+  ],
+  "demands": [],
+  "version": {
+    "Major": "0",
+    "Minor": "2",
+    "Patch": "7"
+  },
+  "minimumAgentVersion": "1.95.0",
+  "instanceNameFormat": "File $(FilePath) to Variable $(VariableName)",
+  "inputs": [
+    {
+      "name": "FilePath",
+      "type": "filePath",
+      "label": "Source file",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "Path of the file to read"
+    },
+    {
+      "name": "VariableName",
+      "type": "string",
+      "label": "Variable Name",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "Name of the variable without $(....)"
+    }
+  ],
+  "execution": {
+    "PowerShell3": {
+      "target": "filecontenttovariable.ps1"
+    }
+  }
+}
