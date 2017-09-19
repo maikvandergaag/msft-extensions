@@ -2,7 +2,7 @@
   "manifestVersion": 1,
   "id": "maikvandergaag-file-to-variable",
   "name": "File Content to Variable",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "publisher": "maikvandergaag",
   "targets": [
     {
