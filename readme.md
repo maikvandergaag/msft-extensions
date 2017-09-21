@@ -6,6 +6,6 @@ File Content to Variable is an extension to extract content from a file and inse
 
 [Extension](extensions/filecontenttovariable)
 
-[More information](wiki)
+[More information](https://github.com/maikvandergaag/msft-vsts-extensions/wiki)
 
-[Issues](/issues)
+[Issues](https://github.com/maikvandergaag/msft-vsts-extensions/issues)
