@@ -1,4 +1,4 @@
-#/ VSTS Extensions
+# VSTS Extensions
 This repository will be used for posting Visual Studio Team Services Extensions that I build.
 
 ## File Content to Variable
