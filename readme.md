@@ -1,4 +1,4 @@
-# VSTS Extensions
+#/ VSTS Extensions
 This repository will be used for posting Visual Studio Team Services Extensions that I build.
 
 ## File Content to Variable
@@ -8,4 +8,4 @@ File Content to Variable is an extension to extract content from a file and inse
 
 [More information](wiki)
 
-[Issues](issues)
+[Issues](/issues)
