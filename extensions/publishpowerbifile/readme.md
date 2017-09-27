@@ -7,7 +7,6 @@ This extension can be used to save the content of a specific file within your ar
 Within the task two parameters can be specified:
 * Source File: The file from which the content needs to be read.
 * Variable Name: The name of the variable specify it without $(..)
-* Add New Line: THe possibility to add a new line character meaning that you will have a single line variable
 
 ## Documentation
 
@@ -16,7 +15,3 @@ For the documentation check the [Wiki](https://github.com/MaikvanderGaag/msft-vs
 When you like the extension please leave a review. File a issues when you have suggestions or problems with the extension.
 
 [Issues](https://github.com/MaikvanderGaag/msft-vsts-extensions/issues)
-
-## Release Notes
-
-Version 2.0.0: Added a new line functionality.

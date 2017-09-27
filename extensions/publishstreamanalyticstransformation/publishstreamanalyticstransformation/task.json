@@ -1,0 +1,85 @@
+{
+  "id": "1FBC4E5C-C928-44CB-A757-3EDFAD7D1FE6",
+  "name": "PublishStreamAnalyticsTransformation",
+  "friendlyName": "Publish Stream Analytics Transformation",
+  "description": "Publish a Stream Analytics Transformation to Azure.",
+  "author": "Maik van der Gaag",
+  "helpMarkDown": "",
+  "category": "Utility",
+  "visibility": [
+    "Build",
+    "Release"
+  ],
+  "demands": [],
+  "version": {
+    "Major": "1",
+    "Minor": "0",
+    "Patch": "9"
+  },
+  "minimumAgentVersion": "1.95.0",
+  "instanceNameFormat": "Publish Stream Analytics Transformation $(FilePath)",
+  "groups": [
+    {
+      "name": "AzureDetails",
+      "displayName": "Azure Details",
+      "isExpanded": true
+    },
+    {
+      "name": "StreamAnalyticsDetails",
+      "displayName": "Stream Analytics Details",
+      "isExpanded": true
+    }
+  ],
+  "inputs": [
+    {
+      "name": "ConnectedServiceName",
+      "type": "connectedService:AzureRM",
+      "label": "Azure Subscription",
+      "groupName": "AzureDetails",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "Azure Resource Manager subscription to configure before running PowerShell"
+    },
+    {
+      "name": "StreamAnalyticsJobName",
+      "type": "string",
+      "label": "Stream Analytics Job Name",
+      "defaultValue": "",
+      "groupName": "StreamAnalyticsDetails",
+      "required": true,
+      "helpMarkDown": "Stream Analytics Job Name"
+    },
+    {
+      "name": "FilePath",
+      "type": "filePath",
+      "label": "Stream Analytics Query file",
+      "defaultValue": "",
+      "groupName": "StreamAnalyticsDetails",
+      "required": true,
+      "helpMarkDown": "Stream Analytics Query File"
+    },
+    {
+      "name": "StreamingUnit ('1','3','6','12', and multiples of 6 up to your quota)",
+      "type": "int",
+      "label": "Streaming Units",
+      "groupName": "StreamAnalyticsDetails",
+      "defaultValue": "1",
+      "required": true,
+      "helpMarkDown": "Streaming Unit must be: '1','3','6','12', and multiples of 6 up to your quota. Or else it will fail with a bad request."
+    },
+    {
+      "name": "TransformationName",
+      "type": "string",
+      "label": "The name of the transformation (Default value of the transformation is 'Transformation')",
+      "defaultValue": "Transformation",
+      "groupName": "StreamAnalyticsDetails",
+      "required": true,
+      "helpMarkDown": "Bad request can be encountered when using the wrong transformation name."
+    }
+  ],
+  "execution": {
+    "PowerShell3": {
+      "target": "publishstreamanalyticstransformation.ps1"
+    }
+  }
+}
