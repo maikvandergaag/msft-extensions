@@ -20,5 +20,4 @@ When you like the extension please leave a review. File a issues when you have s
 [Issues](https://github.com/MaikvanderGaag/msft-vsts-extensions/issues)
 
 ## Release Notes
-
 Version 1.1.0: Issue fixed where property StreamingUnit isn't recognized.
