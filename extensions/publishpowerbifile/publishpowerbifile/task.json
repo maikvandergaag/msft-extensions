@@ -1,0 +1,76 @@
+{
+  "id": "c9e44e10-97ef-11e7-8bd5-3dc66515223e",
+  "name": "PublishPowerBIFile",
+  "friendlyName": "Publish PowerBI File",
+  "description": "Release Task for Publishing a PowerBI File",
+  "author": "Maik van der Gaag",
+  "helpMarkDown": "",
+  "category": "Utility",
+  "visibility": [
+    "Build",
+    "Release"
+  ],
+  "demands": [],
+  "version": {
+    "Major": "0",
+    "Minor": "2",
+    "Patch": "5"
+  },
+  "minimumAgentVersion": "1.95.0",
+  "instanceNameFormat": "Publish PowerBI File $(PowerBIPath)",
+  "inputs": [
+    {
+      "name": "PowerBIPath",
+      "type": "filePath",
+      "label": "Source file",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "Absolute path of the file."
+    },
+    {
+      "name": "Username",
+      "type": "string",
+      "label": "Publishing User",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "Username of the publishing user."
+    },
+    {
+      "name": "Password",
+      "type": "string",
+      "label": "Password",
+      "defaultValue": "",
+      "required": false,
+      "helpMarkDown": "Password of the user. Value should be a secured variable."
+    },
+    {
+      "name": "ClientId",
+      "type": "string",
+      "label": "ClientId",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "ClientId of the application that has access to the PowerBI API."
+    },
+    {
+      "name": "Overwrite",
+      "type": "boolean",
+      "label": "Overwrite PowerBI File",
+      "defaultValue": "true",
+      "required": false,
+      "helpMarkDown": "Should the dataset be overwritten?"
+    },
+    {
+      "name": "GroupName",
+      "type": "string",
+      "label": "GroupName",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "Name of the group to publish the file to."
+    }
+  ],
+  "execution": {
+    "PowerShell3": {
+      "target": "publishpowerbi.ps1"
+    }
+  }
+}
