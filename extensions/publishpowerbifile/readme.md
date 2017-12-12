@@ -1,12 +1,25 @@
-File Content To Variable is a Build and Release Task for wihtin your Build / Release pipeline.
+Publish PowerBI file is a Build and Release Task for wihtin your Build / Release pipeline.
 
-With this tasks you can save the content of a file to a variable. 
+With this tasks you can publish a PowerBI file or multiple files to a specific group within powerbi.com. 
 
-This extension can be used to save the content of a specific file within your artifact or source control into a variable.
+Within the task multiple parameters need to be specified:
+* Source File: The location of the PowerBI file can be a search query "*.pbix".
+* Username: The name of the user that will publish the file.
+* Password: The password of the user that will publish the file. This value should be saved as a secured variable.
+* ClientId: The ClientId of the application that has access to the PowerBI API.
+* Overwrite: Checkbox for specifying if the PowerBI report should be overwritten.
+* GroupName: The groupname were the file should be published to. 
 
-Within the task two parameters can be specified:
-* Source File: The file from which the content needs to be read.
-* Variable Name: The name of the variable specify it without $(..)
+In order to make this extension work a application should be created with access to the PowerBI api. Besides that you should have a user that has access to the application your specified in Azure Active Directory.
+
+**Azure Active Directory Application**
+
+
+
+**Permissions**
+
+
+
 
 ## Documentation
 
