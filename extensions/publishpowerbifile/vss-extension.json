@@ -1,8 +1,8 @@
 {
   "manifestVersion": 1,
-  "id": "maikvandergaag-file-to-variable",
-  "name": "File Content to Variable",
-  "version": "1.0.5",
+  "id": "maikvandergaag-publish-power-bi-file",
+  "name": "Publish Power BI File",
+  "version": "1.0.0",
   "publisher": "maikvandergaag",
   "public": true,
   "targets": [
@@ -12,7 +12,7 @@
   ],
   "repository": {
     "type": "git",
-    "uri": "https://github.com/MaikvanderGaag/msft-vsts-extensions/tree/master/extensions/filecontenttovariable"
+    "uri": "https://github.com/MaikvanderGaag/msft-vsts-extensions/tree/master/extensions/publishpowerbifile"
   },
   "links": {
     "getstarted": {
@@ -28,15 +28,15 @@
   "scope": [
     "vso.build"
   ],
-  "description": "Build and Release Management tasks for setting variables to specific file content.",
+  "description": "Build and Release Management tasks publishing a PowerBI (pbix) file to PowerBI.",
   "categories": [
     "Build and release"
   ],
   "tags": [
     "Release",
     "Build",
-    "Variable",
-    "File",
+    "PowerBI",
+    "pbix",
     "Motion10"
   ],
   "content": {
@@ -52,28 +52,28 @@
   },
   "contributions": [
     {
-      "id": "FileContentToVariable",
+      "id": "PublishPowerBIFile",
       "type": "ms.vss-distributed-task.task",
       "targets": [
         "ms.vss-distributed-task.tasks"
       ],
       "properties": {
-        "name": "filecontenttovariable"
+        "name": "publishpowerbifile"
       }
     }
   ],
   "files": [
     {
-      "path": "filecontenttovariable/filecontenttovariable.ps1"
+      "path": "publishpowerbifile/publishpowerbi.ps1"
     },
     {
-      "path": "filecontenttovariable/task.json"
+      "path": "publishpowerbifile/task.json"
     },
     {
-      "path": "filecontenttovariable/icon.png"
+      "path": "publishpowerbifile/icon.png"
     },
     {
-      "path": "filecontenttovariable/ps_modules/vststasksdk"
+      "path": "publishpowerbifile/ps_modules/vststasksdk"
     }
   ]
 }
