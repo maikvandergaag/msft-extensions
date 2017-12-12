@@ -14,12 +14,11 @@ In order to make this extension work a application should be created with access
 
 **Azure Active Directory Application**
 
-
+![Application](https://github.com/maikvandergaag/msft-vsts-extensions/raw/master/docs/images/application.png "Azure Active Directory Application")
 
 **Permissions**
 
-
-
+![Permissions](https://github.com/maikvandergaag/msft-vsts-extensions/raw/master/docs/images/permissions.png "Azure Active Directory Permissions")
 
 ## Documentation
 

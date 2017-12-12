@@ -2,7 +2,7 @@
   "manifestVersion": 1,
   "id": "maikvandergaag-publish-power-bi-file",
   "name": "Publish Power BI File",
-  "version": "1.0.0",
+  "version": "1.2.2",
   "publisher": "maikvandergaag",
   "public": true,
   "targets": [
@@ -74,6 +74,15 @@
     },
     {
       "path": "publishpowerbifile/ps_modules/vststasksdk"
+    },
+    {
+      "path": "publishpowerbifile/ps_modules/PowerBi"
+    },
+    {
+      "path": "publishpowerbifile/Microsoft.IdentityModel.Clients.ActiveDirectory.dll"
+    },
+    {
+      "path": "publishpowerbifile/Microsoft.IdentityModel.Clients.ActiveDirectory.WindowsForms.dll"
     }
   ]
 }
