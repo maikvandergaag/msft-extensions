@@ -2,7 +2,7 @@
   "id": "84F23C57-8C65-4709-BC94-5CBD44E96A68",
   "name": "azurerbas",
   "friendlyName": "Azure Role Based Access Control",
-  "description": "Task for managing Role Based Access addignments on a Resource Group",
+  "description": "Task for managing Role Based Access assignments on a Resource Group",
   "author": "Maik van der Gaag",
   "helpMarkDown": "",
   "category": "Utility",
@@ -12,9 +12,9 @@
   ],
   "demands": [],
   "version": {
-    "Major": "0",
+    "Major": "1",
     "Minor": "0",
-    "Patch": "6"
+    "Patch": "0"
   },
   "minimumAgentVersion": "2.117.0",
   "instanceNameFormat": "Azure RBAC",
@@ -32,7 +32,7 @@
       "label": "Action",
       "type": "pickList",
       "required": true,
-      "helpMarkDown": "Select the action you would like to perform",
+      "helpMarkDown": "Select the action you would like to perform (Add or Remove)",
       "defaultValue": "Add",
       "options": {
         "Add": "Add",
@@ -44,14 +44,14 @@
       "label": "Resource Group",
       "type": "pickList",
       "required": true,
-      "helpMarkDown": "Select resource group which contains the API portal"
+      "helpMarkDown": "Select the resource group for the assignments"
     },
     {
       "name": "AzureRoleAssignments",
       "label": "Azure Role Assignment",
       "type": "pickList",
-      "required": true
-
+      "required": true,
+      "helpMarkDown": "The assignment to add or remove"
     },
     {
       "name": "usergroup",
@@ -59,7 +59,7 @@
       "label": "Users or Groups",
       "defaultValue": "Groups",
       "required": true,
-      "helpMarkDown": "Action to be performed on the Azure resources or resource group.",
+      "helpMarkDown": "Perform the actions for users or groups",
       "options": {
         "Users": "Users",
         "Groups": "Groups"
@@ -71,7 +71,7 @@
       "label": "Group",
       "defaultValue": "",
       "required": false,
-      "helpMarkDown": "Groups for setting the specific role (seperate by ,)",
+      "helpMarkDown": "Groups for setting the specific role (seperate by ',')",
       "visibleRule": "usergroup = Groups"
     },
     {
@@ -79,7 +79,7 @@
       "type": "string",
       "label": "Users",
       "required": false,
-      "helpMarkDown": "Users for setting the specific Role (seperate by ,)",
+      "helpMarkDown": "Users for setting the specific Role (seperate by ',')",
       "visibleRule": "usergroup = Users"
     },
     {
@@ -88,7 +88,7 @@
       "label": "Fail on Error",
       "defaultValue": "false",
       "required": true,
-      "helpMarkDown": "Should release break on a exception. Existing role assignment will also result in a error?"
+      "helpMarkDown": "Should the release break on a exception."
     }
   ],
   "dataSourceBindings": [
