@@ -28,16 +28,18 @@
   "scope": [
     "vso.build"
   ],
-  "description": "Build and Release Task performing Role Based Access Control on a Azure Resource Group",
+  "description": "Build and Release Task for performing Role Based Access Control on a Azure Resource Group",
   "categories": [
     "Build and release"
   ],
   "tags": [
     "Release",
     "Build",
-    "PowerBI",
-    "pbix",
-    "Motion10"
+    "Access",
+    "RBAC",
+    "3Fifty",
+    "Azure",
+    "Resource Group"
   ],
   "content": {
     "license": {
@@ -67,6 +69,9 @@
       "path": "azurerbac/addroleassignment.ps1"
     },
     {
+      "path": "azurerbac/utility.ps1"
+    },
+    {
       "path": "azurerbac/removeroleassignment.ps1"
     },
     {
@@ -82,7 +87,7 @@
       "path": "azurerbac/ps_modules/vststasksdk"
     },
     {
-      "path": "azurerbac/ps_modules/vstsazurehelpers"
+      "path": "azurerbac/ps_modules/vstsazurehelpers_"
     }
   ]
 }
