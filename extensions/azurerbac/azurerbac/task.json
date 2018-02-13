@@ -52,7 +52,6 @@
       "type": "pickList",
       "required": true,
       "helpMarkDown": "The assignment to add or remove"
-
     },
     {
       "name": "usergroup",
