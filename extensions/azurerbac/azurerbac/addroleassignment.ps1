@@ -7,11 +7,17 @@ function SetAssigment{
     )
             
     Try{
-	
 		$ErrorActionPreference = "Stop";
-			Write-Host "Setting new assigment for $Role and $ObjectId";
-			New-AzureRmRoleAssignment  -ObjectId $ObjectId -RoleDefinitionName $Role -ResourceGroupName $ResourceGroupName
 
+		$assignment = $null
+		$assignment = Get-AzureRmRoleAssignment -ObjectId $ObjectId -RoleDefinitionName $Role -ResourceGroupName $ResourceGroupName
+
+			if($assignment -eq $null){
+				Write-Host "Setting new assigment for $Role and $ObjectId";
+				New-AzureRmRoleAssignment  -ObjectId $ObjectId -RoleDefinitionName $Role -ResourceGroupName $ResourceGroupName
+			}else{
+				Write-Host "Assignment already exists"
+			}
 
     }Catch{
          $ErrorMessage = $_.Exception.Message
