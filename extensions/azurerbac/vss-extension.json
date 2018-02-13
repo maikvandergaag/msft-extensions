@@ -1,8 +1,8 @@
 {
   "manifestVersion": 1,
-  "id": "maikvandergaag-publish-power-bi-file",
-  "name": "Publish Power BI File",
-  "version": "1.2.2",
+  "id": "maikvandergaag-azurerbac",
+  "name": "Azure Role Based Access Control",
+  "version": "1.0.0",
   "publisher": "maikvandergaag",
   "public": true,
   "targets": [
@@ -12,7 +12,7 @@
   ],
   "repository": {
     "type": "git",
-    "uri": "https://github.com/MaikvanderGaag/msft-vsts-extensions/tree/master/extensions/publishpowerbifile"
+    "uri": "https://github.com/MaikvanderGaag/msft-vsts-extensions/tree/master/extensions/azurerbac"
   },
   "links": {
     "getstarted": {
@@ -28,7 +28,7 @@
   "scope": [
     "vso.build"
   ],
-  "description": "Build and Release Management tasks publishing a PowerBI (pbix) file to PowerBI.",
+  "description": "Build and Release Task performing Role Based Access Control on a Azure Resource Group",
   "categories": [
     "Build and release"
   ],
@@ -52,37 +52,37 @@
   },
   "contributions": [
     {
-      "id": "PublishPowerBIFile",
+      "id": "azurerbac",
       "type": "ms.vss-distributed-task.task",
       "targets": [
         "ms.vss-distributed-task.tasks"
       ],
       "properties": {
-        "name": "publishpowerbifile"
+        "name": "azurerbac"
       }
     }
   ],
   "files": [
     {
-      "path": "publishpowerbifile/publishpowerbi.ps1"
+      "path": "azurerbac/addroleassignment.ps1"
     },
     {
-      "path": "publishpowerbifile/task.json"
+      "path": "azurerbac/removeroleassignment.ps1"
     },
     {
-      "path": "publishpowerbifile/icon.png"
+      "path": "azurerbac/run-task.ps1"
     },
     {
-      "path": "publishpowerbifile/ps_modules/vststasksdk"
+      "path": "azurerbac/task.json"
     },
     {
-      "path": "publishpowerbifile/ps_modules/PowerBi"
+      "path": "azurerbac/icon.png"
     },
     {
-      "path": "publishpowerbifile/Microsoft.IdentityModel.Clients.ActiveDirectory.dll"
+      "path": "azurerbac/ps_modules/vststasksdk"
     },
     {
-      "path": "publishpowerbifile/Microsoft.IdentityModel.Clients.ActiveDirectory.WindowsForms.dll"
+      "path": "azurerbac/ps_modules/vstsazurehelpers"
     }
   ]
 }

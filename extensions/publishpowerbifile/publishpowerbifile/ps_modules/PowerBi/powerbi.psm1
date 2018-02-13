@@ -1,4 +1,5 @@
 $powerbiUrl = "https://api.powerbi.com/v1.0/myorg"
+$resourceUrl = "https://analysis.windows.net/powerbi/api"
 
 $powerBiBodyTemplate = @'
 --{0}
@@ -137,4 +138,5 @@ Export-ModuleMember -Function "Invoke-*"
 Export-ModuleMember -Function "Get-*"
 Export-ModuleMember -Function "Import-*"
 Export-ModuleMember -Variable "powerbiUrl"
+Export-ModuleMember -Variable "resourceUrl"
  

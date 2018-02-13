@@ -1,0 +1,113 @@
+{
+  "id": "84F23C57-8C65-4709-BC94-5CBD44E96A68",
+  "name": "azurerbas",
+  "friendlyName": "Azure Role Based Access Control",
+  "description": "Task for managing Role Based Access addignments on a Resource Group",
+  "author": "Maik van der Gaag",
+  "helpMarkDown": "",
+  "category": "Utility",
+  "visibility": [
+    "Build",
+    "Release"
+  ],
+  "demands": [],
+  "version": {
+    "Major": "0",
+    "Minor": "0",
+    "Patch": "6"
+  },
+  "minimumAgentVersion": "2.117.0",
+  "instanceNameFormat": "Azure RBAC",
+  "inputs": [
+    {
+      "name": "ConnectedServiceName",
+      "type": "connectedService:AzureRM",
+      "label": "Azure RM Subscription",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "Select the Azure Resource Manager subscription for the deployment."
+    },
+    {
+      "name": "Action",
+      "label": "Action",
+      "type": "pickList",
+      "required": true,
+      "helpMarkDown": "Select the action you would like to perform",
+      "defaultValue": "Add",
+      "options": {
+        "Add": "Add",
+        "Remove": "Remove"
+      }
+    },
+    {
+      "name": "ResourceGroupName",
+      "label": "Resource Group",
+      "type": "pickList",
+      "required": true,
+      "helpMarkDown": "Select resource group which contains the API portal"
+    },
+    {
+      "name": "AzureRoleAssignments",
+      "label": "Azure Role Assignment",
+      "type": "pickList",
+      "required": true
+
+    },
+    {
+      "name": "usergroup",
+      "type": "pickList",
+      "label": "Users or Groups",
+      "defaultValue": "Groups",
+      "required": true,
+      "helpMarkDown": "Action to be performed on the Azure resources or resource group.",
+      "options": {
+        "Users": "Users",
+        "Groups": "Groups"
+      }
+    },
+    {
+      "name": "Groups",
+      "type": "string",
+      "label": "Group",
+      "defaultValue": "",
+      "required": false,
+      "helpMarkDown": "Groups for setting the specific role (seperate by ,)",
+      "visibleRule": "usergroup = Groups"
+    },
+    {
+      "name": "Users",
+      "type": "string",
+      "label": "Users",
+      "required": false,
+      "helpMarkDown": "Users for setting the specific Role (seperate by ,)",
+      "visibleRule": "usergroup = Users"
+    },
+    {
+      "name": "FailonError",
+      "type": "boolean",
+      "label": "Fail on Error",
+      "defaultValue": "false",
+      "required": true,
+      "helpMarkDown": "Should release break on a exception. Existing role assignment will also result in a error?"
+    }
+  ],
+  "dataSourceBindings": [
+    {
+      "target": "ResourceGroupName",
+      "endpointId": "$(ConnectedServiceName)",
+      "dataSourceName": "AzureResourceGroups"
+    },
+    {
+      "name": "RoleAssignments",
+      "target": "AzureRoleAssignments",
+      "endpointId": "$(ConnectedServiceName)",
+      "endpointUrl": "{{endpoint.url}}/subscriptions/$(endpoint.subscriptionId)/providers/Microsoft.Authorization/roleDefinitions?api-version=2015-07-01",
+      "resultSelector": "jsonpath:$.value[*].properties.roleName"
+    }
+  ],
+  "execution": {
+    "PowerShell3": {
+      "target": "run-task.ps1"
+    }
+  }
+}
