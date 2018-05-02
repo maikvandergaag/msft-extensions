@@ -1,6 +1,3 @@
-# For more information on the VSTS Task SDK:
-# https://github.com/Microsoft/vsts-task-lib
-
 Trace-VstsEnteringInvocation $MyInvocation
 
 $resourceGroupName = Get-VstsInput -Name ResourceGroupName -Require
@@ -11,14 +8,6 @@ $action = Get-VstsInput -Name usergroup
 $failonError = Get-VstsInput -Name FailonError
 $userAction = Get-VstsInput -Name Action
 
-. "$PSScriptRoot\Utility.ps1"
-
-$targetAzurePs = Get-RollForwardVersion -azurePowerShellVersion ""
-Update-PSModulePathForHostedAgent -targetAzurePs $targetAzurePs
-
-Import-Module $PSScriptRoot\ps_modules\VstsAzureHelpers_
-Initialize-Azure -azurePsVersion $targetAzurePs
-
 Write-Host "Resource group: $resourceGroupName"
 Write-Host "Groups: $groups"
 Write-Host "Users: $users"
@@ -26,12 +15,50 @@ Write-Host "Role : $role"
 Write-Host "Action : $action"
 Write-Host "Fail On Error : $failonError"
 
-if($userAction -eq "Add"){
-	.\addroleassignment.ps1
-}elseif($userAction -eq "Remove"){
-	.\removeroleassignment.ps1
+. "$PSScriptRoot\Utility.ps1"
+$targetAzurePs = Get-RollForwardVersion -azurePowerShellVersion $targetAzurePs
+
+$authScheme = ''
+try
+{
+    $serviceNameInput = Get-VstsInput -Name ConnectedServiceNameSelector -Default 'ConnectedServiceName'
+    $serviceName = Get-VstsInput -Name $serviceNameInput -Default (Get-VstsInput -Name DeploymentEnvironmentName)
+    if (!$serviceName)
+    {
+            Get-VstsInput -Name $serviceNameInput -Require
+    }
+
+    $endpoint = Get-VstsEndpoint -Name $serviceName -Require
+
+    if($endpoint)
+    {
+        $authScheme = $endpoint.Auth.Scheme 
+    }
+
+     Write-Verbose "AuthScheme $authScheme"
+}
+catch
+{
+   $error = $_.Exception.Message
+   Write-Verbose "Unable to get the authScheme $error" 
 }
 
+Update-PSModulePathForHostedAgent -targetAzurePs $targetAzurePs -authScheme $authScheme
+
+try {
+    # Initialize Azure.
+    Import-Module $PSScriptRoot\ps_modules\VstsAzureHelpers_
+    Initialize-Azure -azurePsVersion $targetAzurePs -strict   
+
+	if($userAction -eq "Add"){
+		.\addroleassignment.ps1
+	}elseif($userAction -eq "Remove"){
+		.\removeroleassignment.ps1
+	}
+}
+finally {
+	  Trace-VstsLeavingInvocation $MyInvocation
+}
 
 
 

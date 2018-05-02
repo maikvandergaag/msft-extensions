@@ -5,12 +5,15 @@ function SetAssigment{
         [parameter(Mandatory=$true)][string]$ResourceGroupName,
         [parameter(Mandatory=$true)][string]$BreakonException
     )
-            
+    
+	$getting = $false;
+
     Try{
 		$ErrorActionPreference = "Stop";
 
 		$assignment = $null
 		$assignment = Get-AzureRmRoleAssignment -ObjectId $ObjectId -RoleDefinitionName $Role -ResourceGroupName $ResourceGroupName
+		$getting = $true;
 
 			if($assignment -eq $null){
 				Write-Host "Setting new assigment for $Role and $ObjectId";
@@ -19,10 +22,16 @@ function SetAssigment{
 				Write-Host "Assignment already exists"
 			}
 
-    }Catch{
+    }
+	Catch [Microsoft.Rest.Azure.CloudException]{
+		if(!$getting){
+			Write-Host "Assignment already exists"
+		}
+	}
+	Catch{
          $ErrorMessage = $_.Exception.Message
          Write-Host $ErrorMessage -ForegroundColor Red
-         if($BreakonException -eq "true"){
+         if($BreakonException){
             throw $_
          }
     }
@@ -58,7 +67,13 @@ if($items -ne $null){
         if($adObject -ne $null){
             SetAssigment -Role $role -ObjectId $adObject.Id -ResourceGroupName $resourceGroupName -BreakonException $failonError                      
         }else{
-            Write-Host "Can't find ad object: $item" -ForegroundColor Red
+            $message = "Can't find ad object: $item"
+
+            if($failonError){
+                throw $message
+            }else{
+                Write-Host $message -ForegroundColor Red
+            }
         }
     }
 }
