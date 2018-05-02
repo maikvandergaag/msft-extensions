@@ -1,6 +1,3 @@
-[CmdletBinding()]
-param()
-
 Trace-VstsEnteringInvocation $MyInvocation	
 
 try {
@@ -27,8 +24,9 @@ try {
 	}
 
 	Write-Host "##vso[task.setvariable variable=$($variable);]$fileContent"
-
 	Write-Host $fileContent
-}finally {
+}
+finally 
+{
     Trace-VstsLeavingInvocation $MyInvocation
 }

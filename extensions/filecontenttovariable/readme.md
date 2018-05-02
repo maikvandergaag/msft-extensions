@@ -19,4 +19,9 @@ When you like the extension please leave a review. File a issues when you have s
 
 ## Release Notes
 
-Version 2.0.0: Added a new line functionality.
+| Version | Remarks                                |  
+|---------|----------------------------------------|
+| 1.0.0   | Initial version                        | 
+| 2.0.0   | Added a new line functionality         |
+| 2.2.0   | Changes tagging and some minor changes | 
+
