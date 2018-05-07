@@ -1,8 +1,8 @@
 {
   "manifestVersion": 1,
-  "id": "maikvandergaag-publish-power-bi-file",
-  "name": "Publish Power BI File",
-  "version": "1.2.3",
+  "id": "maikvandergaag-power-bi-actions",
+  "name": "PowerBI Actions",
+  "version": "2.0.2",
   "publisher": "maikvandergaag",
   "public": true,
   "targets": [
@@ -12,7 +12,7 @@
   ],
   "repository": {
     "type": "git",
-    "uri": "https://github.com/MaikvanderGaag/msft-vsts-extensions/tree/master/extensions/publishpowerbifile"
+    "uri": "https://github.com/MaikvanderGaag/msft-vsts-extensions/tree/master/extensions/powerbiactions"
   },
   "links": {
     "getstarted": {
@@ -28,7 +28,7 @@
   "scope": [
     "vso.build"
   ],
-  "description": "Build and Release Management tasks publishing a PowerBI (pbix) file to PowerBI.",
+  "description": "Build and Release Management tasks for PowerBI.",
   "categories": [
     "Build and release"
   ],
@@ -37,6 +37,8 @@
     "Build",
     "PowerBI",
     "pbix",
+    "DirectQuery",
+    "Dataset",
     "3Fifty"
   ],
   "content": {
@@ -52,37 +54,37 @@
   },
   "contributions": [
     {
-      "id": "PublishPowerBIFile",
+      "id": "PowerBIActions",
       "type": "ms.vss-distributed-task.task",
       "targets": [
         "ms.vss-distributed-task.tasks"
       ],
       "properties": {
-        "name": "publishpowerbifile"
+        "name": "PowerBIActions"
       }
     }
   ],
   "files": [
     {
-      "path": "publishpowerbifile/publishpowerbi.ps1"
+      "path": "powerbiactions/publishpowerbi.ps1"
     },
     {
-      "path": "publishpowerbifile/task.json"
+      "path": "powerbiactions/task.json"
     },
     {
-      "path": "publishpowerbifile/icon.png"
+      "path": "powerbiactions/icon.png"
     },
     {
-      "path": "publishpowerbifile/ps_modules/vststasksdk"
+      "path": "powerbiactions/ps_modules/vststasksdk"
     },
     {
-      "path": "publishpowerbifile/ps_modules/PowerBi"
+      "path": "powerbiactions/ps_modules/PowerBi"
     },
     {
-      "path": "publishpowerbifile/Microsoft.IdentityModel.Clients.ActiveDirectory.dll"
+      "path": "powerbiactions/ps_modules/PowerBi/Microsoft.IdentityModel.Clients.ActiveDirectory.dll"
     },
     {
-      "path": "publishpowerbifile/Microsoft.IdentityModel.Clients.ActiveDirectory.WindowsForms.dll"
+      "path": "powerbiactions/ps_modules/PowerBi/Microsoft.IdentityModel.Clients.ActiveDirectory.WindowsForms.dll"
     }
   ]
 }

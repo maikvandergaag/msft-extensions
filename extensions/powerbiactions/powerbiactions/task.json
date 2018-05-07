@@ -1,0 +1,117 @@
+{
+  "id": "D5B7FEC6-2B25-4742-905B-0DAD97687DF5",
+  "name": "PowerBIActions",
+  "friendlyName": "PowerBI Actions",
+  "description": "Release Task PowerBI Actions",
+  "author": "Maik van der Gaag",
+  "helpMarkDown": "",
+  "category": "Utility",
+  "visibility": [
+    "Build",
+    "Release"
+  ],
+  "demands": [],
+  "version": {
+    "Major": "2",
+    "Minor": "0",
+    "Patch": "2"
+  },
+  "minimumAgentVersion": "1.95.0",
+  "instanceNameFormat": "PowerBI Actions",
+  "inputs": [
+    {
+      "name": "Username",
+      "type": "string",
+      "label": "Publishing User",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "Username of the publishing user."
+    },
+    {
+      "name": "Password",
+      "type": "string",
+      "label": "Password",
+      "defaultValue": "",
+      "required": false,
+      "helpMarkDown": "Password of the user. Value should be a secured variable."
+    },
+    {
+      "name": "ClientId",
+      "type": "string",
+      "label": "ClientId",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "ClientId of the application that has access to the PowerBI API."
+    },
+    {
+      "name": "Action",
+      "label": "Action",
+      "type": "pickList",
+      "required": true,
+      "helpMarkDown": "Select the action you would like to perform",
+      "defaultValue": "Upload",
+      "options": {
+        "DirectQuery": "Update directquery connection string",
+        "Upload": "Upload PowerBI Report"
+      }
+    },
+    {
+      "name": "Connectionstring",
+      "type": "string",
+      "label": "Connectionstring",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "The new connection string to the database",
+      "visibleRule": "Action = DirectQuery"
+    },
+    {
+      "name": "PowerBIPath",
+      "type": "filePath",
+      "label": "Source file",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "Absolute path of the file.",
+      "visibleRule": "Action = Upload"
+    },
+    {
+      "name": "Dataset",
+      "type": "string",
+      "label": "Dataset",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "The name of the dataset with direct query",
+      "visibleRule": "Action = DirectQuery"
+    },
+    {
+      "name": "Overwrite",
+      "type": "boolean",
+      "label": "Overwrite PowerBI File",
+      "defaultValue": "true",
+      "required": false,
+      "helpMarkDown": "Should the dataset be overwritten?",
+      "visibleRule": "Action = Upload"
+    },
+    {
+      "name": "GroupName",
+      "type": "string",
+      "label": "GroupName",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "Name of the group to publish the file to."
+    },
+    {
+      "name": "Create",
+      "type": "boolean",
+      "label": "Create if workspace does not exist",
+      "defaultValue": "true",
+      "required": false,
+      "helpMarkDown": "Create the workspace when it does not exist",
+      "visibleRule": "Action = Upload"
+    }
+  ],
+  "execution": {
+    "PowerShell3": {
+      "target": "run-task.ps1"
+    }
+  }
+}
