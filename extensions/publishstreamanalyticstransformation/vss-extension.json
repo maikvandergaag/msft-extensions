@@ -2,7 +2,7 @@
   "manifestVersion": 1,
   "id": "maikvandergaag-publish-stream-analytics",
   "name": "Publish Stream Analytics Transformation",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "publisher": "maikvandergaag",
   "public": true,
   "targets": [
@@ -37,7 +37,10 @@
     "Build",
     "Stream Analytics",
     "Transformation",
-    "Motion10"
+    "Publish",
+    "Stream",
+    "3Fifty",
+    "asaql"
   ],
   "content": {
     "license": {
@@ -64,7 +67,7 @@
   ],
   "files": [
     {
-      "path": "publishstreamanalyticstransformation/publishstreamanalyticstransformation.ps1"
+      "path": "publishstreamanalyticstransformation/run-task.ps1"
     },
     {
       "path": "publishstreamanalyticstransformation/task.json"
@@ -76,7 +79,16 @@
       "path": "publishstreamanalyticstransformation/ps_modules/vststasksdk"
     },
     {
-      "path": "publishstreamanalyticstransformation/ps_modules/VstsAzureHelpers"
+      "path": "publishstreamanalyticstransformation/ps_modules/VstsAzureHelpers_"
+    },
+    {
+      "path": "publishstreamanalyticstransformation/ps_modules/TlsHelper_"
+    },
+    {
+      "path": "publishstreamanalyticstransformation/utility.ps1"
+    },
+    {
+      "path": "publishstreamanalyticstransformation/streamanalytics.ps1"
     }
   ]
 }

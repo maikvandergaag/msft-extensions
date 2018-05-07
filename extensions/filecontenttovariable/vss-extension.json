@@ -2,7 +2,7 @@
   "manifestVersion": 1,
   "id": "maikvandergaag-file-to-variable",
   "name": "File Content to Variable",
-  "version": "2.0.0",
+  "version": "2.2.0",
   "publisher": "maikvandergaag",
   "public": true,
   "targets": [
@@ -37,7 +37,9 @@
     "Build",
     "Variable",
     "File",
-    "Motion10"
+    "Text",
+    "File Content",
+    "3Fifty"
   ],
   "content": {
     "license": {
@@ -64,7 +66,7 @@
   ],
   "files": [
     {
-      "path": "filecontenttovariable/filecontenttovariable.ps1"
+      "path": "filecontenttovariable/run-task.ps1"
     },
     {
       "path": "filecontenttovariable/task.json"

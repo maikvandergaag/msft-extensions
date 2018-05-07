@@ -1,0 +1,90 @@
+{
+  "manifestVersion": 1,
+  "id": "maikvandergaag-power-bi-actions",
+  "name": "PowerBI Actions",
+  "version": "2.0.2",
+  "publisher": "maikvandergaag",
+  "public": true,
+  "targets": [
+    {
+      "id": "Microsoft.VisualStudio.Services"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "uri": "https://github.com/MaikvanderGaag/msft-vsts-extensions/tree/master/extensions/powerbiactions"
+  },
+  "links": {
+    "getstarted": {
+      "uri": "https://github.com/MaikvanderGaag/msft-vsts-extensions/wiki"
+    },
+    "repository": {
+      "uri": "https://github.com/MaikvanderGaag/msft-vsts-extensions/"
+    },
+    "issues": {
+      "uri": "https://github.com/MaikvanderGaag/msft-vsts-extensions/issues"
+    }
+  },
+  "scope": [
+    "vso.build"
+  ],
+  "description": "Build and Release Management tasks for PowerBI.",
+  "categories": [
+    "Build and release"
+  ],
+  "tags": [
+    "Release",
+    "Build",
+    "PowerBI",
+    "pbix",
+    "DirectQuery",
+    "Dataset",
+    "3Fifty"
+  ],
+  "content": {
+    "license": {
+      "path": "license.txt"
+    },
+    "details": {
+      "path": "readme.md"
+    }
+  },
+  "icons": {
+    "default": "icon.png"
+  },
+  "contributions": [
+    {
+      "id": "PowerBIActions",
+      "type": "ms.vss-distributed-task.task",
+      "targets": [
+        "ms.vss-distributed-task.tasks"
+      ],
+      "properties": {
+        "name": "PowerBIActions"
+      }
+    }
+  ],
+  "files": [
+    {
+      "path": "powerbiactions/publishpowerbi.ps1"
+    },
+    {
+      "path": "powerbiactions/task.json"
+    },
+    {
+      "path": "powerbiactions/icon.png"
+    },
+    {
+      "path": "powerbiactions/ps_modules/vststasksdk"
+    },
+    {
+      "path": "powerbiactions/ps_modules/PowerBi"
+    },
+    {
+      "path": "powerbiactions/ps_modules/PowerBi/Microsoft.IdentityModel.Clients.ActiveDirectory.dll"
+    },
+    {
+      "path": "powerbiactions/ps_modules/PowerBi/Microsoft.IdentityModel.Clients.ActiveDirectory.WindowsForms.dll"
+    }
+  ]
+}

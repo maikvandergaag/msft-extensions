@@ -19,3 +19,14 @@ For the documentation check the [Wiki](https://github.com/MaikvanderGaag/msft-vs
 When you like the extension please leave a review. File a issues when you have suggestions or problems with the extension.
 
 [Issues](https://github.com/MaikvanderGaag/msft-vsts-extensions/issues)
+
+## Permissions
+
+Make sure the application that is performing the actions has the appropriate rights for settings assignments.
+
+## Release Notes
+
+| Version | Remarks                             |  
+|---------|-------------------------------------|
+| 1.0.0   | Initial version                     |
+| 1.2.0   | Fixed issues and some minor changes |

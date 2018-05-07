@@ -1,3 +1,8 @@
+# This extension is discontinued
+In order to get the same functionality with extra actions get the extension **PowerBI Actions**
+
+* https://marketplace.visualstudio.com/items?itemName=maikvandergaag.maikvandergaag-power-bi-actions
+
 Publish PowerBI file is a Build and Release Task for wihtin your Build / Release pipeline.
 
 With this tasks you can publish a PowerBI file or multiple files to a specific group within powerbi.com. 
@@ -27,3 +32,11 @@ For the documentation check the [Wiki](https://github.com/MaikvanderGaag/msft-vs
 When you like the extension please leave a review. File a issues when you have suggestions or problems with the extension.
 
 [Issues](https://github.com/MaikvanderGaag/msft-vsts-extensions/issues)
+
+## Release Notes
+
+| Version | Remarks                             |  
+|---------|-------------------------------------|
+| 1.0.0   | Initial version                     |
+| 1.2.0   | Fixed issues and some minor changes |
+| 1.2.3   | Extension discontinued use extension "PowerBI Actions" instead https://marketplace.visualstudio.com/items?itemName=maikvandergaag.maikvandergaag-power-bi-actions | 

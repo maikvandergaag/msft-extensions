@@ -2,7 +2,7 @@
   "manifestVersion": 1,
   "id": "maikvandergaag-azurerbac",
   "name": "Azure Role Based Access Control",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "publisher": "maikvandergaag",
   "public": true,
   "targets": [
@@ -85,6 +85,9 @@
     },
     {
       "path": "azurerbac/ps_modules/vststasksdk"
+    },
+    {
+      "path": "azurerbac/ps_modules/TlsHelper_"
     },
     {
       "path": "azurerbac/ps_modules/vstsazurehelpers_"
