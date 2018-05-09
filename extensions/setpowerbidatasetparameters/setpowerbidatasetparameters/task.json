@@ -1,0 +1,92 @@
+{
+  "id": "57cac705-f967-4f81-a815-85ea6f8ea0d4",
+  "name": "SetPowerBIDatasetParameters",
+  "friendlyName": "Set PowerBI Dataset Parameters",
+  "description": "Release Task for Setting existing ",
+  "author": "Ali Mostafa",
+  "helpMarkDown": "",
+  "category": "Utility",
+  "visibility": [
+    "Build",
+    "Release"
+  ],
+  "demands": [],
+  "version": {
+    "Major": "1",
+    "Minor": "0",
+    "Patch": "0"
+  },
+  "minimumAgentVersion": "1.95.0",
+  "instanceNameFormat": "Set Power BI dataset parameters: Cluster $(CLUSTER), Database: $(DB)",
+  "inputs": [
+    {
+      "name": "Username",
+      "type": "string",
+      "label": "Username",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "Username"
+    },
+    {
+      "name": "Password",
+      "type": "string",
+      "label": "Password",
+      "defaultValue": "",
+      "required": false,
+      "helpMarkDown": "Password of the user. Value should be a secured variable."
+    },
+    {
+      "name": "ClientId",
+      "type": "string",
+      "label": "ClientId",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "ClientId of the application that has access to the PowerBI API."
+    },
+    {
+      "name": "TenantId",
+      "type": "string",
+      "label": "TenantId",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "TenantId for the tenant where the dataset resides."
+    },
+    {
+      "name": "GroupId",
+      "type": "string",
+      "label": "PBI Group Id",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "Id of the group where the dataset resides."
+    },
+    {
+      "name": "DatasetId",
+      "type": "string",
+      "label": "PBI Dataset Id",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "the PBI dataset Id."
+    },
+    {
+      "name": "ParamsArray",
+      "type": "string",
+      "label": "Parameters Array",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "the parameters array to be set - should be provided in json format."
+    },
+    {
+      "name": "Refresh",
+      "type": "boolean",
+      "label": "Refresh dataset",
+      "defaultValue": "true",
+      "required": false,
+      "helpMarkDown": "Should the dataset be refreshed after setting parameters?"
+    }
+  ],
+  "execution": {
+    "PowerShell3": {
+      "target": "run-task.ps1"
+    }
+  }
+}
