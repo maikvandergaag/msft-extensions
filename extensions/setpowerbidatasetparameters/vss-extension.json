@@ -3,7 +3,8 @@
   "id": "set-power-bi-dataset-parameters",
   "name": "Set Power BI dataset parameters",
   "version": "1.0.0",
-  "publisher": "AliMostafa",
+  "publisher": "maikvandergaag",
+  "public": true,
   "targets": [
     {
       "id": "Microsoft.VisualStudio.Services"
@@ -36,7 +37,6 @@
     "Build",
     "PowerBI",
     "pbix",
-    "Motion10",
     "dataset"
   ],
   "content": {
