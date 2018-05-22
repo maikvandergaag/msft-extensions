@@ -69,7 +69,7 @@
       "path": "azurerbac/addroleassignment.ps1"
     },
     {
-      "path": "azurerbac/utility.ps1"
+     "path": "azurerbac/utility.ps1"
     },
     {
       "path": "azurerbac/removeroleassignment.ps1"
