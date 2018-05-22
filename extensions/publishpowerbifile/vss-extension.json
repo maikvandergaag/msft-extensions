@@ -2,7 +2,7 @@
   "manifestVersion": 1,
   "id": "maikvandergaag-publish-power-bi-file",
   "name": "Publish Power BI File",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "publisher": "maikvandergaag",
   "public": true,
   "targets": [
@@ -65,6 +65,9 @@
   "files": [
     {
       "path": "publishpowerbifile/publishpowerbi.ps1"
+    },
+    {
+      "path": "publishpowerbifile/run-task.ps1"
     },
     {
       "path": "publishpowerbifile/task.json"

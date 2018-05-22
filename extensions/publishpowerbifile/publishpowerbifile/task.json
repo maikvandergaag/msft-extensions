@@ -14,7 +14,7 @@
   "version": {
     "Major": "1",
     "Minor": "2",
-    "Patch": "3"
+    "Patch": "4"
   },
   "minimumAgentVersion": "1.95.0",
   "instanceNameFormat": "Publish PowerBI File $(PowerBIPath)",
@@ -70,7 +70,7 @@
   ],
   "execution": {
     "PowerShell3": {
-      "target": "publishpowerbi.ps1"
+      "target": "run-task.ps1"
     }
   }
 }
