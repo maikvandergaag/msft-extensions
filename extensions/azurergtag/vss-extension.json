@@ -1,8 +1,8 @@
 {
   "manifestVersion": 1,
-  "id": "maikvandergaag-power-bi-actions",
-  "name": "PowerBI Actions",
-  "version": "2.0.3",
+  "id": "maikvandergaag-azurergtag",
+  "name": "Azure Resource Group Tagging",
+  "version": "1.0.5",
   "publisher": "maikvandergaag",
   "public": true,
   "targets": [
@@ -12,7 +12,7 @@
   ],
   "repository": {
     "type": "git",
-    "uri": "https://github.com/MaikvanderGaag/msft-vsts-extensions/tree/master/extensions/powerbiactions"
+    "uri": "https://github.com/MaikvanderGaag/msft-vsts-extensions/tree/master/extensions/azurergtag"
   },
   "links": {
     "getstarted": {
@@ -28,18 +28,17 @@
   "scope": [
     "vso.build"
   ],
-  "description": "Build and Release Management tasks for PowerBI.",
+  "description": "Build and Release Task for performing Role Based Access Control on a Azure Resource Group",
   "categories": [
     "Build and release"
   ],
   "tags": [
     "Release",
     "Build",
-    "PowerBI",
-    "pbix",
-    "DirectQuery",
-    "Dataset",
-    "3Fifty"
+    "Tagging",
+    "3Fifty",
+    "Azure",
+    "Resource Group"
   ],
   "content": {
     "license": {
@@ -54,40 +53,43 @@
   },
   "contributions": [
     {
-      "id": "PowerBIActions",
+      "id": "azurergtag",
       "type": "ms.vss-distributed-task.task",
       "targets": [
         "ms.vss-distributed-task.tasks"
       ],
       "properties": {
-        "name": "PowerBIActions"
+        "name": "azurergtag"
       }
     }
   ],
   "files": [
     {
-      "path": "powerbiactions/publishpowerbi.ps1"
+      "path": "azurergtag/addtags.ps1"
     },
     {
-      "path": "powerbiactions/run-task.ps1"
+      "path": "azurergtag/utility.ps1"
     },
     {
-      "path": "powerbiactions/task.json"
+      "path": "azurergtag/removetags.ps1"
     },
     {
-      "path": "powerbiactions/icon.png"
+      "path": "azurergtag/run-task.ps1"
     },
     {
-      "path": "powerbiactions/ps_modules/vststasksdk"
+      "path": "azurergtag/task.json"
     },
     {
-      "path": "powerbiactions/ps_modules/PowerBi"
+      "path": "azurergtag/icon.png"
     },
     {
-      "path": "powerbiactions/ps_modules/PowerBi/Microsoft.IdentityModel.Clients.ActiveDirectory.dll"
+      "path": "azurergtag/ps_modules/vststasksdk"
     },
     {
-      "path": "powerbiactions/ps_modules/PowerBi/Microsoft.IdentityModel.Clients.ActiveDirectory.WindowsForms.dll"
+      "path": "azurergtag/ps_modules/TlsHelper_"
+    },
+    {
+      "path": "azurergtag/ps_modules/vstsazurehelpers_"
     }
   ]
 }

@@ -41,3 +41,4 @@ When you like the extension please leave a review. File a issues when you have s
 | 1.2.0   | Fixed issues and some minor changes |
 | 2.0.0   | Added support for: - Groups that do not exists. - The 'me' workspace. - Updating datasets |
 | 2.0.2   | Updated tags |
+| 2.0.4   | Updated file reference |

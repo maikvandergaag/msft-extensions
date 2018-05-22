@@ -39,4 +39,4 @@ When you like the extension please leave a review. File a issues when you have s
 |---------|-------------------------------------|
 | 1.0.0   | Initial version                     |
 | 1.2.0   | Fixed issues and some minor changes |
-| 1.2.3   | Extension discontinued use extension "PowerBI Actions" instead https://marketplace.visualstudio.com/items?itemName=maikvandergaag.maikvandergaag-power-bi-actions | 
+| 1.2.4   | Extension discontinued use extension "PowerBI Actions" instead https://marketplace.visualstudio.com/items?itemName=maikvandergaag.maikvandergaag-power-bi-actions | 
