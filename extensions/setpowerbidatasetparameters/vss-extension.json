@@ -1,0 +1,82 @@
+{
+  "manifestVersion": 1,
+  "id": "set-power-bi-dataset-parameters",
+  "name": "Set Power BI dataset parameters",
+  "version": "1.0.0",
+  "publisher": "maikvandergaag",
+  "public": true,
+  "targets": [
+    {
+      "id": "Microsoft.VisualStudio.Services"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "uri": "https://github.com/MaikvanderGaag/msft-vsts-extensions/tree/master/extensions/setpowerbidatasetparameters"
+  },
+  "links": {
+    "getstarted": {
+      "uri": "https://github.com/MaikvanderGaag/msft-vsts-extensions/wiki"
+    },
+    "repository": {
+      "uri": "https://github.com/MaikvanderGaag/msft-vsts-extensions/"
+    },
+    "issues": {
+      "uri": "https://github.com/MaikvanderGaag/msft-vsts-extensions/issues"
+    }
+  },
+  "scope": [
+    "vso.build"
+  ],
+  "description": "Release task for setting existing Power BI dataset parameters",
+  "categories": [
+    "Build and release"
+  ],
+  "tags": [
+    "Release",
+    "Build",
+    "PowerBI",
+    "pbix",
+    "dataset"
+  ],
+  "content": {
+    "details": {
+      "path": "readme.md"
+    }
+  },
+  "icons": {
+    "default": "icon.png"
+  },
+  "contributions": [
+    {
+      "id": "SetPowerBIDatasetParameters",
+      "type": "ms.vss-distributed-task.task",
+      "targets": [
+        "ms.vss-distributed-task.tasks"
+      ],
+      "properties": {
+        "name": "setpowerbidatasetparameters"
+      }
+    }
+  ],
+  "files": [
+    {
+      "path": "setpowerbidatasetparameters/setpowerbidatasetparameters.ps1"
+    },
+    {
+      "path": "setpowerbidatasetparameters/run-task.ps1"
+    },
+    {
+      "path": "setpowerbidatasetparameters/task.json"
+    },
+    {
+      "path": "setpowerbidatasetparameters/icon.png"
+    },
+    {
+      "path": "setpowerbidatasetparameters/ps_modules/vststasksdk"
+    },
+    {
+      "path": "setpowerbidatasetparameters/ps_modules/powerbi"
+    }
+  ]
+}
