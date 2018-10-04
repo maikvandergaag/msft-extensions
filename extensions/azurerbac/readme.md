@@ -30,3 +30,4 @@ Make sure the application that is performing the actions has the appropriate rig
 |---------|-------------------------------------|
 | 1.0.0   | Initial version                     |
 | 1.2.0   | Fixed issues and some minor changes |
+| 1.2.1   | Added trimming support for added items |

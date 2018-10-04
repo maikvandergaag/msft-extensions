@@ -1,10 +1,10 @@
 function SetAssigment{
     Param(
-        [parameter(Mandatory=$true)][string]$Role,
+        [parameter(Mandatory=$true)][string]$Role,
         [parameter(Mandatory=$true)][guid]$ObjectId,
         [parameter(Mandatory=$true)][string]$ResourceGroupName,
         [parameter(Mandatory=$true)][string]$BreakonException
-    )
+    )
     
 	$getting = $false;
 
@@ -55,7 +55,7 @@ if($items -ne $null){
     foreach($item in $items){
 
         $adObject = $null
-
+        $item = $item.Trim();
         if($action -eq 'Users'){
 			Write-Host "Getting user $item";
             $adObject = Get-AzureRmADUser -UserPrincipalName $item

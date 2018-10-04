@@ -8,12 +8,12 @@ $action = Get-VstsInput -Name usergroup
 $failonError = Get-VstsInput -Name FailonError
 $userAction = Get-VstsInput -Name Action
 
-Write-Host "Resource group: $resourceGroupName"
-Write-Host "Groups: $groups"
-Write-Host "Users: $users"
-Write-Host "Role : $role"
-Write-Host "Action : $action"
-Write-Host "Fail On Error : $failonError"
+Write-Host "Resource group:      $resourceGroupName"
+Write-Host "Groups:              $groups"
+Write-Host "Users:               $users"
+Write-Host "Role :               $role"
+Write-Host "Action :             $action"
+Write-Host "Fail On Error :      $failonError"
 
 . "$PSScriptRoot\Utility.ps1"
 $targetAzurePs = Get-RollForwardVersion -azurePowerShellVersion $targetAzurePs
