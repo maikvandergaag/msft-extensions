@@ -2,7 +2,7 @@
   "manifestVersion": 1,
   "id": "maikvandergaag-azurerbac",
   "name": "Azure Role Based Access Control",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "publisher": "maikvandergaag",
   "public": true,
   "targets": [
