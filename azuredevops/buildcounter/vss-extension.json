@@ -1,0 +1,76 @@
+{
+  "manifestVersion": 1,
+  "id": "maikvandergaag-buildcounter",
+  "name": "Azure Pipeline build counter",
+  "version": "1.0.0",
+  "publisher": "maikvandergaag",
+  "public": true,
+  "targets": [
+    {
+      "id": "Microsoft.VisualStudio.Services"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "uri": "https://github.com/MaikvanderGaag/msft-extensions/tree/master/azuredevops/buildcounter"
+  },
+  "links": {
+    "getstarted": {
+      "uri": "https://github.com/MaikvanderGaag/msft-extensions/wiki"
+    },
+    "repository": {
+      "uri": "https://github.com/MaikvanderGaag/msft-extensions/"
+    },
+    "issues": {
+      "uri": "https://github.com/MaikvanderGaag/msft-extensions/issues"
+    }
+  },
+  "scope": [
+    "vso.build"
+  ],
+  "description": "Build task for a counter of the builds",
+  "categories": [
+    "Build and release"
+  ],
+  "tags": [
+    "Build",
+    "Counter",
+    "3Fifty",
+    "Pipeline",
+    "Azure DevOps"
+  ],
+  "content": {
+    "license": {
+      "path": "license.txt"
+    },
+    "details": {
+      "path": "readme.md"
+    }
+  },
+  "icons": {
+    "default": "icon.png"
+  },
+  "contributions": [
+    {
+      "id": "buildcounter",
+      "type": "ms.vss-distributed-task.task",
+      "targets": [
+        "ms.vss-distributed-task.tasks"
+      ],
+      "properties": {
+        "name": "buildcounter"
+      }
+    }
+  ],
+  "files": [
+    {
+      "path": "buildcounter/run-task.ps1"
+    },
+    {
+      "path": "buildcounter/task.json"
+    },
+    {
+      "path": "buildcounter/icon.png"
+    }
+  ]
+}
