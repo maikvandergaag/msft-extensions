@@ -26,6 +26,9 @@ try
 	$buildDef = Invoke-RestMethod -Uri $buildUri -Method Get -ContentType "application/json" -Headers $devOpsHeader
 
 	if ($buildDef){
+
+		$projectDef.variables
+
 		$item = $projectDef.variables.$VariableName
 		Write-Output "Saved value for $($VariableName): $($item.Value)"
 
