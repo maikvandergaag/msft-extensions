@@ -27,6 +27,7 @@ try
 
 	if ($buildDef){
 		$item = $projectDef.variables.$VariableName
+		Write-Output "Saved value for $($VariableName): $($item)"
 
 		if ($item){
 			[int]$counter = [convert]::ToInt32($item.Value, 10)
