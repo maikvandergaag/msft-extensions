@@ -27,9 +27,7 @@ try
 
 	if ($buildDef){
 
-		$projectDef.variables
-
-		$item = $projectDef.variables.$VariableName
+		$item = $buildDef.variables.$VariableName
 		Write-Output "Saved value for $($VariableName): $($item.Value)"
 
 		if ($item){
@@ -38,12 +36,12 @@ try
 
 			Write-Host "Project Build Number for '$ProjectName' is $counter. Will be updating to $updatedCounter"
 
-			$projectDef.variables.ProjectBuildNumber.Value = $updatedCounter.ToString()
+			$buildDef.variables.ProjectBuildNumber.Value = $updatedCounter.ToString()
 
 
 			# Update the value and update VSTS
-			$projectDef.variables.ProjectBuildNumber.Value = $updatedCounter.ToString()
-			$projectDefJson = $projectDef | ConvertTo-Json -Depth 50 -Compress
+			$buildDef.variables.ProjectBuildNumber.Value = $updatedCounter.ToString()
+			$projectDefJson = $buildDef | ConvertTo-Json -Depth 50 -Compress
 
 			$putUrl = "$($projectDef.Url)?api-version=4.1"
 			Write-Verbose "Updating Project Build number with URL: $putUrl"
