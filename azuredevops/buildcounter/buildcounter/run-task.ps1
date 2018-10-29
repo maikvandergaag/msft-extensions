@@ -27,7 +27,7 @@ try
 
 	if ($buildDef){
 		$item = $projectDef.variables.$VariableName
-		Write-Output "Saved value for $($VariableName): $($item)"
+		Write-Output "Saved value for $($VariableName): $($item.Value)"
 
 		if ($item){
 			[int]$counter = [convert]::ToInt32($item.Value, 10)
@@ -38,6 +38,13 @@ try
 			$projectDef.variables.ProjectBuildNumber.Value = $updatedCounter.ToString()
 
 
+			# Update the value and update VSTS
+			$projectDef.variables.ProjectBuildNumber.Value = $updatedCounter.ToString()
+			$projectDefJson = $projectDef | ConvertTo-Json -Depth 50 -Compress
+
+			$putUrl = "$($projectDef.Url)?api-version=4.1"
+			Write-Verbose "Updating Project Build number with URL: $putUrl"
+			Invoke-RestMethod -Method Put -Uri $putUrl -Headers $header -ContentType "application/json" -Body $projectDefJson | Out-Null
 		}else{
 			Write-Error "Unable to find a variable called '$valueName' in Project $ProjectName. Please check the config and try again."
 		}
@@ -45,14 +52,6 @@ try
 	else{
 		Write-Error "Unable to find a build definition for Project $($ProjectName) with the build id: $($buildId)."
 	}
-
-	# Update the value and update VSTS
-	$projectDef.variables.ProjectBuildNumber.Value = $updatedCounter.ToString()
-	$projectDefJson = $projectDef | ConvertTo-Json -Depth 50 -Compress
-
-	$putUrl = "$($projectDef.Url)?api-version=4.1"
-	Write-Verbose "Updating Project Build number with URL: $putUrl"
-	Invoke-RestMethod -Method Put -Uri $putUrl -Headers $header -ContentType "application/json" -Body $projectDefJson | Out-Null
 }
 catch{
    $error = $_.Exception.Message
