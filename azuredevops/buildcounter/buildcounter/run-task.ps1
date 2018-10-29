@@ -1,7 +1,7 @@
-Trace-VstsEnteringInvocation $MyInvocation
+#Trace-VstsEnteringInvocation $MyInvocation
 
-$VariableName = Get-VstsInput -Name VariableName -Require
-$DevOpsPat = Get-VstsInput -Name DevOpsPat -Require
+$VariableName = "ProjectNumber" #Get-VstsInput -Name VariableName -Require
+$DevOpsPat = "lyxwwoiggyyyc6kyo74wmj5rsw6xcxc7sg537iw4i37qjovm6i2q" #Get-VstsInput -Name DevOpsPat -Require
 
 $devOpsUri = $env:SYSTEM_TEAMFOUNDATIONSERVERURI
 $projectName = $env:SYSTEM_TEAMPROJECT
