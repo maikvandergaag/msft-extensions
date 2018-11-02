@@ -1,8 +1,6 @@
 Trace-VstsEnteringInvocation $MyInvocation
 
-$MinorVersionVariable = Get-VstsInput -Name MinorVersionVariable -Require
-$MajorVersionVariable = Get-VstsInput -Name MajorVersionVariable -Require
-$PatchVersionVariable = Get-VstsInput -Name PatchVersionVariable -Require
+$VersionVariable = Get-VstsInput -Name VersionVariable -Require
 $UpdateMinorVersion = Get-VstsInput -Name UpdateMinorVersion -Require
 $MaxValuePatchVersion = Get-VstsInput -Name MaxValuePatchVersion -Require
 $MaxValueMinorVersion = Get-VstsInput -Name MaxValueMinorVersion -Require
@@ -14,9 +12,7 @@ $projectName = $env:SYSTEM_TEAMPROJECT
 $projectId = $env:SYSTEM_TEAMPROJECTID 
 $buildId = $env:BUILD_BUILDID
 
-Write-Output "MinorVersionVariable           : $($MinorVersionVariable)";
-Write-Output "MajorVersionVariable           : $($MajorVersionVariable)";
-Write-Output "PatchVersionVariable           : $($PatchVersionVariable)";
+Write-Output "VersionVariable                : $($VersionVariable)";
 Write-Output "UpdateMinorVersion             : $($UpdateMinorVersion)";
 Write-Output "MaxValuePatchVersion           : $($MaxValuePatchVersion)";
 Write-Output "UpdateMajorVersion             : $($UpdateMajorVersion)";
@@ -43,7 +39,15 @@ if ($buildDef) {
     Write-Host "Trying to retrieve the build definition with the url: $($defUri)."
     $definition = Invoke-RestMethod -Method Get -Uri $defUri -Headers $devOpsHeader -ContentType "application/json"
 
-    if ($definition.variables.$MinorVersionVariable -and $definition.variables.$MajorVersionVariable -and $definition.variables.$PatchVersionVariable) {
+    if ($definition.variables.$VersionVariable) {
+        Write-Host "Value of the Major Version Variable: $($definition.variables.$VersionVariable.Value)"
+        $version = $definition.variables.$VersionVariable.Value
+
+        if(!$version){
+            $version = "1.0.0"
+        }
+
+        $items = $version.split('.')
 
         Write-Host "Value of the Major Version Variable: $($definition.variables.$MajorVersionVariable.Value)"
         Write-Host "Value of the Minor Version Variable: $($definition.variables.$MinorVersionVariable.Value)"

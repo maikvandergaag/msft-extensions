@@ -26,28 +26,12 @@
     }],
   "inputs": [
     {
-      "name": "MajorVersionVariable",
-      "label": "Major number variable",
+      "name": "VersionVariable",
+      "label": "The saved version variable",
       "type": "string",
       "required": true,
       "groupName": "version",
-      "helpMarkDown": "The variable for the major number of the version '*.0.0'" 
-    },
-    {
-      "name": "MinorVersionVariable",
-      "label": "Minor number variable",
-      "type": "string",
-      "required": true,
-      "groupName": "version",
-      "helpMarkDown": "The variable for the minor number of the version '1.*.0'" 
-    },
-    {
-      "name": "PatchVersionVariable",
-      "label": "Patch number variable",
-      "type": "string",
-      "required": true,
-      "groupName": "version",
-      "helpMarkDown": "The variable for the patch number of the version '1.0.*'" 
+      "helpMarkDown": "The name of the saved variable. The value should be in the format '1.6.3'. When left empty it will by default use the value '1.0.0'" 
     },
     {
       "name": "UpdateMinorVersion",
@@ -64,7 +48,7 @@
       "required": false,
       "groupName": "version",
       "helpMarkDown": "The maximum value to the path number",
-      "visibleRule": "UpdateMinorVersion = true"
+      "visibleRule": "UpdateMinorVersion=true"
     },
     {
       "name": "UpdateMajorVersion",
@@ -73,7 +57,7 @@
       "required": false,
       "groupName": "version",
       "helpMarkDown": "Automatically update the major version number when the maximum value of the the patch number is reached.",
-      "visibleRule": "UpdateMinorVersion = true"
+      "visibleRule": "UpdateMinorVersion=true"
     },
     {
       "name": "MaxValueMinorVersion",
@@ -82,7 +66,7 @@
       "required": false,
       "groupName": "version",
       "helpMarkDown": "The maximum value to the minor number",
-      "visibleRule": "UpdateMajorVersion = true"
+      "visibleRule": "UpdateMajorVersion=true"
     },
     {
       "name": "DevOpsPat",
