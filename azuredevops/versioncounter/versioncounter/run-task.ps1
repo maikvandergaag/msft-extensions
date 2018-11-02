@@ -31,13 +31,12 @@ $base64AuthInfo = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(("{0
 $devOpsHeader = @{Authorization = ("Basic {0}" -f $base64AuthInfo)}
 
 Write-Host "Invoking rest method 'Get' for the url: $($buildUri)."
-
 $buildDef = Invoke-RestMethod -Uri $buildUri -Method Get -ContentType "application/json" -Headers $devOpsHeader
 
 if ($buildDef) {
     $defUri = "$($buildDef.Url)?api-version=4.1"
-    Write-Host "Trying to retrieve the build definition with the url: $($buildDef.Url)."
-    $definition = Invoke-RestMethod -Method Get -Uri $defUri -ContentType "application/json" -Headers @devOpsHeader
+    Write-Host "Trying to retrieve the build definition with the url: $($defUri)."
+    $definition = Invoke-RestMethod -Method Get -Uri $defUri -Headers $devOpsHeader -ContentType "application/json"
 
     if ($definition.variables.$MinorVersionVariable -and $definition.variables.$MajorVersionVariable -and $definition.variables.$PatchVersionVariable) {
 		$minorVersion = [convert]::ToInt32($projectDef.variables.$MinorVersionVariable.Value, 10)
