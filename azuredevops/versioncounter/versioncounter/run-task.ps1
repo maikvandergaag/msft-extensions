@@ -4,8 +4,9 @@ $MinorVersionVariable = Get-VstsInput -Name MinorVersionVariable -Require
 $MajorVersionVariable = Get-VstsInput -Name MajorVersionVariable -Require
 $PatchVersionVariable = Get-VstsInput -Name PatchVersionVariable -Require
 $UpdateMinorVersion = Get-VstsInput -Name UpdateMinorVersion -Require
-$MaxValuePathVersion = Get-VstsInput -Name MaxValuePathVersion -Require
-
+$MaxValuePatchVersion = Get-VstsInput -Name MaxValuePatchVersion -Require
+$MaxValueMinorVersion = Get-VstsInput -Name MaxValueMinorVersion -Require
+$UpdateMinorVersion = Get-VstsInput -Name UpdateMajorVersion -Require
 $DevOpsPat = Get-VstsInput -Name DevOpsPat -Require
 
 $devOpsUri = $env:SYSTEM_TEAMFOUNDATIONSERVERURI
@@ -17,7 +18,9 @@ Write-Output "MinorVersionVariable           : $($MinorVersionVariable)";
 Write-Output "MajorVersionVariable           : $($MajorVersionVariable)";
 Write-Output "PatchVersionVariable           : $($PatchVersionVariable)";
 Write-Output "UpdateMinorVersion             : $($UpdateMinorVersion)";
-Write-Output "MaxValuePathVersion            : $($MaxValuePathVersion)";
+Write-Output "MaxValuePatchVersion           : $($MaxValuePatchVersion)";
+Write-Output "UpdateMajorVersion             : $($UpdateMajorVersion)";
+Write-Output "MaxValueMinorVersion           : $($MaxValueMinorVersion)";
 Write-Output "DevOpsPAT                  	 : $(if (![System.String]::IsNullOrWhiteSpace($DevOpsPAT)) { '***'; } else { '<not present>'; })"; ;
 Write-Output "DevOps Uri           		     : $($devOpsUri)";
 Write-Output "Project Name          	     : $($projectName)";
@@ -52,16 +55,24 @@ if ($buildDef) {
 		
 		$updatedPatchVersion = $patchVersion + 1
         $updatedMinorVersion = $minorVersion
+        $updatedMajorVersion = $majorVersion
 
-		if(($MaxValuePathVersion -ne 0) -and ($updatedPatchVersion -gt $MaxValuePathVersion) -and $UpdateMinorVersion){
+		if(($MaxValuePatchVersion -ne 0) -and ($updatedPatchVersion -gt $MaxValuePatchVersion) -and $UpdateMinorVersion){
 			$updatedPatchVersion = 0
-			$updatedMinorVersion = $minorVersion + 1
+			$updatedMinorVersion = $updatedMinorVersion + 1
+        }
+        
+        if(($MaxValueMinorVersion -ne 0) -and ($updatedMinorVersion -gt $MaxValueMinorVersion) -and $UpdateMajorVersion){
+			$updatedMinorVersion = 0
+			$updatedMajorVersion = $majorVersion + 1
 		}
 
         Write-Host "Updating patch version number from: $($patchVersion) to $($updatedPatchVersion)."
         $definition.variables.$PatchVersionVariable.Value = $updatedPatchVersion.ToString()
         Write-Host "Updating minor version number from: $($minorVersion) to $($updatedMinorVersion)."
-		$definition.variables.$MinorVersionVariable.Value = $updatedMinorVersion.ToString()
+        $definition.variables.$MinorVersionVariable.Value = $updatedMinorVersion.ToString()
+        Write-Host "Updating major version number from: $($majorVersion) to $($updatedMajorVersion)."
+		$definition.variables.$MajorVersionVariable.Value = $updatedMajorVersion.ToString()
 		
         $definitionJson = $definition | ConvertTo-Json -Depth 50 -Compress
 

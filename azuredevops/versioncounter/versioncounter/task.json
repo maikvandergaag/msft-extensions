@@ -58,7 +58,7 @@
       "helpMarkDown": "Automatically update the minor version number when the maximum value of the the patch number is reached."
     },
     {
-      "name": "MaxValuePathVersion",
+      "name": "MaxValuePatchVersion",
       "label": "Maximum value of the patch number variable",
       "type": "string",
       "required": true,
