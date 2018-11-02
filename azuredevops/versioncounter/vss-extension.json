@@ -1,7 +1,7 @@
 {
   "manifestVersion": 1,
-  "id": "maikvandergaag-buildcounter",
-  "name": "Azure Pipeline build counter",
+  "id": "maikvandergaag-versioncounter",
+  "name": "Azure Pipeline Version Number Counter",
   "version": "1.0.0",
   "publisher": "maikvandergaag",
   "public": true,
@@ -12,7 +12,7 @@
   ],
   "repository": {
     "type": "git",
-    "uri": "https://github.com/MaikvanderGaag/msft-extensions/tree/master/azuredevops/buildcounter"
+    "uri": "https://github.com/MaikvanderGaag/msft-extensions/tree/master/azuredevops/versioncounter"
   },
   "links": {
     "getstarted": {

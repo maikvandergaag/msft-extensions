@@ -1,0 +1,83 @@
+{
+  "id": "84F23C57-8C65-4709-BC94-5CBD44E96A98",
+  "name": "versioncounter",
+  "friendlyName": "Version number Counter",
+  "description": "Build and release task for a version number counter",
+  "author": "Maik van der Gaag",
+  "helpMarkDown": "",
+  "category": "Utility",
+  "visibility": [
+    "Build",
+    "Release"
+  ],
+  "demands": [],
+  "version": {
+    "Major": "1",
+    "Minor": "0",
+    "Patch": "0"
+  },
+  "minimumAgentVersion": "2.117.0",
+  "instanceNameFormat": "Version number Counter",
+  "groups": [
+    {
+      "name": "version",
+      "displayName": "Versioning",
+      "isExpanded": true
+    }],
+  "inputs": [
+    {
+      "name": "MajorVersionVariable",
+      "label": "Major number variable",
+      "type": "string",
+      "required": true,
+      "groupName": "version",
+      "helpMarkDown": "The variable for the major number of the version '*.0.0'" 
+    },
+    {
+      "name": "MinorVersionVariable",
+      "label": "Minor number variable",
+      "type": "string",
+      "required": true,
+      "groupName": "version",
+      "helpMarkDown": "The variable for the minor number of the version '1.*.0'" 
+    },
+    {
+      "name": "PatchVersionVariable",
+      "label": "Patch number variable",
+      "type": "string",
+      "required": true,
+      "groupName": "version",
+      "helpMarkDown": "The variable for the patch number of the version '1.0.*'" 
+    },
+    {
+      "name": "UpdateMinorVersion",
+      "label": "Automatically update minor number",
+      "type": "boolean",
+      "required": false,
+      "groupName": "version",
+      "helpMarkDown": "Automatically update the minor version number when the maximum value of the the patch number is reached." 
+    },
+    {
+      "name": "MaxValuePathVersion",
+      "label": "Maximum value of the patch number variable",
+      "type": "string",
+      "required": true,
+      "groupName": "version",
+      "helpMarkDown": "The maximum value to the path number" 
+    },
+    {
+      "name": "DevOpsPat",
+      "label": "Azure DevOps Personal Access Token",
+      "type": "string",
+      "required": true,
+      "groupName": "version",
+      "helpMarkDown": "The personal access token for Azure DevOps"
+    }
+  ],
+  "dataSourceBindings": [],
+  "execution": {
+    "PowerShell3": {
+      "target": "run-task.ps1"
+    }
+  }
+}
