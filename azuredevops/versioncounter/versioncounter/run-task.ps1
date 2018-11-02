@@ -34,7 +34,9 @@ Write-Host "Invoking rest method 'Get' for the url: $($buildUri)."
 $buildDef = Invoke-RestMethod -Uri $buildUri -Method Get -ContentType "application/json" -Headers $devOpsHeader
 
 if ($buildDef) {
-    $defUri = "$($buildDef.Url)?api-version=4.1"
+    $definitionId = $buildDef.definition.id
+    $defUri = "$($devOpsUri)$($projectName)/_apis/build/definitions/$($definitionId)?api-version=4.1"
+
     Write-Host "Trying to retrieve the build definition with the url: $($defUri)."
     $definition = Invoke-RestMethod -Method Get -Uri $defUri -Headers $devOpsHeader -ContentType "application/json"
 
@@ -57,9 +59,8 @@ if ($buildDef) {
 		
         $definitionJson = $definition | ConvertTo-Json -Depth 50 -Compress
 
-        $updateUri = "$($definition.Url)?api-version=4.1"
-        Write-Verbose "Updating Project Build number with URL: $($updateUri)"
-        Invoke-RestMethod -Method Put -Uri $updateUri -Headers $devOpsHeader -ContentType "application/json" -Body $definitionJson | Out-Null
+        Write-Verbose "Updating Project Build number with URL: $($defUri)"
+        Invoke-RestMethod -Method Put -Uri $defUri -Headers $devOpsHeader -ContentType "application/json" -Body $definitionJson | Out-Null
     }
     else {
         Write-Error "The variables can not be found on the definition: $($MajorVersionVariable), $($MinorVersionVariable), $($PatchVersionVariable)"
