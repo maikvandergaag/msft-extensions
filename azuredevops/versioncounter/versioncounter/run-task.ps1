@@ -67,7 +67,7 @@ if ($buildDef) {
             $updatedMinorVersion = $minorVersion
             $updatedMajorVersion = $majorVersion
 
-            if($UpdateMinorVersion){
+            if($UpdateMinorVersion -eq $true){
                 if (($MaxValuePatchVersion -ne 0) -and ($updatedPatchVersion -gt $MaxValuePatchVersion)) {
                     Write-Host "Automatically updating minor version number: $($updatedMinorVersion)"
                     $updatedPatchVersion = 0
@@ -76,7 +76,7 @@ if ($buildDef) {
                 }
             }
             
-            if($UpdateMajorVersion){
+            if($UpdateMajorVersion -eq $true){
                 if (($MaxValueMinorVersion -ne 0) -and ($updatedMinorVersion -gt $MaxValueMinorVersion)) {
                     Write-Host "Automatically updating major version numer: $($updatedMajorVersion)"
                     $updatedMinorVersion = 0

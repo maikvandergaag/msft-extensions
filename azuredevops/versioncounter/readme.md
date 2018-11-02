@@ -8,6 +8,10 @@ The following configuration can be made in the task:
 * Maximum value of the patch number: The maximum number of the patch version number.
 * Automatically update major number: Checkbox if you want to automatically update the major version (*.0.0) when the minor version reaches a certain amount.
 * Maximum value of the minor number: The maximum number of the minor version number.
+* Azure DevOps Personal Access Token: The personal access token that is used for updating the build definition.
+
+The minimal permissions required for the PAT are:
+* **Build**: Read & Execute
 
 ## Documentation
 
