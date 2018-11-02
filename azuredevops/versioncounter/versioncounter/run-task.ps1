@@ -67,14 +67,18 @@ if ($buildDef) {
             $updatedMinorVersion = $minorVersion
             $updatedMajorVersion = $majorVersion
 
-            if (($MaxValuePatchVersion -ne 0) -and ($updatedPatchVersion -gt $MaxValuePatchVersion) -and $UpdateMinorVersion) {
-                $updatedPatchVersion = 0
-                $updatedMinorVersion = $updatedMinorVersion + 1
+            if($UpdateMinorVersion){
+                if (($MaxValuePatchVersion -ne 0) -and ($updatedPatchVersion -gt $MaxValuePatchVersion)) {
+                    $updatedPatchVersion = 0
+                    $updatedMinorVersion = $updatedMinorVersion + 1
+                }
             }
             
-            if (($MaxValueMinorVersion -ne 0) -and ($updatedMinorVersion -gt $MaxValueMinorVersion) -and $UpdateMajorVersion) {
-                $updatedMinorVersion = 0
-                $updatedMajorVersion = $majorVersion + 1
+            if($UpdateMajorVersion){
+                if (($MaxValueMinorVersion -ne 0) -and ($updatedMinorVersion -gt $MaxValueMinorVersion)) {
+                    $updatedMinorVersion = 0
+                    $updatedMajorVersion = $majorVersion + 1
+                }
             }
 
             Write-Host "Updating patch version number from: $($patchVersion) to $($updatedPatchVersion)."

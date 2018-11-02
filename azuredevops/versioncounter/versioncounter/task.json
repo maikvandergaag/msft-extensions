@@ -37,6 +37,7 @@
       "name": "UpdateMinorVersion",
       "label": "Automatically update minor number",
       "type": "boolean",
+      "defaultValue": "false",
       "required": false,
       "groupName": "version",
       "helpMarkDown": "Automatically update the minor version number when the maximum value of the the patch number is reached."
@@ -47,6 +48,7 @@
       "type": "string",
       "required": false,
       "groupName": "version",
+      "defaultValue": "0",
       "helpMarkDown": "The maximum value to the path number",
       "visibleRule": "UpdateMinorVersion=true"
     },
@@ -54,6 +56,7 @@
       "name": "UpdateMajorVersion",
       "label": "Automatically update major number",
       "type": "boolean",
+      "defaultValue": "false",
       "required": false,
       "groupName": "version",
       "helpMarkDown": "Automatically update the major version number when the maximum value of the the patch number is reached.",
@@ -64,6 +67,7 @@
       "label": "Maximum value of the minor number variable",
       "type": "string",
       "required": false,
+      "defaultValue": "0",
       "groupName": "version",
       "helpMarkDown": "The maximum value to the minor number",
       "visibleRule": "UpdateMajorVersion=true"
