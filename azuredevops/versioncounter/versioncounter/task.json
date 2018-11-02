@@ -1,7 +1,7 @@
 {
   "id": "84F23C57-8C65-4709-BC94-5CBD44E96A98",
   "name": "versioncounter",
-  "friendlyName": "Version number Counter",
+  "friendlyName": "Version number counter",
   "description": "Build and release task for a version number counter",
   "author": "Maik van der Gaag",
   "helpMarkDown": "",
@@ -17,7 +17,7 @@
     "Patch": "0"
   },
   "minimumAgentVersion": "2.117.0",
-  "instanceNameFormat": "Version number Counter",
+  "instanceNameFormat": "Version number counter",
   "groups": [
     {
       "name": "version",
@@ -31,7 +31,7 @@
       "type": "string",
       "required": true,
       "groupName": "version",
-      "helpMarkDown": "The name of the saved variable. The value should be in the format '1.6.3'. When left empty it will by default use the value '1.0.0'" 
+      "helpMarkDown": "The name of the saved variable. The value should be in the format '1.6.3'." 
     },
     {
       "name": "UpdateMinorVersion",
@@ -44,7 +44,7 @@
     },
     {
       "name": "MaxValuePatchVersion",
-      "label": "Maximum value of the patch number variable",
+      "label": "Maximum value of the patch number",
       "type": "string",
       "required": false,
       "groupName": "version",
@@ -64,7 +64,7 @@
     },
     {
       "name": "MaxValueMinorVersion",
-      "label": "Maximum value of the minor number variable",
+      "label": "Maximum value of the minor number",
       "type": "string",
       "required": false,
       "defaultValue": "0",

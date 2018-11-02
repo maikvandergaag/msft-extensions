@@ -69,13 +69,16 @@ if ($buildDef) {
 
             if($UpdateMinorVersion){
                 if (($MaxValuePatchVersion -ne 0) -and ($updatedPatchVersion -gt $MaxValuePatchVersion)) {
+                    Write-Host "Automatically updating minor version number: $($updatedMinorVersion)"
                     $updatedPatchVersion = 0
                     $updatedMinorVersion = $updatedMinorVersion + 1
+
                 }
             }
             
             if($UpdateMajorVersion){
                 if (($MaxValueMinorVersion -ne 0) -and ($updatedMinorVersion -gt $MaxValueMinorVersion)) {
+                    Write-Host "Automatically updating major version numer: $($updatedMajorVersion)"
                     $updatedMinorVersion = 0
                     $updatedMajorVersion = $majorVersion + 1
                 }

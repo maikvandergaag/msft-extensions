@@ -1,24 +1,21 @@
-Azure Role Based Access Control is a Build and Release Task for Build / Release pipeline.
+Version number counter is a Release and Build pipeline tasks that can increment a version number. 
 
-With this task you can alter role-based access assignments on resource groups. 
+The default version number should be saved as a variable in the release or build pipeline. The task will increment the number based on your configuration.
 
-Within the task multiple parameters need to be specified:
-* Azure Subscription: The subscription to perform the assignments on.
-* Resource Group: The Azure resource group name.
-* Action: The specific action to perform: Add or Remove.
-* Azure Role Assignment: The Role Assignment.
-* Users or Group: Perform the action for users or groups.
-* Groups: Visible when Groups action is chosen. In this field you need to specify the group names. For multiple separate by (',').
-* Users: Visible when Users action is chosen. In this field you need to specify the user principal names of the users. For multiple separate by (','). 
-* Fail on Error: Boolean value whether the task should fail when a error occurs.
+The following configuration can be made in the task:
+* The saved version variable: The name of the variable that contains the version number. This version number should be in the format: *.*.*.
+* Automatically update minor number: Checkbox if you want to automatically update the minor version (1.*.0) when the patch version reaches a certain amount.
+* Maximum value of the patch number: The maximum number of the patch version number.
+* Automatically update major number: Checkbox if you want to automatically update the major version (*.0.0) when the minor version reaches a certain amount.
+* Maximum value of the minor number: The maximum number of the minor version number.
 
 ## Documentation
 
-For the documentation check the [Wiki](https://github.com/MaikvanderGaag/msft-vsts-extensions/wiki).
+For the documentation check the [Wiki](https://github.com/MaikvanderGaag/msft-extensions/wiki).
 
 When you like the extension please leave a review. File a issues when you have suggestions or problems with the extension.
 
-[Issues](https://github.com/MaikvanderGaag/msft-vsts-extensions/issues)
+[Issues](https://github.com/MaikvanderGaag/msft-extensions/issues)
 
 ## Permissions
 
@@ -29,5 +26,3 @@ Make sure the application that is performing the actions has the appropriate rig
 | Version | Remarks                             |  
 |---------|-------------------------------------|
 | 1.0.0   | Initial version                     |
-| 1.2.0   | Fixed issues and some minor changes |
-| 1.2.1   | Added trimming support for added items |

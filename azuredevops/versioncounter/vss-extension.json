@@ -1,7 +1,7 @@
 {
   "manifestVersion": 1,
   "id": "maikvandergaag-versioncounter",
-  "name": "Azure Pipeline Version Number Counter",
+  "name": "Version number counter",
   "version": "1.0.0",
   "publisher": "maikvandergaag",
   "public": true,
@@ -36,7 +36,7 @@
     "Build",
     "Version",
     "Counter",
-    "3Fifty",
+    "3fifty",
     "Pipeline",
     "Azure DevOps"
   ],
