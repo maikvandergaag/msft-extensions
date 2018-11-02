@@ -61,7 +61,7 @@
       "name": "MaxValuePatchVersion",
       "label": "Maximum value of the patch number variable",
       "type": "string",
-      "required": true,
+      "required": false,
       "groupName": "version",
       "helpMarkDown": "The maximum value to the path number",
       "visibleRule": "UpdateMinorVersion = true"
@@ -79,7 +79,7 @@
       "name": "MaxValueMinorVersion",
       "label": "Maximum value of the minor number variable",
       "type": "string",
-      "required": true,
+      "required": false,
       "groupName": "version",
       "helpMarkDown": "The maximum value to the minor number",
       "visibleRule": "UpdateMajorVersion = true"
