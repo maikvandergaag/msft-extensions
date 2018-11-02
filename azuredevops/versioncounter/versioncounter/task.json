@@ -55,7 +55,7 @@
       "type": "boolean",
       "required": false,
       "groupName": "version",
-      "helpMarkDown": "Automatically update the minor version number when the maximum value of the the patch number is reached." 
+      "helpMarkDown": "Automatically update the minor version number when the maximum value of the the patch number is reached."
     },
     {
       "name": "MaxValuePathVersion",
@@ -63,7 +63,26 @@
       "type": "string",
       "required": true,
       "groupName": "version",
-      "helpMarkDown": "The maximum value to the path number" 
+      "helpMarkDown": "The maximum value to the path number",
+      "visibleRule": "UpdateMinorVersion = true"
+    },
+    {
+      "name": "UpdateMajorVersion",
+      "label": "Automatically update major number",
+      "type": "boolean",
+      "required": false,
+      "groupName": "version",
+      "helpMarkDown": "Automatically update the major version number when the maximum value of the the patch number is reached.",
+      "visibleRule": "UpdateMinorVersion = true"
+    },
+    {
+      "name": "MaxValueMinorVersion",
+      "label": "Maximum value of the minor number variable",
+      "type": "string",
+      "required": true,
+      "groupName": "version",
+      "helpMarkDown": "The maximum value to the minor number",
+      "visibleRule": "UpdateMajorVersion = true"
     },
     {
       "name": "DevOpsPat",
