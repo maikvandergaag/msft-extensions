@@ -51,6 +51,7 @@ if ($buildDef) {
 		$patchVersion = [convert]::ToInt32($definition.variables.$PatchVersionVariable.Value, 10)
 		
 		$updatedPatchVersion = $patchVersion + 1
+        $updatedMinorVersion = $minorVersion
 
 		if(($MaxValuePathVersion -ne 0) -and ($updatedPatchVersion -gt $MaxValuePathVersion) -and $UpdateMinorVersion){
 			$updatedPatchVersion = 0
