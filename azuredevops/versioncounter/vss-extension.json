@@ -72,6 +72,9 @@
     },
     {
       "path": "versioncounter/icon.png"
+    },
+    {
+      "path": "versioncounter/ps_modules/vststasksdk"
     }
   ]
 }
