@@ -41,9 +41,14 @@ if ($buildDef) {
     $definition = Invoke-RestMethod -Method Get -Uri $defUri -Headers $devOpsHeader -ContentType "application/json"
 
     if ($definition.variables.$MinorVersionVariable -and $definition.variables.$MajorVersionVariable -and $definition.variables.$PatchVersionVariable) {
-		$minorVersion = [convert]::ToInt32($projectDef.variables.$MinorVersionVariable.Value, 10)
-		$majorVersion = [convert]::ToInt32($projectDef.variables.$MajorVersionVariable.Value, 10)
-		$patchVersion = [convert]::ToInt32($projectDef.variables.$PatchVersionVariable.Value, 10)
+
+        Write-Host "Value of the Major Version Variable: $($definition.variables.$MajorVersionVariable.Value)"
+        Write-Host "Value of the Minor Version Variable: $($definition.variables.$MinorVersionVariable.Value)"
+        Write-Host "Value of the Patch Version Variable: $($definition.variables.$PatchVersionVariable.Value)"
+
+		$minorVersion = [convert]::ToInt32($definition.variables.$MinorVersionVariable.Value, 10)
+		$majorVersion = [convert]::ToInt32($definition.variables.$MajorVersionVariable.Value, 10)
+		$patchVersion = [convert]::ToInt32($definition.variables.$PatchVersionVariable.Value, 10)
 		
 		$updatedPatchVersion = $patchVersion + 1
 
