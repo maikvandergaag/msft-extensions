@@ -18,9 +18,9 @@ Write-Output "MajorVersionVariable           : $($MajorVersionVariable)";
 Write-Output "PatchVersionVariable           : $($PatchVersionVariable)";
 Write-Output "UpdateMinorVersion             : $($UpdateMinorVersion)";
 Write-Output "MaxValuePathVersion            : $($MaxValuePathVersion)";
-Write-Output "DevOpsPAT             		 : $(if (![System.String]::IsNullOrWhiteSpace($DevOpsPAT)) { '***'; } else { '<not present>'; })"; ;
-Write-Output "DevOps Uri        		     : $($devOpsUri)";
-Write-Output "Project Name      		     : $($projectName)";
+Write-Output "DevOpsPAT                  	 : $(if (![System.String]::IsNullOrWhiteSpace($DevOpsPAT)) { '***'; } else { '<not present>'; })"; ;
+Write-Output "DevOps Uri           		     : $($devOpsUri)";
+Write-Output "Project Name          	     : $($projectName)";
 Write-Output "Project Id           			 : $($projectId)";
 Write-Output "BuildId            		     : $($buildId)";
 
@@ -30,10 +30,13 @@ $buildUri = "$($devOpsUri)$($projectName)/_apis/build/builds/$($buildId)?api-ver
 $base64AuthInfo = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(("{0}:{1}" -f "", $DevOpsPAT)))
 $devOpsHeader = @{Authorization = ("Basic {0}" -f $base64AuthInfo)}
 
+Write-Host "Invoking rest method 'Get' for the url: $($buildUri)."
+
 $buildDef = Invoke-RestMethod -Uri $buildUri -Method Get -ContentType "application/json" -Headers $devOpsHeader
 
 if ($buildDef) {
     $defUri = "$($buildDef.Url)?api-version=4.1"
+    Write-Host "Trying to retrieve the build definition with the url: $($buildDef.Url)."
     $definition = Invoke-RestMethod -Method Get -Uri $defUri -ContentType "application/json" -Headers @devOpsHeader
 
     if ($definition.variables.$MinorVersionVariable -and $definition.variables.$MajorVersionVariable -and $definition.variables.$PatchVersionVariable) {
@@ -48,14 +51,16 @@ if ($buildDef) {
 			$updatedMinorVersion = $minorVersion + 1
 		}
 
-		$definition.variables.$PatchVersionVariable.Value = $updatedPatchVersion.ToString()
+        Write-Host "Updating patch version number from: $($patchVersion) to $($updatedPatchVersion)."
+        $definition.variables.$PatchVersionVariable.Value = $updatedPatchVersion.ToString()
+        Write-Host "Updating minor version number from: $($minorVersion) to $($updatedMinorVersion)."
 		$definition.variables.$MinorVersionVariable.Value = $updatedMinorVersion.ToString()
 		
         $definitionJson = $definition | ConvertTo-Json -Depth 50 -Compress
 
         $updateUri = "$($definition.Url)?api-version=4.1"
         Write-Verbose "Updating Project Build number with URL: $($updateUri)"
-        Invoke-RestMethod -Method Put -Uri $updateUri -Headers $header -ContentType "application/json" -Body $definitionJson | Out-Null
+        Invoke-RestMethod -Method Put -Uri $updateUri -Headers $devOpsHeader -ContentType "application/json" -Body $definitionJson | Out-Null
     }
     else {
         Write-Error "The variables can not be found on the definition: $($MajorVersionVariable), $($MinorVersionVariable), $($PatchVersionVariable)"
