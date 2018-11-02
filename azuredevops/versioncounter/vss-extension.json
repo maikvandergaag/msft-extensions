@@ -28,12 +28,13 @@
   "scope": [
     "vso.build"
   ],
-  "description": "Build task for a counter of the builds",
+  "description": "Build and Release task for a version number counter",
   "categories": [
     "Build and release"
   ],
   "tags": [
     "Build",
+    "Version",
     "Counter",
     "3Fifty",
     "Pipeline",
@@ -52,25 +53,25 @@
   },
   "contributions": [
     {
-      "id": "buildcounter",
+      "id": "versioncounter",
       "type": "ms.vss-distributed-task.task",
       "targets": [
         "ms.vss-distributed-task.tasks"
       ],
       "properties": {
-        "name": "buildcounter"
+        "name": "versioncounter"
       }
     }
   ],
   "files": [
     {
-      "path": "buildcounter/run-task.ps1"
+      "path": "versioncounter/run-task.ps1"
     },
     {
-      "path": "buildcounter/task.json"
+      "path": "versioncounter/task.json"
     },
     {
-      "path": "buildcounter/icon.png"
+      "path": "versioncounter/icon.png"
     }
   ]
 }
