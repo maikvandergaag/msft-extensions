@@ -1,21 +1,20 @@
-# VSTS Extensions
-This repository will be used for posting Visual Studio Team Services Extensions that I build.
+# Extensions
+This repository will be used for posting several types of extensions. You can find Azure DevOps and Visual Studio extensions in this repository.
 
-## File Content to Variable
-File Content to Variable is an extension to extract content from a file and inserting the content into a variable.
+## Azure DevOps Extensions
 
-[Extension](extensions/filecontenttovariable)
+[Azure Role Based Access Control](azuredevops/azurerbac)
+[Azure Resource Group Tagging](azuredevops/azurergtag)
+[File content to Variable](azuredevops/filecontenttovariable)
+[PowerBI Actions](azuredevops/powerbiactions)
+[Publish PowerBI file](azuredevops/publishpowerbifile)
+[Publish Stream Analytics Transformation](azuredevops/publishstreamanalyticstransformation)
+[Version number counter](azuredevops/versioncounter)
 
-[More information](https://github.com/maikvandergaag/msft-vsts-extensions/wiki)
+### More Information
+[More information](https://github.com/maikvandergaag/msft-extensions/wiki)
 
-[Issues](https://github.com/maikvandergaag/msft-vsts-extensions/issues)
+### Issues
+[Issues](https://github.com/maikvandergaag/msft-extensions/issues)
 
 
-## Publish Stream Analytics Transformation
-Publish Stream Analytics Transformation is an extension to publish a stream analytics transformation / query to a stream analytics job.
-
-[Extension](extensions/publishstreamanalyticstransformation)
-
-[More information](https://github.com/maikvandergaag/msft-vsts-extensions/wiki)
-
-[Issues](https://github.com/maikvandergaag/msft-vsts-extensions/issues)
