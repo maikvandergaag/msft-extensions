@@ -19,19 +19,19 @@ In order to make this extension work a application should be created with access
 
 **Azure Active Directory Application**
 
-![Application](https://github.com/maikvandergaag/msft-vsts-extensions/raw/master/docs/images/application.png "Azure Active Directory Application")
+![Application](https://github.com/maikvandergaag/msft-extensions/raw/master/docs/images/application.png "Azure Active Directory Application")
 
 **Permissions**
 
-![Permissions](https://github.com/maikvandergaag/msft-vsts-extensions/raw/master/docs/images/permissions.png "Azure Active Directory Permissions")
+![Permissions](https://github.com/maikvandergaag/msft-extensions/raw/master/docs/images/permissions.png "Azure Active Directory Permissions")
 
 ## Documentation
 
-For the documentation check the [Wiki](https://github.com/MaikvanderGaag/msft-vsts-extensions/wiki).
+For the documentation check the [Wiki](https://github.com/MaikvanderGaag/msft-extensions/wiki).
 
 When you like the extension please leave a review. File a issues when you have suggestions or problems with the extension.
 
-[Issues](https://github.com/MaikvanderGaag/msft-vsts-extensions/issues)
+[Issues](https://github.com/MaikvanderGaag/msft-extensions/issues)
 
 ## Release Notes
 
@@ -40,3 +40,4 @@ When you like the extension please leave a review. File a issues when you have s
 | 1.0.0   | Initial version                     |
 | 1.2.0   | Fixed issues and some minor changes |
 | 1.2.4   | Extension discontinued use extension "PowerBI Actions" instead https://marketplace.visualstudio.com/items?itemName=maikvandergaag.maikvandergaag-power-bi-actions | 
+| 1.2.5   | Integrated in CI & CD for patching when nessary | 

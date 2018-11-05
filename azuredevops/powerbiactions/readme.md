@@ -19,19 +19,19 @@ In order to make this extension work a application should be created with access
 
 **Azure Active Directory Application**
 
-![Application](https://github.com/maikvandergaag/msft-vsts-extensions/raw/master/docs/images/application.png "Azure Active Directory Application")
+![Application](https://github.com/maikvandergaag/msft-extensions/raw/master/docs/images/application.png "Azure Active Directory Application")
 
 **Permissions**
 
-![Permissions](https://github.com/maikvandergaag/msft-vsts-extensions/raw/master/docs/images/permissions.png "Azure Active Directory Permissions")
+![Permissions](https://github.com/maikvandergaag/msft-extensions/raw/master/docs/images/permissions.png "Azure Active Directory Permissions")
 
 ## Documentation
 
-For the documentation check the [Wiki](https://github.com/MaikvanderGaag/msft-vsts-extensions/wiki).
+For the documentation check the [Wiki](https://github.com/MaikvanderGaag/msft-extensions/wiki).
 
 When you like the extension please leave a review. File a issues when you have suggestions or problems with the extension.
 
-[Issues](https://github.com/MaikvanderGaag/msft-vsts-extensions/issues)
+[Issues](https://github.com/MaikvanderGaag/msft-extensions/issues)
 
 ## Release Notes
 
@@ -41,4 +41,5 @@ When you like the extension please leave a review. File a issues when you have s
 | 1.2.0   | Fixed issues and some minor changes |
 | 2.0.0   | Added support for: - Groups that do not exists. - The 'me' workspace. - Updating datasets |
 | 2.0.2   | Updated tags |
-| 2.0.4   | Updated file reference |
+| 2.0.3   | Updated file reference |
+| 2.0.4   | Integration into CI & CD |

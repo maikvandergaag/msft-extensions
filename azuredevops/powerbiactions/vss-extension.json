@@ -12,17 +12,17 @@
   ],
   "repository": {
     "type": "git",
-    "uri": "https://github.com/MaikvanderGaag/msft-vsts-extensions/tree/master/extensions/powerbiactions"
+    "uri": "https://github.com/MaikvanderGaag/msft-extensions/tree/master/extensions/powerbiactions"
   },
   "links": {
     "getstarted": {
-      "uri": "https://github.com/MaikvanderGaag/msft-vsts-extensions/wiki"
+      "uri": "https://github.com/MaikvanderGaag/msft-extensions/wiki"
     },
     "repository": {
-      "uri": "https://github.com/MaikvanderGaag/msft-vsts-extensions/"
+      "uri": "https://github.com/MaikvanderGaag/msft-extensions/"
     },
     "issues": {
-      "uri": "https://github.com/MaikvanderGaag/msft-vsts-extensions/issues"
+      "uri": "https://github.com/MaikvanderGaag/msft-extensions/issues"
     }
   },
   "scope": [
@@ -39,7 +39,7 @@
     "pbix",
     "DirectQuery",
     "Dataset",
-    "3Fifty"
+    "3fifty"
   ],
   "content": {
     "license": {
