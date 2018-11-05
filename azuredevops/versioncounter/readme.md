@@ -30,3 +30,4 @@ Make sure the application that is performing the actions has the appropriate rig
 | Version | Remarks                             |  
 |---------|-------------------------------------|
 | 1.0.0   | Initial version                     |
+| 1.0.5   | Small changes and updated icon                     |
