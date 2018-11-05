@@ -13,11 +13,11 @@ Within the task two parameters can be specified:
 
 ## Documentation
 
-For the documentation check the [Wiki](https://github.com/MaikvanderGaag/msft-vsts-extensions/wiki).
+For the documentation check the [Wiki](https://github.com/MaikvanderGaag/msft-extensions/wiki).
 
 When you like the extension please leave a review. File a issues when you have suggestions or problems with the extension.
 
-[Issues](https://github.com/MaikvanderGaag/msft-vsts-extensions/issues)
+[Issues](https://github.com/MaikvanderGaag/msft-extensions/issues)
 
 ## Release Notes
 
@@ -27,4 +27,5 @@ When you like the extension please leave a review. File a issues when you have s
 | 1.0.0   | Initial version                                                  | 
 | 1.1.0   | Issue fixed where property StreamingUnit isn't recognized        |
 | 1.2.0   | Changes tagging and some minor changes                           | 
+| 1.2.1   | Integrated within CI & CD                           | 
 
