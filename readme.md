@@ -3,13 +3,13 @@ This repository will be used for posting several types of extensions. You can fi
 
 ## Azure DevOps Extensions
 
-[Azure Role Based Access Control](azuredevops/azurerbac)
-[Azure Resource Group Tagging](azuredevops/azurergtag)
-[File content to Variable](azuredevops/filecontenttovariable)
-[PowerBI Actions](azuredevops/powerbiactions)
-[Publish PowerBI file](azuredevops/publishpowerbifile)
-[Publish Stream Analytics Transformation](azuredevops/publishstreamanalyticstransformation)
-[Version number counter](azuredevops/versioncounter)
+* [Azure Role Based Access Control](azuredevops/azurerbac)
+* [Azure Resource Group Tagging](azuredevops/azurergtag)
+* [File content to Variable](azuredevops/filecontenttovariable)
+* [PowerBI Actions](azuredevops/powerbiactions)
+* [Publish PowerBI file](azuredevops/publishpowerbifile)
+* [Publish Stream Analytics Transformation](azuredevops/publishstreamanalyticstransformation)
+* [Version number counter](azuredevops/versioncounter)
 
 ## Build status
 |Extension|Status|
