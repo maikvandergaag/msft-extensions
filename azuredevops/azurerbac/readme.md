@@ -14,11 +14,11 @@ Within the task multiple parameters need to be specified:
 
 ## Documentation
 
-For the documentation check the [Wiki](https://github.com/MaikvanderGaag/msft-vsts-extensions/wiki).
+For the documentation check the [Wiki](https://github.com/MaikvanderGaag/msft-extensions/wiki).
 
 When you like the extension please leave a review. File a issues when you have suggestions or problems with the extension.
 
-[Issues](https://github.com/MaikvanderGaag/msft-vsts-extensions/issues)
+[Issues](https://github.com/MaikvanderGaag/msft-extensions/issues)
 
 ## Permissions
 
@@ -31,3 +31,4 @@ Make sure the application that is performing the actions has the appropriate rig
 | 1.0.0   | Initial version                     |
 | 1.2.0   | Fixed issues and some minor changes |
 | 1.2.1   | Added trimming support for added items |
+| 1.2.3   | Integration in a CI / CD pipeline |

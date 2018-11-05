@@ -1,6 +1,6 @@
 {
   "id": "84F23C57-8C65-4709-BC94-5CBD44E96A68",
-  "name": "azurerbas",
+  "name": "azurerbac",
   "friendlyName": "Azure Role Based Access Control",
   "description": "Task for managing Role Based Access assignments on a Resource Group",
   "author": "Maik van der Gaag",

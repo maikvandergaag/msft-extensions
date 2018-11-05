@@ -12,17 +12,17 @@
   ],
   "repository": {
     "type": "git",
-    "uri": "https://github.com/MaikvanderGaag/msft-vsts-extensions/tree/master/extensions/azurerbac"
+    "uri": "https://github.com/MaikvanderGaag/msft-extensions/tree/master/extensions/azurerbac"
   },
   "links": {
     "getstarted": {
-      "uri": "https://github.com/MaikvanderGaag/msft-vsts-extensions/wiki"
+      "uri": "https://github.com/MaikvanderGaag/msft-extensions/wiki"
     },
     "repository": {
-      "uri": "https://github.com/MaikvanderGaag/msft-vsts-extensions/"
+      "uri": "https://github.com/MaikvanderGaag/msft-extensions/"
     },
     "issues": {
-      "uri": "https://github.com/MaikvanderGaag/msft-vsts-extensions/issues"
+      "uri": "https://github.com/MaikvanderGaag/msft-extensions/issues"
     }
   },
   "scope": [
@@ -37,7 +37,7 @@
     "Build",
     "Access",
     "RBAC",
-    "3Fifty",
+    "3fifty",
     "Azure",
     "Resource Group"
   ],
