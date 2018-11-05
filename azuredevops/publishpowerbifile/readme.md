@@ -3,7 +3,7 @@ In order to get the same functionality with extra actions get the extension **Po
 
 * https://marketplace.visualstudio.com/items?itemName=maikvandergaag.maikvandergaag-power-bi-actions
 
-Publish PowerBI file is a Build and Release Task for wihtin your Build / Release pipeline.
+Publish PowerBI file is a Build and Release Task for within your Build / Release pipeline.
 
 With this tasks you can publish a PowerBI file or multiple files to a specific group within powerbi.com. 
 

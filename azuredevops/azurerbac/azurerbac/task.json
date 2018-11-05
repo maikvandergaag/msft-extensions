@@ -44,7 +44,10 @@
       "label": "Resource Group",
       "type": "pickList",
       "required": true,
-      "helpMarkDown": "Select the resource group for the assignments"
+      "helpMarkDown": "Select the resource group for the assignments",
+      "properties": {
+        "EditableOptions": "True"
+      }
     },
     {
       "name": "AzureRoleAssignments",
