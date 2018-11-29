@@ -1,8 +1,8 @@
 {
   "id": "D5B7FEC6-2B25-4742-905B-0DAD97687DF5",
   "name": "PowerBIActions",
-  "friendlyName": "PowerBI Actions",
-  "description": "Release Task PowerBI Actions",
+  "friendlyName": "Power BI Actions",
+  "description": "Release Task Power BI Actions",
   "author": "Maik van der Gaag",
   "helpMarkDown": "",
   "category": "Utility",
@@ -17,7 +17,7 @@
     "Patch": "3"
   },
   "minimumAgentVersion": "1.95.0",
-  "instanceNameFormat": "PowerBI Actions",
+  "instanceNameFormat": "Power BI Actions",
   "inputs": [
     {
       "name": "Username",
@@ -85,7 +85,7 @@
     {
       "name": "Overwrite",
       "type": "boolean",
-      "label": "Overwrite PowerBI File",
+      "label": "Overwrite Power BI File",
       "defaultValue": "true",
       "required": false,
       "helpMarkDown": "Should the dataset be overwritten?",
@@ -111,7 +111,7 @@
   ],
   "execution": {
     "PowerShell3": {
-      "target": "run-task.ps1"
+      "target": "run.ps1"
     }
   }
 }

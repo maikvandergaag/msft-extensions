@@ -1,47 +1,26 @@
- 
-Import-Module $PSScriptRoot\ps_modules\PowerBi -Force
+[CmdletBinding()]
+param()
 
-# Get VSTS input values
-$userName = ""
-$filePattern = "test.pbix"
-$passWord = ""
-$clientId = ""
-$groupName = "Sub Matters Experts 2"
-$overwrite = $true
-$create = $true
-$action = "Upload"
+#import powerbi module
+Import-Module $PSScriptRoot\ps_modules\PowerBI
 
-## Dataset update
-$connectionstring = "data source=MyAzureDB.database.windows.net;initial catalog=Sample2;persist security info=True;encrypt=True;trustservercertificate=Fals"
-
-#AADToken
-Write-Host "Getting AAD Token for user: $userName"
-$token = Get-AADToken -username $userName -Password $passWord -clientId $clientId -resource $resourceUrl -Verbose
-
-$groupsPath = ""
-if ($groupName -eq "me") {
-    $groupsPath = "/myorg"
-} else {
-        #Current groups
-    Write-Host "Getting PowerBI group properties; $groupName"
-    $group = Get-PowerBiGroup -GroupName $groupName -AccessToken $token -Verbose
-
-    if($create -And !$group){
-        $group = Create-WorkSpace -GroupName $groupname -AccessToken $token
-    }
-
-    $groupId = $group.Id
-
-    $groupsPath = "/myorg/groups/$groupId"
-}
-	
-if($action -eq "DirectQuery"){
-		Write-Host "Updating Dataset"
-		Update-ConnectionStringDirectQuery -GroupPath $groupsPath -AccessToken $token -DataSetName $dataset -ConnectionString $connectionstring
-	}
-	elseif($action -eq "Upload"){
- 		.\publishpowerbi.ps1
-	}
+try {
     
+    $userName = "nomulti@familie-vandergaag.nl"
+    $filePattern = "D:\test.pbix"
+    $passWord = ConvertTo-SecureString -String "Ch@rl0tte" -AsPlainText -Force
+    $clientId = "7b878115-55e1-48c5-bfb8-848dc07f9d1e"
+    $groupName = "Extension"
+    $overwrite = $true
+    $create = $true
+    $users = "maik@familie-vandergaag.nl,peter@familie-vandergaag.nl"
+    $accesRight = "Admin"
+    $dataset = "test"
+    $action = "DataRefresh"
+    $connectionstring = "data source=MyAzureDB.database.windows.net;initial catalog=Sample2;persist security info=True;encrypt=True;trustservercertificate=Fals"
 
-
+    .\run-task.ps1 -Username $userName -AccessRight $accesRight -Users $users -FilePattern $filePattern -Password $passWord -ClientId $clientId -WorkspaceName $groupName -Overwrite $overwrite -Connectionstring $connectionstring -Create $create -Dataset $dataset -Action $action
+}
+finally {
+    Write-Information "Done running the task"
+}
