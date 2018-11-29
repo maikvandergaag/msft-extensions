@@ -1,8 +1,5 @@
 [CmdletBinding()]
 param()
-
-# For more information on the VSTS Task SDK:
-# https://github.com/Microsoft/vsts-task-lib
 Trace-VstsEnteringInvocation $MyInvocation
 
 Import-Module $PSScriptRoot\ps_modules\PowerBi
@@ -19,8 +16,29 @@ try {
 	$create = Get-VstsInput -Name Create
 	$action= Get-VstsInput -Name Action -Require
 	$dataset = Get-VstsInput -Name Dataset
-	
-	#AADToken
+
+	Write-Output "FilePattern           : $($filePattern)";
+	Write-Output "ClientID         		: $($clientId)";
+	Write-Output "PassWord            	: $(if (![System.String]::IsNullOrWhiteSpace($passWord)) { '***'; } else { '<not present>'; })";
+	Write-Output "Username             	: $($username)";
+	Write-Output "GroupName             : $($groupName)";
+	Write-Output "Overwrite             : $($overwrite)";
+	Write-Output "Connectionstring      : $(if (![System.String]::IsNullOrWhiteSpace($connectionstring)) { '***'; } else { '<not present>'; })";
+	Write-Output "Create                : $($create)";
+	Write-Output "Action                : $($action)";
+	Write-Output "Dataset               : $($dataset)";
+
+	try {
+		# Force powershell to use TLS 1.2 for all communications.
+		[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor [System.Net.SecurityProtocolType]::Tls12 -bor [System.Net.SecurityProtocolType]::Tls11 -bor [System.Net.SecurityProtocolType]::Tls10;
+	}
+	catch {
+		Write-Warning $error
+	}
+
+
+
+ 	#AADToken
 	Write-Host "Getting AAD Token for user: $userName"
 	$token = Get-AADToken -username $userName -Password $passWord -clientId $clientId -resource $resourceUrl -Verbose
 

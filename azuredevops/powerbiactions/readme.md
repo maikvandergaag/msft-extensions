@@ -43,3 +43,4 @@ When you like the extension please leave a review. File a issues when you have s
 | 2.0.2   | Updated tags |
 | 2.0.3   | Updated file reference |
 | 2.0.4   | Integration into CI & CD |
+| 2.0.5   | Added TLS 1.2 support |
