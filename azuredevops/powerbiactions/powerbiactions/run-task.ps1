@@ -57,9 +57,6 @@ $token = Get-AADToken -username $UserName -Password $PassWord -clientId $ClientI
 if($Action -eq "Workspace"){
     Write-Host "Creating a new Workspace"
     New-PowerBIWorkSpace -WorkspaceName $WorkspaceName -AccessToken $token
-}elseif($Action -eq "SQL"){
-    Write-Host "Updating Dataset"
-    Update-ConnectionStringDirectQuery -WorkspaceName $WorkspaceName -Create $Create -AccessToken $token -DataSetName $Dataset -ConnectionString $Connectionstring
 }elseif($action -eq "Publish"){
     Write-Host "Publishing PowerBI FIle: $FilePattern, in workspace: $WorkspaceName with user: $Username"
     Publish-PowerBIFile -WorkspaceName $WorkspaceName -Create $Create -AccessToken $token -FilePattern $FilePattern
