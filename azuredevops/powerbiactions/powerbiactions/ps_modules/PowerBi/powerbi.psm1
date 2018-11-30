@@ -143,6 +143,70 @@ Function Get-PowerBIWorkspace{
     return $workspace
 }
 
+Function Update-PowerBIDatasetDatasources{
+    Param(
+        [parameter(Mandatory=$true)]$WorkspaceName,
+        [parameter(Mandatory=$true)]$AccessToken,
+        [parameter(Mandatory=$true)]$DatasetName,
+        [parameter(Mandatory=$true)]$DatasourceType,
+        [parameter(Mandatory=$false)]$OldServer,
+        [parameter(Mandatory=$false)]$NewServer,
+        [parameter(Mandatory=$false)]$OldDatabase,
+        [parameter(Mandatory=$false)]$NewDatase,
+        [parameter(Mandatory=$false)]$OldUrl,
+        [parameter(Mandatory=$false)]$NewUrl,
+
+    )
+
+    $groupPath = Get-PowerBIGroupPath -WorkspaceName $WorkspaceName -AccessToken $AccessToken
+    if($groupPath){
+        $dataset = Get-PowerBiDataSet -GroupPath $groupPath -AccessToken $AccessToken -Name $DatasetName
+
+        if($dataset){
+
+            $setId = $dataset.id
+            $url = $powerbiUrl + "$GroupPath/datasets/$setId/Default.UpdateDatasources"
+
+            if($DatasourceType -eq "OData" -OR $DatasourceType -eq "SharePointList" -OR $DatasourceType -eq "SharePointFolder"){
+                $body = "{ 
+                    'updateDetails': [{
+                        'datasourceSelector': {
+                            'datasourceType': '$DatasourceType',
+                            'connectionDetails': {
+                            'url': '$OldUrl'
+                            }
+                        },
+                        'connectionDetails': {
+                            'database': '$NewUrl'
+                        }
+                        }]
+                  }"
+            }else{
+            $body = "{ 
+                'updateDetails': [{
+                    'datasourceSelector': {
+                        'datasourceType': '$DatasourceType',
+                        'connectionDetails': {
+                        'server': '$OldServer',
+                        'database': '$OldDatabase'
+                        }
+                    },
+                    'connectionDetails': {
+                        'server': '$NewServer',
+                        'database': '$NewDatabase'
+                    }
+                    }]
+              }"
+            }
+            Invoke-API -Url $url -Method "Post" -AccessToken $AccessToken -Body $body -ContentType "application/json"
+        }else{
+            Write-Error "Dataset: $DatasetName could not be found"
+        }
+    }else{
+        Write-Error "Workspace: $WorkspaceName could not be found"
+    }
+}
+
 Function Update-ConnectionStringDirectQuery{
     Param(
         [parameter(Mandatory=$true)]$GroupPath,
