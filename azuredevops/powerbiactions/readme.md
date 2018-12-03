@@ -8,7 +8,7 @@ Within the task multiple parameters need to be specified:
 * Password: The password of the user that will publish the file. This value should be saved as a secured variable.
 * ClientId: The ClientId of the application that has access to the PowerBI API.
 * Overwrite: Checkbox for specifying if the PowerBI report should be overwritten.
-* GroupName: The groupname were the file should be published to. You can also use your own workspace (me)
+* GroupName: The groupname were the file should be published to. You can also use your own workspace (me).
 * Create: Create the group if it does not exist. 
 * Dataset: The name of the dataset to alter.
 * Connectionstring: The connection string to update in the dataset.
@@ -21,7 +21,7 @@ In order to make this extension work a application should be created with access
 
 For the documentation check the [Wiki](https://github.com/MaikvanderGaag/msft-extensions/wiki).
 
-When you like the extension please leave a review. File a issues when you have suggestions or problems with the extension.
+If you like the extension please leave a review. File an issue when you have suggestions or if you experience problems with the extension.
 
 [Issues](https://github.com/MaikvanderGaag/msft-extensions/issues)
 
