@@ -8,7 +8,7 @@ try {
     
     $userName = "nomulti@familie-vandergaag.nl"
     $filePattern = "D:\powerbi-analysys.pbix"
-    $passWord = 
+    $passWord = ""
     $clientId = "7b878115-55e1-48c5-bfb8-848dc07f9d1e"
     $groupName = "PowerBI"
     $overwrite = $true
