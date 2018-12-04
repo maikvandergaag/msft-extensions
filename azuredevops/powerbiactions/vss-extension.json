@@ -98,7 +98,7 @@
                   "inputDescriptors": [
                       {
                           "id": "username",
-                          "name": "i18n:Username",
+                          "name": "Username",
                           "description": "Specify a work or school account. Multi-Factor authentication can not be enabled on this account.",
                           "inputMode": "textbox",
                           "isConfidential": false,

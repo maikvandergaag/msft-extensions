@@ -12,9 +12,9 @@ try {
 	$serviceEndpoint = Get-VstsEndpoint -Name $connectedServiceName -Require
 
 	#connected service
-	$userName =  $serviceEndpoint.Auth.Parameters.UserName
+	$userName =  $serviceEndpoint.Auth.Parameters.Username
 	$passWord = $serviceEndpoint.Auth.Parameters.Password
-	$clientId = $serviceEndpoint.Auth.Parameters.Url
+	$clientId = $serviceEndpoint.Data.Parameters.ClientId
 
 	#parameters
 	$filePattern = Get-VstsInput -Name PowerBIPath
