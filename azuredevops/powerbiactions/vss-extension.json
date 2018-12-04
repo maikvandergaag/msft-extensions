@@ -72,33 +72,6 @@
       "properties": {
           "name": "PowerBI",
           "displayName": "Power BI",
-          "url": {
-              "displayName": "i18n:Server Url",
-              "value": "https://management.core.windows.net/",
-              "isVisible": "true",
-              "helpText": "",
-              "dependsOn": {
-                  "input": "environment",
-                  "map":  [
-                      {
-                          "key": "AzureCloud",
-                          "value": "https://management.core.windows.net/"
-                      },
-                      {
-                          "key": "AzureChinaCloud",
-                          "value": "https://management.core.chinacloudapi.cn/"
-                      },
-                      {
-                          "key": "AzureUSGovernment",
-                          "value": "https://management.core.usgovcloudapi.net/"
-                      },
-                      {
-                          "key": "AzureGermanCloud",
-                          "value": "https://management.core.cloudapi.de/ "
-                      }
-                  ]
-              }
-          },
           "inputDescriptors": [
               {
                   "id": "clientId",
@@ -116,12 +89,12 @@
           "authenticationSchemes": [
               {
                   "type": "ms.vss-endpoint.endpoint-auth-scheme-basic",
-                  "displayName": "i18n:Credentials",
+                  "displayName": "Credentials",
                   "inputDescriptors": [
                       {
                           "id": "username",
                           "name": "i18n:Username",
-                          "description": "i18n:Specify a work or school account (for example <b>@fabrikam.com</b>). Microsoft accounts (for example <b>@live</b> or <b>@hotmail</b>) are not supported. Not recommended if Multi-Factored Authentication is enabled.",
+                          "description": "Specify a work or school account. Multi-Factor authentication can not be enabled on this account.",
                           "inputMode": "textbox",
                           "isConfidential": false,
                           "validation": {
@@ -134,7 +107,7 @@
               }
           ],
           "helpMarkDown": "",
-          "icon": "icons/icon.png"
+          "icon": "icon.png"
       }
   }
   ],
