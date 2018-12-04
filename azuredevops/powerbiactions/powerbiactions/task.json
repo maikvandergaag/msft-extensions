@@ -121,7 +121,7 @@
       "defaultValue": "",
       "required": true,
       "helpMarkDown": "The name the old server",
-      "visibleRule": "Action = UpdateDatasource && DatasourceType = SQL || DatasourceType = AnalysisServices"
+      "visibleRule": "DatasourceType = SQL || DatasourceType = AnalysisServices"
     },
     {
       "name": "NewServer",
@@ -130,7 +130,7 @@
       "defaultValue": "",
       "required": true,
       "helpMarkDown": "The name the new server",
-      "visibleRule": "Action = UpdateDatasource && DatasourceType = SQL || DatasourceType = AnalysisServices"
+      "visibleRule": "DatasourceType = SQL || DatasourceType = AnalysisServices"
     },
     {
       "name": "OldDatabase",
@@ -139,7 +139,7 @@
       "defaultValue": "",
       "required": true,
       "helpMarkDown": "The old database the new server",
-      "visibleRule": "Action = UpdateDatasource && DatasourceType = SQL || DatasourceType = AnalysisServices"
+      "visibleRule": "DatasourceType = SQL || DatasourceType = AnalysisServices"
     },
     {
       "name": "NewDatabase",
@@ -148,7 +148,7 @@
       "defaultValue": "",
       "required": true,
       "helpMarkDown": "The new database",
-      "visibleRule": "Action = UpdateDatasource && DatasourceType = SQL || DatasourceType = AnalysisServices"
+      "visibleRule": "DatasourceType = SQL || DatasourceType = AnalysisServices"
     },
     {
       "name": "OldUrl",
@@ -157,7 +157,7 @@
       "defaultValue": "",
       "required": true,
       "helpMarkDown": "The old url",
-      "visibleRule": "Action = UpdateDatasource && DatasourceType = SharePointList || DatasourceType = OData"
+      "visibleRule": "DatasourceType = SharePointList || DatasourceType = OData"
     },
     {
       "name": "NewUrl",
@@ -166,7 +166,7 @@
       "defaultValue": "",
       "required": true,
       "helpMarkDown": "The new url to the source",
-      "visibleRule": "Action = UpdateDatasource && DatasourceType = SharePointList || DatasourceType = OData"
+      "visibleRule": "DatasourceType = SharePointList || DatasourceType = OData"
     }
   ],
   "execution": {
