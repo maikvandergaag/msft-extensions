@@ -31,8 +31,8 @@ try {
 	#parameters
 	$filePattern = Get-VstsInput -Name PowerBIPath
 	$workspaceName = Get-VstsInput -Name WorkspaceName
-	$overwrite = Get-VstsInput -Name OverWrite
-	$create = Get-VstsInput -Name Create
+	$overwrite = Get-VstsInput -Name OverWrite -AsBool
+	$create = Get-VstsInput -Name Create -AsBool
 	$action= Get-VstsInput -Name Action -Require
 	$dataset = Get-VstsInput -Name Dataset
 	$oldUrl = Get-VstsInput -Name OldUrl
@@ -44,6 +44,8 @@ try {
 	$accesRight = "Admin"
 	$users = Get-VstsInput -Name -Users
 	$datasourceType = Get-VstsInput -Name DatasourceType
+
+
 
 	#.\run-task.ps1 -Username $userName -FilePattern $filePattern -Password $passWord -ClientId $clientId -GroupName $groupName -Overwrite $overwrite -Connectionstring $connectionstring -Create $create -Dataset $dataset -Action $action
 	.\run-task.ps1 -Username $userName -OldUrl $oldUrl -NewUrl $newUrl -OldServer $oldServer -DatasourceType $datasourceType -NewServer $newServer -OldDatabase $oldDatabase -NewDatabase $newDatabase -AccessRight $accesRight -Users $users -FilePattern $filePattern -Password $passWord -ClientId $clientId -WorkspaceName $workspaceName -Overwrite $overwrite -Create $create -Dataset $dataset -Action $action
