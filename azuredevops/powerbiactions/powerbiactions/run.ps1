@@ -12,9 +12,9 @@ try {
 	$serviceEndpoint = Get-VstsEndpoint -Name $connectedServiceName -Require
 
 	#connected service
-	$userName =  $serviceEndpoint.Auth.Parameters.Username
-	$passWord = $serviceEndpoint.Auth.Parameters.Password
-	$clientId = $serviceEndpoint.Data.Parameters.ClientId
+	$userName =  $serviceEndpoint.Auth.Parameters.username
+	$passWord = $serviceEndpoint.Auth.Parameters.password
+	$clientId = $serviceEndpoint.Data.clientId
 
 	$json = ConvertTo-Json $serviceEndpoint
 	Write-Host $json

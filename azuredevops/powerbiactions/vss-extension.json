@@ -51,7 +51,7 @@
     }
   },
   "icons": {
-    "default": "icon.png"
+    "default": "icons/icon.png"
   },
   "contributions": [
     {
@@ -112,7 +112,7 @@
               }
           ],
           "helpMarkDown": "",
-          "icon": "icon.png"
+          "icon": "icons/connection-icon.png"
       }
   }
   ],
@@ -127,7 +127,10 @@
       "path": "powerbiactions/task.json"
     },
     {
-      "path": "powerbiactions/icon.png"
+      "path": "powerbiactions/icons/connection-icon.png"
+    },
+    {
+      "path": "powerbiactions/icons/icon.png"
     },
     {
       "path": "powerbiactions/ps_modules/vststasksdk"
