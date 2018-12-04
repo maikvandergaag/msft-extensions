@@ -154,8 +154,7 @@ Function Update-PowerBIDatasetDatasources{
         [parameter(Mandatory=$false)]$OldDatabase,
         [parameter(Mandatory=$false)]$NewDatase,
         [parameter(Mandatory=$false)]$OldUrl,
-        [parameter(Mandatory=$false)]$NewUrl,
-
+        [parameter(Mandatory=$false)]$NewUrl
     )
 
     $groupPath = Get-PowerBIGroupPath -WorkspaceName $WorkspaceName -AccessToken $AccessToken
