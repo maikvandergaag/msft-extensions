@@ -17,7 +17,7 @@
     "Patch": "3"
   },
   "minimumAgentVersion": "1.95.0",
-  "instanceNameFormat": "Power BI Actions",
+  "instanceNameFormat": "Power BI Action: $(Action)",
   "inputs": [
     {
       "name": "connectedServiceName",
