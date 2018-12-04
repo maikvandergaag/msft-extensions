@@ -24,7 +24,7 @@
       "aliases": [
           "serviceConnection"
       ],
-      "type": "connectedService:Generic",
+      "type": "connectedService:PowerBI",
       "label": "Generic service connection",
       "defaultValue": "",
       "required": "true",

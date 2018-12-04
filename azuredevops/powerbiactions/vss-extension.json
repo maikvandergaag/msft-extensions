@@ -63,7 +63,80 @@
       "properties": {
         "name": "PowerBIActions"
       }
-    }
+    },
+    {
+      "id": "powerbi-endpoint-type",
+      "description": "Power BI Service Endpoint",
+      "type": "ms.vss-endpoint.service-endpoint-type",
+      "targets": [ "ms.vss-endpoint.endpoint-types" ],
+      "properties": {
+          "name": "PowerBI",
+          "displayName": "Power BI",
+          "url": {
+              "displayName": "i18n:Server Url",
+              "value": "https://management.core.windows.net/",
+              "isVisible": "true",
+              "helpText": "",
+              "dependsOn": {
+                  "input": "environment",
+                  "map":  [
+                      {
+                          "key": "AzureCloud",
+                          "value": "https://management.core.windows.net/"
+                      },
+                      {
+                          "key": "AzureChinaCloud",
+                          "value": "https://management.core.chinacloudapi.cn/"
+                      },
+                      {
+                          "key": "AzureUSGovernment",
+                          "value": "https://management.core.usgovcloudapi.net/"
+                      },
+                      {
+                          "key": "AzureGermanCloud",
+                          "value": "https://management.core.cloudapi.de/ "
+                      }
+                  ]
+              }
+          },
+          "inputDescriptors": [
+              {
+                  "id": "clientId",
+                  "name": "ClientId",
+                  "description": "The client id of the native application",
+                  "inputMode": "textbox",
+                  "isConfidential": false,
+                  "validation": {
+                      "isRequired": false,
+                      "dataType": "string",
+                      "maxLength": 300
+                  }
+              }
+          ],
+          "authenticationSchemes": [
+              {
+                  "type": "ms.vss-endpoint.endpoint-auth-scheme-basic",
+                  "displayName": "i18n:Credentials",
+                  "inputDescriptors": [
+                      {
+                          "id": "username",
+                          "name": "i18n:Username",
+                          "description": "i18n:Specify a work or school account (for example <b>@fabrikam.com</b>). Microsoft accounts (for example <b>@live</b> or <b>@hotmail</b>) are not supported. Not recommended if Multi-Factored Authentication is enabled.",
+                          "inputMode": "textbox",
+                          "isConfidential": false,
+                          "validation": {
+                              "isRequired": true,
+                              "dataType": "string",
+                              "maxLength": 300
+                          }
+                      }
+                  ]
+              }
+          ],
+          "helpMarkDown": "",
+          "icon": "icons/icon.png"
+      }
+  }
   ],
   "files": [
     {
