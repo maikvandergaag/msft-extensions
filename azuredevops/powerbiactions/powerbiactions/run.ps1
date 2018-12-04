@@ -16,6 +16,15 @@ try {
 	$passWord = $serviceEndpoint.Auth.Parameters.Password
 	$clientId = $serviceEndpoint.Data.Parameters.ClientId
 
+	Write-Host "******************************"
+	Write-Host "** Service Connection: $($connectedServiceName)"
+	Write-Host "** Username: $($userName)"
+	Write-Host "** Password: $($passWord)"
+	Write-Host "** ClientId: $($clientId)"
+	Write-Host "******************************"
+
+	$passWord = ConvertTo-SecureString $passWord -AsPlainText -Force
+
 	#parameters
 	$filePattern = Get-VstsInput -Name PowerBIPath
 	$workspaceName = Get-VstsInput -Name WorkspaceName
