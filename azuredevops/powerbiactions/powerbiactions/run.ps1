@@ -16,6 +16,9 @@ try {
 	$passWord = $serviceEndpoint.Auth.Parameters.Password
 	$clientId = $serviceEndpoint.Data.Parameters.ClientId
 
+	$json = ConvertTo-Json $serviceEndpoint
+	Write-Host $json
+
 	Write-Host "******************************"
 	Write-Host "** Service Connection: $($connectedServiceName)"
 	Write-Host "** Username: $($userName)"
