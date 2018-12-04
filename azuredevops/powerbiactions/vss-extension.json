@@ -127,10 +127,13 @@
       "path": "powerbiactions/task.json"
     },
     {
-      "path": "powerbiactions/icons/connection-icon.png"
+      "path": "icons/icon.png"
     },
     {
-      "path": "powerbiactions/icons/icon.png"
+      "path": "icons/connection-icon.png"
+    },
+    {
+      "path": "powerbiactions/icon.png"
     },
     {
       "path": "powerbiactions/ps_modules/vststasksdk"
