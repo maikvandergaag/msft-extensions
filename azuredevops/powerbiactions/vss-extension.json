@@ -67,7 +67,7 @@
   ],
   "files": [
     {
-      "path": "powerbiactions/publishpowerbi.ps1"
+      "path": "powerbiactions/run.ps1"
     },
     {
       "path": "powerbiactions/run-task.ps1"
