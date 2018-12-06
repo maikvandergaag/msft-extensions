@@ -34,7 +34,7 @@ try {
 	$overwrite = Get-VstsInput -Name OverWrite -AsBool
 	$create = Get-VstsInput -Name Create -AsBool
 	$action= Get-VstsInput -Name Action -Require
-	$dataset = Get-VstsInput -Name Dataset
+	$dataset = Get-VstsInput -Name DatasetName
 	$oldUrl = Get-VstsInput -Name OldUrl
 	$newUrl = Get-VstsInput -Name NewUrl
 	$oldServer = Get-VstsInput -Name OldServer
