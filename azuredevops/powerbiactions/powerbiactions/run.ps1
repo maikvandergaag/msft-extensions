@@ -40,7 +40,7 @@ try {
 	$oldServer = Get-VstsInput -Name OldServer
 	$newServer = Get-VstsInput -Name NewServer
 	$oldDatabase = Get-VstsInput -Name OldDatabase
-	$newDatabase = Get-VstsInput -Name -NewDatabase
+	$newDatabase = Get-VstsInput -Name NewDatabase
 	$accesRight = "Admin"
 	$users = Get-VstsInput -Name Users
 	$datasourceType = Get-VstsInput -Name DatasourceType
