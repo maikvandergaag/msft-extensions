@@ -7,21 +7,21 @@ Import-Module $PSScriptRoot\ps_modules\PowerBI
 try {
     
     $userName = "nomulti@familie-vandergaag.nl"
-    $filePattern = "D:\powerbi-analysys.pbix"
-    $passWord = ""
+    $filePattern = "D:\powerbi.pbix"
+    $passWord = ConvertTo-SecureString -String "Ch@rl0tte" -AsPlainText -Force
     $clientId = "7b878115-55e1-48c5-bfb8-848dc07f9d1e"
-    $groupName = "PowerBI"
-    $overwrite = $true
+    $groupName = "VSTS"
+    $overwrite = $false
     $create = $true
-    $users = "maik@familie-vandergaag.nl,peter@familie-vandergaag.nl"
-    $accesRight = "Admin"
-    $dataset = "PowerBI"
-    $action = "UpdateDatasource"
-    $oldServer = "powerbisql55.database.windows.net"
-    $newServer = "powerbisql55.database.windows.net"
-    $oldDatabase = "sql01"
-    $newDatabase = "sql02"
-    $datasourceType = "Sql"
+    $users = ""
+    $accesRight = ""
+    $dataset = ""
+    $action = "Publish"
+    $oldServer = ""
+    $newServer = ""
+    $oldDatabase = ""
+    $newDatabase = ""
+    $datasourceType = ""
     $oldUrl = ""
     $newUrl =""
 

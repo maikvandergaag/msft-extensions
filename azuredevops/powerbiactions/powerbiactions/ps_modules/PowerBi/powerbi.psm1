@@ -387,6 +387,7 @@ Function Publish-PowerBIFile{
         [parameter(Mandatory=$true)]$WorkspaceName,
         [parameter(Mandatory=$true)]$FilePattern,
         [parameter()][bool]$Create = $false,
+        [parameter()][bool]$Overwrite = $false,
         [parameter(Mandatory=$true)]$AccessToken
     )
 
@@ -405,19 +406,25 @@ Function Publish-PowerBIFile{
         Write-Host "Checking for existing Reports with the name: $fileNamewithoutextension"
     
         $report = Get-PowerBIReport -GroupPath $GroupPath -AccessToken $AccessToken -ReportName $fileNamewithoutextension -Verbose
-     
+        
+        $publish = $true
         $nameConflict = "Abort"
         if($report){
             Write-Verbose "Reports exisits"
-            if($overwrite){
+            if($Overwrite){
                 Write-Verbose "Reports exisits and needs to be overwritten"
                 $nameConflict = "Overwrite"
+            }else{
+                $publish = $false
+                Write-Warning "Report already exists"
             }
         }
        
-        #Import PowerBi file
-        Write-Host "Importing PowerBI File"
-        Import-PowerBiFile -GroupPath $GroupPath -AccessToken $AccessToken -Path $FilePath -Conflict $nameConflict -Verbose
+        if($publish){
+            #Import PowerBi file
+            Write-Host "Importing PowerBI File"
+            Import-PowerBiFile -GroupPath $GroupPath -AccessToken $AccessToken -Path $FilePath -Conflict $nameConflict -Verbose
+        }
     }
 }
 

@@ -35,7 +35,6 @@ Write-Output "PassWord            	: $(if (![System.String]::IsNullOrWhiteSpace(
 Write-Output "Username             	: $($Username)";
 Write-Output "WorkspaceName         : $($WorkspaceName)";
 Write-Output "Overwrite             : $($Overwrite)";
-Write-Output "Connectionstring      : $(if (![System.String]::IsNullOrWhiteSpace($Connectionstring)) { '***'; } else { '<not present>'; })";
 Write-Output "Create                : $($Create)";
 Write-Output "Action                : $($Action)";
 Write-Output "Dataset               : $($Dataset)";
@@ -59,7 +58,7 @@ if($Action -eq "Workspace"){
     New-PowerBIWorkSpace -WorkspaceName $WorkspaceName -AccessToken $token
 }elseif($action -eq "Publish"){
     Write-Host "Publishing PowerBI FIle: $FilePattern, in workspace: $WorkspaceName with user: $Username"
-    Publish-PowerBIFile -WorkspaceName $WorkspaceName -Create $Create -AccessToken $token -FilePattern $FilePattern
+    Publish-PowerBIFile -WorkspaceName $WorkspaceName -Create $Create -AccessToken $token -FilePattern $FilePattern -Overwrite $Overwrite
 }elseif($Action -eq "DeleteWorkspace"){
     Write-Host "Deleting a Workspace"
     Remove-PowerBIWorkSpace -WorkspaceName $WorkspaceName -AccessToken $token
