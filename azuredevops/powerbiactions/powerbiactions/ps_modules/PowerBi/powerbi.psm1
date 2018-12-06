@@ -152,7 +152,7 @@ Function Update-PowerBIDatasetDatasources{
         [parameter(Mandatory=$false)]$OldServer,
         [parameter(Mandatory=$false)]$NewServer,
         [parameter(Mandatory=$false)]$OldDatabase,
-        [parameter(Mandatory=$false)]$NewDatase,
+        [parameter(Mandatory=$false)]$NewDatabase,
         [parameter(Mandatory=$false)]$OldUrl,
         [parameter(Mandatory=$false)]$NewUrl
     )
