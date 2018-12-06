@@ -30,7 +30,7 @@
   ],
   "description": "Build and Release Management tasks for PowerBI.",
   "categories": [
-    "Build and release"
+    "Azure Pipelines"
   ],
   "tags": [
     "Release",
