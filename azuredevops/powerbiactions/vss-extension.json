@@ -2,7 +2,7 @@
   "manifestVersion": 1,
   "id": "maikvandergaag-power-bi-actions",
   "name": "Power BI Actions",
-  "version": "2.0.3",
+  "version": "3.0.0",
   "publisher": "maikvandergaag",
   "public": true,
   "targets": [
