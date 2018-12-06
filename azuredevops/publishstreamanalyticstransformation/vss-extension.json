@@ -30,7 +30,7 @@
   ],
   "description": "Build and Release Management tasks for publishing a Stream Analytics Transformation.",
   "categories": [
-    "Build and release"
+    "Azure Pipelines"
   ],
   "tags": [
     "Release",

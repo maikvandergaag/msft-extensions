@@ -30,7 +30,7 @@
   ],
   "description": "Build and Release Management tasks for setting variables to specific file content.",
   "categories": [
-    "Build and release"
+    "Azure Pipelines"
   ],
   "tags": [
     "Release",

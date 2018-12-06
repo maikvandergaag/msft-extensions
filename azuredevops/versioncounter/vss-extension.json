@@ -30,7 +30,7 @@
   ],
   "description": "Build and Release task for a version number counter",
   "categories": [
-    "Build and release"
+    "Azure Pipelines"
   ],
   "tags": [
     "Build",
