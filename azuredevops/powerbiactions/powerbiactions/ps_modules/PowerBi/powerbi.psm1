@@ -69,23 +69,22 @@ Function Invoke-API{
 			{
                 $streamReader = [System.IO.StreamReader]::new($_.Exception.Response.GetResponseStream())
                 $errorContent = $streamReader.ReadToEnd() | ConvertFrom-Json
-                $errorMessage = $errorContent | ConvertTo-Json
-                $message = "$($ex.Message) - '$($errorMessage)'"
                 
                 if($errorContent.error.code -eq "AddingAlreadyExistsGroupUserNotSupportedError"){
                     $existUser = $true
                 }
 			}
-			else {
-				$message = "$($ex.Message) - 'Empty'"
-			}
 
             if($existUser){
                 Write-Warning "User already exists. Updating an existing user is not supported"
             }else{
-                Write-Error -Exception $ex -Message $message
+                $message = $errorContent.error.message
+                if($message){
+                    Write-Error $message
+                }else{
+                    Write-Error -Exception $ex
+                }               
             }
-            
 		}
 		catch
 		{

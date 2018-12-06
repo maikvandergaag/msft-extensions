@@ -7,16 +7,16 @@ Import-Module $PSScriptRoot\ps_modules\PowerBI
 try {
     
     $userName = "nomulti@familie-vandergaag.nl"
-    $filePattern = "D:\powerbi.pbix"
+    $filePattern = ""
     $passWord = 
     $clientId = "7b878115-55e1-48c5-bfb8-848dc07f9d1e"
-    $groupName = "VSTS2"
+    $groupName = "PowerBI"
     $overwrite = $true
     $create = $true
     $users = ""
     $accesRight = ""
     $dataset = "powerbi"
-    $action = "UpdateDatasource"
+    $action = "DataRefresh"
     $oldServer = "powerbisql55.database.windows.net"
     $newServer = "powerbisql55.database.windows.net"
     $oldDatabase = "sql01"
