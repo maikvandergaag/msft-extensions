@@ -51,7 +51,7 @@
     }
   },
   "icons": {
-    "default": "icons/icon.png"
+    "default": "icon.png"
   },
   "contributions": [
     {
@@ -112,7 +112,7 @@
               }
           ],
           "helpMarkDown": "",
-          "icon": "icons/connection-icon.png"
+          "icon": "connection-icon.png"
       }
   }
   ],
@@ -127,10 +127,13 @@
       "path": "powerbiactions/task.json"
     },
     {
-      "path": "icons/icon.png"
+      "path": "icon.png"
     },
     {
-      "path": "icons/connection-icon.png"
+      "path": "connection-icon.png"
+    },
+    {
+      "path": "images/serviceconnection.png"
     },
     {
       "path": "powerbiactions/icon.png"
