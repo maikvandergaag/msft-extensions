@@ -42,7 +42,7 @@ try {
 	$oldDatabase = Get-VstsInput -Name OldDatabase
 	$newDatabase = Get-VstsInput -Name -NewDatabase
 	$accesRight = "Admin"
-	$users = Get-VstsInput -Name -Users
+	$users = Get-VstsInput -Name Users
 	$datasourceType = Get-VstsInput -Name DatasourceType
 
 

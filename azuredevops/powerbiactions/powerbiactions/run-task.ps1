@@ -64,8 +64,13 @@ if($Action -eq "Workspace"){
     Remove-PowerBIWorkSpace -WorkspaceName $WorkspaceName -AccessToken $token
 }elseif($Action -eq "AddUsers"){
     Write-Host "Adding users to a Workspace"
-    $users = $UserString.Split(",")
-    Add-PowerBIWorkspaceUsers -WorkspaceName $WorkspaceName -Users $users -AccessToken $token -AccessRight $AccessRight -Create $Create
+
+    if($UserString -eq ""){
+        Write-Warning "No users inserted in the variable!"
+    }else{
+        $users = $UserString.Split(",")
+        Add-PowerBIWorkspaceUsers -WorkspaceName $WorkspaceName -Users $users -AccessToken $token -AccessRight $AccessRight -Create $Create
+    }
 }elseif($Action -eq "DataRefresh"){
     Write-Host "Trying to refresh Dataset"
     New-DatasetRefresh -WorkspaceName $WorkspaceName -DataSetName $Dataset -AccessToken $token
