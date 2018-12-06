@@ -25,7 +25,7 @@
           "serviceConnection"
       ],
       "type": "connectedService:PowerBI",
-      "label": "Generic service connection",
+      "label": "Power BI service connection",
       "defaultValue": "",
       "required": "true",
       "helpMarkDown": "Select a generic service connection that should be used to pick the URL and construct authorization header for the http request."
