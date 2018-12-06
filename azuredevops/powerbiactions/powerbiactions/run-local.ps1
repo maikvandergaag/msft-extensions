@@ -21,7 +21,7 @@ try {
     $newServer = "powerbisql55.database.windows.net"
     $oldDatabase = "sql01"
     $newDatabase = "sql02"
-    $datasourceType = ""
+    $datasourceType = "Sql"
     $oldUrl = ""
     $newUrl =""
 
