@@ -4,31 +4,16 @@
   "name": "Power BI Actions",
   "version": "3.0.0",
   "publisher": "maikvandergaag",
+  "description": "Build and Release Management tasks for PowerBI.",
   "public": true,
   "targets": [
     {
       "id": "Microsoft.VisualStudio.Services"
     }
   ],
-  "repository": {
-    "type": "git",
-    "uri": "https://github.com/MaikvanderGaag/msft-extensions/tree/master/extensions/powerbiactions"
+  "icons": {
+    "default": "images/service-logo.png"
   },
-  "links": {
-    "getstarted": {
-      "uri": "https://github.com/MaikvanderGaag/msft-extensions/wiki"
-    },
-    "repository": {
-      "uri": "https://github.com/MaikvanderGaag/msft-extensions/"
-    },
-    "issues": {
-      "uri": "https://github.com/MaikvanderGaag/msft-extensions/issues"
-    }
-  },
-  "scope": [
-    "vso.build"
-  ],
-  "description": "Build and Release Management tasks for PowerBI.",
   "categories": [
     "Azure Pipelines"
   ],
@@ -42,16 +27,40 @@
     "Dataset",
     "3fifty"
   ],
+  "screenshots": [
+    {
+        "path": "images/screenshot-1.png"
+    },
+    {
+        "path": "images/screenshot-2.png"
+    }
+  ],
   "content": {
     "license": {
-      "path": "license.txt"
+      "path": "license.md"
     },
     "details": {
       "path": "readme.md"
     }
   },
-  "icons": {
-    "default": "icon.png"
+  "links": {
+    "getstarted": {
+      "uri": "https://github.com/MaikvanderGaag/msft-extensions/wiki"
+    },
+    "repository": {
+      "uri": "https://github.com/MaikvanderGaag/msft-extensions/"
+    },
+    "issues": {
+      "uri": "https://github.com/MaikvanderGaag/msft-extensions/issues"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "uri": "https://github.com/MaikvanderGaag/msft-extensions/tree/master/extensions/powerbiactions"
+  },
+  "branding": {
+    "color": "rgb(0, 171, 236)",
+    "theme": "light"
   },
   "contributions": [
     {
@@ -118,34 +127,7 @@
   ],
   "files": [
     {
-      "path": "powerbiactions/run.ps1"
-    },
-    {
-      "path": "powerbiactions/run-task.ps1"
-    },
-    {
-      "path": "powerbiactions/task.json"
-    },
-    {
-      "path": "icon.png"
-    },
-    {
-      "path": "connection-icon.png"
-    },
-    {
-      "path": "powerbiactions/icon.png"
-    },
-    {
-      "path": "powerbiactions/ps_modules/vststasksdk"
-    },
-    {
-      "path": "powerbiactions/ps_modules/PowerBi"
-    },
-    {
-      "path": "powerbiactions/ps_modules/PowerBi/Microsoft.IdentityModel.Clients.ActiveDirectory.dll"
-    },
-    {
-      "path": "powerbiactions/ps_modules/PowerBi/Microsoft.IdentityModel.Clients.ActiveDirectory.WindowsForms.dll"
+      "path": "powerbiactions"
     }
   ]
 }
