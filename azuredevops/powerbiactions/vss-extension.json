@@ -12,7 +12,7 @@
     }
   ],
   "icons": {
-    "default": "images/service-logo.png"
+    "default": "images/icon.png"
   },
   "categories": [
     "Azure Pipelines"
@@ -121,7 +121,7 @@
               }
           ],
           "helpMarkDown": "",
-          "icon": "connection-icon.png"
+          "icon": "images/connection-icon.png"
       }
   }
   ],
