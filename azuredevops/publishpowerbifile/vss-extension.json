@@ -30,7 +30,7 @@
   ],
   "description": "Build and Release Management tasks publishing a PowerBI (pbix) file to PowerBI.",
   "categories": [
-    "Build and release"
+    "Azure Pipelines"
   ],
   "tags": [
     "Release",

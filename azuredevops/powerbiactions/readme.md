@@ -54,6 +54,7 @@ If you like the extension, please leave a review. File an issue when you have su
 | 2.0.3   | Updated file reference |
 | 2.0.4   | Integration into CI & CD |
 | 2.0.5   | Added TLS 1.2 support |
-| 3.0.0   | Added several new actions and updated the authentication to a Service Connection|
+| 3.0.8   | Added several new actions and updated the authentication to a Service Connection|
+
 
 [serviceconnection]: https://github.com/maikvandergaag/msft-extensions/raw/master/docs/images/serviceconnection.png "Power BI Service Connection"
