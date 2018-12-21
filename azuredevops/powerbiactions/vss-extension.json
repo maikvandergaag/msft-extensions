@@ -94,7 +94,7 @@
                   "inputMode": "textbox",
                   "isConfidential": false,
                   "validation": {
-                      "isRequired": false,
+                      "isRequired": true,
                       "dataType": "string",
                       "maxLength": 300
                   }
