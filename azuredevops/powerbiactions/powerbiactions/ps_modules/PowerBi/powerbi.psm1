@@ -197,8 +197,6 @@ Function Update-PowerBIDatasetDatasources{
               }"
             }
 
-            Write-Host $body
-
             Invoke-API -Url $url -Method "Post" -AccessToken $AccessToken -Body $body -ContentType "application/json"
         }else{
             Write-Error "Dataset: $DatasetName could not be found"
