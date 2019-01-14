@@ -26,10 +26,10 @@
   ],
   "screenshots": [
     {
-        "path": "images/screenshot-1.png"
+      "path": "images/screenshot-1.png"
     },
     {
-        "path": "images/screenshot-2.png"
+      "path": "images/screenshot-2.png"
     }
   ],
   "content": {
@@ -71,68 +71,56 @@
       }
     },
     {
-      "id": "azuredevops-endpoint-type",
-      "description": "Azure DevOps Service Endpoint",
+      "id": "vstsTfsApi-endpoint-type",
+      "description": "Service Endpoint type for vsts/tfs api connection",
       "type": "ms.vss-endpoint.service-endpoint-type",
-      "targets": [ "ms.vss-endpoint.endpoint-types" ],
+      "targets": [
+        "ms.vss-endpoint.endpoint-types"
+      ],
       "properties": {
-          "name": "AzureDevOpsOrganization",
-          "displayName": "Azure DevOps Organization",
-          "url": {
-            "displayName": "Azure DevOps Url",
-            "value": "https://dev.azure.com/",
-            "isVisible": "false"
+        "name": "vstsTfsApi",
+        "displayName": "Azure DevOps Api Access",
+        "url": {
+          "displayName": "Organization Url"
+        },
+        "dataSources": [
+          {
+            "name": "projects",
+            "endpointUrl": "{{endpoint.url}}/_apis/projects?api-version=1.0",
+            "resultSelector": "jsonpath:$.value[?(@.state=='wellFormed')]"
           },
-          "inputDescriptors": [
-            {
-                "id": "OrganizationName",
-                "name": "Azure DevOps Organization",
-                "description": "The name of the Azure DevOps Organization",
-                "inputMode": "textbox",
-                "isConfidential": false,
-                "validation": {
-                    "isRequired": true,
-                    "dataType": "string",
-                    "maxLength": 300
-                }
-            }
+          {
+            "name": "buildDefinitions",
+            "endpointUrl": "{{endpoint.url}}/{{project}}/_apis/build/definitions?api-version=2.0",
+            "resultSelector": "jsonpath:$.value[?(@.quality=='definition')]"
+          }
         ],
         "authenticationSchemes": [
-            {
-                "type": "ms.vss-endpoint.endpoint-auth-scheme-basic",
-                "displayName": "Credentials",
-                "inputDescriptors": [
-                    {
-                        "id": "username",
-                        "name": "Username",
-                        "description": "Specify the account of the user used for the actions.",
-                        "inputMode": "textbox",
-                        "isConfidential": false,
-                        "validation": {
-                            "isRequired": true,
-                            "dataType": "string",
-                            "maxLength": 300
-                        }
-                    },
-                    {
-                      "id": "password",
-                      "name": "Personal Access Token",
-                      "description": "",
-                      "inputMode": "textbox",
-                      "isConfidential": true,
-                      "validation": {
-                          "isRequired": true,
-                          "dataType": "string",
-                          "maxLength": 300
-                      }
-                  }
-                ]
-            }
-        ],
-          "helpMarkDown": "",
-          "icon": "images/connection-icon.png"
+          {
+            "type": "ms.vss-endpoint.endpoint-auth-scheme-token",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "Basic {{ #base64 \"token\" \":\" endpoint.apitoken }}"
+              }
+            ],
+            "inputDescriptors": [
+              {
+                "id": "apitoken",
+                "name": "Personal Access Token",
+                "description": "Personal access token is applicable only for endpoint targeting VSTS account or TFS 2016. Click <a href=\"https://www.visualstudio.com/en-us/docs/setup-admin/team-services/use-personal-access-tokens-to-authenticate\" target=\"_blank\">here</a>. for information on how to create Personal Access Token.",
+                "inputMode": "passwordbox",
+                "isConfidential": true,
+                "validation": {
+                  "isRequired": true,
+                  "dataType": "string"
+                }
+              }
+            ]
+          }
+        ]
       }
-  }
+    }
   ],
   "files": [
     {
