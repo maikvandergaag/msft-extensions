@@ -79,30 +79,56 @@
           "name": "AzureDevOpsOrganization",
           "displayName": "Azure DevOps Organization",
           "url": {
-            "displayName": "Power BI Api Url",
-            "value": "https://dev.azure.com/[organization]",
-            "isVisible": "true"
+            "displayName": "Azure DevOps Url",
+            "value": "https://dev.azure.com/",
+            "isVisible": "false"
           },
           "inputDescriptors": [
-              {
-                  "id": "azuredevopsPAT",
-                  "name": "Personal Access Token",
-                  "description": "The personal access token",
-                  "inputMode": "textbox",
-                  "isConfidential": true,
-                  "validation": {
-                      "isRequired": true,
-                      "dataType": "string",
-                      "maxLength": 300
+            {
+                "id": "OrganizationName",
+                "name": "Azure DevOps Organization",
+                "description": "The name of the Azure DevOps Organization",
+                "inputMode": "textbox",
+                "isConfidential": false,
+                "validation": {
+                    "isRequired": true,
+                    "dataType": "string",
+                    "maxLength": 300
+                }
+            }
+        ],
+        "authenticationSchemes": [
+            {
+                "type": "ms.vss-endpoint.endpoint-auth-scheme-basic",
+                "displayName": "Credentials",
+                "inputDescriptors": [
+                    {
+                        "id": "username",
+                        "name": "Username",
+                        "description": "Specify the account of the user used for the actions.",
+                        "inputMode": "textbox",
+                        "isConfidential": false,
+                        "validation": {
+                            "isRequired": true,
+                            "dataType": "string",
+                            "maxLength": 300
+                        }
+                    },
+                    {
+                      "id": "password",
+                      "name": "Personal Access Token",
+                      "description": "",
+                      "inputMode": "textbox",
+                      "isConfidential": true,
+                      "validation": {
+                          "isRequired": true,
+                          "dataType": "string",
+                          "maxLength": 300
+                      }
                   }
-              }
-          ],
-          "authenticationSchemes": [
-              {
-                  "type": "ms.vss-endpoint.endpoint-auth-scheme-none",
-                  "displayName": "None"
-              }
-          ],
+                ]
+            }
+        ],
           "helpMarkDown": "",
           "icon": "images/connection-icon.png"
       }

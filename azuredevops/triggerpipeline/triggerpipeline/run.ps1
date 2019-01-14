@@ -11,11 +11,13 @@ try {
 	#connected service
 	$userName =  $serviceEndpoint.Auth.Parameters.username
 	$pat = $serviceEndpoint.Auth.Parameters.password
+	$OrganizationName = $serviceEndpoint.Data.OrganizationName
 
 	Write-Host "******************************"
 	Write-Host "** Service Connection: $($connectedServiceName)"
 	Write-Host "** Username: $($userName)"
 	Write-Host "** PAT: $($pat)"
+	Write-Host "** Organization name: $($OrganizationName)"
 	Write-Host "******************************"
 
 	#parameters
