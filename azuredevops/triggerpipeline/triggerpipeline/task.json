@@ -14,7 +14,7 @@
   "version": {
     "Major": "1",
     "Minor": "0",
-    "Patch": "7"
+    "Patch": "8"
   },
   "minimumAgentVersion": "1.95.0",
   "instanceNameFormat": "Trigger Release Pipeline: $(Pipeline)",
@@ -53,6 +53,14 @@
       "defaultValue": "",
       "required": true,
       "helpMarkDown": "Select the name of the Build to trigger."
+    },
+    {
+      "name": "releaseDefinition",
+      "type": "pickList",
+      "label": "Release Definition",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "Select the name of the Release to trigger."
     },
     {
       "name": "Pipeline",
@@ -112,8 +120,16 @@
       "endpointId": "$(connectedServiceName)",
       "dataSourceName": "buildDefinitions",
       "parameters": {
-        "collectionName": "$(collectionName)",
         "project": "$(project)"
+      },
+      "resultTemplate": "{ \"Value\" : \"{{{id}}}\", \"DisplayValue\" : \"{{{name}}}\" }"
+    },
+    {
+      "target": "releaseDefinition",
+      "endpointId": "$(connectedServiceName)",
+      "dataSourceName": "releaseDefinitions",
+      "parameters": {
+         "project": "$(project)"
       },
       "resultTemplate": "{ \"Value\" : \"{{{id}}}\", \"DisplayValue\" : \"{{{name}}}\" }"
     }

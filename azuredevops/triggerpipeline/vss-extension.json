@@ -2,7 +2,7 @@
   "manifestVersion": 1,
   "id": "maikvandergaag-trigger-pipeline",
   "name": "Trigger Azure DevOps Pipeline",
-  "version": "3.0.0",
+  "version": "1.0.0",
   "publisher": "maikvandergaag",
   "description": "Build and Release Management task to trigger a Azure DevOps release or build pipeline.",
   "public": true,
@@ -96,8 +96,7 @@
           },
           {
             "name": "releaseDefinitions",
-            "endpointUrl": "{{endpoint.data.releaseUrl}}/{{project}}/_apis/release/definitions?api-version=5.1-preview.7",
-            "resultSelector": ""
+            "endpointUrl": "{{endpoint.data.releaseUrl}}/{{project}}/_apis/release/definitions?api-version=5.1-preview.3"
           }
         ],
         "inputDescriptors": [
