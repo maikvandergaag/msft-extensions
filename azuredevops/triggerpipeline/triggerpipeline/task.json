@@ -1,0 +1,92 @@
+{
+  "id": "05485ce0-4948-481c-a89f-f21fa2fe9a74",
+  "name": "TriggerPipeline",
+  "friendlyName": "Trigger Azure DevOps Pipeline",
+  "description": "Build and Release Management task to trigger a Azure DevOps release or build pipeline.",
+  "author": "Maik van der Gaag",
+  "helpMarkDown": "",
+  "category": "Utility",
+  "visibility": [
+    "Build",
+    "Release"
+  ],
+  "demands": [],
+  "version": {
+    "Major": "1",
+    "Minor": "0",
+    "Patch": "0"
+  },
+  "minimumAgentVersion": "1.95.0",
+  "instanceNameFormat": "Trigger Release Pipeline: $(Action)",
+  "inputs": [
+    {
+      "name": "connectedServiceName",
+      "aliases": [
+          "serviceConnection"
+      ],
+      "type": "connectedService:AzureDevOpsOrganization",
+      "label": "Azure DevOps service connection",
+      "defaultValue": "",
+      "required": "true",
+      "helpMarkDown": "Select the Azure DevOps Organization service connection that should be used to connect to Azure DevOps"
+    },
+    {
+      "name": "AzureDevOpsProjectName",
+      "type": "string",
+      "label": "Project name",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "The name of the project were in the pipeline resides"
+    },
+    {
+      "name": "Pipeline",
+      "label": "Pipeline type",
+      "type": "picklist",
+      "required": true,
+      "helpMarkDown": "Select the type of pipeline",
+      "defaultValue": "Release",
+      "options": {
+        "Release": "Release",
+        "Build": "Build"
+      }
+    },
+    {
+      "name": "PipelineName",
+      "type": "string",
+      "label": "Pipeline name",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "The name of the pipeline to trigger"
+    },
+    {
+      "name": "Description",
+      "type": "string",
+      "label": "Release description",
+      "required": false,
+      "helpMarkDown": "The description of the release",
+      "visibleRule": "Pipeline = Release"
+    },
+    {
+      "name": "Branch",
+      "type": "string",
+      "label": "Branch",
+      "required": false,
+      "helpMarkDown": "The name of the branch to build. When kept empty the default branch of the build will be used.",
+      "visibleRule": "Action = Build"
+    },
+    {
+      "name": "BuildNumber",
+      "type": "string",
+      "label": "Build Number",
+      "defaultValue": "",
+      "required": false,
+      "helpMarkDown": "The succeeded build number to release of the primary artifact. When kept empty the latest version is used.",
+      "visibleRule": "Action = Release"
+    }
+  ],
+  "execution": {
+    "PowerShell3": {
+      "target": "run.ps1"
+    }
+  }
+}
