@@ -91,8 +91,27 @@
           },
           {
             "name": "buildDefinitions",
-            "endpointUrl": "{{endpoint.url}}/{{project}}/_apis/build/definitions?api-version=2.0",
+            "endpointUrl": "{{endpoint.url}}/{{project}}/_apis/build/definitions?api-version=5.1-preview.7",
             "resultSelector": "jsonpath:$.value[?(@.quality=='definition')]"
+          },
+          {
+            "name": "releaseDefinitions",
+            "endpointUrl": "{{endpoint.data.releaseUrl}}/{{project}}/_apis/release/definitions?api-version=5.1-preview.7",
+            "resultSelector": ""
+          }
+        ],
+        "inputDescriptors": [
+          {
+              "id": "releaseUrl",
+              "name": "Release API Url",
+              "description": "The url of the release API",
+              "inputMode": "textbox",
+              "isConfidential": false,
+              "validation": {
+                  "isRequired": true,
+                  "dataType": "string",
+                  "maxLength": 300
+              }
           }
         ],
         "authenticationSchemes": [

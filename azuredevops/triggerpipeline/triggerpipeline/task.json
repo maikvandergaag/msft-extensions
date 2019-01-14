@@ -14,7 +14,7 @@
   "version": {
     "Major": "1",
     "Minor": "0",
-    "Patch": "0"
+    "Patch": "7"
   },
   "minimumAgentVersion": "1.95.0",
   "instanceNameFormat": "Trigger Release Pipeline: $(Pipeline)",
@@ -22,7 +22,7 @@
     {
       "name": "connectedServiceName",
       "aliases": [
-          "serviceConnection"
+        "serviceConnection"
       ],
       "type": "connectedService:vstsTfsApi",
       "label": "Azure DevOps service connection",
@@ -37,6 +37,22 @@
       "defaultValue": "",
       "required": true,
       "helpMarkDown": "The name of the project were in the pipeline resides"
+    },
+    {
+      "name": "project",
+      "type": "pickList",
+      "label": "Project",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "Select the name of the team project."
+    },
+    {
+      "name": "buildDefinition",
+      "type": "pickList",
+      "label": "Build Definition",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "Select the name of the Build to trigger."
     },
     {
       "name": "Pipeline",
@@ -82,6 +98,24 @@
       "required": false,
       "helpMarkDown": "The succeeded build number to release of the primary artifact. When kept empty the latest version is used.",
       "visibleRule": "Pipeline = Release"
+    }
+  ],
+  "dataSourceBindings": [
+    {
+      "target": "project",
+      "endpointId": "$(connectedServiceName)",
+      "dataSourceName": "projects",
+      "resultTemplate": "{ \"Value\" : \"{{{id}}}\", \"DisplayValue\" : \"{{{name}}}\" }"
+    },
+    {
+      "target": "buildDefinition",
+      "endpointId": "$(connectedServiceName)",
+      "dataSourceName": "buildDefinitions",
+      "parameters": {
+        "collectionName": "$(collectionName)",
+        "project": "$(project)"
+      },
+      "resultTemplate": "{ \"Value\" : \"{{{id}}}\", \"DisplayValue\" : \"{{{name}}}\" }"
     }
   ],
   "execution": {
