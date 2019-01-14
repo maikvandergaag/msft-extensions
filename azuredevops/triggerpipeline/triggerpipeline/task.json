@@ -17,14 +17,14 @@
     "Patch": "0"
   },
   "minimumAgentVersion": "1.95.0",
-  "instanceNameFormat": "Trigger Release Pipeline: $(Action)",
+  "instanceNameFormat": "Trigger Release Pipeline: $(Pipeline)",
   "inputs": [
     {
       "name": "connectedServiceName",
       "aliases": [
           "serviceConnection"
       ],
-      "type": "connectedService:AzureDevOpsOrganization",
+      "type": "connectedService:vstsTfsApi",
       "label": "Azure DevOps service connection",
       "defaultValue": "",
       "required": "true",
