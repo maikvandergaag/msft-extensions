@@ -72,7 +72,7 @@
       "label": "Branch",
       "required": false,
       "helpMarkDown": "The name of the branch to build. When kept empty the default branch of the build will be used.",
-      "visibleRule": "Action = Build"
+      "visibleRule": "Pipeline = Build"
     },
     {
       "name": "BuildNumber",
@@ -81,7 +81,7 @@
       "defaultValue": "",
       "required": false,
       "helpMarkDown": "The succeeded build number to release of the primary artifact. When kept empty the latest version is used.",
-      "visibleRule": "Action = Release"
+      "visibleRule": "Pipeline = Release"
     }
   ],
   "execution": {
