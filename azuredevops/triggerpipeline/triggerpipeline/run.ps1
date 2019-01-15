@@ -8,9 +8,6 @@ try {
 	$connectedServiceName = Get-VstsInput -Name ConnectedServiceName
 	$serviceEndpoint = Get-VstsEndpoint -Name $connectedServiceName -Require
 
-	$json = ConvertTo-Json @serviceEndpoint
-	Write-Host $json
-
 	#connected service
 	$userName =  $serviceEndpoint.Auth.Parameters.username
 	$token = $serviceEndpoint.Auth.Parameters.apitoken
