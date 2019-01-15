@@ -2,7 +2,7 @@ Trigger Azure DevOps Pipeline is an extension for triggering a Azure DevOps Buil
 
 Depending on your choice in the task it will trigger a build or a release pipeline.
 
-To be able to use the extension an Azure DevOps API endpoint needs to be created. The token used in the endpoint should be Personal Access Token. How you can create a personal access token can be found here: 
+To be able to use the extension an Azure DevOps API endpoint needs to be created. The token used in the endpoint should be Personal Access Token. How you can create a personal access token can be found here:
 
 * [Use personal access tokens to authenticate](https://docs.microsoft.com/en-us/azure/devops/organizations/accounts/use-personal-access-tokens-to-authenticate?view=vsts)
 
@@ -21,7 +21,7 @@ For the service connection to work as it should you need to configure the follow
 
 The extension itself has the following parameters
 
-*Azure DevOps service connection: The service connection that you have configured.
+* Azure DevOps service connection: The service connection that you have configured.
 * Project: The project where the pipeline resides.
 * Pipeline type: The type of pipeline (build / release).
 * Release Definition: The definition to trigger.
