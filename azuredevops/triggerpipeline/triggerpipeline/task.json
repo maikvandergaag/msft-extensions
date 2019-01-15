@@ -31,36 +31,12 @@
       "helpMarkDown": "Select the Azure DevOps Organization service connection that should be used to connect to Azure DevOps"
     },
     {
-      "name": "AzureDevOpsProjectName",
-      "type": "string",
-      "label": "Project name",
-      "defaultValue": "",
-      "required": true,
-      "helpMarkDown": "The name of the project were in the pipeline resides"
-    },
-    {
       "name": "project",
       "type": "pickList",
       "label": "Project",
       "defaultValue": "",
       "required": true,
-      "helpMarkDown": "Select the name of the team project."
-    },
-    {
-      "name": "buildDefinition",
-      "type": "pickList",
-      "label": "Build Definition",
-      "defaultValue": "",
-      "required": true,
-      "helpMarkDown": "Select the name of the Build to trigger."
-    },
-    {
-      "name": "releaseDefinition",
-      "type": "pickList",
-      "label": "Release Definition",
-      "defaultValue": "",
-      "required": true,
-      "helpMarkDown": "Select the name of the Release to trigger."
+      "helpMarkDown": "Select the name of the team project were the pipeline resides."
     },
     {
       "name": "Pipeline",
@@ -75,12 +51,22 @@
       }
     },
     {
-      "name": "PipelineName",
-      "type": "string",
-      "label": "Pipeline name",
+      "name": "buildDefinition",
+      "type": "pickList",
+      "label": "Build Definition",
       "defaultValue": "",
       "required": true,
-      "helpMarkDown": "The name of the pipeline to trigger"
+      "helpMarkDown": "Select the name of the Build to trigger.",
+      "visibleRule": "Pipeline = Build"
+    },
+    {
+      "name": "releaseDefinition",
+      "type": "pickList",
+      "label": "Release Definition",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "Select the name of the Release to trigger.",
+      "visibleRule": "Pipeline = Release"
     },
     {
       "name": "Description",
@@ -122,7 +108,7 @@
       "parameters": {
         "project": "$(project)"
       },
-      "resultTemplate": "{ \"Value\" : \"{{{id}}}\", \"DisplayValue\" : \"{{{name}}}\" }"
+      "resultTemplate": "{ \"Value\" : \"{{{name}}}\", \"DisplayValue\" : \"{{{name}}}\" }"
     },
     {
       "target": "releaseDefinition",
@@ -131,7 +117,7 @@
       "parameters": {
          "project": "$(project)"
       },
-      "resultTemplate": "{ \"Value\" : \"{{{id}}}\", \"DisplayValue\" : \"{{{name}}}\" }"
+      "resultTemplate": "{ \"Value\" : \"{{{name}}}\", \"DisplayValue\" : \"{{{name}}}\" }"
     }
   ],
   "execution": {

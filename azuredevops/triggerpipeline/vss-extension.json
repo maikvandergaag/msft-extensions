@@ -93,12 +93,12 @@
           {
             "name": "buildDefinitions",
             "endpointUrl": "{{endpoint.url}}/{{project}}/_apis/build/definitions",
-            "resultSelector": "jsonpath:$.value[?(@.quality=='definition')]"
+            "resultSelector": "jsonpath:$.value[?(@.quality=='definition')].name"
           },
           {
             "name": "releaseDefinitions",
             "endpointUrl": "{{endpoint.releaseUrl}}/{{project}}/_apis/release/definitions",
-            "resultSelector": "jsonpath:$.value[?(@.isDeleted==false)]"
+            "resultSelector": "jsonpath:$.value[?(@.isDeleted==false)].name"
           }
         ],
         "inputDescriptors": [
