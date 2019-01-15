@@ -81,7 +81,8 @@
         "name": "vstsTfsApi",
         "displayName": "Azure DevOps Api Access",
         "url": {
-          "displayName": "Organization Url"
+          "displayName": "Organization Url",
+          "value": "https://dev.azure.com/[organization]"
         },
         "dataSources": [
           {
@@ -107,6 +108,7 @@
               "description": "The url of the release API",
               "inputMode": "textbox",
               "isConfidential": false,
+              "value":"https://vsrm.dev.azure.com/[organization]",
               "validation": {
                   "isRequired": true,
                   "dataType": "string",
