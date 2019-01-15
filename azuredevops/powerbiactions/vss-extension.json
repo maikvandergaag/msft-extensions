@@ -56,7 +56,7 @@
   },
   "repository": {
     "type": "git",
-    "uri": "https://github.com/MaikvanderGaag/msft-extensions/tree/master/extensions/powerbiactions"
+    "uri": "https://github.com/maikvandergaag/msft-extensions/tree/master/azuredevops/powerbiactions"
   },
   "branding": {
     "color": "rgb(0, 171, 236)",
