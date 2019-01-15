@@ -38,10 +38,10 @@ try {
 	Write-Host "******************************"
 
     if ($Pipeline -eq "Build") {
-        .\run-build.ps1 -OrganizationUrl $organizationUrl -AzureDevOpsProjectName $AzureDevOpsProjectName -Username $Username -DevOpsPAT $token -PipelineName $BuildPipelineName -Description $Description -Branch $Branch
+        .\run-build.ps1 -OrganizationUrl $organizationUrl -AzureDevOpsProjectName $AzureDevOpsProjectName -DevOpsPAT $token -PipelineName $BuildPipelineName -Description $Description -Branch $Branch
     }
     elseif ($Pipeline -eq "Release") {
-        .\run-release.ps1 -OrganizationUrl $organizationUrl -ReleaseUrl $releaseUrl -AzureDevOpsProjectName $AzureDevOpsProjectName -Username $Username -DevOpsPAT $token -PipelineName $ReleasePipelineName -Description $Description -BuildNumber $BuildNumber
+        .\run-release.ps1 -OrganizationUrl $organizationUrl -ReleaseUrl $releaseUrl -AzureDevOpsProjectName $AzureDevOpsProjectName -DevOpsPAT $token -PipelineName $ReleasePipelineName -Description $Description -BuildNumber $BuildNumber
     }  
 }
 finally {

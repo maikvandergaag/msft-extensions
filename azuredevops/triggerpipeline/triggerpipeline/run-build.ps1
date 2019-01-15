@@ -2,31 +2,24 @@
 Param (
     [Parameter(Mandatory = $true)][String]$OrganizationUrl,
     [Parameter(Mandatory = $true)][String]$AzureDevOpsProjectName,
-    [Parameter(Mandatory = $true)][String]$Username,
     [Parameter(Mandatory = $true)][String]$DevOpsPAT,
     [Parameter(Mandatory = $true)][String]$PipelineName,
-    [Parameter(Mandatory = $true)][String]$Branch,
+    [Parameter(Mandatory = $false)][String]$Branch,
     [Parameter(Mandatory = $false)][String]$Description = "Automatically triggered release"
 )
 
 $ErrorActionPreference = 'Stop';
 
-Write-Output "OrganizationUrl             : $($OrganizationUrl)";
-Write-Output "AzureDevOpsProjectName      : $($AzureDevOpsProjectName)";
-Write-Output "PipelineName                : $($PipelineName)";
-Write-Output "DevOpsPAT                   : $(if (![System.String]::IsNullOrWhiteSpace($DevOpsPAT)) { '***'; } else { '<not present>'; })";
-Write-Output "Branch                      : $($Branch)";
-
 #uri
 $baseUri = "$($OrganizationUrl)/$($AzureDevOpsProjectName)/";
 $getUri = "_apis/build/definitions?name=$(${PipelineName})";
-$runBuild = "_apis/build/builds"
+$runBuild = "_apis/build/builds?api-version=5.0-preview.5"
 
 $buildUri = "$($baseUri)$($getUri)"
 $runBuildUri = "$($baseUri)$($runBuild)"
 
 # Base64-encodes the Personal Access Token (PAT) appropriately
-$base64AuthInfo = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(("token:{1}" -f $DevOpsPAT)))
+$base64AuthInfo = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(("token:{0}" -f $DevOpsPAT)))
 $DevOpsHeaders = @{Authorization = ("Basic {0}" -f $base64AuthInfo)};
 
 $BuildDefinitions = Invoke-RestMethod -UseBasicParsing -Uri $buildUri -Method Get -ContentType "application/json" -Headers $DevOpsHeaders;
@@ -46,7 +39,21 @@ if ($BuildDefinitions -and $BuildDefinitions.count -eq 1) {
 
         $jsonbody = $Build | ConvertTo-Json -Depth 100
 
-        $Result = Invoke-RestMethod -UseBasicParsing -Uri $runBuildUri -Method Post -ContentType "application/json" -Headers $DevOpsHeaders -Body $jsonbody;
+        try {
+            $Result = Invoke-RestMethod -UseBasicParsing -Uri $runBuildUri -Method Post -ContentType "application/json" -Headers $DevOpsHeaders -Body $jsonbody;
+        } catch {
+            if($_.ErrorDetails.Message){
+
+                $errorObject = $_.ErrorDetails.Message | ConvertFrom-Json
+
+                foreach($result in $errorObject.customProperties.ValidationResults){
+                    Write-Warning $result.message
+                }
+                Write-Error $errorObject.message
+            }
+
+            throw $_.Exception
+        }
 
         Write-Host "Triggered Build: $($Result.buildnumber)"
     }

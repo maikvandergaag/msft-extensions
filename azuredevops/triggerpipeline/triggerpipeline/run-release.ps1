@@ -11,27 +11,18 @@ Param (
 
 $ErrorActionPreference = 'Stop';
 
-Write-Output "OrganizationUrl             : $($OrganizationUrl)";
-Write-Output "ReleaseUrl                  : $($ReleaseUrl)";
-Write-Output "AzureDevOpsProjectName      : $($AzureDevOpsProjectName)";
-Write-Output "PipelineName                : $($PipelineName)";
-Write-Output "DevOpsPAT                   : $(if (![System.String]::IsNullOrWhiteSpace($DevOpsPAT)) { '***'; } else { '<not present>'; })";
-Write-Output "Run                         : $($Run)";
-Write-Output "Description                 : $($Description)";
-Write-Output "BuildNumber                 : $($BuildNumber)";
-
 #uri
 $baseBuildUri = "$($OrganizationUrl)/$($AzureDevOpsProjectName)/"
 $baseReleaseUri = "$($ReleaseUrl)/$($AzureDevOpsProjectName)/";
 $getUri = "_apis/release/definitions?searchText=$($PipelineName)&`$expand=environments&isExactNameMatch=true";
-$runRelease = "_apis/release/releases"
+$runRelease = "_apis/release/releases?api-version=5.0-preview.8"
 
 
 $ReleaseUri = "$($baseReleaseUri)$($getUri)"
 $RunReleaseUri = "$($baseReleaseUri)$($runRelease)"
 
 # Base64-encodes the Personal Access Token (PAT) appropriately
-$base64AuthInfo = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(("token:{1}" -f $DevOpsPAT)))
+$base64AuthInfo = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(("token:{0}" -f $DevOpsPAT)))
 $DevOpsHeaders = @{Authorization = ("Basic {0}" -f $base64AuthInfo)};
 
 $ReleaseDefinitions = Invoke-RestMethod -UseBasicParsing -Uri $ReleaseUri -Method Get -ContentType "application/json" -Headers $DevOpsHeaders;
@@ -73,7 +64,21 @@ if ($ReleaseDefinitions -and $ReleaseDefinitions.count -eq 1) {
 
         $jsonbody = $Release | ConvertTo-Json -Depth 100
 
-        $Result = Invoke-RestMethod -UseBasicParsing -Uri $RunReleaseUri -Method Post -ContentType "application/json" -Headers $DevOpsHeaders -Body $jsonbody;
+        try {
+            $Result = Invoke-RestMethod -UseBasicParsing -Uri $RunReleaseUri -Method Post -ContentType "application/json" -Headers $DevOpsHeaders -Body $jsonbody;
+        } catch {
+            if($_.ErrorDetails.Message){
+
+                $errorObject = $_.ErrorDetails.Message | ConvertFrom-Json
+
+                foreach($result in $errorObject.customProperties.ValidationResults){
+                    Write-Warning $result.message
+                }
+                Write-Error $errorObject.message
+            }
+
+            throw $_.Exception 
+        }
 
         Write-Host "Triggered Release: $($Result.name)"
     }
