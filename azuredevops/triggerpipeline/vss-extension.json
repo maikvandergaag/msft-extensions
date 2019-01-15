@@ -71,15 +71,15 @@
       }
     },
     {
-      "id": "vstsTfsApi-endpoint-type",
-      "description": "Service Endpoint type for vsts/tfs api connection",
+      "id": "azuredevops-endpoint-type",
+      "description": "Service Endpoint for a Azure DevOps API connection",
       "type": "ms.vss-endpoint.service-endpoint-type",
       "targets": [
         "ms.vss-endpoint.endpoint-types"
       ],
       "properties": {
-        "name": "vstsTfsApi",
-        "displayName": "Azure DevOps Api Access",
+        "name": "azuredevopsAPI",
+        "displayName": "Azure DevOps API",
         "url": {
           "displayName": "Organization Url",
           "value": "https://dev.azure.com/[organization]"
@@ -132,7 +132,7 @@
               {
                 "id": "apitoken",
                 "name": "Personal Access Token",
-                "description": "Personal access token is applicable only for endpoint targeting VSTS account or TFS 2016. Click <a href=\"https://www.visualstudio.com/en-us/docs/setup-admin/team-services/use-personal-access-tokens-to-authenticate\" target=\"_blank\">here</a>. for information on how to create Personal Access Token.",
+                "description": "Personal access token.",
                 "inputMode": "passwordbox",
                 "isConfidential": true,
                 "validation": {
