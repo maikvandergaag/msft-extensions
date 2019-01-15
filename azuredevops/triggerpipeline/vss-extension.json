@@ -108,11 +108,13 @@
               "description": "The url of the release API",
               "inputMode": "textbox",
               "isConfidential": false,
-              "value":"https://vsrm.dev.azure.com/[organization]",
               "validation": {
                   "isRequired": true,
                   "dataType": "string",
                   "maxLength": 300
+              },
+              "values": {
+                "defaultValue": "https://vsrm.dev.azure.com/[organization]"
               }
           }
         ],
