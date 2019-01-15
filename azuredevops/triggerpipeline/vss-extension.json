@@ -98,7 +98,7 @@
           {
             "name": "releaseDefinitions",
             "endpointUrl": "{{endpoint.releaseUrl}}/{{project}}/_apis/release/definitions",
-            "resultSelector": "jsonpath:$.value[?(@.isdeleted==false]"
+            "resultSelector": "jsonpath:$.value[?(@.isDeleted==false]"
           }
         ],
         "inputDescriptors": [
