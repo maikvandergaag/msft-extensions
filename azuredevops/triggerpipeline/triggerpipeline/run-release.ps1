@@ -1,8 +1,8 @@
 [CmdletBinding()]
 Param (
-    [Parameter(Mandatory = $true)][String]$AzureDevOpsAccount,
+    [Parameter(Mandatory = $true)][String]$OrganizationUrl,
+    [Parameter(Mandatory = $true)][String]$ReleaseUrl,
     [Parameter(Mandatory = $true)][String]$AzureDevOpsProjectName,
-    [Parameter(Mandatory = $true)][String]$Username,
     [Parameter(Mandatory = $true)][String]$DevOpsPAT,
     [Parameter(Mandatory = $true)][String]$PipelineName,
     [Parameter(Mandatory = $false)][String]$BuildNumber,
@@ -11,27 +11,27 @@ Param (
 
 $ErrorActionPreference = 'Stop';
 
-Write-Output "AzureDevOpsAccount          : $($AzureDevOpsAccount)";
+Write-Output "OrganizationUrl             : $($OrganizationUrl)";
+Write-Output "ReleaseUrl                  : $($ReleaseUrl)";
 Write-Output "AzureDevOpsProjectName      : $($AzureDevOpsProjectName)";
 Write-Output "PipelineName                : $($PipelineName)";
 Write-Output "DevOpsPAT                   : $(if (![System.String]::IsNullOrWhiteSpace($DevOpsPAT)) { '***'; } else { '<not present>'; })";
-Write-Output "Username                    : $($Username)";
 Write-Output "Run                         : $($Run)";
 Write-Output "Description                 : $($Description)";
 Write-Output "BuildNumber                 : $($BuildNumber)";
 
 #uri
-$baseBuildUri = "https://dev.azure.com/$($AzureDevOpsAccount)/$($AzureDevOpsProjectName)/"
-$baseReleaseUri = "https://vsrm.dev.azure.com/$($AzureDevOpsAccount)/$($AzureDevOpsProjectName)/";
-$getUri = "_apis/release/definitions?searchText=$($PipelineName)&`$expand=environments&isExactNameMatch=true&api-version=4.1-preview.3";
-$runRelease = "_apis/release/releases?api-version=4.1-preview.6"
+$baseBuildUri = "$($OrganizationUrl)/$($AzureDevOpsProjectName)/"
+$baseReleaseUri = "$($ReleaseUrl)/$($AzureDevOpsProjectName)/";
+$getUri = "_apis/release/definitions?searchText=$($PipelineName)&`$expand=environments&isExactNameMatch=true";
+$runRelease = "_apis/release/releases"
 
 
 $ReleaseUri = "$($baseReleaseUri)$($getUri)"
 $RunReleaseUri = "$($baseReleaseUri)$($runRelease)"
 
 # Base64-encodes the Personal Access Token (PAT) appropriately
-$base64AuthInfo = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(("{0}:{1}" -f $Username, $DevOpsPAT)))
+$base64AuthInfo = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(("token:{1}" -f $DevOpsPAT)))
 $DevOpsHeaders = @{Authorization = ("Basic {0}" -f $base64AuthInfo)};
 
 $ReleaseDefinitions = Invoke-RestMethod -UseBasicParsing -Uri $ReleaseUri -Method Get -ContentType "application/json" -Headers $DevOpsHeaders;
