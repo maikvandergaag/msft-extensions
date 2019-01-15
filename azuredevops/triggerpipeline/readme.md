@@ -42,7 +42,7 @@ If you like the extension, please leave a review. File an issue when you have su
 
 | Version | Remarks                             |  
 |---------|-------------------------------------|
-| 1.0.0   | Initial version                     |
+| 1.0.1   | Initial version                     |
 
 
 [serviceconnection]: https://github.com/maikvandergaag/msft-extensions/raw/master/azuredevops/triggerpipeline/images/schreenshot-2.png "Service Connection"
