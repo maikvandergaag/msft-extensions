@@ -114,6 +114,7 @@
                   "maxLength": 300
               },
               "values": {
+                "inputId": "releaseUrlInput",
                 "defaultValue": "https://vsrm.dev.azure.com/[organization]"
               }
           }
