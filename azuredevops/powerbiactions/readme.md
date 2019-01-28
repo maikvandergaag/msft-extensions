@@ -61,4 +61,5 @@ If you like the extension, please leave a review. File an issue when you have su
 
 
 
+
 [serviceconnection]: https://github.com/maikvandergaag/msft-extensions/raw/master/docs/images/serviceconnection.png "Power BI Service Connection"
