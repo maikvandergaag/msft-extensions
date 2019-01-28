@@ -93,7 +93,7 @@
     {
       "name": "UpdateAll",
       "type": "boolean",
-      "label": "Update all datasources in workspace",
+      "label": "Update all datasources in workspace the datasource name will be ignored",
       "defaultValue": "false",
       "required": false,
       "helpMarkDown": "Should all the datasets be overwritten?",
@@ -104,9 +104,9 @@
       "type": "string",
       "label": "Dataset name",
       "defaultValue": "",
-      "required": true,
+      "required": false,
       "helpMarkDown": "The name of the dataset",
-      "visibleRule": "Action = DataRefresh || (Action = UpdateDatasource && UpdateAll = false)"
+      "visibleRule": "Action = DataRefresh || Action = UpdateDatasource"
     },
     {
       "name": "DatasourceType",
