@@ -25,6 +25,7 @@ Depending on the action you choose within the task you need to supply the follow
 * Source File: The location of the Power BI file that needs to be published. The parameter can also be a search query "*.pbix".
 * Overwrite: Checkbox for specifying if the Power BI report should be overwritten.
 * Create: Create the Power BI workspace if it does not exist. 
+* UpdateAll: Will update all datasets if checked.
 * Dataset: The name of the dataset.
 * Users: The users that should be added as Admin to the workspace (separated by ',')
 * Datasource type: The datasource type that needs to be changed within the dataset.
@@ -56,6 +57,7 @@ If you like the extension, please leave a review. File an issue when you have su
 | 2.0.5   | Added TLS 1.2 support |
 | 3.0.8   | Added several new actions and updated the authentication to a Service Connection|
 | 3.1.0   | Updated Service Connection (ClientId required)|
+| 3.2.0   | Added feature to update all datasets at once|
 
 
 

@@ -16,7 +16,7 @@ try {
     $users = ""
     $accesRight = ""
     $dataset = "powerbi"
-    $action = "DataRefresh"
+    $action = "UpdateDatasource"
     $oldServer = "powerbisql55.database.windows.net"
     $newServer = "powerbisql55.database.windows.net"
     $oldDatabase = "sql01"
@@ -24,8 +24,9 @@ try {
     $datasourceType = "Sql"
     $oldUrl = ""
     $newUrl =""
+    $UpdateAll = $false
 
-    .\run-task.ps1 -Username $userName -OldUrl $oldUrl -NewUrl $newUrl -OldServer $oldServer -DatasourceType $datasourceType -NewServer $newServer -OldDatabase $oldDatabase -NewDatabase $newDatabase -AccessRight $accesRight -Users $users -FilePattern $filePattern -Password $passWord -ClientId $clientId -WorkspaceName $groupName -Overwrite $overwrite -Create $create -Dataset $dataset -Action $action
+    .\run-task.ps1 -Username $userName -OldUrl $oldUrl -NewUrl $newUrl -OldServer $oldServer -DatasourceType $datasourceType -NewServer $newServer -OldDatabase $oldDatabase -NewDatabase $newDatabase -AccessRight $accesRight -Users $users -FilePattern $filePattern -Password $passWord -ClientId $clientId -WorkspaceName $groupName -Overwrite $overwrite -Create $create -Dataset $dataset -Action $action -UpdateAll $UpdateAll
 }
 finally {
     Write-Information "Done running the task"

@@ -18,7 +18,8 @@ Param(
     [Parameter(Mandatory = $false)][String]$NewDatabase,
     [Parameter(Mandatory = $false)][String]$DatasourceType,
     [Parameter(Mandatory = $false)][String]$OldUrl,
-    [Parameter(Mandatory = $false)][String]$NewUrl
+    [Parameter(Mandatory = $false)][String]$NewUrl,
+    [Parameter(Mandatory = $false)][Boolean]$UpdateAll
 )
 
 try {
@@ -47,6 +48,7 @@ Write-Output "NewDatabase           : $($NewDatabase)";
 Write-Output "OldUrl                : $($OldUrl)";
 Write-Output "NewUrl                : $($NewUrl)";
 Write-Output "DatasourceType        : $($DatasourceType)";
+Write-Output "UpdateAll             : $($UpdateAll)";
 
 #AADToken
 $ResourceUrl = "https://analysis.windows.net/powerbi/api"
@@ -76,5 +78,5 @@ if($Action -eq "Workspace"){
     New-DatasetRefresh -WorkspaceName $WorkspaceName -DataSetName $Dataset -AccessToken $token
 }elseif($Action -eq "UpdateDatasource"){
     Write-Host "Trying to update the datasource"
-    Update-PowerBIDatasetDatasources -WorkspaceName $WorkspaceName -OldUrl $OldUrl -NewUrl $NewUrl -DataSetName $Dataset -AccessToken $token -DatasourceType $DatasourceType -OldServer $OldServer -NewServer $NewServer -OldDatabase $OldDatabase -NewDatabase $NewDatabase
+    Update-PowerBIDatasetDatasources -WorkspaceName $WorkspaceName -OldUrl $OldUrl -NewUrl $NewUrl -DataSetName $Dataset -AccessToken $token -DatasourceType $DatasourceType -OldServer $OldServer -NewServer $NewServer -OldDatabase $OldDatabase -NewDatabase $NewDatabase -UpdateAll $UpdateAll
 }
