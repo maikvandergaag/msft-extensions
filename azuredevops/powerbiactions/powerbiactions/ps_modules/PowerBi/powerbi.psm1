@@ -10,12 +10,12 @@ Content-Type: application/x-zip-compressed
 
 '@
 
-Function Get-AADToken{
+Function Get-AADToken {
     Param(
-        [parameter(Mandatory=$true)][string]$Username,
-        [parameter(Mandatory=$true)][SecureString]$Password,
-        [parameter(Mandatory=$true)][guid]$ClientId,
-        [parameter(Mandatory=$true)][string]$Resource
+        [parameter(Mandatory = $true)][string]$Username,
+        [parameter(Mandatory = $true)][SecureString]$Password,
+        [parameter(Mandatory = $true)][guid]$ClientId,
+        [parameter(Mandatory = $true)][string]$Resource
     )
 
     $authorityUrl = "https://login.microsoftonline.com/common/oauth2/authorize"
@@ -31,67 +31,65 @@ Function Get-AADToken{
     $credential = New-Object -TypeName Microsoft.IdentityModel.Clients.ActiveDirectory.UserCredential -ArgumentList ($UserName, $Password)
     
     Write-Verbose "Trying to aquire token for resource: $Resource"
-    $authResult = $authContext.AcquireToken($Resource,$clientId, $credential)
+    $authResult = $authContext.AcquireToken($Resource, $clientId, $credential)
 
     Write-Verbose "Authentication Result retrieved for: $($authResult.UserInfo.DisplayableId)"
     return $authResult.AccessToken
 }
 
-Function Invoke-API{
+Function Invoke-API {
     Param(
-        [parameter(Mandatory=$true)][string]$Url,
-        [parameter(Mandatory=$true)][string]$Method,
-        [parameter(Mandatory=$true)]$AccessToken,
-        [parameter(Mandatory=$false)][string]$Body,
-        [parameter(Mandatory=$false)][string]$ContentType
+        [parameter(Mandatory = $true)][string]$Url,
+        [parameter(Mandatory = $true)][string]$Method,
+        [parameter(Mandatory = $true)]$AccessToken,
+        [parameter(Mandatory = $false)][string]$Body,
+        [parameter(Mandatory = $false)][string]$ContentType
     )
 
     $apiHeaders = @{
-		'Content-Type'='application/json'
-	    'Authorization'= "Bearer $AccessToken"
+        'Content-Type'  = 'application/json'
+        'Authorization' = "Bearer $AccessToken"
     }
 
-	Write-Verbose "Trying to invoke api: $Url"
+    Write-Verbose "Trying to invoke api: $Url"
 
     try {
-        if($Body){
+        if ($Body) {
             $result = Invoke-RestMethod -Uri $Url -Headers $apiHeaders -Method $Method -ContentType $ContentType -Body $Body
-        }else{
+        }
+        else {
             $result = Invoke-RestMethod -Uri $Url -Headers $apiHeaders -Method $Method
         }
     }
-    catch [System.Net.WebException]
-    {
+    catch [System.Net.WebException] {
         $ex = $_.Exception
-        try
-        {
-			if ($null -ne $ex.Response)
-			{
+        try {
+            if ($null -ne $ex.Response) {
                 $streamReader = [System.IO.StreamReader]::new($_.Exception.Response.GetResponseStream())
                 $errorContent = $streamReader.ReadToEnd() | ConvertFrom-Json
                 
-                if($errorContent.error.code -eq "AddingAlreadyExistsGroupUserNotSupportedError"){
+                if ($errorContent.error.code -eq "AddingAlreadyExistsGroupUserNotSupportedError") {
                     $existUser = $true
                 }
-			}
+            }
 
-            if($existUser){
+            if ($existUser) {
                 Write-Warning "User already exists. Updating an existing user is not supported"
-            }else{
+            }
+            else {
                 $message = $errorContent.error.message
-                if($message){
+                if ($message) {
                     Write-Error $message
-                }else{
+                }
+                else {
                     Write-Error -Exception $ex
                 }               
             }
-		}
-		catch
-		{
-			throw;
-		}
-        finally
-        {
+        }
+        catch {
+            throw;
+        }
+        finally {
             if ($reader) { $reader.Dispose() }
             if ($stream) { $stream.Dispose() }
         }       		
@@ -100,28 +98,29 @@ Function Invoke-API{
     return $result
 }
 
-Function New-DatasetRefresh{
+Function New-DatasetRefresh {
     Param(
-        [parameter(Mandatory=$true)][string]$WorkspaceName,
-        [parameter(Mandatory=$true)][string]$DataSetName,
-        [parameter(Mandatory=$true)]$AccessToken
+        [parameter(Mandatory = $true)][string]$WorkspaceName,
+        [parameter(Mandatory = $true)][string]$DataSetName,
+        [parameter(Mandatory = $true)]$AccessToken
     )
     
     $GroupPath = Get-PowerBIGroupPath -WorkspaceName $WorkspaceName -AccessToken $AccessToken
     $set = Get-PowerBIDataSet -GroupPath $GroupPath -AccessToken $AccessToken -Name $DatasetName
 
-    if($set){
+    if ($set) {
         $url = $powerbiUrl + $GroupPath + "/datasets/$($set.id)/refreshes"
         Invoke-API -Url $url -Method "Post" -ContentType "application/json" -AccessToken $AccessToken
-    }else{
+    }
+    else {
         Write-Warning "The dataset: $DataSetName does not exist."
     }
     
 }
-Function Get-PowerBIWorkspace{
+Function Get-PowerBIWorkspace {
     Param(
-        [parameter(Mandatory=$true)][string]$WorkspaceName,
-        [parameter(Mandatory=$true)]$AccessToken
+        [parameter(Mandatory = $true)][string]$WorkspaceName,
+        [parameter(Mandatory = $true)]$AccessToken
     )
 
     $groupsUrl = $powerbiUrl + '/myorg/groups'
@@ -129,12 +128,12 @@ Function Get-PowerBIWorkspace{
     $groups = $result.value
 
     $workspace = $null;
-    if (-not [string]::IsNullOrEmpty($WorkspaceName)){
+    if (-not [string]::IsNullOrEmpty($WorkspaceName)) {
 
         Write-Verbose "Trying to find workspace: $WorkspaceName"		
         $groups = @($groups |Where-Object name -eq $WorkspaceName)
     
-        if ($groups.Count -ne 0){
+        if ($groups.Count -ne 0) {
             $workspace = $groups[0]		
         }				
     }
@@ -142,31 +141,61 @@ Function Get-PowerBIWorkspace{
     return $workspace
 }
 
-Function Update-PowerBIDatasetDatasources{
+Function Update-PowerBIDatasetDatasources {
     Param(
-        [parameter(Mandatory=$true)]$WorkspaceName,
-        [parameter(Mandatory=$true)]$AccessToken,
-        [parameter(Mandatory=$true)]$DatasetName,
-        [parameter(Mandatory=$true)]$DatasourceType,
-        [parameter(Mandatory=$false)]$OldServer,
-        [parameter(Mandatory=$false)]$NewServer,
-        [parameter(Mandatory=$false)]$OldDatabase,
-        [parameter(Mandatory=$false)]$NewDatabase,
-        [parameter(Mandatory=$false)]$OldUrl,
-        [parameter(Mandatory=$false)]$NewUrl
+        [parameter(Mandatory = $true)]$WorkspaceName,
+        [parameter(Mandatory = $true)]$AccessToken,
+        [parameter(Mandatory = $true)]$DatasetName,
+        [parameter(Mandatory = $true)]$DatasourceType,
+        [parameter(Mandatory = $false)]$OldServer,
+        [parameter(Mandatory = $false)]$NewServer,
+        [parameter(Mandatory = $false)]$OldDatabase,
+        [parameter(Mandatory = $false)]$NewDatabase,
+        [parameter(Mandatory = $false)]$OldUrl,
+        [parameter(Mandatory = $false)]$NewUrl,
+        [parameter(Mandatory = $false)]$UpdateAll
     )
 
     $groupPath = Get-PowerBIGroupPath -WorkspaceName $WorkspaceName -AccessToken $AccessToken
-    if($groupPath){
-        $dataset = Get-PowerBiDataSet -GroupPath $groupPath -AccessToken $AccessToken -Name $DatasetName
+    if ($groupPath) {
+        if($UpdateAll)
+        {
+            $datasets = Get-PowerBiDataSets -GroupPath $groupPath -AccessToken $AccessToken
 
-        if($dataset){
+            foreach($dataset in $datasets){
+                Update-PowerBIDatasetDatasource -GroupPath $groupPath -Set $dataset -OldUrl $OldUrl -NewUrl $NewUrl -AccessToken $AccessToken -DatasourceType $DatasourceType -OldServer $OldServer -NewServer $NewServer -OldDatabase $OldDatabase -NewDatabase $NewDatabase
+            }
+        }else{
+            $dataset = Get-PowerBiDataSet -GroupPath $groupPath -AccessToken $AccessToken -Name $DatasetName
+            Update-PowerBIDatasetDatasource -GroupPath $groupPath -Set $dataset -OldUrl $OldUrl -NewUrl $NewUrl -AccessToken $AccessToken -DatasourceType $DatasourceType -OldServer $OldServer -NewServer $NewServer -OldDatabase $OldDatabase -NewDatabase $NewDatabase
+        }
+    }
+    else {
+        Write-Error "Workspace: $WorkspaceName could not be found"
+    }
+}
 
-            $setId = $dataset.id
-            $url = $powerbiUrl + "$GroupPath/datasets/$setId/Default.UpdateDatasources"
+Function Update-PowerBIDatasetDatasource {
+    Param(
+        [parameter(Mandatory = $true)]$Set,
+        [parameter(Mandatory = $true)]$GroupPath,
+        [parameter(Mandatory = $true)]$DatasourceType,
+        [parameter(Mandatory = $true)]$AccessToken,
+        [parameter(Mandatory = $false)]$OldServer,
+        [parameter(Mandatory = $false)]$NewServer,
+        [parameter(Mandatory = $false)]$OldDatabase,
+        [parameter(Mandatory = $false)]$NewDatabase,
+        [parameter(Mandatory = $false)]$OldUrl,
+        [parameter(Mandatory = $false)]$NewUrl
+    )
 
-            if($DatasourceType -eq "OData" -OR $DatasourceType -eq "SharePointList" -OR $DatasourceType -eq "SharePointFolder"){
-                $body = "{ 
+    if ($set) {
+
+        $setId = $dataset.id
+        $url = $powerbiUrl + "$GroupPath/datasets/$setId/Default.UpdateDatasources"
+
+        if ($DatasourceType -eq "OData" -OR $DatasourceType -eq "SharePointList" -OR $DatasourceType -eq "SharePointFolder") {
+            $body = "{ 
                     'updateDetails': [{
                         'datasourceSelector': {
                             'datasourceType': '$DatasourceType',
@@ -179,7 +208,8 @@ Function Update-PowerBIDatasetDatasources{
                         }
                         }]
                   }"
-            }else{
+        }
+        else {
             $body = "{ 
                 'updateDetails': [{
                     'datasourceSelector': {
@@ -195,43 +225,41 @@ Function Update-PowerBIDatasetDatasources{
                     }
                     }]
               }"
-            }
-
-            Invoke-API -Url $url -Method "Post" -AccessToken $AccessToken -Body $body -ContentType "application/json"
-        }else{
-            Write-Error "Dataset: $DatasetName could not be found"
         }
-    }else{
-        Write-Error "Workspace: $WorkspaceName could not be found"
+
+        Invoke-API -Url $url -Method "Post" -AccessToken $AccessToken -Body $body -ContentType "application/json"
+    }
+    else {
+        Write-Error "Dataset: $DatasetName could not be found"
     }
 }
 
-Function Update-ConnectionStringDirectQuery{
+Function Update-ConnectionStringDirectQuery {
     Param(
-        [parameter(Mandatory=$true)]$GroupPath,
-        [parameter(Mandatory=$true)]$AccessToken,
-        [parameter(Mandatory=$true)]$DatasetName,
-        [parameter(Mandatory=$true)]$ConnectionString
-)
+        [parameter(Mandatory = $true)]$GroupPath,
+        [parameter(Mandatory = $true)]$AccessToken,
+        [parameter(Mandatory = $true)]$DatasetName,
+        [parameter(Mandatory = $true)]$ConnectionString
+    )
 
     $set = Get-PowerBIDataSet -GroupPath $GroupPath -AccessToken $AccessToken -Name $DatasetName 
     $setId = $set.id
 
     $body = @{
-		connectionString = $ConnectionString
-	} | ConvertTo-Json
+        connectionString = $ConnectionString
+    } | ConvertTo-Json
     
     $url = $powerbiUrl + "$GroupPath/datasets/$setId/Default.SetAllConnections"
      
     Invoke-API -Url $url -Method "Post" -AccessToken $AccessToken -Body $body -ContentType "application/json"
 }
 
-Function Get-PowerBIReport{
+Function Get-PowerBIReport {
     Param(
-        [parameter(Mandatory=$true)]$GroupPath,
-        [parameter(Mandatory=$true)]$AccessToken,
-        [parameter(Mandatory=$true)]$ReportName
-)
+        [parameter(Mandatory = $true)]$GroupPath,
+        [parameter(Mandatory = $true)]$AccessToken,
+        [parameter(Mandatory = $true)]$ReportName
+    )
 
     $url = $powerbiUrl + $GroupPath + "/reports"
 
@@ -239,53 +267,67 @@ Function Get-PowerBIReport{
     $reports = $result.value
 	
     $report	= $null;
-    if (-not [string]::IsNullOrEmpty($ReportName)){
+    if (-not [string]::IsNullOrEmpty($ReportName)) {
         Write-Verbose "Trying to find report '$ReportName'"		
 
-	    $reports = @($reports |Where-Object name -eq $ReportName)
-	    if ($reports.Count -ne 0){
-    	    $report = $reports[0]		
-	    }			
+        $reports = @($reports |Where-Object name -eq $ReportName)
+        if ($reports.Count -ne 0) {
+            $report = $reports[0]		
+        }			
     }	
 
     return $report
 }
 
-Function Get-PowerBiDataSet{
+Function Get-PowerBiDataSet {
     Param(
-        [parameter(Mandatory=$true)]$GroupPath,
-        [parameter(Mandatory=$true)]$AccessToken,
-        [parameter(Mandatory=$true)]$Name
-)
+        [parameter(Mandatory = $true)]$GroupPath,
+        [parameter(Mandatory = $true)]$AccessToken,
+        [parameter(Mandatory = $true)]$Name
+    )
     
     $url = $powerbiUrl + "$GroupPath/datasets"
     $result = Invoke-API -Url $url -Method "Get" -AccessToken $AccessToken -Verbose
     $sets = $result.value
 	
     $set = $null;
-    if (-not [string]::IsNullOrEmpty($Name)){
+    if (-not [string]::IsNullOrEmpty($Name)) {
         Write-Verbose "Trying to find dataset '$Name'"		
 
-	    $sets = @($sets |Where-Object name -eq $Name)
-	    if ($sets.Count -ne 0){
-    	    $set = $sets[0]		
-	    }			
+        $sets = @($sets |Where-Object name -eq $Name)
+        if ($sets.Count -ne 0) {
+            $set = $sets[0]		
+        }			
     }	
 
     return $set
 }
 
-Function New-PowerBIWorkSpace{
-   Param(
-        [parameter(Mandatory=$true)]$WorkspaceName,
-        [parameter(Mandatory=$true)]$AccessToken
+Function Get-PowerBiDataSets {
+    Param(
+        [parameter(Mandatory = $true)]$GroupPath,
+        [parameter(Mandatory = $true)]$AccessToken
+    )
+    
+    $url = $powerbiUrl + "$GroupPath/datasets"
+    $result = Invoke-API -Url $url -Method "Get" -AccessToken $AccessToken -Verbose
+    $sets = $result.value
+
+    return $sets
+}
+
+Function New-PowerBIWorkSpace {
+    Param(
+        [parameter(Mandatory = $true)]$WorkspaceName,
+        [parameter(Mandatory = $true)]$AccessToken
     )
 
     $workspace = Get-PowerBIWorkspace -WorkspaceName $WorkspaceName -AccessToken $AccessToken -Verbose
 
-    if($workspace){
+    if ($workspace) {
         Write-Host "Workspace: $WorkspaceName already exists"
-    }else{
+    }
+    else {
         Write-Host "Trying to create workspace: $WorkspaceName"
         $url = $powerbiUrl + "/myorg/groups"
 
@@ -300,59 +342,62 @@ Function New-PowerBIWorkSpace{
     }
 }
 
-Function Remove-PowerBIWorkSpace{
+Function Remove-PowerBIWorkSpace {
     Param(
-         [parameter(Mandatory=$true)]$WorkspaceName,
-         [parameter(Mandatory=$true)]$AccessToken
-     )
+        [parameter(Mandatory = $true)]$WorkspaceName,
+        [parameter(Mandatory = $true)]$AccessToken
+    )
  
-     $workspace = Get-PowerBIWorkspace -WorkspaceName $WorkspaceName -AccessToken $AccessToken -Verbose
+    $workspace = Get-PowerBIWorkspace -WorkspaceName $WorkspaceName -AccessToken $AccessToken -Verbose
  
-     if($workspace){
+    if ($workspace) {
         Write-Host "Workspace: $WorkspaceName exists"
         $groupPath = Get-PowerBIGroupPath -WorkspaceName $WorkspaceName -AccessToken $AccessToken
         $url = $powerbiUrl + $groupPath
         Invoke-API -Url $url -Method "Delete" -AccessToken $AccessToken -Verbose
-     }else{
-         Write-Host "Workspace: $WorkspaceName does exist"
-     }
- }
+    }
+    else {
+        Write-Host "Workspace: $WorkspaceName does exist"
+    }
+}
 
-Function Import-PowerBIFile{
+Function Import-PowerBIFile {
     Param(
-        [parameter(Mandatory=$true)]$GroupPath,
-        [parameter(Mandatory=$true)]$AccessToken,
-        [parameter(Mandatory=$true)]$Conflict,
-        [parameter(Mandatory=$true)]$Path
-)
+        [parameter(Mandatory = $true)]$GroupPath,
+        [parameter(Mandatory = $true)]$AccessToken,
+        [parameter(Mandatory = $true)]$Conflict,
+        [parameter(Mandatory = $true)]$Path
+    )
 
-	$fileName = [IO.Path]::GetFileName($Path)
-	$boundary = [guid]::NewGuid().ToString()
-	$fileBytes = [System.IO.File]::ReadAllBytes($Path)
-	$encoding = [System.Text.Encoding]::GetEncoding("iso-8859-1")
-	$url = $powerbiUrl + "$GroupPath/imports?datasetDisplayName=$fileName&nameConflict=$Conflict"
+    $fileName = [IO.Path]::GetFileName($Path)
+    $boundary = [guid]::NewGuid().ToString()
+    $fileBytes = [System.IO.File]::ReadAllBytes($Path)
+    $encoding = [System.Text.Encoding]::GetEncoding("iso-8859-1")
+    $url = $powerbiUrl + "$GroupPath/imports?datasetDisplayName=$fileName&nameConflict=$Conflict"
 
     $body = $powerBiBodyTemplate -f $boundary, $fileName, $encoding.GetString($fileBytes)
  
     $result = Invoke-API -Url $url -Method "Post" -AccessToken $AccessToken -Body $body -ContentType "multipart/form-data; boundary=--$boundary" 
     return $result
 }
-Function Get-PowerBIGroupPath{
+Function Get-PowerBIGroupPath {
     Param(
-        [parameter(Mandatory=$true)]$WorkspaceName,
-        [parameter(Mandatory=$true)]$AccessToken,
+        [parameter(Mandatory = $true)]$WorkspaceName,
+        [parameter(Mandatory = $true)]$AccessToken,
         [parameter()][bool]$Create = $false
     )
     $groupsPath = ""
     if ($WorkspaceName -eq "me") {
         $groupsPath = "/myorg"
-    } else {
+    }
+    else {
         Write-Host "Getting Power BI Workspace properties; $WorkspaceName"
         $workspace = Get-PowerBIWorkspace -WorkspaceName $WorkspaceName -AccessToken $AccessToken -Verbose
 
-        if($Create -And !$workspace){
+        if ($Create -And !$workspace) {
             $workspace = New-PowerBIWorkSpace -WorkspaceName $WorkspaceName -AccessToken $AccessToken
-        }elseif(!$workspace){
+        }
+        elseif (!$workspace) {
             Throw "Power BI Workspace: $WorkspaceName does not exist"
         }
         $groupId = $workspace.Id
@@ -362,39 +407,39 @@ Function Get-PowerBIGroupPath{
     return $groupsPath
 }
 
-Function Add-PowerBIWorkspaceUsers{
+Function Add-PowerBIWorkspaceUsers {
     Param(
-        [parameter(Mandatory=$true)]$WorkspaceName,
+        [parameter(Mandatory = $true)]$WorkspaceName,
         [parameter()][bool]$Create = $false,
-        [parameter(Mandatory=$true)]$AccessToken,
-        [parameter(Mandatory=$true)]$Users,
-        [parameter(Mandatory=$true)][ValidateSet("Admin", "Contributor", "Member")]$AccessRight = "Admin"	
+        [parameter(Mandatory = $true)]$AccessToken,
+        [parameter(Mandatory = $true)]$Users,
+        [parameter(Mandatory = $true)][ValidateSet("Admin", "Contributor", "Member")]$AccessRight = "Admin"	
     )
     $GroupPath = Get-PowerBIGroupPath -WorkspaceName $WorkspaceName -AccessToken $AccessToken -Create $Create
     $url = $powerbiUrl + $GroupPath + "/users"
 
-    foreach($user in $Users){
+    foreach ($user in $Users) {
         $body = @{
             groupUserAccessRight = $AccessRight
-            emailAddress = $user
+            emailAddress         = $user
         } | ConvertTo-Json	
 
         Invoke-API -Url $url -Method "Post" -AccessToken $AccessToken -Body $body -ContentType "application/json" 
     }
 }
-Function Publish-PowerBIFile{
+Function Publish-PowerBIFile {
     Param(
-        [parameter(Mandatory=$true)]$WorkspaceName,
-        [parameter(Mandatory=$true)]$FilePattern,
+        [parameter(Mandatory = $true)]$WorkspaceName,
+        [parameter(Mandatory = $true)]$FilePattern,
         [parameter()][bool]$Create = $false,
         [parameter()][bool]$Overwrite = $false,
-        [parameter(Mandatory=$true)]$AccessToken
+        [parameter(Mandatory = $true)]$AccessToken
     )
 
     $GroupPath = Get-PowerBIGroupPath -WorkspaceName $WorkspaceName -AccessToken $AccessToken -Create $Create
     
     $searchedFiles = Get-ChildItem $filePattern
-    foreach($foundFile in $searchedFiles){
+    foreach ($foundFile in $searchedFiles) {
         $directory = $foundFile.DirectoryName
         $file = $foundFile.Name
     
@@ -409,18 +454,19 @@ Function Publish-PowerBIFile{
         
         $publish = $true
         $nameConflict = "Abort"
-        if($report){
+        if ($report) {
             Write-Verbose "Reports exisits"
-            if($Overwrite){
+            if ($Overwrite) {
                 Write-Verbose "Reports exisits and needs to be overwritten"
                 $nameConflict = "Overwrite"
-            }else{
+            }
+            else {
                 $publish = $false
                 Write-Warning "Report already exists"
             }
         }
        
-        if($publish){
+        if ($publish) {
             #Import PowerBi file
             Write-Host "Importing PowerBI File"
             Import-PowerBiFile -GroupPath $GroupPath -AccessToken $AccessToken -Path $FilePath -Conflict $nameConflict -Verbose

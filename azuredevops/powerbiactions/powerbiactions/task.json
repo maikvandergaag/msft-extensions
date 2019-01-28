@@ -97,7 +97,16 @@
       "defaultValue": "",
       "required": true,
       "helpMarkDown": "The name of the dataset",
-      "visibleRule": "Action = DataRefresh || Action = UpdateDatasource"
+      "visibleRule": "Action = DataRefresh || Action = UpdateDatasource || UpdateAll = false"
+    },
+    {
+      "name": "UpdateAll",
+      "type": "boolean",
+      "label": "Update all datasources in workspace",
+      "defaultValue": "false",
+      "required": false,
+      "helpMarkDown": "Should all the datasets be overwritten?",
+      "visibleRule": "Action = UpdateDatasource"
     },
     {
       "name": "DatasourceType",
