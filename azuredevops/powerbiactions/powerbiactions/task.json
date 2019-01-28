@@ -106,7 +106,7 @@
       "defaultValue": "",
       "required": true,
       "helpMarkDown": "The name of the dataset",
-      "visibleRule": "Action = DataRefresh || Action = UpdateDatasource || UpdateAll = false"
+      "visibleRule": "Action = DataRefresh || (Action = UpdateDatasource && UpdateAll = false)"
     },
     {
       "name": "DatasourceType",
