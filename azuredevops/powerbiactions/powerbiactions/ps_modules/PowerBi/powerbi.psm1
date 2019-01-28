@@ -145,7 +145,7 @@ Function Update-PowerBIDatasetDatasources {
     Param(
         [parameter(Mandatory = $true)]$WorkspaceName,
         [parameter(Mandatory = $true)]$AccessToken,
-        [parameter(Mandatory = $true)]$DatasetName,
+        [parameter(Mandatory = $false)]$DatasetName,
         [parameter(Mandatory = $true)]$DatasourceType,
         [parameter(Mandatory = $false)]$OldServer,
         [parameter(Mandatory = $false)]$NewServer,
