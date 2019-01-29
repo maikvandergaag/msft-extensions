@@ -60,5 +60,4 @@ If you like the extension, please leave a review. File an issue when you have su
 | 3.2.4   | Added feature to update all datasets at once|
 | 3.2.6   | Small bug fix |
 
-
 [serviceconnection]: https://github.com/maikvandergaag/msft-extensions/raw/master/docs/images/serviceconnection.png "Power BI Service Connection"
