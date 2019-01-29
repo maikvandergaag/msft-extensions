@@ -92,7 +92,7 @@ if ($buildDef) {
             $definitionJson = $definition | ConvertTo-Json -Depth 50 -Compress
 
             Write-Verbose "Updating Project Build number with URL: $($defUri)"
-            Invoke-RestMethod -Method Put -Uri $defUri -Headers $devOpsHeader -ContentType "application/json" -Body $definitionJson | Out-Null
+            Invoke-RestMethod -Method Put -Uri $defUri -Headers $devOpsHeader -ContentType "application/json" -Body ([System.Text.Encoding]::UTF8.GetBytes($definitionJson)) | Out-Null
         }        
     }
     else {

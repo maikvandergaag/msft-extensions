@@ -82,5 +82,10 @@ if($Action -eq "Workspace"){
     New-DatasetRefresh -WorkspaceName $WorkspaceName -DataSetName $Dataset -AccessToken $token
 }elseif($Action -eq "UpdateDatasource"){
     Write-Host "Trying to update the datasource"
+
+    if($UpdateAll -eq $false -and $Dataset -eq ""){
+        Write-Error "When the update all function isn't checked you need to supply a dataset."
+    }
+    
     Update-PowerBIDatasetDatasources -WorkspaceName $WorkspaceName -OldUrl $OldUrl -NewUrl $NewUrl -DataSetName $Dataset -AccessToken $token -DatasourceType $DatasourceType -OldServer $OldServer -NewServer $NewServer -OldDatabase $OldDatabase -NewDatabase $NewDatabase -UpdateAll $UpdateAll
 }
