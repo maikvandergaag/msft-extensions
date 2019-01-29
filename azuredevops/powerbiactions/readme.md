@@ -58,8 +58,7 @@ If you like the extension, please leave a review. File an issue when you have su
 | 3.0.8   | Added several new actions and updated the authentication to a Service Connection|
 | 3.1.0   | Updated Service Connection (ClientId required)|
 | 3.2.4   | Added feature to update all datasets at once|
-
-
+| 3.2.6   | Small bug fix |
 
 
 [serviceconnection]: https://github.com/maikvandergaag/msft-extensions/raw/master/docs/images/serviceconnection.png "Power BI Service Connection"
