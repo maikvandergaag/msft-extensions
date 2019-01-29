@@ -50,10 +50,6 @@ Write-Output "NewUrl                : $($NewUrl)";
 Write-Output "DatasourceType        : $($DatasourceType)";
 Write-Output "UpdateAll             : $($UpdateAll)";
 
-if($UpdateAll -eq $false -and $Dataset -eq ""){
-    Write-Error "When the update all function isn't checked you need to supply a dataset."
-}
-
 #AADToken
 $ResourceUrl = "https://analysis.windows.net/powerbi/api"
 Write-Host "Getting AAD Token for user: $UserName"
