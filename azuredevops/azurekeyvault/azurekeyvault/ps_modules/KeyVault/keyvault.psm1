@@ -84,7 +84,13 @@ Function Get-KeyVaultCertificateUrl {
 
     $certificateUri = $cert.SecretId;
 
-    Set-AzureDevOpsVariable -VariableName $VariableName -VariableValue $certificateUri
+    if(!$certificateUri){
+        Write-Warning "There is no certificate with the name $($CertificateName)"
+    }else{
+        if($VariableName){
+            Set-AzureDevOpsVariable -VariableName $VariableName -VariableValue $secretValue
+        }
+    }
 }
 
 
@@ -112,7 +118,7 @@ Function Import-KeyVaultCertificate{
     }
 
     if($VariableName){
-        Set-AzureDevOpsVariable -VariableName $VariableName -VariableValue $result.Id
+        Set-AzureDevOpsVariable -VariableName $VariableName -VariableValue $result.SecretId
     }
 }
 

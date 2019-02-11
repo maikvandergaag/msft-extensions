@@ -6,7 +6,7 @@ $Secret = "Test"
 $CertificateFile = "D:\Source\promanagement\pmonline\PMOnline\src\PM.STS\PMWebSTS.pfx"
 $CertificateName = "sts"
 $SecretName = "Test"
-$ObjectId = "eb7afd3d-cb95-4275-9229-066d910b0f9f"
+$ObjectId = "0f0969ef-a298-4db5-82b1-c304b9dcda0c"
 #decrypt,encrypt,unwrapKey,wrapKey,verify,sign,get,list,update,create,import,delete,backup,restore,recover,purge
 $PermissionsToKeys = "decrypt,encrypt,unwrapKey,wrapKey,verify,sign,get,list,update,create,import,delete,backup,restore,recover,purge"
 #get,list,set,delete,backup,restore,recover,purge
@@ -15,7 +15,7 @@ $PermissionsToSecrets = "get,list,set,delete,backup,restore,recover,purge"
 $PermissionsToCertificates = "get,list,delete,create,import,update,managecontacts,getissuers,listissuers,setissuers,deleteissuers,manageissuers,recover,purge,backup,restore"
 #get,list,delete,set,update,regeneratekey,getsas,listsas,deletesas,setsas,recover,backup,restore,purge
 $PermissionsToStorage = ""
-$Action = "GetCertificateUri"
+$Action = "ImportCertificate"
 $VariableName = "Test"
 $CertificatePassword = "pass@word1" 
 $Overwrite = $true
