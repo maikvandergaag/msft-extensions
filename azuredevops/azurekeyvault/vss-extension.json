@@ -1,0 +1,82 @@
+{
+  "manifestVersion": 1,
+  "id": "maikvandergaag-azurekeyvault",
+  "name": "Azure KeyVault Actions", 
+  "version": "1.0.0",
+  "publisher": "maikvandergaag",
+  "public": true,
+  "targets": [
+    {
+      "id": "Microsoft.VisualStudio.Services"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "uri": "https://github.com/MaikvanderGaag/msft-extensions/tree/master/extensions/azurekeyvault"
+  },
+  "links": {
+    "getstarted": {
+      "uri": "https://github.com/MaikvanderGaag/msft-extensions/wiki"
+    },
+    "repository": {
+      "uri": "https://github.com/MaikvanderGaag/msft-extensions/"
+    },
+    "issues": {
+      "uri": "https://github.com/MaikvanderGaag/msft-extensions/issues"
+    }
+  },
+  "scope": [
+    "vso.build"
+  ],
+  "description": "Build and Release Task for performing actions on a Azure Key Vault",
+  "categories": [
+    "Azure Pipelines"
+  ],
+  "tags": [
+    "Release",
+    "Build",
+    "Certificates",
+    "Secret",
+    "3fifty",
+    "Azure",
+    "KeyVault",
+    "Actions"
+  ],
+  "screenshots": [
+    {
+        "path": "images/screenshot-1.png"
+    }
+  ],
+  "branding": {
+    "color": "rgb(0, 171, 236)",
+    "theme": "light"
+  },
+  "content": {
+    "license": {
+      "path": "license.txt"
+    },
+    "details": {
+      "path": "readme.md"
+    }
+  },
+  "icons": {
+    "default": "images/icon.png"
+  },
+  "contributions": [
+    {
+      "id": "azurekeyvault",
+      "type": "ms.vss-distributed-task.task",
+      "targets": [
+        "ms.vss-distributed-task.tasks"
+      ],
+      "properties": {
+        "name": "azurekeyvault"
+      }
+    }
+  ],
+  "files": [
+    {
+      "path": "azurekeyvault"
+    }
+  ]
+}
