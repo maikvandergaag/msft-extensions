@@ -1,0 +1,162 @@
+{
+  "id": "84F23C57-8C65-4709-BC94-5CBD44E96A54",
+  "name": "azurekeyvault",
+  "friendlyName": "Azure Key Vault Actions",
+  "description": "Task to perform specific actions on the Azure Key Vault",
+  "author": "Maik van der Gaag",
+  "helpMarkDown": "",
+  "category": "Utility",
+  "visibility": [
+    "Build",
+    "Release"
+  ],
+  "demands": [],
+  "version": {
+    "Major": "1",
+    "Minor": "2",
+    "Patch": "1"
+  },
+  "minimumAgentVersion": "2.117.0",
+  "instanceNameFormat": "Azure Key Vault: $(Action)",
+  "inputs": [
+    {
+      "name": "ConnectedServiceName",
+      "type": "connectedService:AzureRM",
+      "label": "Azure RM Subscription",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "Select the Azure Resource Manager subscription for the deployment."
+    },
+    {
+      "name": "Action",
+      "label": "Action",
+      "type": "pickList",
+      "required": true,
+      "helpMarkDown": "Select the action you would like to perform (Add or Remove)",
+      "defaultValue": "GetSecret",
+      "options": {
+        "GetSecret": "Retrieve Secret",
+        "SetSecret": "Add / Update Secret",
+        "RemoveSecret": "Remove Secret",
+        "AddAccessPolicy": "Add Access Policy",
+        "RemoveAccessPolicy": "Remove Access Policy",
+        "ImportCertificate": "Import Certificate",
+        "GetCertificateUri": "Get Certificate Uri"
+      }
+    },
+    {
+      "name": "KeyVaultName",
+      "label": "Azure Key Vault Name",
+      "type": "string",
+      "required": true,
+      "helpMarkDown": "The name of the Azure Key Vault"
+    },
+    {
+      "name": "SecretName",
+      "label": "Secret name",
+      "type": "string",
+      "required": true,
+      "helpMarkDown": "The name of the secret",
+      "visibleRule": "Action = SetSecret || Action = GetSecret || Action = RemoveSecret" 
+    },
+    {
+      "name": "Secret",
+      "label": "Secret value",
+      "type": "string",
+      "required": true,
+      "helpMarkDown": "The value of the secret",
+      "visibleRule": "Action = SetSecret"
+    },
+    {
+      "name": "CertificateName",
+      "label": "The name of the certificate name",
+      "type": "string",
+      "required": true,
+      "helpMarkDown": "The name for or of the certificate in the Azure Key Vault",
+      "visibleRule": "Action = GetCertificateUri || Action = ImportCertificate"
+    },
+    {
+      "name": "CertificateFile",
+      "type": "filePath",
+      "label": "Certificate file",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "Absolute path of the file.",
+      "visibleRule": "Action = ImportCertificate"
+    },
+    {
+      "name": "ObjectId",
+      "label": "ObjectId",
+      "type": "string",
+      "required": true,
+      "helpMarkDown": "The objectid of the object to give access to",
+      "visibleRule": "Action = AddAccessPolicy || Action = RemoveAccessPolicy"
+    },
+    {
+      "name": "PermissionsToKeys",
+      "type": "string",
+      "label": "Permissions to keys (',' separated)",
+      "defaultValue" :"decrypt,encrypt,unwrapKey,wrapKey,verify,sign,get,list,update,create,import,delete,backup,restore,recover,purge",
+      "required": false,
+      "helpMarkDown": "The required permission to keys - possible options: decrypt,encrypt,unwrapKey,wrapKey,verify,sign,get,list,update,create,import,delete,backup,restore,recover,purge",
+      "visibleRule": "Action = AddAccessPolicy"
+    },
+    {
+      "name": "PermissionsToSecrets",
+      "type": "string",
+      "label": "Permissions to secrets (',' separated)",
+      "defaultValue" :"get,list,set,delete,backup,restore,recover,purge",
+      "required": false,
+      "helpMarkDown": "The required permission to secrets - possible options: get,list,set,delete,backup,restore,recover,purge",
+      "visibleRule": "Action = AddAccessPolicy"
+    },
+    {
+      "name": "PermissionsToCertificates",
+      "type": "string",
+      "label": "Permissions to certificates (',' separated)",
+      "defaultValue" :"get,list,delete,create,import,update,managecontacts,getissuers,listissuers,setissuers,deleteissuers,manageissuers,recover,purge,backup,restore",
+      "required": false,
+      "helpMarkDown": "The required permission to certificates - possible options: get,list,delete,create,import,update,managecontacts,getissuers,listissuers,setissuers,deleteissuers,manageissuers,recover,purge,backup,restore",
+      "visibleRule": "Action = AddAccessPolicy"
+    },
+    {
+      "name": "PermissionsToStorage",
+      "type": "string",
+      "label": "Permissions to storage (',' separated)",
+      "defaultValue" :"get,list,delete,set,update,regeneratekey,getsas,listsas,deletesas,setsas,recover,backup,restore,purge",
+      "required": false,
+      "helpMarkDown": "The required permission to keys - possible options: get,list,delete,set,update,regeneratekey,getsas,listsas,deletesas,setsas,recover,backup,restore,purge",
+      "visibleRule": "Action = AddAccessPolicy"
+    },
+    {
+      "name": "VariableName",
+      "label": "Variable name",
+      "type": "string",
+      "required": true,
+      "helpMarkDown": "The variable name to save the result",
+      "visibleRule": "Action = GetSecret || Action = ImportCertificate || Action = GetCertificateUri || Action = SetSecret"
+    },
+    {
+      "name": "CertificatePassword",
+      "label": "Certificate password",
+      "type": "string",
+      "required": true,
+      "helpMarkDown": "The password of the certificate",
+      "visibleRule": "Action = ImportCertificate"
+    },
+    {
+      "name": "Overwrite",
+      "label": "Overwrite",
+      "type": "boolean",
+      "required": false,
+      "helpMarkDown": "Overwrite the value",
+      "visibleRule": "Action = ImportCertificate || Action = SetSecret"
+    }
+  ],
+  "dataSourceBindings": [],
+  "execution": {
+    "PowerShell3": {
+      "target": "run.ps1"
+    }
+  }
+}
