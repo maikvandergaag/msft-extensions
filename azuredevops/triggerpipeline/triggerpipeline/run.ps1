@@ -16,9 +16,9 @@ try {
 
 	#parameters
 	$AzureDevOpsProjectName = Get-VstsInput -Name project -Require
-	$BuildPipelineName = Get-VstsInput -Name buildDefinition -Require
-	$ReleasePipelineName = Get-VstsInput -Name releaseDefinition -Require
-	$Pipeline = Get-VstsInput -Name Pipeline -Require
+	$BuildPipelineName = Get-VstsInput -Name buildDefinition
+	$ReleasePipelineName = Get-VstsInput -Name releaseDefinition
+	$Pipeline = Get-VstsInput -Name Pipeline
 	$Description = Get-VstsInput -Name Description
 	$Branch= Get-VstsInput -Name Branch
 	$BuildNumber = Get-VstsInput -Name BuildNumber
