@@ -1,0 +1,94 @@
+{
+  "manifestVersion": 1,
+  "id": "maikvandergaag-publish-stream-analytics",
+  "name": "Publish Stream Analytics Transformation",
+  "version": "1.2.0",
+  "publisher": "maikvandergaag",
+  "public": true,
+  "targets": [
+    {
+      "id": "Microsoft.VisualStudio.Services"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "uri": "https://github.com/MaikvanderGaag/msft-extensions/tree/master/extensions/publishstreamanalyticstransformation"
+  },
+  "links": {
+    "getstarted": {
+      "uri": "https://github.com/MaikvanderGaag/msft-extensions/wiki"
+    },
+    "repository": {
+      "uri": "https://github.com/MaikvanderGaag/msft-extensions/"
+    },
+    "issues": {
+      "uri": "https://github.com/MaikvanderGaag/msft-extensions/issues"
+    }
+  },
+  "scope": [
+    "vso.build"
+  ],
+  "description": "Build and Release Management tasks for publishing a Stream Analytics Transformation.",
+  "categories": [
+    "Azure Pipelines"
+  ],
+  "tags": [
+    "Release",
+    "Build",
+    "Stream Analytics",
+    "Transformation",
+    "Publish",
+    "Stream",
+    "3fifty",
+    "asaql"
+  ],
+  "content": {
+    "license": {
+      "path": "license.txt"
+    },
+    "details": {
+      "path": "readme.md"
+    }
+  },
+  "icons": {
+    "default": "icon.png"
+  },
+  "contributions": [
+    {
+      "id": "PublishStreamAnalyticsTransformation",
+      "type": "ms.vss-distributed-task.task",
+      "targets": [
+        "ms.vss-distributed-task.tasks"
+      ],
+      "properties": {
+        "name": "publishstreamanalyticstransformation"
+      }
+    }
+  ],
+  "files": [
+    {
+      "path": "publishstreamanalyticstransformation/run-task.ps1"
+    },
+    {
+      "path": "publishstreamanalyticstransformation/task.json"
+    },
+    {
+      "path": "publishstreamanalyticstransformation/icon.png"
+    },
+    {
+      "path": "publishstreamanalyticstransformation/ps_modules/vststasksdk"
+    },
+    {
+      "path": "publishstreamanalyticstransformation/ps_modules/VstsAzureHelpers_"
+    },
+    {
+      "path": "publishstreamanalyticstransformation/ps_modules/TlsHelper_"
+    },
+    {
+      "path": "publishstreamanalyticstransformation/utility.ps1"
+    },
+    {
+      "path": "publishstreamanalyticstransformation/streamanalytics.ps1"
+    }
+  ]
+}

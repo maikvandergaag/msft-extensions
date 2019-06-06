@@ -1,0 +1,186 @@
+{
+  "id": "D5B7FEC6-2B25-4742-905B-0DAD97687DF5",
+  "name": "PowerBIActions",
+  "friendlyName": "Power BI Actions",
+  "description": "Release Task Power BI Actions",
+  "author": "Maik van der Gaag",
+  "helpMarkDown": "",
+  "category": "Utility",
+  "visibility": [
+    "Build",
+    "Release"
+  ],
+  "demands": [],
+  "version": {
+    "Major": "2",
+    "Minor": "0",
+    "Patch": "3"
+  },
+  "minimumAgentVersion": "1.95.0",
+  "instanceNameFormat": "Power BI Action: $(Action)",
+  "inputs": [
+    {
+      "name": "connectedServiceName",
+      "aliases": [
+          "serviceConnection"
+      ],
+      "type": "connectedService:PowerBI",
+      "label": "Power BI service connection",
+      "defaultValue": "",
+      "required": "true",
+      "helpMarkDown": "Select a generic service connection that should be used to pick the URL and construct authorization header for the http request."
+    },
+    {
+      "name": "Action",
+      "label": "Action",
+      "type": "pickList",
+      "required": true,
+      "helpMarkDown": "Select the action you would like to perform",
+      "defaultValue": "Publish",
+      "options": {
+        "Workspace": "Create a new Workspace",
+        "DeleteWorkspace": "Delete an existing Workspace",
+        "AddUsers": "Add a new Admin user to an Workspace",
+        "DataRefresh": "Refresh a Dataset",
+        "UpdateDatasource": "Update DataSource connection",
+        "Publish": "Upload PowerBI Report"
+      }
+    },
+    {
+      "name": "WorkspaceName",
+      "type": "string",
+      "label": "Workspace Name",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "The name of the power bi workspace."
+    },
+    {
+      "name": "PowerBIPath",
+      "type": "filePath",
+      "label": "Source file",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "Absolute path of the file.",
+      "visibleRule": "Action = Publish"
+    },
+    {
+      "name": "Overwrite",
+      "type": "boolean",
+      "label": "Overwrite Power BI File",
+      "defaultValue": "true",
+      "required": false,
+      "helpMarkDown": "Should the dataset be overwritten?",
+      "visibleRule": "Action = Publish"
+    },
+    {
+      "name": "Create",
+      "type": "boolean",
+      "label": "Create if the workspace does not exist",
+      "defaultValue": "true",
+      "required": false,
+      "helpMarkDown": "Create the workspace when it does not exist",
+      "visibleRule": "Action = Publish || Action = AddUsers"
+    },
+    {
+      "name": "Users",
+      "type": "string",
+      "label": "Users (e-mail)",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "If you want to add multiple users seperate them with ','. For example piet@piet.nl,klaas@klaas.nl. At this moment only admin access is supported.",
+      "visibleRule": "Action = AddUsers"
+    },
+    {
+      "name": "UpdateAll",
+      "type": "boolean",
+      "label": "Update all datasources in workspace the datasource name will be ignored",
+      "defaultValue": "false",
+      "required": false,
+      "helpMarkDown": "Should all the datasets be overwritten?",
+      "visibleRule": "Action = UpdateDatasource"
+    },
+    {
+      "name": "DatasetName",
+      "type": "string",
+      "label": "Dataset name",
+      "defaultValue": "",
+      "required": false,
+      "helpMarkDown": "The name of the dataset",
+      "visibleRule": "Action = DataRefresh || Action = UpdateDatasource"
+    },
+    {
+      "name": "DatasourceType",
+      "label": "Datasource type",
+      "type": "pickList",
+      "required": true,
+      "helpMarkDown": "Select the type of datasource",
+      "defaultValue": "Sql",
+      "options": {
+        "Sql": "Sql",
+        "AnalysisServices": "Analysis Services",
+        "SharePointList": "SharePoint",
+        "OData": "OData"
+      },
+      "visibleRule": "Action = UpdateDatasource"
+    },
+    {
+      "name": "OldServer",
+      "type": "string",
+      "label": "Old server",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "The name the old server",
+      "visibleRule": "DatasourceType = SQL || DatasourceType = AnalysisServices"
+    },
+    {
+      "name": "NewServer",
+      "type": "string",
+      "label": "New server",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "The name the new server",
+      "visibleRule": "DatasourceType = SQL || DatasourceType = AnalysisServices"
+    },
+    {
+      "name": "OldDatabase",
+      "type": "string",
+      "label": "Old database",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "The old database the new server",
+      "visibleRule": "DatasourceType = SQL || DatasourceType = AnalysisServices"
+    },
+    {
+      "name": "NewDatabase",
+      "type": "string",
+      "label": "New database",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "The new database",
+      "visibleRule": "DatasourceType = SQL || DatasourceType = AnalysisServices"
+    },
+    {
+      "name": "OldUrl",
+      "type": "string",
+      "label": "Old url",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "The old url",
+      "visibleRule": "DatasourceType = SharePointList || DatasourceType = OData"
+    },
+    {
+      "name": "NewUrl",
+      "type": "string",
+      "label": "New Url",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "The new url to the source",
+      "visibleRule": "DatasourceType = SharePointList || DatasourceType = OData"
+    }
+  ],
+  "execution": {
+    "PowerShell3": {
+      "target": "run.ps1"
+    }
+  }
+}

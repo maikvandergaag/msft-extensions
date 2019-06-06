@@ -1,0 +1,105 @@
+{
+  "id": "567F7830-5655-4D11-B4C5-BADA59A88896",
+  "name": "azureresourcegroup",
+  "friendlyName": "Azure Resource Group with Tags and Lock",
+  "description": "Build and Release Task for the creation of a Azure Resource Group with specific tags and a delete lock",
+  "author": "Maik van der Gaag",
+  "helpMarkDown": "",
+  "category": "Utility",
+  "runsOn": [
+    "Agent",
+    "DeploymentGroup"
+  ],
+  "visibility": [
+    "Build",
+    "Release"
+  ],
+  "demands": [],
+  "version": {
+    "Major": "0",
+    "Minor": "0",
+    "Patch": "13"
+  },
+  "minimumAgentVersion": "2.115.0",
+  "groups":[
+    {
+      "name": "AzureDetails",
+      "displayName": "Azure Details",
+      "isExpanded": true
+    },
+    {
+      "name": "ResourceGroupDetails",
+      "displayName": "Resource Group Details",
+      "isExpanded": true
+    }
+  ],
+  "instanceNameFormat": "Azure Resource Group with Tags and Lock",
+  "inputs": [
+    {
+      "name": "ConnectedServiceName",
+      "type": "connectedService:AzureRM",
+      "label": "Azure Subscription",
+      "defaultValue": "",
+      "required": true,
+      "groupName": "AzureDetails",
+      "helpMarkDown": "Select the Azure Resource Manager subscription for the deployment."
+    },
+    {
+      "name": "ResourceGroupName",
+      "label": "Resource Group",
+      "type": "pickList",
+      "required": true,
+      "groupName": "AzureDetails",
+      "helpMarkDown": "Select the resource group for the assignments",
+      "properties": {
+        "EditableOptions": "True"
+      }
+    },
+    {
+      "name": "location",
+      "type": "pickList",
+      "label": "Location",
+      "required": true,
+      "helpMarkDown": "Location for deploying the resource group. If the resource group already exists in the subscription, then this value will be ignored.",
+      "groupName": "ResourceGroupDetails",
+      "properties": {
+          "EditableOptions": "True"
+      }
+    },
+    {
+      "name": "Tags",
+      "type": "multiLine",
+      "label": "Tags (in json format)",
+      "defaultValue": "",
+      "required": false,
+      "groupName": "ResourceGroupDetails",
+      "helpMarkDown": "Place the key value pairs in json format example {'key':'value'}"      
+    },
+    {
+      "name": "Lock",
+      "type": "boolean",
+      "label": "Add delete lock",
+      "defaultValue": "",
+      "required": true,
+      "groupName": "ResourceGroupDetails",
+      "helpMarkDown": "Add delete lock be added to the resource group"      
+    }
+  ],
+  "dataSourceBindings": [
+    {
+      "target": "ResourceGroupName",
+      "endpointId": "$(ConnectedServiceName)",
+      "dataSourceName": "AzureResourceGroups"
+    },
+    {
+      "target": "location",
+      "endpointId": "$(ConnectedServiceName)",
+      "dataSourceName": "AzureLocations"
+    }
+  ],
+  "execution": {
+    "PowerShell3": {
+      "target": "run-task.ps1"
+    }
+  }
+}

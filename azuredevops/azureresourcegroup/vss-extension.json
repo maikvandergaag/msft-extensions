@@ -1,0 +1,73 @@
+{
+  "manifestVersion": 1,
+  "id": "maikvandergaag-azureresourcegroup",
+  "name": "Azure Resource Group with Tags and Lock",
+  "version": "0.0.13",
+  "publisher": "Development-vanderGaag",
+  "public": false,
+  "targets": [
+    {
+      "id": "Microsoft.VisualStudio.Services"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "uri": "https://github.com/MaikvanderGaag/msft-extensions/tree/master/extensions/azureresourcegroup"
+  },
+  "links": {
+    "getstarted": {
+      "uri": "https://github.com/MaikvanderGaag/msft-extensions/wiki"
+    },
+    "repository": {
+      "uri": "https://github.com/MaikvanderGaag/msft-extensions/"
+    },
+    "issues": {
+      "uri": "https://github.com/MaikvanderGaag/msft-extensions/issues"
+    }
+  },
+  "scope": [
+    "vso.build"
+  ],
+  "description": "Build and Release Task for the creation of a Azure Resource Group with specific tags and a delete lock",
+  "categories": [
+    "Azure Pipelines"
+  ],
+  "tags": [
+    "Release",
+    "Build",
+    "Tagging",
+    "Lock",
+    "Tag",
+    "3fifty",
+    "Azure",
+    "Resource Group"
+  ],
+  "content": {
+    "license": {
+      "path": "license.txt"
+    },
+    "details": {
+      "path": "readme.md"
+    }
+  },
+  "icons": {
+    "default": "icon.png"
+  },
+  "contributions": [
+    {
+      "id": "azurergtag",
+      "type": "ms.vss-distributed-task.task",
+      "targets": [
+        "ms.vss-distributed-task.tasks"
+      ],
+      "properties": {
+        "name": "azureresourcegroup"
+      }
+    }
+  ],
+  "files": [
+    {
+      "path": "azureresourcegroup"
+    }
+  ]
+}

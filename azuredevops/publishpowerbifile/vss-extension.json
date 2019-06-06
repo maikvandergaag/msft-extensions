@@ -1,0 +1,91 @@
+{
+  "manifestVersion": 1,
+  "id": "maikvandergaag-publish-power-bi-file",
+  "name": "Publish Power BI File",
+  "version": "1.2.4",
+  "publisher": "maikvandergaag",
+  "public": true,
+  "targets": [
+    {
+      "id": "Microsoft.VisualStudio.Services"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "uri": "https://github.com/MaikvanderGaag/msft-extensions/tree/master/extensions/publishpowerbifile"
+  },
+  "links": {
+    "getstarted": {
+      "uri": "https://github.com/MaikvanderGaag/msft-extensions/wiki"
+    },
+    "repository": {
+      "uri": "https://github.com/MaikvanderGaag/msft-extensions/"
+    },
+    "issues": {
+      "uri": "https://github.com/MaikvanderGaag/msft-extensions/issues"
+    }
+  },
+  "scope": [
+    "vso.build"
+  ],
+  "description": "Build and Release Management tasks publishing a PowerBI (pbix) file to PowerBI.",
+  "categories": [
+    "Azure Pipelines"
+  ],
+  "tags": [
+    "Release",
+    "Build",
+    "PowerBI",
+    "pbix",
+    "3fifty"
+  ],
+  "content": {
+    "license": {
+      "path": "license.txt"
+    },
+    "details": {
+      "path": "readme.md"
+    }
+  },
+  "icons": {
+    "default": "icon.png"
+  },
+  "contributions": [
+    {
+      "id": "PublishPowerBIFile",
+      "type": "ms.vss-distributed-task.task",
+      "targets": [
+        "ms.vss-distributed-task.tasks"
+      ],
+      "properties": {
+        "name": "publishpowerbifile"
+      }
+    }
+  ],
+  "files": [
+    {
+      "path": "publishpowerbifile/publishpowerbi.ps1"
+    },
+    {
+      "path": "publishpowerbifile/run-task.ps1"
+    },
+    {
+      "path": "publishpowerbifile/task.json"
+    },
+    {
+      "path": "publishpowerbifile/icon.png"
+    },
+    {
+      "path": "publishpowerbifile/ps_modules/vststasksdk"
+    },
+    {
+      "path": "publishpowerbifile/ps_modules/PowerBi"
+    },
+    {
+      "path": "publishpowerbifile/Microsoft.IdentityModel.Clients.ActiveDirectory.dll"
+    },
+    {
+      "path": "publishpowerbifile/Microsoft.IdentityModel.Clients.ActiveDirectory.WindowsForms.dll"
+    }
+  ]
+}

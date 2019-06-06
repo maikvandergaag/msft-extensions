@@ -1,0 +1,96 @@
+{
+  "manifestVersion": 1,
+  "id": "maikvandergaag-azurerbac",
+  "name": "Azure Role Based Access Control",
+  "version": "1.2.1",
+  "publisher": "maikvandergaag",
+  "public": true,
+  "targets": [
+    {
+      "id": "Microsoft.VisualStudio.Services"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "uri": "https://github.com/MaikvanderGaag/msft-extensions/tree/master/extensions/azurerbac"
+  },
+  "links": {
+    "getstarted": {
+      "uri": "https://github.com/MaikvanderGaag/msft-extensions/wiki"
+    },
+    "repository": {
+      "uri": "https://github.com/MaikvanderGaag/msft-extensions/"
+    },
+    "issues": {
+      "uri": "https://github.com/MaikvanderGaag/msft-extensions/issues"
+    }
+  },
+  "scope": [
+    "vso.build"
+  ],
+  "description": "Build and Release Task for performing Role Based Access Control on a Azure Resource Group",
+  "categories": [
+    "Azure Pipelines"
+  ],
+  "tags": [
+    "Release",
+    "Build",
+    "Access",
+    "RBAC",
+    "3fifty",
+    "Azure",
+    "Resource Group"
+  ],
+  "content": {
+    "license": {
+      "path": "license.txt"
+    },
+    "details": {
+      "path": "readme.md"
+    }
+  },
+  "icons": {
+    "default": "icon.png"
+  },
+  "contributions": [
+    {
+      "id": "azurerbac",
+      "type": "ms.vss-distributed-task.task",
+      "targets": [
+        "ms.vss-distributed-task.tasks"
+      ],
+      "properties": {
+        "name": "azurerbac"
+      }
+    }
+  ],
+  "files": [
+    {
+      "path": "azurerbac/addroleassignment.ps1"
+    },
+    {
+     "path": "azurerbac/utility.ps1"
+    },
+    {
+      "path": "azurerbac/removeroleassignment.ps1"
+    },
+    {
+      "path": "azurerbac/run-task.ps1"
+    },
+    {
+      "path": "azurerbac/task.json"
+    },
+    {
+      "path": "azurerbac/icon.png"
+    },
+    {
+      "path": "azurerbac/ps_modules/vststasksdk"
+    },
+    {
+      "path": "azurerbac/ps_modules/TlsHelper_"
+    },
+    {
+      "path": "azurerbac/ps_modules/vstsazurehelpers_"
+    }
+  ]
+}

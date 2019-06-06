@@ -1,0 +1,81 @@
+{
+  "manifestVersion": 1,
+  "id": "maikvandergaag-file-to-variable",
+  "name": "File Content to Variable",
+  "version": "2.2.0",
+  "publisher": "maikvandergaag",
+  "public": true,
+  "targets": [
+    {
+      "id": "Microsoft.VisualStudio.Services"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "uri": "https://github.com/MaikvanderGaag/msft-extensions/tree/master/extensions/filecontenttovariable"
+  },
+  "links": {
+    "getstarted": {
+      "uri": "https://github.com/MaikvanderGaag/msft-extensions/wiki"
+    },
+    "repository": {
+      "uri": "https://github.com/MaikvanderGaag/msft-extensions/"
+    },
+    "issues": {
+      "uri": "https://github.com/MaikvanderGaag/msft-extensions/issues"
+    }
+  },
+  "scope": [
+    "vso.build"
+  ],
+  "description": "Build and Release Management tasks for setting variables to specific file content.",
+  "categories": [
+    "Azure Pipelines"
+  ],
+  "tags": [
+    "Release",
+    "Build",
+    "Variable",
+    "File",
+    "Text",
+    "File Content",
+    "3fifty"
+  ],
+  "content": {
+    "license": {
+      "path": "license.txt"
+    },
+    "details": {
+      "path": "readme.md"
+    }
+  },
+  "icons": {
+    "default": "icon.png"
+  },
+  "contributions": [
+    {
+      "id": "FileContentToVariable",
+      "type": "ms.vss-distributed-task.task",
+      "targets": [
+        "ms.vss-distributed-task.tasks"
+      ],
+      "properties": {
+        "name": "filecontenttovariable"
+      }
+    }
+  ],
+  "files": [
+    {
+      "path": "filecontenttovariable/run-task.ps1"
+    },
+    {
+      "path": "filecontenttovariable/task.json"
+    },
+    {
+      "path": "filecontenttovariable/icon.png"
+    },
+    {
+      "path": "filecontenttovariable/ps_modules/vststasksdk"
+    }
+  ]
+}

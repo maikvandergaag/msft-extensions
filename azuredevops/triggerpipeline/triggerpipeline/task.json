@@ -1,0 +1,137 @@
+{
+  "id": "05485ce0-4948-481c-a89f-f21fa2fe9a74",
+  "name": "TriggerPipeline",
+  "friendlyName": "Trigger Azure DevOps Pipeline",
+  "description": "Build and Release Management task to trigger a Azure DevOps release or build pipeline.",
+  "author": "Maik van der Gaag",
+  "helpMarkDown": "",
+  "category": "Utility",
+  "visibility": [
+    "Build",
+    "Release"
+  ],
+  "demands": [],
+  "version": {
+    "Major": "1",
+    "Minor": "0",
+    "Patch": "8"
+  },
+  "minimumAgentVersion": "1.95.0",
+  "instanceNameFormat": "Trigger Azure DevOps Pipeline: $(Pipeline)",
+  "inputs": [
+    {
+      "name": "connectedServiceName",
+      "aliases": [
+        "serviceConnection"
+      ],
+      "type": "connectedService:azuredevopsAPI",
+      "label": "Azure DevOps service connection",
+      "defaultValue": "",
+      "required": "true",
+      "helpMarkDown": "Select the Azure DevOps Organization service connection that should be used to connect to Azure DevOps"
+    },
+    {
+      "name": "project",
+      "type": "pickList",
+      "label": "Project",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "Select the name of the team project were the pipeline resides.",
+      "properties": {
+        "EditableOptions": "True"
+      }
+    },
+    {
+      "name": "Pipeline",
+      "label": "Pipeline type",
+      "type": "picklist",
+      "required": true,
+      "helpMarkDown": "Select the type of pipeline",
+      "defaultValue": "Release",
+      "options": {
+        "Release": "Release",
+        "Build": "Build"
+      }
+    },
+    {
+      "name": "buildDefinition",
+      "type": "pickList",
+      "label": "Build Definition",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "Select the name of the Build to trigger.",
+      "visibleRule": "Pipeline = Build",
+      "properties": {
+        "EditableOptions": "True"
+      }
+    },
+    {
+      "name": "releaseDefinition",
+      "type": "pickList",
+      "label": "Release Definition",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "Select the name of the Release to trigger.",
+      "visibleRule": "Pipeline = Release",
+      "properties": {
+        "EditableOptions": "True"
+      }
+    },
+    {
+      "name": "Description",
+      "type": "string",
+      "label": "Release description",
+      "required": false,
+      "helpMarkDown": "The description of the release",
+      "visibleRule": "Pipeline = Release"
+    },
+    {
+      "name": "Branch",
+      "type": "string",
+      "label": "Branch",
+      "required": false,
+      "helpMarkDown": "The name of the branch to build. When kept empty the default branch of the build will be used.",
+      "visibleRule": "Pipeline = Build"
+    },
+    {
+      "name": "BuildNumber",
+      "type": "string",
+      "label": "Build Number",
+      "defaultValue": "",
+      "required": false,
+      "helpMarkDown": "The succeeded build number to release of the primary artifact. When kept empty the latest version is used.",
+      "visibleRule": "Pipeline = Release"
+    }
+  ],
+  "dataSourceBindings": [
+    {
+      "target": "project",
+      "endpointId": "$(connectedServiceName)",
+      "dataSourceName": "projects",
+      "resultTemplate": "{ \"Value\" : \"{{{id}}}\", \"DisplayValue\" : \"{{{name}}}\" }"
+    },
+    {
+      "target": "buildDefinition",
+      "endpointId": "$(connectedServiceName)",
+      "dataSourceName": "buildDefinitions",
+      "parameters": {
+        "project": "$(project)"
+      },
+      "resultTemplate": "{ \"Value\" : \"{{{name}}}\", \"DisplayValue\" : \"{{{name}}}\" }"
+    },
+    {
+      "target": "releaseDefinition",
+      "endpointId": "$(connectedServiceName)",
+      "dataSourceName": "releaseDefinitions",
+      "parameters": {
+         "project": "$(project)"
+      },
+      "resultTemplate": "{ \"Value\" : \"{{{name}}}\", \"DisplayValue\" : \"{{{name}}}\" }"
+    }
+  ],
+  "execution": {
+    "PowerShell3": {
+      "target": "run.ps1"
+    }
+  }
+}

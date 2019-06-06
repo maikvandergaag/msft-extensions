@@ -1,0 +1,95 @@
+{
+  "manifestVersion": 1,
+  "id": "maikvandergaag-azurergtag",
+  "name": "Azure Resource Group Tagging",
+  "version": "1.0.5",
+  "publisher": "maikvandergaag",
+  "public": true,
+  "targets": [
+    {
+      "id": "Microsoft.VisualStudio.Services"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "uri": "https://github.com/MaikvanderGaag/msft-extensions/tree/master/extensions/azurergtag"
+  },
+  "links": {
+    "getstarted": {
+      "uri": "https://github.com/MaikvanderGaag/msft-extensions/wiki"
+    },
+    "repository": {
+      "uri": "https://github.com/MaikvanderGaag/msft-extensions/"
+    },
+    "issues": {
+      "uri": "https://github.com/MaikvanderGaag/msft-extensions/issues"
+    }
+  },
+  "scope": [
+    "vso.build"
+  ],
+  "description": "Build and Release Task for performing Role Based Access Control on a Azure Resource Group",
+  "categories": [
+    "Azure Pipelines"
+  ],
+  "tags": [
+    "Release",
+    "Build",
+    "Tagging",
+    "3fifty",
+    "Azure",
+    "Resource Group"
+  ],
+  "content": {
+    "license": {
+      "path": "license.txt"
+    },
+    "details": {
+      "path": "readme.md"
+    }
+  },
+  "icons": {
+    "default": "icon.png"
+  },
+  "contributions": [
+    {
+      "id": "azurergtag",
+      "type": "ms.vss-distributed-task.task",
+      "targets": [
+        "ms.vss-distributed-task.tasks"
+      ],
+      "properties": {
+        "name": "azurergtag"
+      }
+    }
+  ],
+  "files": [
+    {
+      "path": "azurergtag/addtags.ps1"
+    },
+    {
+      "path": "azurergtag/utility.ps1"
+    },
+    {
+      "path": "azurergtag/removetags.ps1"
+    },
+    {
+      "path": "azurergtag/run-task.ps1"
+    },
+    {
+      "path": "azurergtag/task.json"
+    },
+    {
+      "path": "azurergtag/icon.png"
+    },
+    {
+      "path": "azurergtag/ps_modules/vststasksdk"
+    },
+    {
+      "path": "azurergtag/ps_modules/TlsHelper_"
+    },
+    {
+      "path": "azurergtag/ps_modules/vstsazurehelpers_"
+    }
+  ]
+}

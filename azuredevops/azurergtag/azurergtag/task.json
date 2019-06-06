@@ -1,0 +1,81 @@
+{
+  "id": "567F7830-5655-4D11-B4C5-BADA59A77796",
+  "name": "azurergtag",
+  "friendlyName": "Azure Resource Group Tagging",
+  "description": "Task for managing Azure resource group tags",
+  "author": "Maik van der Gaag",
+  "helpMarkDown": "",
+  "category": "Utility",
+  "visibility": [
+    "Build",
+    "Release"
+  ],
+  "demands": [],
+  "version": {
+    "Major": "1",
+    "Minor": "0",
+    "Patch": "5"
+  },
+  "minimumAgentVersion": "2.117.0",
+  "instanceNameFormat": "Azure Resource Group Tagging",
+  "inputs": [
+    {
+      "name": "ConnectedServiceName",
+      "type": "connectedService:AzureRM",
+      "label": "Azure RM Subscription",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "Select the Azure Resource Manager subscription for the deployment."
+    },
+    {
+      "name": "Action",
+      "label": "Action",
+      "type": "pickList",
+      "required": true,
+      "helpMarkDown": "Select the action you would like to perform (Add or Remove)",
+      "defaultValue": "Add",
+      "options": {
+        "Add": "Add / Update",
+        "Remove": "Remove"
+      }
+    },
+    {
+      "name": "ResourceGroupName",
+      "label": "Resource Group",
+      "type": "pickList",
+      "required": true,
+      "helpMarkDown": "Select the resource group for the assignments",
+      "properties": {
+        "EditableOptions": "True"
+      }
+    },
+    {
+      "name": "Key",
+      "type": "string",
+      "label": "Key",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "The key of the tag"      
+    },
+    {
+      "name": "Value",
+      "type": "string",
+      "label": "Value",
+      "required": false,
+      "helpMarkDown": "The value of the tag",
+      "visibleRule": "Action = Add"
+    }
+  ],
+  "dataSourceBindings": [
+    {
+      "target": "ResourceGroupName",
+      "endpointId": "$(ConnectedServiceName)",
+      "dataSourceName": "AzureResourceGroups"
+    }
+  ],
+  "execution": {
+    "PowerShell3": {
+      "target": "run-task.ps1"
+    }
+  }
+}
