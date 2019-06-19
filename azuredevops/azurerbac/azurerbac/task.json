@@ -59,10 +59,10 @@
     {
       "name": "usergroup",
       "type": "pickList",
-      "label": "Users or Groups",
+      "label": "Users, Groups and Applications",
       "defaultValue": "Groups",
       "required": true,
-      "helpMarkDown": "Perform the actions for users or groups",
+      "helpMarkDown": "Perform the actions for users, groups or applications",
       "options": {
         "Users": "Users",
         "Groups": "Groups",
