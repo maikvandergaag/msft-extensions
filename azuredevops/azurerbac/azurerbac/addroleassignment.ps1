@@ -62,16 +62,19 @@ if($items -ne $null){
         if($action -eq 'Users'){
 			Write-Host "Getting user $item";
             $adObject = Get-AzureRmADUser -UserPrincipalName $item
+            $id = $adObject.Id
         }elseif($action -eq 'Groups'){
 			Write-Host "Getting group $item";
             $adObject = Get-AzureRmADGroup -SearchString $item
+            $id = $adObject.Id
         }elseif($action -eq 'Applications'){
 			Write-Host "Getting application $item";
             $adObject = Get-AzureRmADApplication -DisplayName $item
+            $id = $adObject.ObjectId
         }
 
         if($adObject -ne $null){
-            SetAssigment -Role $role -ObjectId $adObject.Id -ResourceGroupName $resourceGroupName -BreakonException $failonError                      
+            SetAssigment -Role $role -ObjectId $id -ResourceGroupName $resourceGroupName -BreakonException $failonError                      
         }else{
             $message = "Can't find ad object: $item"
 
