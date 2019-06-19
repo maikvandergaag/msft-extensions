@@ -51,7 +51,7 @@ if($action -eq 'Users'){
     $items = $groups.Split(",");
 }elseif($action -eq 'Applications'){
     Write-Host "Setting RBAC for specific applications";
-    $items = $applictions.Split(",");
+    $items = $applications.Split(",");
 }
 
 if($items -ne $null){
