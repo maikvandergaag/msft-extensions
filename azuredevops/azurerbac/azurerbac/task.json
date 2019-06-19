@@ -14,7 +14,7 @@
   "version": {
     "Major": "1",
     "Minor": "2",
-    "Patch": "1"
+    "Patch": "4"
   },
   "minimumAgentVersion": "2.117.0",
   "instanceNameFormat": "Azure RBAC",
@@ -65,7 +65,8 @@
       "helpMarkDown": "Perform the actions for users or groups",
       "options": {
         "Users": "Users",
-        "Groups": "Groups"
+        "Groups": "Groups",
+        "Applications": "Applications"
       }
     },
     {
@@ -84,6 +85,14 @@
       "required": false,
       "helpMarkDown": "Users for setting the specific Role (seperate by ',')",
       "visibleRule": "usergroup = Users"
+    },
+    {
+      "name": "Applications",
+      "type": "string",
+      "label": "Applications",
+      "required": false,
+      "helpMarkDown": "Applications for setting the specific Role (displaynames) (seperate by ',')",
+      "visibleRule": "usergroup = Applications"
     },
     {
       "name": "FailonError",

@@ -3,6 +3,7 @@ Trace-VstsEnteringInvocation $MyInvocation
 $resourceGroupName = Get-VstsInput -Name ResourceGroupName -Require
 $groups = Get-VstsInput -Name Groups
 $users = Get-VstsInput -Name Users
+$applications = Get-VstsInput -Name Applications
 $role = Get-VstsInput -Name AzureRoleAssignments
 $action = Get-VstsInput -Name usergroup
 $failonError = Get-VstsInput -Name FailonError
@@ -11,6 +12,7 @@ $userAction = Get-VstsInput -Name Action
 Write-Host "Resource group:      $resourceGroupName"
 Write-Host "Groups:              $groups"
 Write-Host "Users:               $users"
+Write-Host "Applications:        $applications"
 Write-Host "Role :               $role"
 Write-Host "Action :             $action"
 Write-Host "Fail On Error :      $failonError"

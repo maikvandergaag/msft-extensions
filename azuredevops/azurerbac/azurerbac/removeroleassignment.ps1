@@ -52,6 +52,9 @@ if($action -eq 'Users'){
 }elseif($action -eq 'Groups'){
     Write-Host "Setting RBAC for specific groups";
     $items = $groups.Split(",");
+}elseif($action -eq 'Applications'){
+    Write-Host "Setting RBAC for specific applications";
+    $items = $applictions.Split(",");
 }
 
 if($items -ne $null){
@@ -65,6 +68,9 @@ if($items -ne $null){
         }elseif($action -eq 'Groups'){
 			Write-Host "Getting group $item";
             $adObject = Get-AzureRmADGroup -SearchString $item
+        }elseif($action -eq 'Applications'){
+			Write-Host "Getting application $item";
+            $adObject = Get-AzureRmADApplication -DisplayName $item
         }
 
         if($adObject -ne $null){

@@ -7,9 +7,10 @@ Within the task multiple parameters need to be specified:
 * Resource Group: The Azure resource group name.
 * Action: The specific action to perform: Add or Remove.
 * Azure Role Assignment: The Role Assignment.
-* Users or Group: Perform the action for users or groups.
+* Users, Group or Applications: Perform the action for users or groups.
 * Groups: Visible when Groups action is chosen. In this field you need to specify the group names. For multiple separate by (',').
 * Users: Visible when Users action is chosen. In this field you need to specify the user principal names of the users. For multiple separate by (','). 
+* Applications: Visible when Applications action is chosen. In this field you need to specify the display names of the applications. For multiple separate by (','). 
 * Fail on Error: Boolean value whether the task should fail when a error occurs.
 
 ## Documentation
@@ -32,3 +33,4 @@ Make sure the application that is performing the actions has the appropriate rig
 | 1.2.0   | Fixed issues and some minor changes |
 | 1.2.1   | Added trimming support for added items |
 | 1.2.3   | Integration in a CI / CD pipeline |
+| 1.2.4   | Added applications |
