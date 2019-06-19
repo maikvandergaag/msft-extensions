@@ -69,8 +69,8 @@ if($items -ne $null){
             $id = $adObject.Id
         }elseif($action -eq 'Applications'){
 			Write-Host "Getting application $item";
-            $adObject = Get-AzureRmADApplication -DisplayName $item
-            $id = $adObject.ObjectId
+            $adObject = Get-AzureRmADServicePrincipal -DisplayName $item
+            $id = $adObject.Id
         }
 
         if($adObject -ne $null){
