@@ -204,7 +204,7 @@ Function Update-PowerBIDatasetDatasource {
                             }
                         },
                         'connectionDetails': {
-                            'database': '$NewUrl'
+                            'url': '$NewUrl'
                         }
                         }]
                   }"
