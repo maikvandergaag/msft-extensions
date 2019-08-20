@@ -22,11 +22,11 @@ $runBuildUri = "$($baseUri)$($runBuild)"
 $base64AuthInfo = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(("token:{0}" -f $DevOpsPAT)))
 $DevOpsHeaders = @{Authorization = ("Basic {0}" -f $base64AuthInfo)};
 
-$BuildDefinitions = Invoke-RestMethod -UseBasicParsing -Uri $buildUri -Method Get -ContentType "application/json" -Headers $DevOpsHeaders;
+$BuildDefinitions = Invoke-RestMethod -Uri $buildUri -Method Get -ContentType "application/json" -Headers $DevOpsHeaders;
     
 if ($BuildDefinitions -and $BuildDefinitions.count -eq 1) {
     $specificUri = $BuildDefinitions.value[0].url
-    $Definition = Invoke-RestMethod -UseBasicParsing -Uri $specificUri -Method Get -ContentType "application/json" -Headers $DevOpsHeaders;
+    $Definition = Invoke-RestMethod -Uri $specificUri -Method Get -ContentType "application/json" -Headers $DevOpsHeaders;
 
     if ($Definition) {
         $Build = New-Object PSObject -Property @{            
@@ -40,7 +40,7 @@ if ($BuildDefinitions -and $BuildDefinitions.count -eq 1) {
         $jsonbody = $Build | ConvertTo-Json -Depth 100
 
         try {
-            $Result = Invoke-RestMethod -UseBasicParsing -Uri $runBuildUri -Method Post -ContentType "application/json" -Headers $DevOpsHeaders -Body $jsonbody;
+            $Result = Invoke-RestMethod -Uri $runBuildUri -Method Post -ContentType "application/json" -Headers $DevOpsHeaders -Body $jsonbody;
         } catch {
             if($_.ErrorDetails.Message){
 
