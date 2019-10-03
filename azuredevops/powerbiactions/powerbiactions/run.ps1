@@ -18,13 +18,16 @@ try {
 	$passWord = $serviceEndpoint.Auth.Parameters.password
 	$clientId = $serviceEndpoint.Data.clientId
 
-	Write-Host $serviceEndpoint.Data
-	Write-Host $serviceEndpoint.Auth.Parameters
+	if(!$clientId){
+		$clientId = $serviceEndpoint.Auth.Parameters.servicePrincipalId
+	}
+
+	$clientSecret = $serviceEndpoint.Auth.Parameters.servicePrincipalKey
+	$tenantId = $serviceEndpoint.Auth.Parameters.tenantId
 
 	Write-Host "******************************"
 	Write-Host "** Service Connection: $($connectedServiceName)"
-	Write-Host "** Username: $($userName)"
-	Write-Host "** Password: $($passWord)"
+	Write-Host "** TenantId: $($tenantId)"
 	Write-Host "** ClientId: $($clientId)"
 	Write-Host "******************************"
 
@@ -51,7 +54,7 @@ try {
 
 
 	#.\run-task.ps1 -Username $userName -FilePattern $filePattern -Password $passWord -ClientId $clientId -GroupName $groupName -Overwrite $overwrite -Connectionstring $connectionstring -Create $create -Dataset $dataset -Action $action
-	.\run-task.ps1 -Username $userName -OldUrl $oldUrl -NewUrl $newUrl -OldServer $oldServer -DatasourceType $datasourceType -NewServer $newServer -OldDatabase $oldDatabase -NewDatabase $newDatabase -AccessRight $accesRight -Users $users -FilePattern $filePattern -Password $passWord -ClientId $clientId -WorkspaceName $workspaceName -Overwrite $overwrite -Create $create -Dataset $dataset -Action $action -UpdateAll $UpdateAll
+	.\run-task.ps1 -Username $userName -OldUrl $oldUrl -NewUrl $newUrl -OldServer $oldServer -DatasourceType $datasourceType -NewServer $newServer -OldDatabase $oldDatabase -NewDatabase $newDatabase -AccessRight $accesRight -Users $users -FilePattern $filePattern -Password $passWord -ClientId $clientId -WorkspaceName $workspaceName -Overwrite $overwrite -Create $create -Dataset $dataset -Action $action -UpdateAll $UpdateAll -ClientSecret $clientSecret -TenantId $tenantId
 }
 finally {
     Trace-VstsLeavingInvocation $MyInvocation

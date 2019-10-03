@@ -143,7 +143,23 @@
         },
         "authenticationSchemes": [
           {
-            "type": "ms.vss-endpoint.endpoint-auth-scheme-service-principal"
+            "type": "ms.vss-endpoint.endpoint-auth-scheme-service-principal",
+            "inputDescriptors": [
+              {
+                "id": "authenticationType",
+                "values": {
+                  "defaultValue": "",
+                  "isDisabled": true
+                }
+              },
+              {
+                "id": "servicePrincipalCertificate",
+                "values": {
+                  "defaultValue": "",
+                  "isDisabled": true
+                }
+              }
+            ]
           }
         ],
         "helpMarkDown": "",
