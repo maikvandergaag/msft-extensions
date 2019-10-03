@@ -19,7 +19,9 @@ Param(
     [Parameter(Mandatory = $false)][String]$DatasourceType,
     [Parameter(Mandatory = $false)][String]$OldUrl,
     [Parameter(Mandatory = $false)][String]$NewUrl,
-    [Parameter(Mandatory = $false)][Boolean]$UpdateAll
+    [Parameter(Mandatory = $false)][Boolean]$UpdateAll,
+    [Parameter(Mandatory = $true)][SecureString]$ClientSecret,
+    [Parameter(Mandatory = $false)][String]$TenantId
 )
 
 try {
@@ -49,11 +51,23 @@ Write-Output "OldUrl                : $($OldUrl)";
 Write-Output "NewUrl                : $($NewUrl)";
 Write-Output "DatasourceType        : $($DatasourceType)";
 Write-Output "UpdateAll             : $($UpdateAll)";
+Write-Output "ClientSecret          : $($ClientSecret)";
+Write-Output "TenantId              : $($TenantId)";
+
 
 #AADToken
 $ResourceUrl = "https://analysis.windows.net/powerbi/api"
-Write-Host "Getting AAD Token for user: $UserName"
-$token = Get-AADToken -username $UserName -Password $PassWord -clientId $ClientId -resource $ResourceUrl -Verbose
+#Write-Host "Getting AAD Token for user: $UserName"
+
+if(!$TenantId){
+    Write-Host "Logging in with a User Principal"
+    $tokenResult = Get-ADALToken -Resource $ResourceUrl -ClientId $ClientId -UserId $Username -Password $PassWord
+    $token = $tokenResult.AccessToken
+}else{
+    Write-Host "Logging in with a Service Principal"
+    $tokenResult = Get-ADALToken -Resource $ResourceUrl -ClientId $ClientId -ClientSecret $ClientSecret -TenantId $TenantId
+    $token = $tokenResult.AccessToken
+}
 
 if($Action -eq "Workspace"){
     Write-Host "Creating a new Workspace"

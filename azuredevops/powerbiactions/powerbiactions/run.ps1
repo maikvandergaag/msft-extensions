@@ -4,6 +4,8 @@ Trace-VstsEnteringInvocation $MyInvocation
 
 #import powerbi module
 Import-Module $PSScriptRoot\ps_modules\PowerBi
+#import ADAL module
+Import-Module $PSScriptRoot\ps_modules\ADAL.PS
 
 try {
     # Get VSTS input values
@@ -15,6 +17,9 @@ try {
 	$userName =  $serviceEndpoint.Auth.Parameters.username
 	$passWord = $serviceEndpoint.Auth.Parameters.password
 	$clientId = $serviceEndpoint.Data.clientId
+
+	Write-Host $serviceEndpoint.Data
+	Write-Host $serviceEndpoint.Auth.Parameters
 
 	Write-Host "******************************"
 	Write-Host "** Service Connection: $($connectedServiceName)"
