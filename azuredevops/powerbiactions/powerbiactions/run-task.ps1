@@ -1,9 +1,9 @@
 [CmdletBinding()]
 Param(
-    [Parameter(Mandatory = $true)][String]$Username,
+    [Parameter(Mandatory = $false)][String]$Username,
     [Parameter(Mandatory = $false)][String]$FilePattern,
     [Parameter(Mandatory = $true)][String]$ClientID,
-    [Parameter(Mandatory = $true)][SecureString]$PassWord,
+    [Parameter(Mandatory = $false)][SecureString]$PassWord,
     [Parameter(Mandatory = $true)][String]$WorkspaceName,
     [Parameter(Mandatory = $false)][Boolean]$Overwrite,
     [Parameter(Mandatory = $false)][String]$Connectionstring,
@@ -20,7 +20,7 @@ Param(
     [Parameter(Mandatory = $false)][String]$OldUrl,
     [Parameter(Mandatory = $false)][String]$NewUrl,
     [Parameter(Mandatory = $false)][Boolean]$UpdateAll,
-    [Parameter(Mandatory = $true)][SecureString]$ClientSecret,
+    [Parameter(Mandatory = $false)][SecureString]$ClientSecret,
     [Parameter(Mandatory = $false)][String]$TenantId
 )
 
