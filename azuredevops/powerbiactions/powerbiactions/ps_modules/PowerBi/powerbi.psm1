@@ -481,7 +481,7 @@ Function Add-PowerBIWorkspaceUsers {
         [parameter()][bool]$Create = $false,
         [parameter(Mandatory = $true)]$AccessToken,
         [parameter(Mandatory = $true)]$Users,
-        [parameter(Mandatory = $true)][ValidateSet("Admin", "Contributor", "Member", IgnoreCase = $false)]$AccessRight = "Admin"	
+        [parameter(Mandatory = $true)][ValidateSet("Admin", "Contributor", "Member", "Viewer", IgnoreCase = $false)]$AccessRight = "Admin"	
     )
     $GroupPath = Get-PowerBIGroupPath -WorkspaceName $WorkspaceName -AccessToken $AccessToken -Create $Create
     $url = $powerbiUrl + $GroupPath + "/users"
@@ -495,6 +495,31 @@ Function Add-PowerBIWorkspaceUsers {
         Invoke-API -Url $url -Method "Post" -AccessToken $AccessToken -Body $body -ContentType "application/json" 
     }
 }
+
+
+Function Add-PowerBIWorkspaceSP {
+    Param(
+        [parameter(Mandatory = $true)]$WorkspaceName,
+        [parameter()][bool]$Create = $false,
+        [parameter(Mandatory = $true)]$AccessToken,
+        [parameter(Mandatory = $true)]$Sps,
+        [parameter(Mandatory = $true)][ValidateSet("Admin", "Contributor", "Member", "Viewer", IgnoreCase = $false)]$AccessRight = "Admin"	
+    )
+    $GroupPath = Get-PowerBIGroupPath -WorkspaceName $WorkspaceName -AccessToken $AccessToken -Create $Create
+    $url = $powerbiUrl + $GroupPath + "/users"
+
+    foreach ($sp in $Sps) {
+        $body = @{
+            groupUserAccessRight = $AccessRight
+            identifier         = $sp
+            principalType = "App"
+
+        } | ConvertTo-Json	
+
+        Invoke-API -Url $url -Method "Post" -AccessToken $AccessToken -Body $body -ContentType "application/json" 
+    }
+}
+
 Function Publish-PowerBIFile {
     Param(
         [parameter(Mandatory = $true)]$WorkspaceName,

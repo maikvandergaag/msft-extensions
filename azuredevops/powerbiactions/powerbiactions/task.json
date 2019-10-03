@@ -40,7 +40,8 @@
       "options": {
         "Workspace": "Create a new Workspace",
         "DeleteWorkspace": "Delete an existing Workspace",
-        "AddUsers": "Add a new Admin user to an Workspace",
+        "AddUsers": "Add a new user to an Workspace",
+        "AddSP": "Add a service principal to an Workspace",
         "DataRefresh": "Refresh a Dataset",
         "UpdateDatasource": "Update DataSource connection",
         "Publish": "Upload PowerBI Report"
@@ -79,7 +80,7 @@
       "defaultValue": "true",
       "required": false,
       "helpMarkDown": "Create the workspace when it does not exist",
-      "visibleRule": "Action = Publish || Action = AddUsers"
+      "visibleRule": "Action = Publish || Action = AddUsers || Action = AddSP"
     },
     {
       "name": "Users",
@@ -87,8 +88,32 @@
       "label": "Users (e-mail)",
       "defaultValue": "",
       "required": true,
-      "helpMarkDown": "If you want to add multiple users seperate them with ','. For example piet@piet.nl,klaas@klaas.nl. At this moment only admin access is supported.",
+      "helpMarkDown": "If you want to add multiple users seperate them with ','.",
       "visibleRule": "Action = AddUsers"
+    },
+    {
+      "name": "ServicePrincipals",
+      "type": "string",
+      "label": "Service Principals (ClientID)",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "If you want to add multiple service principals seperate them with ','.",
+      "visibleRule": "Action = AddSP"
+    },
+    {
+      "name": "Permission",
+      "type": "picklist",
+      "label": "Permission" ,
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "Specific permission: Admin, Member, Contributor or Viewer",
+      "visibleRule": "Action = AddUsers || Action = AddSP",
+      "options": {
+        "Admin": "Admin",
+        "Member": "Member",
+        "Contributor": "Contributor",
+        "Viewer": "Viewer"
+      }
     },
     {
       "name": "UpdateAll",

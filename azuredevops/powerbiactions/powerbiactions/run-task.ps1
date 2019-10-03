@@ -21,7 +21,8 @@ Param(
     [Parameter(Mandatory = $false)][String]$NewUrl,
     [Parameter(Mandatory = $false)][Boolean]$UpdateAll,
     [Parameter(Mandatory = $false)][SecureString]$ClientSecret,
-    [Parameter(Mandatory = $false)][String]$TenantId
+    [Parameter(Mandatory = $false)][String]$TenantId,
+    [Parameter(Mandatory = $false)][String]$ServicePrincipalString
 )
 
 try {
@@ -53,7 +54,7 @@ Write-Output "DatasourceType        : $($DatasourceType)";
 Write-Output "UpdateAll             : $($UpdateAll)";
 Write-Output "ClientSecret          : $($ClientSecret)";
 Write-Output "TenantId              : $($TenantId)";
-
+Write-Output "Service Principals    : $($ServicePrincipalString)";
 
 #AADToken
 $ResourceUrl = "https://analysis.windows.net/powerbi/api"
@@ -87,7 +88,17 @@ if($Action -eq "Workspace"){
         $users = $UserString.Split(",")
         Add-PowerBIWorkspaceUsers -WorkspaceName $WorkspaceName -Users $users -AccessToken $token -AccessRight $AccessRight -Create $Create
     }
-}elseif($Action -eq "DataRefresh"){
+}elseif($Action -eq "AddSP"){
+    Write-Host "Adding service principals to a Workspace"
+
+    if($ServicePrincipalString -eq ""){
+        Write-Warning "No service principals inserted in the variable!"
+    }else{
+        $sps = $ServicePrincipalString.Split(",")
+        Add-PowerBIWorkspaceSP -WorkspaceName $WorkspaceName -Sps $sps -AccessToken $token -AccessRight $AccessRight -Create $Create
+    }
+}
+elseif($Action -eq "DataRefresh"){
     Write-Host "Trying to refresh Dataset"
     New-DatasetRefresh -WorkspaceName $WorkspaceName -DataSetName $Dataset -AccessToken $token
 }elseif($Action -eq "UpdateDatasource"){
