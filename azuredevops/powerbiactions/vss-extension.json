@@ -164,6 +164,25 @@
                       "defaultValue": "spnKey",
                       "isDisabled" : true
                   }
+              },
+              {
+                "id": "servicePrincipalCertificate",
+                "name": "Service Principal Certificate",
+                "description": "Provide PEM file content. Include both certificate and private key content.  Ignore this field if the authentication type is spnKey.",
+                "type": null,
+                "properties": null,
+                "inputMode": "textArea",
+                "isConfidential": true,
+                "useInDefaultDescription": false,
+                "groupName": "AuthenticationParameter",
+                "valueHint": null,
+                "validation": {
+                    "dataType": "string"
+                },
+                "values": {
+                  "inputId": "servicePrincipalCertificate",
+                  "isDisabled": true
+                }
               }
             ]
           }

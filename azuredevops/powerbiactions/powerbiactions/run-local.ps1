@@ -9,9 +9,9 @@ try {
     
     $userName = "nomulti@familie-vandergaag.nl"
     $filePattern = "D:\test.pbix"
-    $passWord = ConvertTo-SecureString -String "Tibbe11711" -AsPlainText -Force
+    $passWord = ConvertTo-SecureString -String "" -AsPlainText -Force
     $clientId = "c8e611b9-4c16-4e8a-80a0-40123a91ac52"#"7b878115-55e1-48c5-bfb8-848dc07f9d1e"
-    $clientSecret = ConvertTo-SecureString -String "cfUmaOep8IcYCm2r?Fh2x2HenZgtR[=-" -AsPlainText -Force
+    $clientSecret = ConvertTo-SecureString -String "" -AsPlainText -Force
     $groupName = "New Workspace"
     $overwrite = $true
     $create = $true
