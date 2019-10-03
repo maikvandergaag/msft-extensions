@@ -34,7 +34,11 @@ try {
 	if($password){
 		$passWord = ConvertTo-SecureString $passWord -AsPlainText -Force
 	}
-	
+
+	if($clientSecret){
+		$secret = ConvertTo-SecureString $clientSecret -AsPlainText -Force
+	}
+
 	#parameters
 	$filePattern = Get-VstsInput -Name PowerBIPath
 	$workspaceName = Get-VstsInput -Name WorkspaceName
@@ -54,7 +58,7 @@ try {
 	$updateAll = Get-VstsInput -Name UpdateAll -AsBool
 
 	#.\run-task.ps1 -Username $userName -FilePattern $filePattern -Password $passWord -ClientId $clientId -GroupName $groupName -Overwrite $overwrite -Connectionstring $connectionstring -Create $create -Dataset $dataset -Action $action
-	.\run-task.ps1 -Username $userName -OldUrl $oldUrl -NewUrl $newUrl -OldServer $oldServer -DatasourceType $datasourceType -NewServer $newServer -OldDatabase $oldDatabase -NewDatabase $newDatabase -AccessRight $accesRight -Users $users -FilePattern $filePattern -Password $passWord -ClientId $clientId -WorkspaceName $workspaceName -Overwrite $overwrite -Create $create -Dataset $dataset -Action $action -UpdateAll $UpdateAll -ClientSecret $clientSecret -TenantId $tenantId
+	.\run-task.ps1 -Username $userName -OldUrl $oldUrl -NewUrl $newUrl -OldServer $oldServer -DatasourceType $datasourceType -NewServer $newServer -OldDatabase $oldDatabase -NewDatabase $newDatabase -AccessRight $accesRight -Users $users -FilePattern $filePattern -Password $passWord -ClientId $clientId -WorkspaceName $workspaceName -Overwrite $overwrite -Create $create -Dataset $dataset -Action $action -UpdateAll $UpdateAll -ClientSecret $secret -TenantId $tenantId
 }
 finally {
     Trace-VstsLeavingInvocation $MyInvocation
