@@ -145,18 +145,42 @@
           {
             "type": "ms.vss-endpoint.endpoint-auth-scheme-service-principal",
             "inputDescriptors": [
-              {
-                "id": "authenticationType",
-                "values": {
-                  "defaultValue": "",
-                  "isDisabled": true
-                }
+                {
+                  "id": "authenticationType",
+                  "name": "Authentication type",
+                  "description": "Provide Authentication type. Accepted values are <b>spnKey</b> and <b>spnCertificate</b>.",
+                  "type": null,
+                  "properties": null,
+                  "inputMode": "textBox",
+                  "isConfidential": false,
+                  "useInDefaultDescription": false,
+                  "groupName": "AuthenticationParameter",
+                  "valueHint": null,
+                  "validation": {
+                      "dataType": "string"
+                  },
+                  "values": {
+                      "inputId": "authenticationType",
+                      "defaultValue": "spnKey",
+                      "isDisabled" : true
+                  }
               },
               {
                 "id": "servicePrincipalCertificate",
+                "name": "Service Principal Certificate",
+                "description": "Provide PEM file content. Include both certificate and private key content.  Ignore this field if the authentication type is spnKey.",
+                "type": null,
+                "properties": null,
+                "inputMode": "textArea",
+                "isConfidential": true,
+                "useInDefaultDescription": false,
+                "groupName": "AuthenticationParameter",
+                "valueHint": null,
+                "validation": {
+                    "dataType": "string"
+                },
                 "values": {
-                  "defaultValue": "",
-                  "isDisabled": true
+                  "isDisabled" : true
                 }
               }
             ]
