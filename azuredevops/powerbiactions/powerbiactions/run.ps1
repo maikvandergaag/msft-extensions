@@ -31,8 +31,10 @@ try {
 	Write-Host "** ClientId: $($clientId)"
 	Write-Host "******************************"
 
-	$passWord = ConvertTo-SecureString $passWord -AsPlainText -Force
-
+	if($password){
+		$passWord = ConvertTo-SecureString $passWord -AsPlainText -Force
+	}
+	
 	#parameters
 	$filePattern = Get-VstsInput -Name PowerBIPath
 	$workspaceName = Get-VstsInput -Name WorkspaceName
