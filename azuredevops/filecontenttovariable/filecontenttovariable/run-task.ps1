@@ -11,13 +11,16 @@ try {
 	if($newlines -eq $true){
 		Write-Host "Adding newline characters to the file."
 		$fileString = Get-Content $path
-
-		For ($i=0; $i -le $fileString.Length; $i++) {
-			$fileContent += $fileString[$i]
-
-			if($i + 1 -lt $fileString.Length){
-				$fileContent += "\n"
+		$numberOflines = $fileString | Measure-Object –Line
+		if($numberOflines.Lines -gt 1) {
+			For ($i=0; $i -le $fileString.Length; $i++) {
+				$fileContent += $fileString[$i]
+				if($i + 1 -lt $fileString.Length){
+					$fileContent += "\n"
+				}
 			}
+		}else{
+			$fileContent = $fileString
 		}
 	}else{
 		$fileContent = Get-Content $path -Raw
