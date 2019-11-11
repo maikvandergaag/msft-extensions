@@ -44,7 +44,8 @@
         "AddSP": "Add a service principal to an Workspace",
         "DataRefresh": "Refresh a Dataset",
         "UpdateDatasource": "Update DataSource connection",
-        "Publish": "Upload PowerBI Report"
+        "Publish": "Upload PowerBI Report",
+        "SQLDirect": "Update SQL Direct Query String"
       }
     },
     {
@@ -131,7 +132,16 @@
       "defaultValue": "",
       "required": false,
       "helpMarkDown": "The name of the dataset",
-      "visibleRule": "Action = DataRefresh || Action = UpdateDatasource"
+      "visibleRule": "Action = DataRefresh || Action = UpdateDatasource || Action = SQLDirect"
+    },
+    {
+      "name": "ConnectionString",
+      "type": "string",
+      "label": "ConnectionString",
+      "defaultValue": "",
+      "required": false,
+      "helpMarkDown": "The SQL connection string",
+      "visibleRule": "Action = SQLDirect"
     },
     {
       "name": "DatasourceType",
