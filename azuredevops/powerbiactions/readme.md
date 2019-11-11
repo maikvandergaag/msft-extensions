@@ -12,11 +12,22 @@ The task works with a "Power BI" service connection that needs to be configured 
 
 ![Power BI Service Connection][serviceconnection]
 
+Within the latest version there are two types of service connections one for a connection with a Service Principal and one with a user:
+
+*User*
 For the service connection to work as it should you need to configure the following parameters:
 
 * ClientId: The client id of the native Azure Active Directory application. This application should have the appropriate rights in order to use the Power BI Api. To register an application, check the following URL: [Register an Azure AD app to embed Power BI content](https://docs.microsoft.com/en-us/power-bi/developer/register-app)
 * Username: The username of the user that will perform the actions. Make sure the account does not have Multi Factor authentication enabled.
 * Password: The password of the user.
+
+*Service Principal*
+
+To configure a Service Principal with PowerBI you will have to go through this guide:[Service principal with Power BI](https://docs.microsoft.com/en-us/power-bi/developer/embed-service-principal)
+
+* ClientId: The client id of the Azure Active Directory application. This application should have the appropriate rights in order to use the Power BI Api.
+* ClientSecret: The client secret of the application
+* Tenant ID: The identifier of the Azure Active Directory tenant 
 
 Depending on the action you choose within the task you need to supply the following parameters:
 * Power BI service connection: The service connection that you have configured.
@@ -59,5 +70,4 @@ If you like the extension, please leave a review. File an issue when you have su
 | 3.1.0   | Updated Service Connection (ClientId required)|
 | 3.2.4   | Added feature to update all datasets at once|
 | 3.2.6   | Small bug fix |
-
-[serviceconnection]: https://github.com/maikvandergaag/msft-extensions/raw/master/docs/images/serviceconnection.png "Power BI Service Connection"
+| 4.0.0   | Added Service Principal support  |
