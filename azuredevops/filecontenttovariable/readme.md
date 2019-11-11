@@ -25,4 +25,5 @@ When you like the extension please leave a review. File a issues when you have s
 | 2.0.0   | Added a new line functionality         |
 | 2.2.0   | Changes tagging and some minor changes | 
 | 2.2.1   | Integration into CI & CD | 
+| 2.2.6   | Fixed issue with single line | 
 
