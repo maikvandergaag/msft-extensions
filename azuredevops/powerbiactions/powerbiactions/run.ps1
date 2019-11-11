@@ -4,6 +4,8 @@ Trace-VstsEnteringInvocation $MyInvocation
 
 #import powerbi module
 Import-Module $PSScriptRoot\ps_modules\PowerBi
+#import ADAL module
+Import-Module $PSScriptRoot\ps_modules\ADAL.PS
 
 try {
     # Get VSTS input values
@@ -16,14 +18,26 @@ try {
 	$passWord = $serviceEndpoint.Auth.Parameters.password
 	$clientId = $serviceEndpoint.Data.clientId
 
+	if(!$clientId){
+		$clientId = $serviceEndpoint.Auth.Parameters.servicePrincipalId
+	}
+
+	$clientSecret = $serviceEndpoint.Auth.Parameters.servicePrincipalKey
+	$tenantId = $serviceEndpoint.Auth.Parameters.tenantId
+
 	Write-Host "******************************"
 	Write-Host "** Service Connection: $($connectedServiceName)"
-	Write-Host "** Username: $($userName)"
-	Write-Host "** Password: $($passWord)"
+	Write-Host "** TenantId: $($tenantId)"
 	Write-Host "** ClientId: $($clientId)"
 	Write-Host "******************************"
 
-	$passWord = ConvertTo-SecureString $passWord -AsPlainText -Force
+	if($password){
+		$passWord = ConvertTo-SecureString $passWord -AsPlainText -Force
+	}
+
+	if($clientSecret){
+		$secret = ConvertTo-SecureString $clientSecret -AsPlainText -Force
+	}
 
 	#parameters
 	$filePattern = Get-VstsInput -Name PowerBIPath
@@ -38,15 +52,14 @@ try {
 	$newServer = Get-VstsInput -Name NewServer
 	$oldDatabase = Get-VstsInput -Name OldDatabase
 	$newDatabase = Get-VstsInput -Name NewDatabase
-	$accesRight = "Admin"
+	$accesRight = Get-VstsInput -Name Permission
 	$users = Get-VstsInput -Name Users
 	$datasourceType = Get-VstsInput -Name DatasourceType
 	$updateAll = Get-VstsInput -Name UpdateAll -AsBool
-
-
+	$ServicePrincipalsString = Get-VstsInput -Name ServicePrincipals
 
 	#.\run-task.ps1 -Username $userName -FilePattern $filePattern -Password $passWord -ClientId $clientId -GroupName $groupName -Overwrite $overwrite -Connectionstring $connectionstring -Create $create -Dataset $dataset -Action $action
-	.\run-task.ps1 -Username $userName -OldUrl $oldUrl -NewUrl $newUrl -OldServer $oldServer -DatasourceType $datasourceType -NewServer $newServer -OldDatabase $oldDatabase -NewDatabase $newDatabase -AccessRight $accesRight -Users $users -FilePattern $filePattern -Password $passWord -ClientId $clientId -WorkspaceName $workspaceName -Overwrite $overwrite -Create $create -Dataset $dataset -Action $action -UpdateAll $UpdateAll
+	.\run-task.ps1 -Username $userName -OldUrl $oldUrl -NewUrl $newUrl -OldServer $oldServer -DatasourceType $datasourceType -NewServer $newServer -OldDatabase $oldDatabase -NewDatabase $newDatabase -AccessRight $accesRight -Users $users -FilePattern $filePattern -Password $passWord -ClientId $clientId -WorkspaceName $workspaceName -Overwrite $overwrite -Create $create -Dataset $dataset -Action $action -UpdateAll $UpdateAll -ClientSecret $secret -TenantId $tenantId -ServicePrincipalString $ServicePrincipalsString
 }
 finally {
     Trace-VstsLeavingInvocation $MyInvocation

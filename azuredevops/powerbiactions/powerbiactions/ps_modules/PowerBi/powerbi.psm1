@@ -10,32 +10,95 @@ Content-Type: application/x-zip-compressed
 
 '@
 
-Function Get-AADToken {
-    Param(
-        [parameter(Mandatory = $true)][string]$Username,
-        [parameter(Mandatory = $true)][SecureString]$Password,
-        [parameter(Mandatory = $true)][guid]$ClientId,
-        [parameter(Mandatory = $true)][string]$Resource
-    )
+# Function Get-AADToken {
+#     Param(
+#         [parameter(Mandatory = $true)][string]$Username,
+#         [parameter(Mandatory = $true)][SecureString]$Password,
+#         [parameter(Mandatory = $true)][guid]$ClientId,
+#         [parameter(Mandatory = $true)][string]$Resource
+#     )
 
-    $authorityUrl = "https://login.microsoftonline.com/common/oauth2/authorize"
+#     $authorityUrl = "https://login.microsoftonline.com/common/oauth2/authorize"
 
-    ## load active directory client dll
-    $typePath = $PSScriptRoot + "\Microsoft.IdentityModel.Clients.ActiveDirectory.dll"
-    Add-Type -Path $typePath 
+#     ## load active directory client dll
+#     $typePath = $PSScriptRoot + "\Microsoft.IdentityModel.Clients.ActiveDirectory.dll"
+#     Add-Type -Path $typePath 
 
-    Write-Verbose "Loaded the Microsoft.IdentityModel.Clients.ActiveDirectory.dll"
+#     Write-Verbose "Loaded the Microsoft.IdentityModel.Clients.ActiveDirectory.dll"
 
-    Write-Verbose "Using authority: $authorityUrl"
-    $authContext = New-Object -TypeName Microsoft.IdentityModel.Clients.ActiveDirectory.AuthenticationContext -ArgumentList ($authorityUrl)
-    $credential = New-Object -TypeName Microsoft.IdentityModel.Clients.ActiveDirectory.UserCredential -ArgumentList ($UserName, $Password)
+#     Write-Verbose "Using authority: $authorityUrl"
+#     $authContext = New-Object -TypeName Microsoft.IdentityModel.Clients.ActiveDirectory.AuthenticationContext -ArgumentList ($authorityUrl)
+#     $credential = New-Object -TypeName Microsoft.IdentityModel.Clients.ActiveDirectory.UserCredential -ArgumentList ($UserName, $Password)
     
-    Write-Verbose "Trying to aquire token for resource: $Resource"
-    $authResult = $authContext.AcquireToken($Resource, $clientId, $credential)
+#     Write-Verbose "Trying to aquire token for resource: $Resource"
+#     $authResult = $authContext.AcquireToken($Resource, $clientId, $credential)
 
-    Write-Verbose "Authentication Result retrieved for: $($authResult.UserInfo.DisplayableId)"
-    return $authResult.AccessToken
-}
+#     Write-Verbose "Authentication Result retrieved for: $($authResult.UserInfo.DisplayableId)"
+#     return $authResult.AccessToken
+# }
+
+<# Function Get-AADToken {
+       
+    [CmdletBinding()]
+    [OutputType([string])]
+    PARAM (
+      [Parameter(Position=0,Mandatory=$true)]
+      [guid]$TenantID,
+  
+      [Parameter(Position=1,Mandatory=$true)]
+      [pscredential]
+      [System.Management.Automation.CredentialAttribute()]
+      $Credential,
+
+      [parameter(Mandatory = $true)]
+      [string]$Resource,
+      
+      [parameter(Mandatory = $false)][guid]
+      $ClientId,
+
+      [Parameter(Position=0,Mandatory=$false)]
+      [ValidateSet('UserPrincipal', 'ServicePrincipal')]
+      [String]$AuthenticationType = 'UserPrincipal'
+    )
+    Try
+    {
+      ## load active directory client dll
+      $typePath = $PSScriptRoot + "\Microsoft.IdentityModel.Clients.ActiveDirectory.dll"
+      Add-Type -Path $typePath 
+
+      $Username       = $Credential.Username
+      $Password       = $Credential.Password
+  
+      If ($AuthenticationType -ieq 'UserPrincipal')
+      {
+ 
+        # Set Authority to Azure AD Tenant
+        $authority = 'https://login.microsoftonline.com/common/' + $TenantID
+        Write-Verbose "Authority: $authority"
+  
+        $AADcredential = [Microsoft.IdentityModel.Clients.ActiveDirectory.UserCredential]::new($UserName, $Password)
+        $authContext = [Microsoft.IdentityModel.Clients.ActiveDirectory.AuthenticationContext]::new($authority)
+        $authResult = $authCoontext.AcquireTokenAsync($Resurce,$clientId,$AADcredential)
+        $Token = $authResult.Result.CreateAuthorizationHeader()
+      } else {
+        # Set Authority to Azure AD Tenant
+        $authority = 'https://login.windows.net/' + $TenantId
+  
+        $ClientCred = [Microsoft.IdentityModel.Clients.ActiveDirectory.ClientCredential]::new($UserName, $Password)
+        $authContext = [Microsoft.IdentityModel.Clients.ActiveDirectory.AuthenticationContext]::new($authority)
+        $authResult = $authContext.AcquireTokenAsync($Resource,$ClientCred)
+        $Token = $authResult.Result.CreateAuthorizationHeader()
+      }
+      
+    }
+    Catch
+    {
+      Throw $_
+      $ErrorMessage = 'Failed to aquire Azure AD token.'
+      Write-Error -Message 'Failed to aquire Azure AD token'
+    }
+    $Token
+  } #>
 
 Function Invoke-API {
     Param(
@@ -167,7 +230,12 @@ Function Update-PowerBIDatasetDatasources {
             }
         }else{
             $dataset = Get-PowerBiDataSet -GroupPath $groupPath -AccessToken $AccessToken -Name $DatasetName
-            Update-PowerBIDatasetDatasource -GroupPath $groupPath -Set $dataset -OldUrl $OldUrl -NewUrl $NewUrl -AccessToken $AccessToken -DatasourceType $DatasourceType -OldServer $OldServer -NewServer $NewServer -OldDatabase $OldDatabase -NewDatabase $NewDatabase
+
+            if($dataset){
+                Update-PowerBIDatasetDatasource -GroupPath $groupPath -Set $dataset -OldUrl $OldUrl -NewUrl $NewUrl -AccessToken $AccessToken -DatasourceType $DatasourceType -OldServer $OldServer -NewServer $NewServer -OldDatabase $OldDatabase -NewDatabase $NewDatabase
+            }else{
+                Write-Warning "Dataset $DatasetName could not be found"
+            }
         }
     }
     else {
@@ -413,7 +481,7 @@ Function Add-PowerBIWorkspaceUsers {
         [parameter()][bool]$Create = $false,
         [parameter(Mandatory = $true)]$AccessToken,
         [parameter(Mandatory = $true)]$Users,
-        [parameter(Mandatory = $true)][ValidateSet("Admin", "Contributor", "Member")]$AccessRight = "Admin"	
+        [parameter(Mandatory = $true)][ValidateSet("Admin", "Contributor", "Member", "Viewer", IgnoreCase = $false)]$AccessRight = "Admin"	
     )
     $GroupPath = Get-PowerBIGroupPath -WorkspaceName $WorkspaceName -AccessToken $AccessToken -Create $Create
     $url = $powerbiUrl + $GroupPath + "/users"
@@ -427,6 +495,31 @@ Function Add-PowerBIWorkspaceUsers {
         Invoke-API -Url $url -Method "Post" -AccessToken $AccessToken -Body $body -ContentType "application/json" 
     }
 }
+
+
+Function Add-PowerBIWorkspaceSP {
+    Param(
+        [parameter(Mandatory = $true)]$WorkspaceName,
+        [parameter()][bool]$Create = $false,
+        [parameter(Mandatory = $true)]$AccessToken,
+        [parameter(Mandatory = $true)]$Sps,
+        [parameter(Mandatory = $true)][ValidateSet("Admin", "Contributor", "Member", "Viewer", IgnoreCase = $false)]$AccessRight = "Admin"	
+    )
+    $GroupPath = Get-PowerBIGroupPath -WorkspaceName $WorkspaceName -AccessToken $AccessToken -Create $Create
+    $url = $powerbiUrl + $GroupPath + "/users"
+
+    foreach ($sp in $Sps) {
+        $body = @{
+            groupUserAccessRight = $AccessRight
+            identifier         = $sp
+            principalType = "App"
+
+        } | ConvertTo-Json	
+
+        Invoke-API -Url $url -Method "Post" -AccessToken $AccessToken -Body $body -ContentType "application/json" 
+    }
+}
+
 Function Publish-PowerBIFile {
     Param(
         [parameter(Mandatory = $true)]$WorkspaceName,

@@ -1,9 +1,9 @@
 [CmdletBinding()]
 Param(
-    [Parameter(Mandatory = $true)][String]$Username,
+    [Parameter(Mandatory = $false)][String]$Username,
     [Parameter(Mandatory = $false)][String]$FilePattern,
     [Parameter(Mandatory = $true)][String]$ClientID,
-    [Parameter(Mandatory = $true)][SecureString]$PassWord,
+    [Parameter(Mandatory = $false)][SecureString]$PassWord,
     [Parameter(Mandatory = $true)][String]$WorkspaceName,
     [Parameter(Mandatory = $false)][Boolean]$Overwrite,
     [Parameter(Mandatory = $false)][String]$Connectionstring,
@@ -19,7 +19,10 @@ Param(
     [Parameter(Mandatory = $false)][String]$DatasourceType,
     [Parameter(Mandatory = $false)][String]$OldUrl,
     [Parameter(Mandatory = $false)][String]$NewUrl,
-    [Parameter(Mandatory = $false)][Boolean]$UpdateAll
+    [Parameter(Mandatory = $false)][Boolean]$UpdateAll,
+    [Parameter(Mandatory = $false)][SecureString]$ClientSecret,
+    [Parameter(Mandatory = $false)][String]$TenantId,
+    [Parameter(Mandatory = $false)][String]$ServicePrincipalString
 )
 
 try {
@@ -49,11 +52,23 @@ Write-Output "OldUrl                : $($OldUrl)";
 Write-Output "NewUrl                : $($NewUrl)";
 Write-Output "DatasourceType        : $($DatasourceType)";
 Write-Output "UpdateAll             : $($UpdateAll)";
+Write-Output "ClientSecret          : $($ClientSecret)";
+Write-Output "TenantId              : $($TenantId)";
+Write-Output "Service Principals    : $($ServicePrincipalString)";
 
 #AADToken
 $ResourceUrl = "https://analysis.windows.net/powerbi/api"
-Write-Host "Getting AAD Token for user: $UserName"
-$token = Get-AADToken -username $UserName -Password $PassWord -clientId $ClientId -resource $ResourceUrl -Verbose
+#Write-Host "Getting AAD Token for user: $UserName"
+
+if(!$TenantId){
+    Write-Host "Logging in with a User Principal"
+    $tokenResult = Get-ADALToken -Resource $ResourceUrl -ClientId $ClientId -UserId $Username -Password $PassWord
+    $token = $tokenResult.AccessToken
+}else{
+    Write-Host "Logging in with a Service Principal"
+    $tokenResult = Get-ADALToken -Resource $ResourceUrl -ClientId $ClientId -ClientSecret $ClientSecret -TenantId $TenantId
+    $token = $tokenResult.AccessToken
+}
 
 if($Action -eq "Workspace"){
     Write-Host "Creating a new Workspace"
@@ -73,7 +88,17 @@ if($Action -eq "Workspace"){
         $users = $UserString.Split(",")
         Add-PowerBIWorkspaceUsers -WorkspaceName $WorkspaceName -Users $users -AccessToken $token -AccessRight $AccessRight -Create $Create
     }
-}elseif($Action -eq "DataRefresh"){
+}elseif($Action -eq "AddSP"){
+    Write-Host "Adding service principals to a Workspace"
+
+    if($ServicePrincipalString -eq ""){
+        Write-Warning "No service principals inserted in the variable!"
+    }else{
+        $sps = $ServicePrincipalString.Split(",")
+        Add-PowerBIWorkspaceSP -WorkspaceName $WorkspaceName -Sps $sps -AccessToken $token -AccessRight $AccessRight -Create $Create
+    }
+}
+elseif($Action -eq "DataRefresh"){
     Write-Host "Trying to refresh Dataset"
     New-DatasetRefresh -WorkspaceName $WorkspaceName -DataSetName $Dataset -AccessToken $token
 }elseif($Action -eq "UpdateDatasource"){

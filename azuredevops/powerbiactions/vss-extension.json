@@ -29,10 +29,10 @@
   ],
   "screenshots": [
     {
-        "path": "images/screenshot-1.png"
+      "path": "images/screenshot-1.png"
     },
     {
-        "path": "images/screenshot-2.png"
+      "path": "images/screenshot-2.png"
     }
   ],
   "content": {
@@ -75,55 +75,130 @@
     },
     {
       "id": "powerbi-endpoint-type",
-      "description": "Power BI Service Endpoint",
+      "description": "Power BI Service Endpoint - User",
       "type": "ms.vss-endpoint.service-endpoint-type",
-      "targets": [ "ms.vss-endpoint.endpoint-types" ],
+      "icons": {
+        "default": "images/connection-icon.png",
+        "large": "images/connection-icon.png"
+      },
+      "targets": [
+        "ms.vss-endpoint.endpoint-types"
+      ],
       "properties": {
-          "name": "PowerBI",
-          "displayName": "Power BI",
-          "url": {
-            "displayName": "Power BI Api Url",
-            "value": "https://api.powerbi.com/v1.0",
-            "isVisible": "false"
-          },
-          "inputDescriptors": [
+        "name": "PowerBI - User",
+        "displayName": "Power BI - User",
+        "url": {
+          "displayName": "Power BI Api Url",
+          "value": "https://api.powerbi.com/v1.0",
+          "isVisible": "false"
+        },
+        "inputDescriptors": [
+          {
+            "id": "clientId",
+            "name": "ClientId",
+            "description": "The client id of the native application",
+            "inputMode": "textbox",
+            "isConfidential": false,
+            "validation": {
+              "isRequired": true,
+              "dataType": "string",
+              "maxLength": 300
+            }
+          }
+        ],
+        "authenticationSchemes": [
+          {
+            "type": "ms.vss-endpoint.endpoint-auth-scheme-basic",
+            "displayName": "Credentials",
+            "inputDescriptors": [
               {
-                  "id": "clientId",
-                  "name": "ClientId",
-                  "description": "The client id of the native application",
-                  "inputMode": "textbox",
-                  "isConfidential": false,
-                  "validation": {
-                      "isRequired": true,
-                      "dataType": "string",
-                      "maxLength": 300
-                  }
+                "id": "username",
+                "name": "Username",
+                "description": "Specify a work or school account. Multi-Factor authentication can not be enabled on this account.",
+                "inputMode": "textbox",
+                "isConfidential": false,
+                "validation": {
+                  "isRequired": true,
+                  "dataType": "string",
+                  "maxLength": 300
+                }
               }
-          ],
-          "authenticationSchemes": [
-              {
-                  "type": "ms.vss-endpoint.endpoint-auth-scheme-basic",
-                  "displayName": "Credentials",
-                  "inputDescriptors": [
-                      {
-                          "id": "username",
-                          "name": "Username",
-                          "description": "Specify a work or school account. Multi-Factor authentication can not be enabled on this account.",
-                          "inputMode": "textbox",
-                          "isConfidential": false,
-                          "validation": {
-                              "isRequired": true,
-                              "dataType": "string",
-                              "maxLength": 300
-                          }
-                      }
-                  ]
-              }
-          ],
-          "helpMarkDown": "",
-          "icon": "images/connection-icon.png"
+            ]
+          }
+        ],
+        "helpMarkDown": "",
+        "icon": "images/connection-icon.png"
       }
-  }
+    },
+    {
+      "id": "powerbi-endpoint-service-type",
+      "description": "Power BI Service Endpoint - Service Principal",
+      "type": "ms.vss-endpoint.service-endpoint-type",
+      "icons": {
+        "default": "images/connection-icon.png",
+        "large": "images/connection-icon.png"
+      },
+      "targets": [
+        "ms.vss-endpoint.endpoint-types"
+      ],
+      "properties": {
+        "name": "PowerBI",
+        "displayName": "Power BI - Service Principal",
+        "url": {
+          "displayName": "Power BI Api Url",
+          "value": "https://api.powerbi.com/v1.0",
+          "isVisible": "false"
+        },
+        "authenticationSchemes": [
+          {
+            "type": "ms.vss-endpoint.endpoint-auth-scheme-service-principal",
+            "inputDescriptors": [
+                {
+                  "id": "authenticationType",
+                  "name": "Authentication type",
+                  "description": "Provide Authentication type. Accepted values are <b>spnKey</b> and <b>spnCertificate</b>.",
+                  "type": null,
+                  "properties": null,
+                  "inputMode": "textBox",
+                  "isConfidential": false,
+                  "useInDefaultDescription": false,
+                  "groupName": "AuthenticationParameter",
+                  "valueHint": null,
+                  "validation": {
+                      "dataType": "string"
+                  },
+                  "values": {
+                      "inputId": "authenticationType",
+                      "defaultValue": "spnKey",
+                      "isDisabled" : true
+                  }
+              },
+              {
+                "id": "servicePrincipalCertificate",
+                "name": "Service Principal Certificate",
+                "description": "Provide PEM file content. Include both certificate and private key content.  Ignore this field if the authentication type is spnKey.",
+                "type": null,
+                "properties": null,
+                "inputMode": "textArea",
+                "isConfidential": true,
+                "useInDefaultDescription": false,
+                "groupName": "AuthenticationParameter",
+                "valueHint": null,
+                "validation": {
+                    "dataType": "string"
+                },
+                "values": {
+                  "inputId": "servicePrincipalCertificate",
+                  "isDisabled": true
+                }
+              }
+            ]
+          }
+        ],
+        "helpMarkDown": "",
+        "icon": "images/connection-icon.png"
+      }
+    }
   ],
   "files": [
     {
