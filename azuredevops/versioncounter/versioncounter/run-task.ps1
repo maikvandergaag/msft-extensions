@@ -4,7 +4,7 @@ $VersionVariable = Get-VstsInput -Name VersionVariable -Require
 $UpdateMinorVersion = Get-VstsInput -Name UpdateMinorVersion -Require
 $MaxValuePatchVersion = Get-VstsInput -Name MaxValuePatchVersion
 $MaxValueMinorVersion = Get-VstsInput -Name MaxValueMinorVersion
-$UpdateMinorVersion = Get-VstsInput -Name UpdateMajorVersion
+$UpdateMajorVersion = Get-VstsInput -Name UpdateMajorVersion
 $DevOpsPat = Get-VstsInput -Name DevOpsPat -Require
 
 $devOpsUri = $env:SYSTEM_TEAMFOUNDATIONSERVERURI
