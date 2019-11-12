@@ -20,6 +20,18 @@
   "instanceNameFormat": "Power BI Action: $(Action)",
   "inputs": [
     {
+      "name": "AuthenticationType",
+      "label": "Authentication type",
+      "type": "pickList",
+      "required": true,
+      "helpMarkDown": "Select the action you would like to perform",
+      "defaultValue": "User",
+      "options": {
+        "User": "User",
+        "ServicePrincipal": "Service Principal"
+      }
+    },
+    {
       "name": "connectedServiceName",
       "aliases": [
           "serviceConnection"
@@ -28,7 +40,20 @@
       "label": "Power BI service connection",
       "defaultValue": "",
       "required": "true",
-      "helpMarkDown": "Select a generic service connection that should be used to pick the URL and construct authorization header for the http request."
+      "helpMarkDown": "Select a service connection that should be used to authenticate to Power BI.",
+      "visibleRule": "AuthenticationType = User"
+    },
+    {
+      "name": "connectedServiceNameSP",
+      "aliases": [
+          "serviceConnection"
+      ],
+      "type": "connectedService:PowerBISP",
+      "label": "Power BI service connection",
+      "defaultValue": "",
+      "required": "true",
+      "helpMarkDown": "Select a service connection that should be used to authenticate to Power BI.",
+      "visibleRule": "AuthenticationType = ServicePrincipal"
     },
     {
       "name": "Action",
