@@ -46,7 +46,7 @@
     {
       "name": "connectedServiceNameSP",
       "aliases": [
-          "serviceConnection"
+          "serviceConnectionSP"
       ],
       "type": "connectedService:PowerBISP",
       "label": "Power BI service connection",
