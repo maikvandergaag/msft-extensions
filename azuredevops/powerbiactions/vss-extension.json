@@ -85,7 +85,7 @@
         "ms.vss-endpoint.endpoint-types"
       ],
       "properties": {
-        "name": "PowerBI - User",
+        "name": "PowerBI",
         "displayName": "Power BI - User",
         "url": {
           "displayName": "Power BI Api Url",
@@ -142,7 +142,7 @@
         "ms.vss-endpoint.endpoint-types"
       ],
       "properties": {
-        "name": "PowerBI",
+        "name": "PowerBISP",
         "displayName": "Power BI - Service Principal",
         "url": {
           "displayName": "Power BI Api Url",

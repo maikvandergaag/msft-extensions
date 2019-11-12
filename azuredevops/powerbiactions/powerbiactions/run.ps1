@@ -10,7 +10,16 @@ Import-Module $PSScriptRoot\ps_modules\ADAL.PS
 try {
     # Get VSTS input values
 	
-	$connectedServiceName = Get-VstsInput -Name ConnectedServiceName
+	$authenticationType = Get-VstsInput -Name "AuthenticationType" -Require
+
+
+	if($authenticationType -eq "User"){
+		$connectedServiceName = Get-VstsInput -Name ConnectedServiceName
+	}else{
+		$connectedServiceName = Get-VstsInput -Name connectedServiceNameSP
+	}
+
+	
 	$serviceEndpoint = Get-VstsEndpoint -Name $connectedServiceName -Require
 
 	#connected service
