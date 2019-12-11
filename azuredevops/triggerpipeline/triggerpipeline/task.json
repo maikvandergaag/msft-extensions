@@ -86,6 +86,14 @@
       "visibleRule": "Pipeline = Release"
     },
     {
+      "name": "Variables",
+      "type": "string",
+      "label": "Release Variables",
+      "required": false,
+      "helpMarkDown": "The Variables to pass to triggered pipeline",
+      "visibleRule": "Pipeline = Release"
+    },    
+    {
       "name": "Branch",
       "type": "string",
       "label": "Branch",
