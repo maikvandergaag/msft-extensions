@@ -6,10 +6,13 @@ Param (
     [Parameter(Mandatory = $true)][String]$DevOpsPAT,
     [Parameter(Mandatory = $true)][String]$PipelineName,
     [Parameter(Mandatory = $false)][String]$BuildNumber,
+    [Parameter(Mandatory = $false)][String]$Variables,
     [Parameter(Mandatory = $false)][String]$Description = "Automatically triggered release"
 )
 
 $ErrorActionPreference = 'Stop';
+#Variable input and validation to JSON.
+$Variables= $Variables| ConvertTo-json -Depth 100
 
 #uri
 $baseBuildUri = "$($OrganizationUrl)/$($AzureDevOpsProjectName)/"
@@ -59,7 +62,8 @@ if ($ReleaseDefinitions -and $ReleaseDefinitions.count -eq 1) {
             definitionId = $Definition.id                 
             isDraft      = $false              
             description  = $Description 
-            artifacts    = $artifactsItem           
+            artifacts    = $artifactsItem 
+            variables    = $Variables 
         }
 
         $jsonbody = $Release | ConvertTo-Json -Depth 100
