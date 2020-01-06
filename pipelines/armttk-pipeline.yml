@@ -3,16 +3,22 @@
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
 
+name: $(buildversion)
+
 trigger:
 - master
 
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: 'windows-latest'
 
 steps:
+- task: TfxInstaller@2
+  inputs:
+    version: 'v0.6.x'
 - task: PackageAzureDevOpsExtension@2
   inputs:
-    rootFolder: 'azuredevops/powerbiactions'
+    rootFolder: 'azuredevops/arm-ttk'
+    outputVariable: 'ExOutputPath'
     publisherId: 'maikvandergaag'
     extensionTag: 'alpha'
     extensionVersion: '$(Build.Buildnumber)'
@@ -20,12 +26,10 @@ steps:
     extensionVisibility: 'private'
     extensionPricing: 'free'
 - task: PublishBuildArtifacts@1
-  displayName: 'Publish Artifact: powerbiactions'
+  displayName: 'Publish Artifact: arm-ttk'
   inputs:
-    PathtoPublish: '$(Extension.OutputPath)'
+    PathtoPublish: '$(ExOutputPath)'
     ArtifactName: arm-ttk
-- task: versioncounter@1
-  inputs:
 
 - task: versioncounter@1
   displayName: 'Version number counter'
@@ -36,4 +40,3 @@ steps:
     UpdateMajorVersion: true
     MaxValueMinorVersion: 9
     DevOpsPat: '$(devops-pat-versionnumber)'
-
