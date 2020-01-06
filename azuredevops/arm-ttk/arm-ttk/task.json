@@ -1,0 +1,36 @@
+{
+  "id": "84F23C57-8C65-4709-BC94-5CBD44E96A77",
+  "name": "arm-ttk",
+  "friendlyName": "Azure Resource Manager Template Tester",
+  "description": "Task for testing Azure Resource Manager (ARM) templates",
+  "author": "Maik van der Gaag",
+  "helpMarkDown": "",
+  "category": "Utility",
+  "visibility": [
+    "Build",
+    "Release"
+  ],
+  "demands": [],
+  "version": {
+    "Major": "1",
+    "Minor": "0",
+    "Patch": "0"
+  },
+  "minimumAgentVersion": "2.117.0",
+  "instanceNameFormat": "Azure Resource Manager Template Tester",
+  "inputs": [
+    {
+      "name": "Templatefolder",
+      "type": "string",
+      "label": "Template folder",
+      "required": false,
+      "helpMarkDown": "The folder of the ARM templates to test"
+    }
+  ],
+  "dataSourceBindings": [],
+  "execution": {
+    "pwsh": {
+      "target": "run-task.ps1"
+    }
+  }
+}

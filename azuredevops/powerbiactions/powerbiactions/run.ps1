@@ -65,7 +65,7 @@ try {
 	$users = Get-VstsInput -Name Users
 	$datasourceType = Get-VstsInput -Name DatasourceType
 	$updateAll = Get-VstsInput -Name UpdateAll -AsBool
-	$ServicePrincipalsString = Get-VstsInput -Name ServicePrincipals
+	$ServicePrincipalsString = Get-VstsInput -Name ServicePrincipals 
 	$ConnectionString = Get-VstsInput -Name ConnectionString
 
 	#.\run-task.ps1 -Username $userName -FilePattern $filePattern -Password $passWord -ClientId $clientId -GroupName $groupName -Overwrite $overwrite -Connectionstring $connectionstring -Create $create -Dataset $dataset -Action $action
