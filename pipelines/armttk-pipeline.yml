@@ -12,9 +12,13 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
+- task: TfxInstaller@2
+  inputs:
+    version: 'v0.6.x'
 - task: PackageAzureDevOpsExtension@2
   inputs:
     rootFolder: 'azuredevops/powerbiactions'
+    outputVariable: 'ExOutputPath'
     publisherId: 'maikvandergaag'
     extensionTag: 'alpha'
     extensionVersion: '$(Build.Buildnumber)'
@@ -24,7 +28,7 @@ steps:
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact: powerbiactions'
   inputs:
-    PathtoPublish: '$(Extension.OutputPath)'
+    PathtoPublish: '$(ExOutputPath)'
     ArtifactName: arm-ttk
 
 - task: versioncounter@1
