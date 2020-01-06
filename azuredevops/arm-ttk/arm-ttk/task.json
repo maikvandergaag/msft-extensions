@@ -21,10 +21,11 @@
   "inputs": [
     {
       "name": "Templatefolder",
-      "type": "string",
+      "type": "filePath",
       "label": "Template folder",
-      "required": false,
-      "helpMarkDown": "The folder of the ARM templates to test"
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "The folder of the ARM templates to test (1 minimal file called azureDeploy.json or mainTemplate.json)"
     }
   ],
   "dataSourceBindings": [],
