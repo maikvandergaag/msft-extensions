@@ -24,8 +24,6 @@ steps:
   inputs:
     PathtoPublish: '$(Extension.OutputPath)'
     ArtifactName: arm-ttk
-- task: versioncounter@1
-  inputs:
 
 - task: versioncounter@1
   displayName: 'Version number counter'
@@ -36,4 +34,3 @@ steps:
     UpdateMajorVersion: true
     MaxValueMinorVersion: 9
     DevOpsPat: '$(devops-pat-versionnumber)'
-
