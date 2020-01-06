@@ -30,7 +30,7 @@
   ],
   "dataSourceBindings": [],
   "execution": {
-    "PowerShell3": {
+    "PowerShell": {
       "target": "run-task.ps1"
     }
   }
