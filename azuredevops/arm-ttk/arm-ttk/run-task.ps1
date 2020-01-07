@@ -2,6 +2,8 @@ Trace-VstsEnteringInvocation $MyInvocation
 
 $templatefolder = Get-VstsInput -Name TemplateFolder -Require
 
+$ErrorActionPreference = 'SilentlyContinue'
+
 Write-Host "Template Folder:      $templatefolder"
 
 Install-Module Pester -Force -Scope CurrentUser
