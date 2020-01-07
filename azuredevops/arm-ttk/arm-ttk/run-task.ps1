@@ -6,8 +6,10 @@ $ErrorActionPreference = 'SilentlyContinue'
 
 Write-Host "Template Folder:      $templatefolder"
 
-Install-Module Pester -Force -Scope CurrentUser
-
 Import-Module "$PSScriptRoot\ps_modules\arm-ttk\arm-ttk.psd1"
 
-Test-AzTemplate "$templatefolder"
+Write-Host "Testing ARM Template"
+$output = Test-AzTemplate "$templatefolder"
+
+Write-Host "The ouput of the test is:"
+$output
