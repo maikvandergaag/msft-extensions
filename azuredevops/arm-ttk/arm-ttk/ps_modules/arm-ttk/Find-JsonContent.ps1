@@ -1,4 +1,6 @@
-﻿function Find-JsonContent
+﻿$ErrorActionPreference = 'SilentlyContinue'
+
+function Find-JsonContent
 {
     <#
     .Synopsis

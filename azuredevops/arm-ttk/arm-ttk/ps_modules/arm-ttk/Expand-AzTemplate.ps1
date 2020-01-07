@@ -1,3 +1,5 @@
+$ErrorActionPreference = 'SilentlyContinue'
+
 function Expand-AzTemplate
 {
     <#

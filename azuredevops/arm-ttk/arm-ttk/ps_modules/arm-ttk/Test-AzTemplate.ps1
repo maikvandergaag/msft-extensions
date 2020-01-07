@@ -1,3 +1,5 @@
+$ErrorActionPreference = 'SilentlyContinue'
+
 function Test-AzTemplate
 {
 [Alias('Test-AzureRMTemplate')] # Added for backward compat with MP
@@ -248,9 +250,9 @@ Each test script has access to a set of well-known variables:
                             Select-Object -ExpandProperty Exception |
                             Select-Object -ExpandProperty Message
                         
-                        #if ($errorMessages) { # If any were found,
-                        #    throw ($errorMessages -join ([Environment]::NewLine)) # throw.
-                        #}
+                        if ($errorMessages) { # If any were found,
+                            throw ($errorMessages -join ([Environment]::NewLine)) # throw.
+                        }
                     }
                 }                                               
             }
