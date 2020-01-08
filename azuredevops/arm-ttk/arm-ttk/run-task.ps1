@@ -5,11 +5,8 @@ $templatefolder = Get-VstsInput -Name TemplateFolder -Require
 $ErrorActionPreference = 'SilentlyContinue'
 
 Write-Host "Template Folder:      $templatefolder"
-Import-Module Pester
-Import-Module "$PSScriptRoot\ps_modules\arm-ttk"
 
-Write-Host "Testing ARM Template"
-$output = Test-AzTemplate "$templatefolder"
+$testOutput = @(Test-AzTemplate -TemplatePath \"$templatefolder\")
 
-Write-Host "The ouput of the test is:"
-$output
+$testOutput 
+if ($testOutput | ? {$_.Errors }) { exit 1 } else {   exit 0\n}

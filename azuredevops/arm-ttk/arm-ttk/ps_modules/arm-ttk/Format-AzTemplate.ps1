@@ -1,5 +1,3 @@
-$ErrorActionPreference = 'SilentlyContinue'
-
 function Format-AzTemplate
 {
     <#
