@@ -1,5 +1,4 @@
-﻿
-#region JSON Functions
+﻿#region JSON Functions
 if ($PSVersionTable.PSEdition -ne 'Core') {
     . $psScriptRoot\ConvertFrom-Json.ps1 # Overwriting ConvertFrom-JSON to allow for comments within JSON (not on core)
 }
