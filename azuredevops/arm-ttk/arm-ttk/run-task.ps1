@@ -19,7 +19,7 @@ if ($testOutput | Where-Object {$_.Errors }) {
    if($stop){
       Write-Error "## Problems occured during test execution!"
    }else{
-      Write-Output "## Problems occured during test execution!"
+      Write-Warning "## Problems occured during test execution!"
    }
 } else {
    Write-Output "## Test execution went perfectly!"
