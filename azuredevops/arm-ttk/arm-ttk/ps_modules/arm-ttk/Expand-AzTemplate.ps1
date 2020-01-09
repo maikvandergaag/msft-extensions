@@ -1,3 +1,4 @@
+$ErrorActionPreference = "Continue"
 function Expand-AzTemplate
 {
     <#

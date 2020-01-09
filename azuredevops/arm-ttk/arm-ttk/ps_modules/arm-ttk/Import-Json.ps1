@@ -1,4 +1,6 @@
-﻿function Import-Json
+﻿$ErrorActionPreference = "Continue"
+
+function Import-Json
 {
     <#
     .Synopsis

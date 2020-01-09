@@ -1,3 +1,5 @@
+$ErrorActionPreference = "Continue"
+
 function ConvertFrom-Json
 {
 [CmdletBinding(HelpUri='https://go.microsoft.com/fwlink/?LinkID=217031', RemotingCapability='None')]
