@@ -6,7 +6,6 @@ Param(
     [Parameter(Mandatory = $false)][SecureString]$PassWord,
     [Parameter(Mandatory = $true)][String]$WorkspaceName,
     [Parameter(Mandatory = $false)][Boolean]$Overwrite,
-    [Parameter(Mandatory = $false)][String]$Connectionstring,
     [Parameter(Mandatory = $false)][Boolean]$Create,
     [Parameter(Mandatory = $false)][String]$Action,
     [Parameter(Mandatory = $false)][String]$Dataset,
@@ -22,7 +21,8 @@ Param(
     [Parameter(Mandatory = $false)][Boolean]$UpdateAll,
     [Parameter(Mandatory = $false)][SecureString]$ClientSecret,
     [Parameter(Mandatory = $false)][String]$TenantId,
-    [Parameter(Mandatory = $false)][String]$ServicePrincipalString
+    [Parameter(Mandatory = $false)][String]$ServicePrincipalString,
+    [Parameter(Mandatory = $false)][String]$ConnectionString
 )
 
 try {
@@ -55,6 +55,7 @@ Write-Output "UpdateAll             : $($UpdateAll)";
 Write-Output "ClientSecret          : $($ClientSecret)";
 Write-Output "TenantId              : $($TenantId)";
 Write-Output "Service Principals    : $($ServicePrincipalString)";
+Write-Output "ConnectionString     	: $(if (![System.String]::IsNullOrWhiteSpace($ConnectionString)) { '***'; } else { '<not present>'; })";
 
 #AADToken
 $ResourceUrl = "https://analysis.windows.net/powerbi/api"
@@ -109,4 +110,8 @@ elseif($Action -eq "DataRefresh"){
     }
     
     Update-PowerBIDatasetDatasources -WorkspaceName $WorkspaceName -OldUrl $OldUrl -NewUrl $NewUrl -DataSetName $Dataset -AccessToken $token -DatasourceType $DatasourceType -OldServer $OldServer -NewServer $NewServer -OldDatabase $OldDatabase -NewDatabase $NewDatabase -UpdateAll $UpdateAll
+}elseif($Action -eq "SQLDirect"){
+    Write-Host "Trying to update a SQL Direct Query"
+
+    Update-ConnectionStringDirectQuery -WorkspaceName $WorkspaceName -AccessToken $token -DatasetName $Dataset -ConnectionString $Connectionstring
 }

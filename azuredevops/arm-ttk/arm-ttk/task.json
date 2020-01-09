@@ -1,0 +1,45 @@
+{
+  "id": "84F23C57-8C65-4709-BC94-5CBD44E96A77",
+  "name": "arm-ttk",
+  "friendlyName": "Azure Resource Manager Template Tester",
+  "description": "Task for testing Azure Resource Manager (ARM) templates",
+  "author": "Maik van der Gaag",
+  "helpMarkDown": "",
+  "category": "Utility",
+  "visibility": [
+    "Build",
+    "Release"
+  ],
+  "demands": [],
+  "version": {
+    "Major": "1",
+    "Minor": "0",
+    "Patch": "0"
+  },
+  "minimumAgentVersion": "2.117.0",
+  "instanceNameFormat": "Azure Resource Manager Template Tester",
+  "inputs": [
+    {
+      "name": "Templatefolder",
+      "type": "filePath",
+      "label": "Template folder",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "The folder of the ARM templates to test (1 minimal file called azureDeploy.json or mainTemplate.json)"
+    },
+    {
+      "name": "Stop",
+      "type": "boolean",
+      "label": "Stop on violation",
+      "defaultValue": "true",
+      "required": false,
+      "helpMarkDown": "Should the pipeline stop on a violation?"
+    }
+  ],
+  "dataSourceBindings": [],
+  "execution": {
+    "PowerShell3": {
+      "target": "run-task.ps1"
+    }
+  }
+}

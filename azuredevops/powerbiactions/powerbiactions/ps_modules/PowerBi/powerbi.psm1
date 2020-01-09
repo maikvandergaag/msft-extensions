@@ -304,20 +304,22 @@ Function Update-PowerBIDatasetDatasource {
 
 Function Update-ConnectionStringDirectQuery {
     Param(
-        [parameter(Mandatory = $true)]$GroupPath,
+        [parameter(Mandatory = $true)]$WorkspaceName,
         [parameter(Mandatory = $true)]$AccessToken,
         [parameter(Mandatory = $true)]$DatasetName,
         [parameter(Mandatory = $true)]$ConnectionString
     )
 
-    $set = Get-PowerBIDataSet -GroupPath $GroupPath -AccessToken $AccessToken -Name $DatasetName 
+    $groupPath = Get-PowerBIGroupPath -WorkspaceName $WorkspaceName -AccessToken $AccessToken
+
+    $set = Get-PowerBIDataSet -GroupPath $groupPath -AccessToken $AccessToken -Name $DatasetName 
     $setId = $set.id
 
     $body = @{
         connectionString = $ConnectionString
     } | ConvertTo-Json
     
-    $url = $powerbiUrl + "$GroupPath/datasets/$setId/Default.SetAllConnections"
+    $url = $powerbiUrl + "$groupPath/datasets/$setId/Default.SetAllConnections"
      
     Invoke-API -Url $url -Method "Post" -AccessToken $AccessToken -Body $body -ContentType "application/json"
 }
