@@ -1,4 +1,4 @@
-Write-Host "** Starting ARM Template test"
+Write-Host "** Starting ARM Template test **"
 
 
 Trace-VstsEnteringInvocation $MyInvocation
