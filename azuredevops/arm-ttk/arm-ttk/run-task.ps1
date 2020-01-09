@@ -13,10 +13,10 @@ $testOutput = @(Test-AzTemplate -TemplatePath $templatefolder)
 
 $testOutput 
 
+$ErrorActionPreference = "Stop"
+
 if ($testOutput | Where-Object {$_.Errors }) {
-   Write-Output "## Problems occured during test execution!"
-   exit 1 
+   Write-Error "## Problems occured during test execution!"
 } else {
    Write-Output "## Test execution went perfectly!"
-   exit 0
 } 
