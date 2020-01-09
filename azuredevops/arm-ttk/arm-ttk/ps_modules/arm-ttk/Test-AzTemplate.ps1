@@ -1,3 +1,5 @@
+$ErrorActionPreference = "SilentlyContinue"
+
 function Test-AzTemplate
 {
 [Alias('Test-AzureRMTemplate')] # Added for backward compat with MP
