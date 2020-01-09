@@ -1,4 +1,4 @@
-Write-Host "** Starting ARM Template test **"
+Write-Output "** Starting ARM Template test **"
 
 
 Trace-VstsEnteringInvocation $MyInvocation
@@ -8,11 +8,11 @@ $ErrorActionPreference = "Continue"
 
 $moduleFolder = "$PSScriptRoot\ps_modules\arm-ttk\arm-ttk.psd1"
 
-Write-Host "Importing module from the directory: $moduleFolder"
+Write-Output "Importing module from the directory: $moduleFolder"
 
 Import-Module "$moduleFolder" -Verbose
 
-Write-Host = "Testing the the ARM templates in the folder"
+Write-Output = "Testing the the ARM templates in the folder"
 
 $testOutput = @(Test-AzTemplate -TemplatePath $templatefolder)
 
