@@ -13,8 +13,10 @@ $testOutput = @(Test-AzTemplate -TemplatePath $templatefolder)
 
 $testOutput 
 
-if ($testOutput | ? {$_.Errors }) {
+if ($testOutput | Where-Object {$_.Errors }) {
+   Write-Output "## Problems occured during test execution!"
    exit 1 
 } else {
+   Write-Output "## Test execution went perfectly!"
    exit 0
 } 
