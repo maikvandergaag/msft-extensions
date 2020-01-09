@@ -1,3 +1,5 @@
+$ErrorActionPreference = "Continue"
+
 Trace-VstsEnteringInvocation $MyInvocation
 
 $templatefolder = Get-VstsInput -Name TemplateFolder -Require
