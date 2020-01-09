@@ -2,6 +2,7 @@ Write-Output "** Starting ARM Template test **"
 
 Trace-VstsEnteringInvocation $MyInvocation
 $templatefolder = Get-VstsInput -Name TemplateFolder -Require
+$stop = Get-VstsInput -Name Stop -AsBool
 
 $moduleFolder = "$PSScriptRoot\ps_modules\arm-ttk\arm-ttk.psd1"
 
@@ -13,10 +14,13 @@ $testOutput = @(Test-AzTemplate -TemplatePath $templatefolder)
 
 $testOutput 
 
-$ErrorActionPreference = "Stop"
-
 if ($testOutput | Where-Object {$_.Errors }) {
-   Write-Error "## Problems occured during test execution!"
+
+   if($stop){
+      Write-Error "## Problems occured during test execution!"
+   }else{
+      Write-Output "## Problems occured during test execution!"
+   }
 } else {
    Write-Output "## Test execution went perfectly!"
 } 

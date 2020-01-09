@@ -26,6 +26,14 @@
       "defaultValue": "",
       "required": true,
       "helpMarkDown": "The folder of the ARM templates to test (1 minimal file called azureDeploy.json or mainTemplate.json)"
+    },
+    {
+      "name": "Stop",
+      "type": "boolean",
+      "label": "Stop on violation",
+      "defaultValue": "true",
+      "required": false,
+      "helpMarkDown": "Should the pipeline stop on a violation?"
     }
   ],
   "dataSourceBindings": [],
