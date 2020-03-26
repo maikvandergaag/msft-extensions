@@ -78,8 +78,8 @@
       "description": "Power BI Service Endpoint - User",
       "type": "ms.vss-endpoint.service-endpoint-type",
       "icons": {
-        "default": "images/connection-icon.png",
-        "large": "images/connection-icon.png"
+        "default": "images/icon.png",
+        "large": "images/icon.png"
       },
       "targets": [
         "ms.vss-endpoint.endpoint-types"
@@ -127,7 +127,7 @@
           }
         ],
         "helpMarkDown": "",
-        "icon": "images/connection-icon.png"
+        "icon": "images/icon.png"
       }
     },
     {
@@ -135,8 +135,8 @@
       "description": "Power BI Service Endpoint - Service Principal",
       "type": "ms.vss-endpoint.service-endpoint-type",
       "icons": {
-        "default": "images/connection-icon.png",
-        "large": "images/connection-icon.png"
+        "default": "images/icon.png",
+        "large": "images/icon.png"
       },
       "targets": [
         "ms.vss-endpoint.endpoint-types"
@@ -196,7 +196,7 @@
           }
         ],
         "helpMarkDown": "",
-        "icon": "images/connection-icon.png"
+        "icon": "images/icon.png"
       }
     }
   ],
