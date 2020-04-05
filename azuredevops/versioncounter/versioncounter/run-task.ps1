@@ -5,7 +5,7 @@ $UpdateMinorVersion = Get-VstsInput -Name UpdateMinorVersion -Require
 $MaxValuePatchVersion = Get-VstsInput -Name MaxValuePatchVersion
 $MaxValueMinorVersion = Get-VstsInput -Name MaxValueMinorVersion
 $UpdateMajorVersion = Get-VstsInput -Name UpdateMajorVersion
-$OnlyUpdateMinor = Get-VstsInput -Name OnlyUpdateMinor
+$OnlyUpdateMinor = Get-VstsInput -Name OnlyUpdateMinor -AsBool
 $DevOpsPat = Get-VstsInput -Name DevOpsPat -Require
 
 $devOpsUri = $env:SYSTEM_TEAMFOUNDATIONSERVERURI
@@ -70,6 +70,7 @@ if ($buildDef) {
             $updatedMajorVersion = $majorVersion
 
             if($OnlyUpdateMinor){
+                $updatedPatchVersion = $patchVersion
                 $updatedMinorVersion = $updatedMinorVersion + 1
 			}else{
                 $updatedPatchVersion = $patchVersion + 1
