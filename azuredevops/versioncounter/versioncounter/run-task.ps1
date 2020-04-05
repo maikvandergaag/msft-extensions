@@ -5,6 +5,7 @@ $UpdateMinorVersion = Get-VstsInput -Name UpdateMinorVersion -Require
 $MaxValuePatchVersion = Get-VstsInput -Name MaxValuePatchVersion
 $MaxValueMinorVersion = Get-VstsInput -Name MaxValueMinorVersion
 $UpdateMajorVersion = Get-VstsInput -Name UpdateMajorVersion
+$OnlyUpdateMinor = Get-VstsInput -Name OnlyUpdateMinor
 $DevOpsPat = Get-VstsInput -Name DevOpsPat -Require
 
 $devOpsUri = $env:SYSTEM_TEAMFOUNDATIONSERVERURI
@@ -21,6 +22,7 @@ Write-Output "DevOpsPAT            : $(if (![System.String]::IsNullOrWhiteSpace(
 Write-Output "DevOps Uri           : $($devOpsUri)";
 Write-Output "Project Name         : $($projectName)";
 Write-Output "Project Id           : $($projectId)";
+Write-Output "Only Update Minor    : $($OnlyUpdateMinor)";
 Write-Output "BuildId              : $($buildId)";
 
 $buildUri = "$($devOpsUri)$($projectName)/_apis/build/builds/$($buildId)?api-version=4.1"
@@ -63,9 +65,16 @@ if ($buildDef) {
             $majorVersion = [convert]::ToInt32($majorVersionVar, 10)
             $patchVersion = [convert]::ToInt32($patchVersionVar, 10)
             
-            $updatedPatchVersion = $patchVersion + 1
+            
             $updatedMinorVersion = $minorVersion
             $updatedMajorVersion = $majorVersion
+
+            if($OnlyUpdateMinor){
+                $updatedMinorVersion = $updatedMinorVersion + 1
+			}else{
+                $updatedPatchVersion = $patchVersion + 1
+			}
+
 
             if($UpdateMinorVersion -eq $true){
                 if (($MaxValuePatchVersion -ne 0) -and ($updatedPatchVersion -gt $MaxValuePatchVersion)) {
