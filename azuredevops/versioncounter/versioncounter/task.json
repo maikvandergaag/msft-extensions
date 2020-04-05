@@ -74,9 +74,9 @@
     {
       "name": "OnlyUpdateMinor",
       "label": "Update Minor version",
-      "type": "string",
+      "type": "boolean",
       "required": false,
-      "defaultValue": "0",
+      "defaultValue": "false",
       "groupName": "version",
       "helpMarkDown": "Only update the Minor. The rest will go as configured"
     },
