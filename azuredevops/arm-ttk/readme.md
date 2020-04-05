@@ -8,6 +8,7 @@ Within the task multiple parameters need to be specified:
 * Template folder: The folder to check the arm templates
 * Stop on violation: Stop pipeline execution on a violation of the rules in the template
 
+
 ## Documentation
 
 For the documentation check the [Wiki](https://github.com/MaikvanderGaag/msft-extensions/wiki).
