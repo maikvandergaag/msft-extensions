@@ -30,7 +30,7 @@
       "type": "string",
       "required": true,
       "groupName": "version",
-      "helpMarkDown": "The name of the saved variable. The value should be in the format '1.6.3'." 
+      "helpMarkDown": "The name of the saved variable. The value should be in the format '1.6.3'."
     },
     {
       "name": "UpdateMinorVersion",
@@ -70,6 +70,15 @@
       "groupName": "version",
       "helpMarkDown": "The maximum value to the minor number",
       "visibleRule": "UpdateMajorVersion=true"
+    },
+    {
+      "name": "OnlyUpdateMinor",
+      "label": "Update Minor version",
+      "type": "string",
+      "required": false,
+      "defaultValue": "0",
+      "groupName": "version",
+      "helpMarkDown": "Only update the Minor. The rest will go as configured"
     },
     {
       "name": "DevOpsPat",
