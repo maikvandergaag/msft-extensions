@@ -70,7 +70,7 @@ if ($buildDef) {
             $updatedMajorVersion = $majorVersion
 
             if($OnlyUpdateMinor){
-                $updatedPatchVersion = $patchVersion
+                $updatedPatchVersion = 0
                 $updatedMinorVersion = $updatedMinorVersion + 1
 			}else{
                 $updatedPatchVersion = $patchVersion + 1
