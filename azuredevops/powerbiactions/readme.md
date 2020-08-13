@@ -1,3 +1,5 @@
+#test for config
+
 Power BI Actions is a Build and Release Task for Azure Pipelines. With this tasks a couple of actions can be performed against PowerBI.com
 
 Actions that can be performed with this extension are:
