@@ -4,6 +4,9 @@ name: $(buildversion)
 pool:
   vmImage: 'windows-latest'
 
+variables:
+    - group: "Version Counter"
+
 trigger:
   paths:
     include:
