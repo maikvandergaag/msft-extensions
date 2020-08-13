@@ -14,9 +14,11 @@ trigger:
 
 steps:
 - task: TfxInstaller@2
+  displayName: 'Install TFX'
   inputs:
     version: 'v0.6.x'
 - task: PackageAzureDevOpsExtension@2
+  displayName: 'Package extension'
   inputs:
     rootFolder: 'azuredevops/arm-ttk'
     outputVariable: 'ExOutputPath'
@@ -37,7 +39,7 @@ steps:
   inputs:
     VersionVariable: 'buildversion'
     UpdateMinorVersion: false
-    DevOpsPat: '$(devops-pipeline-pat)'
+    DevOpsPat: '$(devops-pat-versionnumber)'
 - task: versioncounter@1
   displayName: 'Update - Version number (Pull Request)'
   condition: and(succeeded(), and(eq(variables['Build.Reason'], 'PullRequest'), eq(variables['System.PullRequest.TargetBranch'], 'refs/heads/master')))
@@ -45,4 +47,4 @@ steps:
     VersionVariable: 'buildversion'
     UpdateMinorVersion: false
     OnlyUpdateMinor: true
-    DevOpsPat: '$(devops-pipeline-pat)'
+    DevOpsPat: '$(devops-pat-versionnumber)'
