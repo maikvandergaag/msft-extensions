@@ -31,13 +31,18 @@ steps:
   inputs:
     PathtoPublish: '$(ExOutputPath)'
     ArtifactName: arm-ttk
-
 - task: versioncounter@1
-  displayName: 'Version number counter'
+  displayName: 'Update - Version number (develop)'
+  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
   inputs:
-    VersionVariable: buildversion
-    UpdateMinorVersion: true
-    MaxValuePatchVersion: 9
-    UpdateMajorVersion: true
-    MaxValueMinorVersion: 9
-    DevOpsPat: '$(devops-pat-versionnumber)'
+    VersionVariable: 'buildversion'
+    UpdateMinorVersion: false
+    DevOpsPat: '$(devops-pipeline-pat)'
+- task: versioncounter@1
+  displayName: 'Update - Version number (Pull Request)'
+  condition: and(succeeded(), and(eq(variables['Build.Reason'], 'PullRequest'), eq(variables['System.PullRequest.TargetBranch'], 'refs/heads/master')))
+  inputs:
+    VersionVariable: 'buildversion'
+    UpdateMinorVersion: false
+    OnlyUpdateMinor: true
+    DevOpsPat: '$(devops-pipeline-pat)'
