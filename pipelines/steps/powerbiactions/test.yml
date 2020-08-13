@@ -1,0 +1,23 @@
+steps:
+- task: ms-devlabs.vsts-developer-tools-build-tasks.publish-extension-build-task.PublishExtension@1
+  displayName: 'Publish Extension'
+  inputs:
+    connectedServiceName: 'Visual Studio Marketplace'
+    fileType: vsix
+    vsixFile: '$(System.DefaultWorkingDirectory)/powerbiactions/powerbiactions/*.vsix'
+    publisherId: '$(private-marketplace)'
+    extensionTag: Dev
+    extensionName: 'DEV - Power BI Actions'
+    updateTasksVersion: false
+    updateTasksId: true
+    extensionVisibility: private
+    extensionPricing: free
+    shareWith: 'https://devops.azure.com/msftplayground-demo'
+- task: ms-devlabs.vsts-developer-tools-build-tasks.install-extension-build-task.InstallExtension@1
+  displayName: 'Install Extension'
+  inputs:
+    connectedServiceName: 'Visual Studio Marketplace'
+    publisherId: '$(private-marketplace)'
+    extensionId: 'maikvandergaag-power-bi-actions'
+    extensionTag: DEV
+    accounts: 'https://devops.azure.com/msftplayground-demo'
