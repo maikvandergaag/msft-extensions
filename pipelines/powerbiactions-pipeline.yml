@@ -27,7 +27,7 @@ stages:
  - stage : Release
    displayName : Test
    variables :
-      - template: variables/portal/test.yml
+      - template: variables/powerbiactions/test.yml
    jobs:
     - deployment: DeployTest
       displayName: Deploy Extension to Test
