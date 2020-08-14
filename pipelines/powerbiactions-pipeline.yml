@@ -18,8 +18,7 @@ stages:
    displayName: Build
    jobs:
     - job:
-      pool:
-        vmImage: windows-2019
+      pool: 'Azure Scale Set Pool'
       continueOnError: false
       steps:
        - template: steps/powerbiactions/build.yml
@@ -29,9 +28,7 @@ stages:
    jobs:
     - deployment: DeployTest
       displayName: Deploy Extension to Test
-      pool:
-        vmImage: 'windows-latest'
-        demands: azureps
+      pool: 'Azure Scale Set Pool'
       environment: 'Extensions test'
       strategy:
         runOnce:
