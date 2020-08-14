@@ -22,6 +22,6 @@ steps:
   inputs:
     connectedServiceName: 'Visual Studio Marketplace'
     publisherId: '$(private-marketplace)'
-    extensionId: 'maikvandergaag-power-bi-actions'
+    extensionId: 'maikvandergaag-trigger-pipeline'
     extensionTag: DEV
     accounts: 'https://dev.azure.com/msftplayground-demo'
