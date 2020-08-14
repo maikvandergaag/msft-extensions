@@ -18,7 +18,7 @@ stages:
    displayName: Build
    jobs:
     - job:
-      pool: 'Azure Scale Set Pool'
+      pool: 'azure-scale-set-win'
       continueOnError: false
       steps:
        - template: steps/powerbiactions/build.yml
@@ -28,7 +28,7 @@ stages:
    jobs:
     - deployment: DeployTest
       displayName: Deploy Extension to Test
-      pool: 'Azure Scale Set Pool'
+      pool: 'azure-scale-set-win'
       environment: 'Extensions test'
       strategy:
         runOnce:
