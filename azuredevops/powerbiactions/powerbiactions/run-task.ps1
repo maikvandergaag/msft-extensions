@@ -33,29 +33,29 @@ catch {
 	Write-Warning $error
 }
 
-Write-Output "FilePattern           : $($FilePattern)";
-Write-Output "ClientID         		: $($ClientId)";
-Write-Output "PassWord            	: $(if (![System.String]::IsNullOrWhiteSpace($PassWord)) { '***'; } else { '<not present>'; })";
-Write-Output "Username             	: $($Username)";
-Write-Output "WorkspaceName         : $($WorkspaceName)";
-Write-Output "Overwrite             : $($Overwrite)";
-Write-Output "Create                : $($Create)";
-Write-Output "Action                : $($Action)";
-Write-Output "Dataset               : $($Dataset)";
-Write-Output "Users                 : $($UserString)";
-Write-Output "AccessRight           : $($AccessRight)";
-Write-Output "OldServer             : $($OldServer)";
-Write-Output "NewServer             : $($NewServer)";
-Write-Output "OldDatabase           : $($OldDatabase)";
-Write-Output "NewDatabase           : $($NewDatabase)";
-Write-Output "OldUrl                : $($OldUrl)";
-Write-Output "NewUrl                : $($NewUrl)";
-Write-Output "DatasourceType        : $($DatasourceType)";
-Write-Output "UpdateAll             : $($UpdateAll)";
-Write-Output "ClientSecret          : $($ClientSecret)";
-Write-Output "TenantId              : $($TenantId)";
-Write-Output "Service Principals    : $($ServicePrincipalString)";
-Write-Output "ConnectionString     	: $(if (![System.String]::IsNullOrWhiteSpace($ConnectionString)) { '***'; } else { '<not present>'; })";
+Write-Debug "FilePattern           : $($FilePattern)";
+Write-Debug "ClientID         		: $($ClientId)";
+Write-Debug "PassWord            	: $(if (![System.String]::IsNullOrWhiteSpace($PassWord)) { '***'; } else { '<not present>'; })";
+Write-Debug "Username             	: $($Username)";
+Write-Debug "WorkspaceName         : $($WorkspaceName)";
+Write-Debug "Overwrite             : $($Overwrite)";
+Write-Debug "Create                : $($Create)";
+Write-Debug "Action                : $($Action)";
+Write-Debug "Dataset               : $($Dataset)";
+Write-Debug "Users                 : $($UserString)";
+Write-Debug "AccessRight           : $($AccessRight)";
+Write-Debug "OldServer             : $($OldServer)";
+Write-Debug "NewServer             : $($NewServer)";
+Write-Debug "OldDatabase           : $($OldDatabase)";
+Write-Debug "NewDatabase           : $($NewDatabase)";
+Write-Debug "OldUrl                : $($OldUrl)";
+Write-Debug "NewUrl                : $($NewUrl)";
+Write-Debug "DatasourceType        : $($DatasourceType)";
+Write-Debug "UpdateAll             : $($UpdateAll)";
+Write-Debug "ClientSecret          : $($ClientSecret)";
+Write-Debug "TenantId              : $($TenantId)";
+Write-Debug "Service Principals    : $($ServicePrincipalString)";
+Write-Debug "ConnectionString     	: $(if (![System.String]::IsNullOrWhiteSpace($ConnectionString)) { '***'; } else { '<not present>'; })";
 
 #AADToken
 $ResourceUrl = "https://analysis.windows.net/powerbi/api"
