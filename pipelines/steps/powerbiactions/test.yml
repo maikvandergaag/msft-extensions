@@ -16,7 +16,6 @@ steps:
     updateTasksId: true
     extensionVisibility: private
     extensionPricing: free
-    shareWith: 'https://dev.azure.com/msftplayground-demo'
 - task: ms-devlabs.vsts-developer-tools-build-tasks.install-extension-build-task.InstallExtension@1
   displayName: 'Install Extension'
   inputs:
