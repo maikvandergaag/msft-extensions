@@ -25,6 +25,7 @@ stages:
        - template: steps/powerbiactions/build.yml
  - stage : Release
    displayName : Test
+   condition: ne(variables['Build.Reason'], 'PullRequest')
    jobs:
     - deployment: DeployTest
       displayName: Deploy Extension to Test
