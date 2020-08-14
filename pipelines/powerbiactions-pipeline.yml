@@ -6,13 +6,12 @@ pool:
 
 variables:
     - group: "Version Number"
+    - group: "Marketplace"
 
 trigger:
   paths:
     include:
     - azuredevops/powerbiactions
-
-
 
 stages:
  - stage: build

@@ -2,7 +2,7 @@ steps:
 - task: TfxInstaller@2
   displayName: 'Install TFX'
   inputs:
-    version: 'v0.6.x'
+    version: 'v0.7.x'
 - task: PackageAzureDevOpsExtension@2
   displayName: 'Package extension'
   inputs:
@@ -15,6 +15,7 @@ steps:
     extensionVisibility: 'private'
     extensionPricing: 'free'
 - task: PublishPipelineArtifact@1
+  displayName: 'Publish artifact'
   inputs:
     targetPath: '$(ExOutputPath)'
     artifact: 'powerbiactions'
