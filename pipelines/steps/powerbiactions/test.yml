@@ -4,7 +4,7 @@ steps:
   inputs:
     connectedServiceName: 'Visual Studio Marketplace'
     fileType: vsix
-    vsixFile: '$(System.DefaultWorkingDirectory)/powerbiactions/powerbiactions/*.vsix'
+    vsixFile: '$(Pipeline.Workspace)/*.vsix'
     publisherId: '$(private-marketplace)'
     extensionTag: Dev
     extensionName: 'DEV - Power BI Actions'

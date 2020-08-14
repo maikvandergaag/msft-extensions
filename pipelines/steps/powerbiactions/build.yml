@@ -14,11 +14,10 @@ steps:
     updateTasksVersion: true
     extensionVisibility: 'private'
     extensionPricing: 'free'
-- task: PublishBuildArtifacts@1
-  displayName: 'Publish Artifact: powerbiactions'
+- task: PublishPipelineArtifact@1
   inputs:
-    PathtoPublish: '$(ExOutputPath)'
-    ArtifactName: powerbiactions
+    targetPath: '$(ExOutputPath)'
+    artifact: 'powerbiactions'
 - task: versioncounter@1
   displayName: 'Update - Version number (develop)'
   condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
