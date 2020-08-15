@@ -67,6 +67,7 @@
         "DeleteWorkspace": "Delete an existing Workspace",
         "AddUsers": "Add a new user to an Workspace",
         "AddSP": "Add a service principal to an Workspace",
+        "AddGroup": "Add a security group to an Workspace",
         "DataRefresh": "Refresh a Dataset",
         "UpdateDatasource": "Update DataSource connection",
         "Publish": "Upload PowerBI Report",
@@ -106,7 +107,7 @@
       "defaultValue": "true",
       "required": false,
       "helpMarkDown": "Create the workspace when it does not exist",
-      "visibleRule": "Action = Publish || Action = AddUsers || Action = AddSP"
+      "visibleRule": "Action = Publish || Action = AddUsers || Action = AddSP || Action = AddGroup"
     },
     {
       "name": "Users",
@@ -125,6 +126,15 @@
       "required": true,
       "helpMarkDown": "If you want to add multiple service principals seperate them with ','.",
       "visibleRule": "Action = AddSP"
+    },
+    {
+      "name": "GroupObjectIds",
+      "type": "string",
+      "label": "Group object Id",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "If you want to add multiple groups seperate the ids with ','.",
+      "visibleRule": "Action = AddGroup"
     },
     {
       "name": "Permission",

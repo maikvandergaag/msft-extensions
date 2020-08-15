@@ -8,20 +8,19 @@ Actions that can be performed with this extension are:
 * Update the connection of a Power BI report.
 * Refresh a dataset.
 
-The task works with a "Power BI" service connection that needs to be configured within the "Service Connections" settings of the project.
+The task works with a "Power BI" service connection that needs to be configured within the "Service Connections" settings of the project. Within the latest version there are two types of service connections one for a connection with a Service Principal and one with a user:
 
-![Power BI Service Connection][serviceconnection]
+### User
 
-Within the latest version there are two types of service connections one for a connection with a Service Principal and one with a user:
-
-*User*
 For the service connection to work as it should you need to configure the following parameters:
 
 * ClientId: The client id of the native Azure Active Directory application. This application should have the appropriate rights in order to use the Power BI Api. To register an application, check the following URL: [Register an Azure AD app to embed Power BI content](https://docs.microsoft.com/en-us/power-bi/developer/register-app)
 * Username: The username of the user that will perform the actions. Make sure the account does not have Multi Factor authentication enabled.
 * Password: The password of the user.
 
-*Service Principal*
+**Note**: The user must have a Power BI Pro license in order to perform the tasks.
+
+### Service Principal
 
 To configure a Service Principal with PowerBI you will have to go through this guide:[Service principal with Power BI](https://docs.microsoft.com/en-us/power-bi/developer/embed-service-principal)
 

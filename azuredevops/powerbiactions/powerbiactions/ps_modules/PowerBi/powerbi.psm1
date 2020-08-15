@@ -498,6 +498,28 @@ Function Add-PowerBIWorkspaceUsers {
     }
 }
 
+Function Add-PowerBIWorkspaceGroup {
+    Param(
+        [parameter(Mandatory = $true)]$WorkspaceName,
+        [parameter()][bool]$Create = $false,
+        [parameter(Mandatory = $true)]$AccessToken,
+        [parameter(Mandatory = $true)]$Groups,
+        [parameter(Mandatory = $true)][ValidateSet("Admin", "Contributor", "Member", "Viewer", IgnoreCase = $false)]$AccessRight = "Admin"	
+    )
+    $GroupPath = Get-PowerBIGroupPath -WorkspaceName $WorkspaceName -AccessToken $AccessToken -Create $Create
+    $url = $powerbiUrl + $GroupPath + "/users"
+
+    foreach ($group in $Groups) {
+        $body = @{
+            groupUserAccessRight = $AccessRight
+            identifier         = $group
+            principalType = "Group"
+
+        } | ConvertTo-Json	
+
+        Invoke-API -Url $url -Method "Post" -AccessToken $AccessToken -Body $body -ContentType "application/json" 
+    }
+}
 
 Function Add-PowerBIWorkspaceSP {
     Param(
