@@ -448,6 +448,10 @@ Function Import-PowerBIFile {
     $body = $powerBiBodyTemplate -f $boundary, $fileName, $encoding.GetString($fileBytes)
  
     $result = Invoke-API -Url $url -Method "Post" -AccessToken $AccessToken -Body $body -ContentType "multipart/form-data; boundary=--$boundary" 
+
+    $reportId = $result.Id
+    Write-Host "##vso[task.setvariable variable=PowerBIActions.ReportId]$reportId"
+
     return $result
 }
 Function Get-PowerBIGroupPath {
@@ -471,6 +475,10 @@ Function Get-PowerBIGroupPath {
             Throw "Power BI Workspace: $WorkspaceName does not exist"
         }
         $groupId = $workspace.Id
+
+        #writing Workspace Id
+        Write-Host "##vso[task.setvariable variable=PowerBIActions.WorkspaceId]$groupId"
+
         $groupsPath = "/myorg/groups/$groupId"
     }
 

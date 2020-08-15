@@ -5,8 +5,11 @@ Actions that can be performed with this extension are:
 * Create a Power BI workspace.
 * Remove a Power BI workspace.
 * Add a new Admin user to a Power BI workspace.
+* Add a Service Principal to a Power BI workspace.
+* Add a Group to a Power BI workspace.
 * Update the connection of a Power BI report.
 * Refresh a dataset.
+* Update SQL Direct Query String
 
 The task works with a "Power BI" service connection that needs to be configured within the "Service Connections" settings of the project. Within the latest version there are two types of service connections one for a connection with a Service Principal and one with a user:
 
@@ -37,7 +40,9 @@ Depending on the action you choose within the task you need to supply the follow
 * Create: Create the Power BI workspace if it does not exist. 
 * UpdateAll: Will update all datasets if checked.
 * Dataset: The name of the dataset.
-* Users: The users that should be added as Admin to the workspace (separated by ',')
+* Users: The users that should be added to the workspace (separated by ',')
+* Service Principals: The users that should be added to the workspace (separated by ',')
+* Groups : The group object Id that should be added to the workspace (separated by ',')
 * Datasource type: The datasource type that needs to be changed within the dataset.
 * Old Server: The server value that is specified in the existing connection.
 * New Server: The server value for the new connection.
@@ -45,6 +50,13 @@ Depending on the action you choose within the task you need to supply the follow
 * New Database: The database value for the new connection.
 * Old Url: The URL value that is specified in the existing connection.
 * New Url: The URL value for the new connection.
+
+## Output
+
+During the execution of the task different values will be placed inside variables:
+
+* PowerBIActions.ReportId: The report Id of the uploaded report (only supported when uploading one report).
+* PowerBIActions.WorkspaceId: The Id of the workspace.
 
 ## Documentation
 
@@ -70,3 +82,4 @@ If you like the extension, please leave a review. File an issue when you have su
 | 3.2.4   | Added feature to update all datasets at once|
 | 3.2.6   | Small bug fix |
 | 4.0.0   | Added Service Principal support  |
+| new | Added posibility to add a security group to a workspace, output variables
