@@ -23,7 +23,7 @@ stages:
         continueOnError: false
         steps:
           - template: steps/powerbiactions/build.yml
-  - stage: Release
+  - stage: Beta
     displayName: Test
     condition: ne(variables['Build.Reason'], 'PullRequest')
     jobs:
@@ -38,8 +38,8 @@ stages:
             deploy:
               steps:
                 - template: steps/powerbiactions/test.yml
-  - stage: Release
-    displayName: Test
+  - stage: Publish
+    displayName: Publish
     condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
     jobs:
       - deployment: DeployPRD
