@@ -5,13 +5,15 @@ BEGIN {
 	Write-Output "Starting Power BI Actions extension"
 	Trace-VstsEnteringInvocation $MyInvocation
 
-	Import-Module $PSScriptRoot\ps_modules\PowerBi
-
-	$PowerBIMgmtModule = Get-Module MicrosoftPowerBIMgmt.Profile
+	$PowerBIMgmtModule = Get-Module MicrosoftPowerBIMgmt
 	If (-not $PowerBIMgmtModule) {
+		Write-Host "### Required Module Microsoft PowerBIMgmt is not present trying to install.." -ForegroundColor Yellow
 		Install-Module MicrosoftPowerBIMgmt -Scope CurrentUser -Force
+		Write-Host "### Required Module Microsoft PowerBIMgmt is not present trying to install.." -ForegroundColor Yellow
 	}
-	Import-Module MicrosoftPowerBIMgmt
+
+	Write-Host "### Trying to import the incorporated module for PowerBI" 
+	Import-Module $PSScriptRoot\ps_modules\PowerBi
 }
 PROCESS {
 	try {
