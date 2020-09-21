@@ -86,7 +86,7 @@
       ],
       "properties": {
         "name": "PowerBI",
-        "displayName": "Power BI - User",
+        "displayName": "Power BI - User - Deprecated",
         "url": {
           "displayName": "Power BI Api Url",
           "value": "https://api.powerbi.com/v1.0",
@@ -142,7 +142,7 @@
       ],
       "properties": {
         "name": "PowerBISP",
-        "displayName": "Power BI - Service Principal",
+        "displayName": "Power BI - Service Principal - Deprecated",
         "url": {
           "displayName": "Power BI Api Url",
           "value": "https://api.powerbi.com/v1.0",
@@ -195,143 +195,6 @@
           }
         ],
         "helpMarkDown": ""
-      }
-    },
-    {
-      "id": "powerbi-endpoint-type-consolidated",
-      "description": "Power BI",
-      "type": "ms.vss-endpoint.service-endpoint-type",
-      "icons": {
-        "default": "images/connection-icon.png",
-        "large": "images/icon.png"
-      },
-      "targets": [
-        "ms.vss-endpoint.endpoint-types"
-      ],
-      "properties": {
-        "name": "PowerBI",
-        "displayName": "Power BI Api Url",
-        "url": {
-          "isVisible": "false",
-          "dependsOn": {
-            "input": "OrganizationType",
-            "map": [
-              {
-                "key": "commercial",
-                "value": "https://api.powerbi.com/v1.0/myorg"
-              },
-              {
-                "key": "powerbigov",
-                "value": "https://api.powerbigov.us/v1.0/myorg"
-              },
-              {
-                "key": "powerbigovhigh",
-                "value": "https://api.high.powerbigov.us/v1.0/myorg"
-              },
-              {
-                "key": "mil",
-                "value": "https://api.mil.powerbigov.us/v1.0/myorg"
-              },
-              {
-                "key": "cn",
-                "value": "https://api.powerbi.cn/v1.0/myorg"
-              },
-              {
-                "key": "de",
-                "value": "https://api.powerbi.de/v1.0/myorg"
-              }
-            ]
-          }
-        },
-        "inputDescriptors": [
-          {
-            "id": "OrganizationType",
-            "name": "Organization type",
-            "description": "The type of organization (Government / regular)",
-            "inputMode": "combo",
-            "isConfidential": false,
-            "validation": {
-              "isRequired": true,
-              "dataType": "string"
-            },
-            "values": {
-              "inputId": "OrganizationValues",
-              "defaultValue": "regular",
-              "possibleValues": [
-                {
-                  "displayValue": "Commercial (regular)",
-                  "value": "commercial"
-                },
-                {
-                  "displayValue": "Microsoft 365 Government Community Cloud (US)",
-                  "value": "powerbigov"
-                },
-                {
-                  "displayValue": "Microsoft 365 Government Community Cloud High (US)",
-                  "value": "powerbigovhigh"
-                },
-                {
-                  "displayValue": "US Department of Defense",
-                  "value": "mil"
-                },
-                {
-                  "displayValue": "Microsoft Cloud China",
-                  "value": "cn"
-                },
-                {
-                  "displayValue": "Microsoft Cloud Germany",
-                  "value": "de"
-                }
-              ]
-            }
-          }
-        ],
-        "authenticationSchemes": [
-          {
-            "type": "ms.vss-endpoint.endpoint-auth-scheme-basic",
-            "displayName": "Username/Password"
-          },
-          {
-            "type": "ms.vss-endpoint.endpoint-auth-scheme-none",
-            "displayName": "Service Principal",
-            "inputDescriptors": [
-              {
-                "id": "TenantId",
-                "name": "Tenant ID",
-                "description": "Tenant ID",
-                "inputMode": "textbox",
-                "isConfidential": false,
-                "validation": {
-                  "isRequired": true,
-                  "dataType": "guid",
-                  "maxLength": 38
-                }
-              },
-              {
-                "id": "ClientId",
-                "name": "Client ID",
-                "description": "Client ID",
-                "inputMode": "textbox",
-                "isConfidential": false,
-                "validation": {
-                  "isRequired": true,
-                  "dataType": "guid"
-                }
-              },
-              {
-                "id": "ClientSecret",
-                "name": "Client Secret",
-                "description": "Client Secret",
-                "inputMode": "passwordbox",
-                "isConfidential": true,
-                "validation": {
-                  "isRequired": true,
-                  "dataType": "string"
-                }
-              }
-            ]
-          }
-        ]
       }
     }
   ],
