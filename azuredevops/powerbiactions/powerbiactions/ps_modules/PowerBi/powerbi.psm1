@@ -524,7 +524,6 @@ Function Add-PowerBIWorkspaceGroup {
             groupUserAccessRight = $AccessRight
             identifier           = $group
             principalType        = "Group"
-
         } | ConvertTo-Json	
 
         Invoke-API -Url $url -Method "Post" -AccessToken $AccessToken -Body $body -ContentType "application/json" 
