@@ -217,27 +217,27 @@
             "input": "OrganizationType",
             "map": [
               {
-                "key": "commercial",
+                "key": "Public",
                 "value": "https://api.powerbi.com/v1.0/myorg"
               },
               {
-                "key": "powerbigov",
+                "key": "USGov",
                 "value": "https://api.powerbigov.us/v1.0/myorg"
               },
               {
-                "key": "powerbigovhigh",
+                "key": "USGovHigh",
                 "value": "https://api.high.powerbigov.us/v1.0/myorg"
               },
               {
-                "key": "mil",
+                "key": "USGovMil",
                 "value": "https://api.mil.powerbigov.us/v1.0/myorg"
               },
               {
-                "key": "cn",
+                "key": "China",
                 "value": "https://api.powerbi.cn/v1.0/myorg"
               },
               {
-                "key": "de",
+                "key": "Germany",
                 "value": "https://api.powerbi.de/v1.0/myorg"
               }
             ]
@@ -259,28 +259,28 @@
               "defaultValue": "regular",
               "possibleValues": [
                 {
-                  "displayValue": "Commercial (regular)",
-                  "value": "commercial"
+                  "displayValue": "Commercial (Public)",
+                  "value": "Public"
                 },
                 {
                   "displayValue": "Microsoft 365 Government Community Cloud (US)",
-                  "value": "powerbigov"
+                  "value": "USGov"
                 },
                 {
                   "displayValue": "Microsoft 365 Government Community Cloud High (US)",
-                  "value": "powerbigovhigh"
+                  "value": "USGovHigh"
                 },
                 {
                   "displayValue": "US Department of Defense",
-                  "value": "mil"
+                  "value": "USGovMil"
                 },
                 {
                   "displayValue": "Microsoft Cloud China",
-                  "value": "cn"
+                  "value": "China"
                 },
                 {
                   "displayValue": "Microsoft Cloud Germany",
-                  "value": "de"
+                  "value": "Germany"
                 }
               ]
             }
