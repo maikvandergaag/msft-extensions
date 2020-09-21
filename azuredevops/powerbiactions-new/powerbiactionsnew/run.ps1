@@ -18,8 +18,8 @@ BEGIN {
 PROCESS {
 	try {
 
-		$verboseVariable = ConvertTo-Json $Endpoint
-		Write-Verbose $verboseVariable
+		$verboseVariable = ConvertTo-Json -InputObject $Endpoint
+		Write-Verbose "$($verboseVariable)" 
 
 		$scheme = $Endpoint.Auth.Scheme
 		$global:powerbiUrl = $Endpoint.Data.OrganizationType
