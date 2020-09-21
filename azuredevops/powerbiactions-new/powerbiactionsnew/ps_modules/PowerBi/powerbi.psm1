@@ -108,7 +108,7 @@ Function Get-PowerBIWorkspace {
 
 Function Update-PowerBIDatasetDatasources {
     Param(
-        [parameter(Mandatory = $true)]$WorkspaceName
+        [parameter(Mandatory = $true)]$WorkspaceName,
         [parameter(Mandatory = $false)]$DatasetName,
         [parameter(Mandatory = $true)]$DatasourceType,
         [parameter(Mandatory = $false)]$OldServer,
@@ -487,6 +487,4 @@ Function Publish-PowerBIFile {
     }
 }
 
-Export-ModuleMember -Function "*-*"
-Export-ModuleMember -Variable "powerbiUrl"
- 
+Export-ModuleMember -Function "*-*" 
