@@ -82,5 +82,5 @@ If you like the extension, please leave a review. File an issue when you have su
 | 3.2.4   | Added feature to update all datasets at once|
 | 3.2.6   | Small bug fix |
 | 4.0.0   | Added Service Principal support  |
-| 4.1.16  | Added posibility to add a security group to a workspace, output variables |
+| 4.1.16  | Added possibility to add a security group to a workspace, output variables |
 | 4.1.17  | Fixed bug naming |
