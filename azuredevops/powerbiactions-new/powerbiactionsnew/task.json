@@ -20,10 +20,7 @@
   "instanceNameFormat": "Power BI Action: $(Action)",
   "inputs": [
     {
-      "name": "connectedServiceName",
-      "aliases": [
-        "serviceConnectionSP"
-      ],
+      "name": "PowerBIServiceEndpoint",
       "type": "connectedService:PowerBINew",
       "label": "Power BI service connection",
       "defaultValue": "",

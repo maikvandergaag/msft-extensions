@@ -17,24 +17,24 @@ BEGIN {
 }
 PROCESS {
 	try {
-
-		$verboseVariable = ConvertTo-Json -InputObject $Endpoint
+		$serviceEndpoint = Get-VstsEndpoint -Name "PowerBIServiceEndpoint" -Require
+		$verboseVariable = ConvertTo-Json -InputObject $serviceEndpoint
 		Write-Verbose "$($verboseVariable)" 
 
-		$scheme = $Endpoint.Auth.Scheme
-		$global:powerbiUrl = $Endpoint.Data.OrganizationType
+		$scheme = $serviceEndpoint.Auth.Scheme
+		$global:powerbiUrl = $serviceEndpoint.Data.OrganizationType
 	
 		If ($scheme -eq "UsernamePassword") {
-			$username = $Endpoint.Auth.Parameters.Username
-			$plainpassWord = $Endpoint.Auth.Parameters.Password
+			$username = $serviceEndpoint.Auth.Parameters.Username
+			$plainpassWord = $serviceEndpoint.Auth.Parameters.Password
 			$password = ConvertTo-SecureString $plainpassWord -AsPlainText -Force
 			$cred = New-Object System.Management.Automation.PSCredential $username, $password
 			Connect-PowerBIServiceAccount -Environment $powerbiUrl -Credential $cred | Out-Null
 		}
 		Else {
-			$tenantId = $Endpoint.Auth.Parameters.TenantId	
-			$clientId = $Endpoint.Auth.Parameters.ClientId
-			$plainclientSecret = $Endpoint.Auth.Parameters.ClientSecret
+			$tenantId = $serviceEndpoint.Auth.Parameters.TenantId	
+			$clientId = $serviceEndpoint.Auth.Parameters.ClientId
+			$plainclientSecret = $serviceEndpoint.Auth.Parameters.ClientSecret
 			$clientSecret = ConvertTo-SecureString $plainclientSecret  -AsPlainText -Force
 			$cred = New-Object System.Management.Automation.PSCredential $clientId, $clientSecret
 	
