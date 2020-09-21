@@ -7,17 +7,20 @@ BEGIN {
 
 	$PowerBIMgmtModule = Get-Module MicrosoftPowerBIMgmt
 	If (-not $PowerBIMgmtModule) {
-		Write-Host "### Required Module Microsoft PowerBIMgmt is not present trying to install.." -ForegroundColor Yellow
+		Write-Output "### Required Module Microsoft PowerBIMgmt is not present trying to install.."
 		Install-Module MicrosoftPowerBIMgmt -Scope CurrentUser -Force
-		Write-Host "### Required Module Microsoft PowerBIMgmt is not present trying to install.." -ForegroundColor Yellow
+		Write-Output "### Required Module Microsoft PowerBIMgmt is not present trying to install.."
 	}
 
+	Write-Output "### Required Module is installed or already present. Importing now..."
+	Import-Module MicrosoftPowerBIMgmt
+	
 	Write-Host "### Trying to import the incorporated module for PowerBI" 
 	Import-Module $PSScriptRoot\ps_modules\PowerBi
 }
 PROCESS {
 	try {
-		$serviceEndpoint = Get-VstsEndpoint -Name "PowerBIServiceEndpoint" -Require
+		$serviceEndpoint = Get-VstsEndpoint -Name $(Get-VstsInput -Name "PowerBIServiceEndpoint") -Require
 		$verboseVariable = ConvertTo-Json -InputObject $serviceEndpoint
 		Write-Verbose "$($verboseVariable)" 
 
