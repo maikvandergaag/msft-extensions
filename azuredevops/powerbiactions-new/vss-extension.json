@@ -4,7 +4,7 @@
   "name": "Power BI Actions",
   "version": "3.0.0",
   "publisher": "maikvandergaag",
-  "description": "Build and Release Management tasks for PowerBI.",
+  "description": "Build and Release Management tasks for Power BI.",
   "public": true,
   "targets": [
     {
@@ -89,7 +89,7 @@
       ],
       "properties": {
         "name": "PowerBI",
-        "displayName": "Power BI - User",
+        "displayName": "Power BI - User - Deprecated",
         "url": {
           "displayName": "Power BI Api Url",
           "value": "https://api.powerbi.com/v1.0",
