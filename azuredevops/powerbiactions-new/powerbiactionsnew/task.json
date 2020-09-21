@@ -12,48 +12,20 @@
   ],
   "demands": [],
   "version": {
-    "Major": "5",
-    "Minor": "0",
-    "Patch": "0"
+    "Major": "4",
+    "Minor": "1",
+    "Patch": "19"
   },
   "minimumAgentVersion": "1.95.0",
   "instanceNameFormat": "Power BI Action: $(Action)",
   "inputs": [
     {
-      "name": "AuthenticationType",
-      "label": "Authentication type",
-      "type": "pickList",
-      "required": true,
-      "helpMarkDown": "Select the action you would like to perform",
-      "defaultValue": "User",
-      "options": {
-        "User": "User",
-        "ServicePrincipal": "Service Principal"
-      }
-    },
-    {
-      "name": "connectedServiceName",
-      "aliases": [
-        "serviceConnection"
-      ],
-      "type": "connectedService:PowerBI",
+      "name": "PowerBIServiceEndpoint",
+      "type": "connectedService:PowerBINew",
       "label": "Power BI service connection",
       "defaultValue": "",
       "required": "true",
-      "helpMarkDown": "Select a service connection that should be used to authenticate to Power BI.",
-      "visibleRule": "AuthenticationType = User"
-    },
-    {
-      "name": "connectedServiceNameSP",
-      "aliases": [
-        "serviceConnectionSP"
-      ],
-      "type": "connectedService:PowerBISP",
-      "label": "Power BI service connection",
-      "defaultValue": "",
-      "required": "true",
-      "helpMarkDown": "Select a service connection that should be used to authenticate to Power BI.",
-      "visibleRule": "AuthenticationType = ServicePrincipal"
+      "helpMarkDown": "Select a service connection that should be used to authenticate to Power BI."
     },
     {
       "name": "Action",
