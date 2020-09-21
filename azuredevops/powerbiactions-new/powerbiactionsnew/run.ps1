@@ -19,20 +19,22 @@ BEGIN {
 	Import-Module $PSScriptRoot\ps_modules\PowerBi
 }
 PROCESS {
+	
 	try {
 		$serviceEndpoint = Get-VstsEndpoint -Name (Get-VstsInput -Name "PowerBIServiceEndpoint") -Require
 		$verboseVariable = ConvertTo-Json -InputObject $serviceEndpoint
 		Write-Verbose "$($verboseVariable)" 
 
 		$scheme = $serviceEndpoint.Auth.Scheme
-		$global:powerbiUrl = $serviceEndpoint.Data.OrganizationType
-	
+		$global:powerbiUrl = $serviceEndpoint.Url
+		$organizationType = $serviceEndpoint.Data.OrganizationType
+
 		If ($scheme -eq "UsernamePassword") {
 			$username = $serviceEndpoint.Auth.Parameters.Username
 			$plainpassWord = $serviceEndpoint.Auth.Parameters.Password
 			$password = ConvertTo-SecureString $plainpassWord -AsPlainText -Force
 			$cred = New-Object System.Management.Automation.PSCredential $username, $password
-			Connect-PowerBIServiceAccount -Environment $powerbiUrl -Credential $cred | Out-Null
+			Connect-PowerBIServiceAccount -Environment $organizationType -Credential $cred | Out-Null
 		}
 		Else {
 			$tenantId = $serviceEndpoint.Auth.Parameters.TenantId	
@@ -41,7 +43,7 @@ PROCESS {
 			$clientSecret = ConvertTo-SecureString $plainclientSecret  -AsPlainText -Force
 			$cred = New-Object System.Management.Automation.PSCredential $clientId, $clientSecret
 	
-			Connect-PowerBIServiceAccount -Environment $powerbiUrl -Tenant $tenantId -Credential $cred -ServicePrincipal | Out-Null
+			Connect-PowerBIServiceAccount -Environment $organizationType -Tenant $tenantId -Credential $cred -ServicePrincipal | Out-Null
 		}
 	
 		#parameters

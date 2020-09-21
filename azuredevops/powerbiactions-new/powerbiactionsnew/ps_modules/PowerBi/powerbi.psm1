@@ -88,7 +88,7 @@ Function Get-PowerBIWorkspace {
         [parameter(Mandatory = $true)][string]$WorkspaceName
     )
 
-    $groupsUrl = $powerbiUrl + '/myorg/groups'
+    $groupsUrl = $powerbiUrl + '/groups'
     $result = Invoke-API -Url $groupsUrl -Method "Get" -Verbose
     $groups = $result.value
 
@@ -294,7 +294,7 @@ Function New-PowerBIWorkSpace {
     }
     else {
         Write-Host "Trying to create workspace: $WorkspaceName"
-        $url = $powerbiUrl + "/myorg/groups"
+        $url = $powerbiUrl + "/groups"
 
         $body = @{
             name = $WorkspaceName
@@ -355,7 +355,7 @@ Function Get-PowerBIGroupPath {
     )
     $groupsPath = ""
     if ($WorkspaceName -eq "me") {
-        $groupsPath = "/myorg"
+        $groupsPath = "/"
     }
     else {
         Write-Host "Getting Power BI Workspace properties; $WorkspaceName"
@@ -372,7 +372,7 @@ Function Get-PowerBIGroupPath {
         #writing Workspace Id
         Write-Host "##vso[task.setvariable variable=PowerBIActions.WorkspaceId]$groupId"
 
-        $groupsPath = "/myorg/groups/$groupId"
+        $groupsPath = "/groups/$groupId"
     }
 
     return $groupsPath
