@@ -209,8 +209,8 @@
         "ms.vss-endpoint.endpoint-types"
       ],
       "properties": {
-        "name": "PowerBI",
-        "displayName": "Power BI Api Url",
+        "name": "PowerBINew",
+        "displayName": "Power BI Service Connection",
         "url": {
           "isVisible": "false",
           "dependsOn": {
