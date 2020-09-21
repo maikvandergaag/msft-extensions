@@ -6,7 +6,7 @@ BEGIN {
 	Trace-VstsEnteringInvocation $MyInvocation
 
 	Write-Output "### Required Module is needed. Importing now..."
-	Import-Module $PSScriptRoot\ps_modules\MicrosoftPowerBIMgmt
+	Import-Module $PSScriptRoot\ps_modules\MicrosoftPowerBIMgmt.Profile
 
 	Write-Host "### Trying to import the incorporated module for PowerBI" 
 	Import-Module $PSScriptRoot\ps_modules\PowerBi
