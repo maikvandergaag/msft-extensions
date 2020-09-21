@@ -74,6 +74,16 @@
       }
     },
     {
+      "id": "PowerBIActions",
+      "type": "ms.vss-distributed-task.task",
+      "targets": [
+        "ms.vss-distributed-task.tasks"
+      ],
+      "properties": {
+        "name": "PowerBIActionsNew"
+      }
+    },
+    {
       "id": "powerbi-endpoint-type",
       "description": "Power BI Service Endpoint - User - Deprecated",
       "type": "ms.vss-endpoint.service-endpoint-type",
