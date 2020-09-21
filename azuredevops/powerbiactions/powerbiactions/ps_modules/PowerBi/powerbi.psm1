@@ -194,7 +194,7 @@ Function Get-PowerBIWorkspace {
     if (-not [string]::IsNullOrEmpty($WorkspaceName)) {
 
         Write-Verbose "Trying to find workspace: $WorkspaceName"		
-        $groups = @($groups |Where-Object name -eq $WorkspaceName)
+        $groups = @($groups | Where-Object name -eq $WorkspaceName)
     
         if ($groups.Count -ne 0) {
             $workspace = $groups[0]		
@@ -221,19 +221,20 @@ Function Update-PowerBIDatasetDatasources {
 
     $groupPath = Get-PowerBIGroupPath -WorkspaceName $WorkspaceName -AccessToken $AccessToken
     if ($groupPath) {
-        if($UpdateAll)
-        {
+        if ($UpdateAll) {
             $datasets = Get-PowerBiDataSets -GroupPath $groupPath -AccessToken $AccessToken
 
-            foreach($dataset in $datasets){
+            foreach ($dataset in $datasets) {
                 Update-PowerBIDatasetDatasource -GroupPath $groupPath -Set $dataset -OldUrl $OldUrl -NewUrl $NewUrl -AccessToken $AccessToken -DatasourceType $DatasourceType -OldServer $OldServer -NewServer $NewServer -OldDatabase $OldDatabase -NewDatabase $NewDatabase
             }
-        }else{
+        }
+        else {
             $dataset = Get-PowerBiDataSet -GroupPath $groupPath -AccessToken $AccessToken -Name $DatasetName
 
-            if($dataset){
+            if ($dataset) {
                 Update-PowerBIDatasetDatasource -GroupPath $groupPath -Set $dataset -OldUrl $OldUrl -NewUrl $NewUrl -AccessToken $AccessToken -DatasourceType $DatasourceType -OldServer $OldServer -NewServer $NewServer -OldDatabase $OldDatabase -NewDatabase $NewDatabase
-            }else{
+            }
+            else {
                 Write-Warning "Dataset $DatasetName could not be found"
             }
         }
@@ -340,7 +341,7 @@ Function Get-PowerBIReport {
     if (-not [string]::IsNullOrEmpty($ReportName)) {
         Write-Verbose "Trying to find report '$ReportName'"		
 
-        $reports = @($reports |Where-Object name -eq $ReportName)
+        $reports = @($reports | Where-Object name -eq $ReportName)
         if ($reports.Count -ne 0) {
             $report = $reports[0]		
         }			
@@ -364,7 +365,7 @@ Function Get-PowerBiDataSet {
     if (-not [string]::IsNullOrEmpty($Name)) {
         Write-Verbose "Trying to find dataset '$Name'"		
 
-        $sets = @($sets |Where-Object name -eq $Name)
+        $sets = @($sets | Where-Object name -eq $Name)
         if ($sets.Count -ne 0) {
             $set = $sets[0]		
         }			
@@ -443,7 +444,8 @@ Function Import-PowerBIFile {
     $boundary = [guid]::NewGuid().ToString()
     $fileBytes = [System.IO.File]::ReadAllBytes($Path)
     $encoding = [System.Text.Encoding]::GetEncoding("iso-8859-1")
-    $url = $powerbiUrl + "$GroupPath/imports?datasetDisplayName=$fileName&nameConflict=$Conflict"
+    $encodedFileName = [System.Web.HttpUtility]::UrlEncode($fileName) 
+    $url = $powerbiUrl + "$GroupPath/imports?datasetDisplayName=$encodedFileName&nameConflict=$Conflict"
 
     $body = $powerBiBodyTemplate -f $boundary, $fileName, $encoding.GetString($fileBytes)
  
@@ -520,9 +522,8 @@ Function Add-PowerBIWorkspaceGroup {
     foreach ($group in $Groups) {
         $body = @{
             groupUserAccessRight = $AccessRight
-            identifier         = $group
-            principalType = "Group"
-
+            identifier           = $group
+            principalType        = "Group"
         } | ConvertTo-Json	
 
         Invoke-API -Url $url -Method "Post" -AccessToken $AccessToken -Body $body -ContentType "application/json" 
@@ -543,8 +544,8 @@ Function Add-PowerBIWorkspaceSP {
     foreach ($sp in $Sps) {
         $body = @{
             groupUserAccessRight = $AccessRight
-            identifier         = $sp
-            principalType = "App"
+            identifier           = $sp
+            principalType        = "App"
 
         } | ConvertTo-Json	
 
