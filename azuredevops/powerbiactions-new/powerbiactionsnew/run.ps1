@@ -17,7 +17,7 @@ PROCESS {
 	try {
 
 		$scheme = $Endpoint.Auth.Scheme
-		$powerbiUrl = $Endpoint.Data.OrganizationType
+		$global:powerbiUrl = $Endpoint.Data.OrganizationType
 	
 		If ($scheme -eq "UsernamePassword") {
 			$username = $Endpoint.Auth.Parameters.Username
