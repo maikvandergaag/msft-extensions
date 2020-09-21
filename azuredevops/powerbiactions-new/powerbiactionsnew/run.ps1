@@ -60,88 +60,88 @@ PROCESS {
 		$oldDatabase = Get-VstsInput -Name OldDatabase
 		$groupObjectIds = Get-VstsInput -Name GroupObjectIds
 		$newDatabase = Get-VstsInput -Name NewDatabase
-		$AccessRight = Get-VstsInput -Name Permission
+		$accessRight = Get-VstsInput -Name Permission
 		$users = Get-VstsInput -Name Users
 		$datasourceType = Get-VstsInput -Name DatasourceType
 		$updateAll = Get-VstsInput -Name UpdateAll -AsBool
-		$ServicePrincipalString = Get-VstsInput -Name ServicePrincipals 
-		$ConnectionString = Get-VstsInput -Name ConnectionString
+		$servicePrincipalString = Get-VstsInput -Name ServicePrincipals 
+		$connectionString = Get-VstsInput -Name ConnectionString
 		
-		Write-Debug "WorkspaceName         : $($WorkspaceName)";
+		Write-Debug "WorkspaceName         : $($workspaceName)";
 		Write-Debug "Create                : $($Create)";
 
-		if ($Action -eq "Workspace") {
+		if ($action -eq "Workspace") {
 			Write-Host "Creating a new Workspace"
-			New-PowerBIWorkSpace -WorkspaceName $WorkspaceName
+			New-PowerBIWorkSpace -WorkspaceName $workspaceName
 		}
 		elseif ($action -eq "Publish") {
-			Write-Debug "Fill patern             : $($FilePattern)";
-			Publish-PowerBIFile -WorkspaceName $WorkspaceName -Create $Create -FilePattern $FilePattern -Overwrite $Overwrite
+			Write-Debug "File patern             : $($filePattern)";
+			Publish-PowerBIFile -WorkspaceName $workspaceName -Create $Create -FilePattern $filePattern -Overwrite $overwrite
 		}
-		elseif ($Action -eq "DeleteWorkspace") {
+		elseif ($action -eq "DeleteWorkspace") {
 			Write-Host "Deleting a Workspace"
-			Remove-PowerBIWorkSpace -WorkspaceName $WorkspaceName
+			Remove-PowerBIWorkSpace -WorkspaceName $workspaceName
 		}
-		elseif ($Action -eq "AddUsers") {
-			Write-Debug "Users             : $($UserString)";
+		elseif ($action -eq "AddUsers") {
+			Write-Debug "Users             : $($users)";
 			Write-Host "Adding users to a Workspace"
 		
-			if ($UserString -eq "") {
+			if ($users -eq "") {
 				Write-Warning "No users inserted in the variable!"
 			}
 			else {
-				$users = $UserString.Split(",")
-				Add-PowerBIWorkspaceUsers -WorkspaceName $WorkspaceName -Users $users -AccessRight $AccessRight -Create $Create
+				$users = $users.Split(",")
+				Add-PowerBIWorkspaceUsers -WorkspaceName $workspaceName -Users $users -AccessRight $accessRight -Create $create
 			}
 		}
-		elseif ($Action -eq "AddSP") {
-			Write-Debug "Service principals             : $($ServicePrincipalString)";
+		elseif ($action -eq "AddSP") {
+			Write-Debug "Service principals             : $($servicePrincipalString)";
 			Write-Host "Adding service principals to a Workspace"
 		
-			if ($ServicePrincipalString -eq "") {
+			if ($servicePrincipalString -eq "") {
 				Write-Warning "No service principals inserted in the variable!"
 			}
 			else {
-				$sps = $ServicePrincipalString.Split(",")
-				Add-PowerBIWorkspaceSP -WorkspaceName $WorkspaceName -Sps $sps -AccessRight $AccessRight -Create $Create
+				$sps = $servicePrincipalString.Split(",")
+				Add-PowerBIWorkspaceSP -WorkspaceName $workspaceName -Sps $sps -AccessRight $accessRight -Create $create
 			}
 		}
-		elseif ($Action -eq "AddGroup") {
+		elseif ($action -eq "AddGroup") {
 			Write-Host "Adding security group to a Workspace"
-			Write-Debug "Group Ids          	  : $($GroupObjectIds)";
-			Write-Debug "Access Rights            : $($AccessRight)";
+			Write-Debug "Group Ids          	  : $($groupObjectIds)";
+			Write-Debug "Access Rights            : $($accessRight)";
 		
-			if ($GroupObjectIds -eq "") {
+			if ($groupObjectIds -eq "") {
 				Write-Warning "No group inserted in the variable!"
 			}
 			else {
-				$groups = $GroupObjectIds.Split(",")
-				Add-PowerBIWorkspaceGroup -WorkspaceName $WorkspaceName -Groups $groups -AccessRight $AccessRight -Create $Create
+				$groups = $groupObjectIds.Split(",")
+				Add-PowerBIWorkspaceGroup -WorkspaceName $workspaceName -Groups $groups -AccessRight $accessRight -Create $create
 			}
 		}
-		elseif ($Action -eq "DataRefresh") {
-			Write-Debug "Dataset               : $($Dataset)";
+		elseif ($action -eq "DataRefresh") {
+			Write-Debug "Dataset               : $($dataset)";
 
 			Write-Host "Trying to refresh Dataset"
-			New-DatasetRefresh -WorkspaceName $WorkspaceName -DataSetName $Dataset
+			New-DatasetRefresh -WorkspaceName $workspaceName -DataSetName $dataset
 		}
-		elseif ($Action -eq "UpdateDatasource") {
-			Write-Debug "Dataset               : $($Dataset)";
+		elseif ($action -eq "UpdateDatasource") {
+			Write-Debug "Dataset               : $($dataset)";
 			Write-Host "Trying to update the datasource"
 		
-			if ($UpdateAll -eq $false -and $Dataset -eq "") {
+			if ($updateAll -eq $false -and $dataset -eq "") {
 				Write-Error "When the update all function isn't checked you need to supply a dataset."
 			}
 			
-			Update-PowerBIDatasetDatasources -WorkspaceName $WorkspaceName -OldUrl $OldUrl -NewUrl $NewUrl -DataSetName $Dataset -DatasourceType $DatasourceType -OldServer $OldServer -NewServer $NewServer -OldDatabase $OldDatabase -NewDatabase $NewDatabase -UpdateAll $UpdateAll
+			Update-PowerBIDatasetDatasources -WorkspaceName $workspaceName -OldUrl $oldUrl -NewUrl $newUrl -DataSetName $dataset -DatasourceType $datasourceType -OldServer $oldServer -NewServer $newServer -OldDatabase $oldDatabase -NewDatabase $newDatabase -UpdateAll $updateAll
 		}
-		elseif ($Action -eq "SQLDirect") {
-			Write-Debug "Dataset               : $($Dataset)";
-			Write-Debug "ConnectionString     	: $(if (![System.String]::IsNullOrWhiteSpace($ConnectionString)) { '***'; } else { '<not present>'; })";
+		elseif ($action -eq "SQLDirect") {
+			Write-Debug "Dataset               : $($dataset)";
+			Write-Debug "ConnectionString     	: $(if (![System.String]::IsNullOrWhiteSpace($connectionString)) { '***'; } else { '<not present>'; })";
 
 			Write-Host "Trying to update a SQL Direct Query"
 		
-			Update-ConnectionStringDirectQuery -WorkspaceName $WorkspaceName -DatasetName $Dataset -ConnectionString $Connectionstring
+			Update-ConnectionStringDirectQuery -WorkspaceName $workspaceName -DatasetName $dataset -ConnectionString $connectionstring
 		}	
 	}
 	finally {
