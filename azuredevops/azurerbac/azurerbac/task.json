@@ -54,7 +54,10 @@
       "label": "Azure Role Assignment",
       "type": "pickList",
       "required": true,
-      "helpMarkDown": "The assignment to add or remove"
+      "helpMarkDown": "The assignment to add or remove",
+	  "properties": {
+        "EditableOptions": "True"
+      }
     },
     {
       "name": "usergroup",
