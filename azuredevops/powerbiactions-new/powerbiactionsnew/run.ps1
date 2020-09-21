@@ -14,13 +14,13 @@ BEGIN {
 
 	Write-Output "### Required Module is installed or already present. Importing now..."
 	Import-Module MicrosoftPowerBIMgmt
-	
+
 	Write-Host "### Trying to import the incorporated module for PowerBI" 
 	Import-Module $PSScriptRoot\ps_modules\PowerBi
 }
 PROCESS {
 	try {
-		$serviceEndpoint = Get-VstsEndpoint -Name $(Get-VstsInput -Name "PowerBIServiceEndpoint") -Require
+		$serviceEndpoint = Get-VstsEndpoint -Name (Get-VstsInput -Name "PowerBIServiceEndpoint") -Require
 		$verboseVariable = ConvertTo-Json -InputObject $serviceEndpoint
 		Write-Verbose "$($verboseVariable)" 
 
