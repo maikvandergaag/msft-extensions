@@ -1,0 +1,46 @@
+{
+    "Environment": {
+        "Development": [
+            {
+                "name": "Parameter1",
+                "newValue": "value1"
+            },
+            {
+                "name": "Parameter2",
+                "newValue": "value2"
+            },
+            {
+                "name": "DB_Name",
+                "newValue": "value3"
+            }
+        ],
+        "UAT": [
+            {
+                "name": "Parameter1",
+                "newValue": "value4"
+            },
+            {
+                "name": "Parameter2",
+                "newValue": "value5"
+            },
+            {
+                "name": "DB_Name",
+                "newValue": "value6"
+            }
+        ],
+        "Production": [
+            {
+                "name": "Parameter1",
+                "newValue": "value7"
+            },
+            {
+                "name": "Parameter2",
+                "newValue": "value8"
+            },
+            {
+                "name": "DB_Name",
+                "newValue": "value9"
+            }
+        ]
+    }
+}

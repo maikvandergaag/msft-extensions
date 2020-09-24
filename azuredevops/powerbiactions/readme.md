@@ -51,6 +51,20 @@ Depending on the action you choose within the task you need to supply the follow
 * Old Url: The URL value that is specified in the existing connection.
 * New Url: The URL value for the new connection.
 
+### Power BI Parameters
+ 
+PowerBI introduced the use of Workspaces (groups) which can be used as Environment or a Department or a combination of both. Now PowerBI supports parameters to eliminate traditional hardcoded values in reports. For instance, Database Name & Database Servers differs for every environment. After publishing the reports from Azure Repos to Workspace, it is difficult to update the parameters manually. It is recommended to use a configuration file that is a collection of all parameters used across the reports for a specific Workspace.
+ 
+* Step01: Create a JSON configuration similar to 'configParameters.json'
+* Step02: Update the list of parameters and their values corresponding to respective environments
+* Step03: Save and check-in the 'config' file to the Repository
+* Step04: Use a FileCopy task to copy the file from Repository to the Staging Directory
+* Step05: Publish the artifacts to Release Pipeline and map the JSON file in the Release Pipeline
+ 
+Note:
+    (1) The paramter name in PowerBI reports should match with the Parameter names specified in the config file.
+    (2) For common variables, the names should be consistant with config file for all reports.
+    
 ## Output
 
 During the execution of the task different values will be placed inside variables:

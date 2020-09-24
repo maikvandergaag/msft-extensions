@@ -4,101 +4,26 @@ $powerBiBodyTemplate = @'
 --{0}
 Content-Disposition: form-data; name="fileData"; filename="{1}"
 Content-Type: application/x-zip-compressed
-
 {2}
 --{0}--
-
 '@
 
-# Function Get-AADToken {
-#     Param(
-#         [parameter(Mandatory = $true)][string]$Username,
-#         [parameter(Mandatory = $true)][SecureString]$Password,
-#         [parameter(Mandatory = $true)][guid]$ClientId,
-#         [parameter(Mandatory = $true)][string]$Resource
-#     )
+<#
+    Clear-Host
+    #--------------------------------------- Get Token using SPN Authentication ---------------------------------------------------#
+    $applicationId = "" #Enter the Application (Client) ID here
+    $clientSecret = "" | ConvertTo-SecureString -AsPlainText -Force #Enter the Application (Client) Secret here
+    $TenantId = "" #Enter the Tenant ID here
 
-#     $authorityUrl = "https://login.microsoftonline.com/common/oauth2/authorize"
-
-#     ## load active directory client dll
-#     $typePath = $PSScriptRoot + "\Microsoft.IdentityModel.Clients.ActiveDirectory.dll"
-#     Add-Type -Path $typePath 
-
-#     Write-Verbose "Loaded the Microsoft.IdentityModel.Clients.ActiveDirectory.dll"
-
-#     Write-Verbose "Using authority: $authorityUrl"
-#     $authContext = New-Object -TypeName Microsoft.IdentityModel.Clients.ActiveDirectory.AuthenticationContext -ArgumentList ($authorityUrl)
-#     $credential = New-Object -TypeName Microsoft.IdentityModel.Clients.ActiveDirectory.UserCredential -ArgumentList ($UserName, $Password)
-    
-#     Write-Verbose "Trying to aquire token for resource: $Resource"
-#     $authResult = $authContext.AcquireToken($Resource, $clientId, $credential)
-
-#     Write-Verbose "Authentication Result retrieved for: $($authResult.UserInfo.DisplayableId)"
-#     return $authResult.AccessToken
-# }
-
-<# Function Get-AADToken {
-       
-    [CmdletBinding()]
-    [OutputType([string])]
-    PARAM (
-      [Parameter(Position=0,Mandatory=$true)]
-      [guid]$TenantID,
-  
-      [Parameter(Position=1,Mandatory=$true)]
-      [pscredential]
-      [System.Management.Automation.CredentialAttribute()]
-      $Credential,
-
-      [parameter(Mandatory = $true)]
-      [string]$Resource,
-      
-      [parameter(Mandatory = $false)][guid]
-      $ClientId,
-
-      [Parameter(Position=0,Mandatory=$false)]
-      [ValidateSet('UserPrincipal', 'ServicePrincipal')]
-      [String]$AuthenticationType = 'UserPrincipal'
-    )
-    Try
-    {
-      ## load active directory client dll
-      $typePath = $PSScriptRoot + "\Microsoft.IdentityModel.Clients.ActiveDirectory.dll"
-      Add-Type -Path $typePath 
-
-      $Username       = $Credential.Username
-      $Password       = $Credential.Password
-  
-      If ($AuthenticationType -ieq 'UserPrincipal')
-      {
- 
-        # Set Authority to Azure AD Tenant
-        $authority = 'https://login.microsoftonline.com/common/' + $TenantID
-        Write-Verbose "Authority: $authority"
-  
-        $AADcredential = [Microsoft.IdentityModel.Clients.ActiveDirectory.UserCredential]::new($UserName, $Password)
-        $authContext = [Microsoft.IdentityModel.Clients.ActiveDirectory.AuthenticationContext]::new($authority)
-        $authResult = $authCoontext.AcquireTokenAsync($Resurce,$clientId,$AADcredential)
-        $Token = $authResult.Result.CreateAuthorizationHeader()
-      } else {
-        # Set Authority to Azure AD Tenant
-        $authority = 'https://login.windows.net/' + $TenantId
-  
-        $ClientCred = [Microsoft.IdentityModel.Clients.ActiveDirectory.ClientCredential]::new($UserName, $Password)
-        $authContext = [Microsoft.IdentityModel.Clients.ActiveDirectory.AuthenticationContext]::new($authority)
-        $authResult = $authContext.AcquireTokenAsync($Resource,$ClientCred)
-        $Token = $authResult.Result.CreateAuthorizationHeader()
-      }
-      
-    }
-    Catch
-    {
-      Throw $_
-      $ErrorMessage = 'Failed to aquire Azure AD token.'
-      Write-Error -Message 'Failed to aquire Azure AD token'
-    }
-    $Token
-  } #>
+    #Generate Credential usign Client ID & Secret
+    $pscredential = New-Object -TypeName System.Management.Automation.PSCredential($applicationId, $clientSecret)
+    #Log into PowerBI Service using the Credentials
+    Connect-PowerBIServiceAccount -ServicePrincipal -Credential $pscredential -Tenant $TenantId
+    #Collect the Access Token
+    $AccessToken = Get-PowerBIAccessToken -AsString
+    $AccessToken = $AccessToken.Replace('Bearer ','')
+    #echo $AccessToken #Print the Access Token
+#>
 
 Function Invoke-API {
     Param(
@@ -259,7 +184,6 @@ Function Update-PowerBIDatasetDatasource {
     )
 
     if ($set) {
-
         $setId = $dataset.id
         $url = $powerbiUrl + "$GroupPath/datasets/$setId/Default.UpdateDatasources"
 
@@ -486,7 +410,25 @@ Function Get-PowerBIGroupPath {
 
     return $groupsPath
 }
+Function Take-PowerBIDataSetInGroup {
+    Param(
+        [parameter(Mandatory = $true)]$GroupPath,
+        [parameter(Mandatory = $true)]$AccessToken,
+        [parameter(Mandatory = $true)]$Set
+    )
 
+    if ($Set) {
+        $setId = $dataset.id
+        $url = $powerbiUrl + "$GroupPath/datasets/$setId/Default.TakeOver"
+    }
+    else {
+        Write-Error "Dataset: Could not be found"
+    }
+    
+    Invoke-API -Url $url -Method "Post" -AccessToken $AccessToken -Verbose
+    
+    return $true
+}
 Function Add-PowerBIWorkspaceUsers {
     Param(
         [parameter(Mandatory = $true)]$WorkspaceName,
@@ -508,6 +450,100 @@ Function Add-PowerBIWorkspaceUsers {
     }
 }
 
+Function Get-PowerBiDataSetParameter {
+    Param(
+        [parameter(Mandatory = $true)]$GroupPath,
+        [parameter(Mandatory = $true)]$AccessToken,
+        [parameter(Mandatory = $true)]$setId,
+        [parameter(Mandatory = $true)]$Environment,
+        [parameter(Mandatory = $true)]$configFilePath
+    )
+    
+    $url = $powerbiUrl + "$GroupPath/datasets/$setId/parameters"
+    $updateJSON = ""
+
+    $config_PowerBI_JSON = Get-Content $configFilePath | ConvertFrom-Json
+    $JSON_ParametersPBI = $config_PowerBI_JSON.Environment.$Environment
+
+    $result = Invoke-API -Url $url -Method "Get" -AccessToken $AccessToken -Verbose
+    $parameters = $result.value
+	
+    foreach ($parameter in $parameters) {
+        $parameterName = $parameter.name
+        if ($JSON_ParametersPBI.name -match $parameterName) {       
+            $parameterValue = $JSON_ParametersPBI | Where-Object name -eq $parameterName
+            $parameterValue = $parameterValue.newValue
+            if ($updateJSON -eq "") {
+                $updateJSON = "{
+                                    'name': '$parameterName',
+                                    'newValue': '$parameterValue'
+                                }"
+            }
+            else {
+                $updateJSON = $updateJSON + "," +
+                "{
+                        'name': '$parameterName',
+                        'newValue': '$parameterValue'
+                }"
+            }
+        }
+    }
+
+    if (!$updateJSON -eq "") {
+        $updateJSON = "{ 
+                            'updateDetails': [" + $updateJSON + "]
+                       }"
+    }
+    return $updateJSON
+}
+Function Update-PowerBIDatasetParameter {
+    Param(
+        [parameter(Mandatory = $true)]$Set,
+        [parameter(Mandatory = $true)]$GroupPath,
+        [parameter(Mandatory = $true)]$DatasourceType,
+        [parameter(Mandatory = $true)]$AccessToken,
+        [parameter(Mandatory = $false)]$ParameterJSON
+    )
+
+    if ($set) {
+        $success = Take-PowerBIDataSetInGroup -Set $set -GroupPath $groupPath -AccessToken $AccessToken
+        if ($success) {
+            $setId = $dataset.id
+            $url = $powerbiUrl + "$GroupPath/datasets/$setId/Default.UpdateParameters"
+            $body = $ParameterJSON
+
+            Invoke-API -Url $url -Method "Post" -AccessToken $AccessToken -Body $body -ContentType "application/json"
+        }
+    }
+    else {
+        Write-Error "Dataset: $DatasetName could not be found"
+    }
+}
+Function Update-PowerBIDatasetParameters {
+    Param(
+        [parameter(Mandatory = $true)]$WorkspaceName,
+        [parameter(Mandatory = $true)]$AccessToken,
+        [parameter(Mandatory = $false)]$DatasetName,
+        [parameter(Mandatory = $true)]$DatasourceType,
+        [parameter(Mandatory = $false)]$UpdateAll
+    )
+
+    $groupPath = Get-PowerBIGroupPath -WorkspaceName $WorkspaceName -AccessToken $AccessToken
+    if ($groupPath) {
+        if ($UpdateAll) {
+            $datasets = Get-PowerBiDataSets -GroupPath $groupPath -AccessToken $AccessToken
+            foreach ($dataset in $datasets) {
+                $updateJSON = Get-PowerBiDataSetParameter -GroupPath $GroupPath -AccessToken $AccessToken -setId $dataset.id -Environment $Environment -configFilePath $configFilePath
+                if (!$updateJSON -eq "") {
+                    Update-PowerBIDatasetParameter -GroupPath $groupPath -DatasourceType $DatasourceType -AccessToken $AccessToken -Set $dataset -ParameterJSON $updateJSON
+                }
+            }
+        }
+    }
+    else {
+        Write-Error "Workspace: $WorkspaceName could not be found"
+    }
+}
 Function Add-PowerBIWorkspaceGroup {
     Param(
         [parameter(Mandatory = $true)]$WorkspaceName,
@@ -602,4 +638,3 @@ Function Publish-PowerBIFile {
 
 Export-ModuleMember -Function "*-*"
 Export-ModuleMember -Variable "powerbiUrl"
- 
