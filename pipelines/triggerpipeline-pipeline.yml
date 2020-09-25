@@ -1,0 +1,55 @@
+name: $(buildversion)
+
+pool:
+  vmImage: "windows-latest"
+
+variables:
+  - group: "Version Number"
+  - group: "Marketplace"
+
+trigger:
+  paths:
+    include:
+      - azuredevops/triggerpipeline
+
+stages:
+  - stage: build
+    displayName: Build
+    jobs:
+      - job:
+        pool:
+          vmImage: "windows-latest"
+          demands: azureps
+        continueOnError: false
+        steps:
+          - template: steps/triggerpipeline/build.yml
+  - stage: Beta
+    displayName: Test
+    condition: ne(variables['Build.Reason'], 'PullRequest')
+    jobs:
+      - deployment: DeployTest
+        displayName: Deploy Extension to Test
+        pool:
+          vmImage: "windows-latest"
+          demands: azureps
+        environment: "Extensions test"
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - template: steps/triggerpipeline/test.yml
+  - stage: Publish
+    displayName: Publish
+    condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
+    jobs:
+      - deployment: DeployPRD
+        displayName: Deploy Extension to Public Publisher
+        pool:
+          vmImage: "windows-latest"
+          demands: azureps
+        environment: "Public publisher"
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - template: steps/triggerpipeline/publish.yml

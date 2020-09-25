@@ -6,6 +6,7 @@ Param (
     [Parameter(Mandatory = $true)][String]$DevOpsPAT,
     [Parameter(Mandatory = $true)][String]$PipelineName,
     [Parameter(Mandatory = $false)][String]$BuildNumber,
+    [Parameter(Mandatory = $false)][String]$Stage,
     [Parameter(Mandatory = $false)][String]$Description = "Automatically triggered release"
 )
 
@@ -23,7 +24,7 @@ $RunReleaseUri = "$($baseReleaseUri)$($runRelease)"
 
 # Base64-encodes the Personal Access Token (PAT) appropriately
 $base64AuthInfo = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(("token:{0}" -f $DevOpsPAT)))
-$DevOpsHeaders = @{Authorization = ("Basic {0}" -f $base64AuthInfo)};
+$DevOpsHeaders = @{Authorization = ("Basic {0}" -f $base64AuthInfo) };
 
 $ReleaseDefinitions = Invoke-RestMethod -Uri $ReleaseUri -Method Get -ContentType "application/json" -Headers $DevOpsHeaders;
     
@@ -66,12 +67,39 @@ if ($ReleaseDefinitions -and $ReleaseDefinitions.count -eq 1) {
 
         try {
             $Result = Invoke-RestMethod -Uri $RunReleaseUri -Method Post -ContentType "application/json" -Headers $DevOpsHeaders -Body $jsonbody;
-        } catch {
-            if($_.ErrorDetails.Message){
+
+            if ($Stage) {
+                $releaseId = $Result.id
+                $stages = $Stage.Split(",")
+                foreach ($env in $stages) {
+                    $environment = $Result.environments | Where-Object $_.Name -eq $env
+
+                    if ($environment) {
+                        $envId = $environment.id
+                        $runRelease = "_apis/release/releases/$($releaseId)/environments/$($envId)?api-version=5.0-preview.8"
+                        $RunEnvUri = "$($baseReleaseUri)$($runRelease)"
+
+                        $stageBody = New-Object PSObject -Property @{            
+                            status                  = "inProgress"
+                            scheduledDeploymentTime = $null              
+                            comment                 = $null 
+                            variables               = {}           
+                        }
+                        $jsonbody = $stageBody | ConvertTo-Json -Depth 100
+                        $Result = Invoke-RestMethod -Uri $RunEnvUri -Method Post -ContentType "application/json" -Headers $DevOpsHeaders -Body $jsonbody;
+                    }
+                    else {
+                        Write-Error "The specified stage could not be found!"
+                    }
+                }
+            }
+        }
+        catch {
+            if ($_.ErrorDetails.Message) {
 
                 $errorObject = $_.ErrorDetails.Message | ConvertFrom-Json
 
-                foreach($result in $errorObject.customProperties.ValidationResults){
+                foreach ($result in $errorObject.customProperties.ValidationResults) {
                     Write-Warning $result.message
                 }
                 Write-Error $errorObject.message
