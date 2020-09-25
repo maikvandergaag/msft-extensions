@@ -46,6 +46,8 @@ Function Update-PowerBIDatasetParameter {
         updateDetails = $itemValue
     }
 
+    Write-Verbose $body
+
     Invoke-API -Url $url -Method "Post" -Body $body -ContentType "application/json"
 }
 
@@ -520,7 +522,7 @@ Function Publish-PowerBIFile {
 
     $GroupPath = Get-PowerBIGroupPath -WorkspaceName $WorkspaceName -Create $Create
     
-    $searchedFiles = Get-ChildItem $filePattern
+    $searchedFiles = Get-ChildItem $filePattern -Include "*.pbix"
     foreach ($foundFile in $searchedFiles) {
         $directory = $foundFile.DirectoryName
         $file = $foundFile.Name
