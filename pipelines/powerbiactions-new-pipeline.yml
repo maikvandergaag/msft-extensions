@@ -25,7 +25,7 @@ stages:
           - template: steps/powerbiactions-new/build.yml
   - stage: Beta
     displayName: Test
-    condition: ne(variables['Build.Reason'], 'PullRequest')
+    condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
     jobs:
       - deployment: DeployTest
         displayName: Deploy Extension to Test
@@ -40,7 +40,7 @@ stages:
                 - template: steps/powerbiactions-new/test.yml
   - stage: Publish
     displayName: Publish
-    condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
     jobs:
       - deployment: DeployPRD
         displayName: Deploy Extension to Public Publisher
