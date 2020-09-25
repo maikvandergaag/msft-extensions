@@ -452,6 +452,7 @@ Function Publish-PowerBIFile {
     $GroupPath = Get-PowerBIGroupPath -WorkspaceName $WorkspaceName -Create $Create
     
     $searchedFiles = Get-ChildItem $filePattern
+
     foreach ($foundFile in $searchedFiles) {
         $directory = $foundFile.DirectoryName
         $file = $foundFile.Name

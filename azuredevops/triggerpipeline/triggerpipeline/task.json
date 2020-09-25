@@ -101,6 +101,15 @@
       "required": false,
       "helpMarkDown": "The succeeded build number to release of the primary artifact. When kept empty the latest version is used.",
       "visibleRule": "Pipeline = Release"
+    },
+    {
+      "name": "Stages",
+      "type": "string",
+      "label": "Stages (, seperated)",
+      "defaultValue": "",
+      "required": false,
+      "helpMarkDown": "The stages you would like to trigger seperated by : , ",
+      "visibleRule": "Pipeline = Release"
     }
   ],
   "dataSourceBindings": [
@@ -124,7 +133,7 @@
       "endpointId": "$(connectedServiceName)",
       "dataSourceName": "releaseDefinitions",
       "parameters": {
-         "project": "$(project)"
+        "project": "$(project)"
       },
       "resultTemplate": "{ \"Value\" : \"{{{name}}}\", \"DisplayValue\" : \"{{{name}}}\" }"
     }
