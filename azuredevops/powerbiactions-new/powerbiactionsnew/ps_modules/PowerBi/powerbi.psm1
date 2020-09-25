@@ -8,6 +8,75 @@ Content-Type: application/x-zip-compressed
 
 '@
 
+
+Function Set-PowerBIDataSetOwnership {
+    Param(
+        [parameter(Mandatory = $true)]$WorkspaceName,
+        [parameter(Mandatory = $true)]$DataSetName
+    )
+
+    $GroupPath = Get-PowerBIGroupPath -WorkspaceName $WorkspaceName
+    $set = Get-PowerBIDataSet -GroupPath $GroupPath -Name $DatasetName
+
+    if ($set) {
+        $setId = $dataset.id
+        $url = $powerbiUrl + "$GroupPath/datasets/$setId/Default.TakeOver"
+    }
+    else {
+        Write-Error "Dataset: Could not be found"
+    }
+
+    Invoke-API -Url $url -Method "Post" -Verbose
+
+    return $true
+}
+
+Function Update-PowerBIDatasetParameter {
+    Param(
+        [parameter(Mandatory = $true)]$Set,
+        [parameter(Mandatory = $true)]$GroupPath,
+        [parameter(Mandatory = $false)]$ParameterJSON
+    )
+
+    $setId = $Set.id
+    $url = $powerbiUrl + "$GroupPath/datasets/$setId/Default.UpdateParameters"
+    $itemValue = ConvertFrom-Json $ParameterJSON
+
+    $body = New-Object PSObject -Property @{            
+        updateDetails = $itemValue
+    }
+
+    Invoke-API -Url $url -Method "Post" -Body $body -ContentType "application/json"
+}
+
+Function Update-PowerBIDatasetParameters {
+    Param(
+        [parameter(Mandatory = $true)]$WorkspaceName,
+        [parameter(Mandatory = $false)]$datasetName,
+        [parameter(Mandatory = $false)]$UpdateAll,
+        [parameter(Mandatory = $false)]$UpdateValue
+    )
+
+    $groupPath = Get-PowerBIGroupPath -WorkspaceName $WorkspaceName
+    if ($groupPath) {
+        if ($UpdateAll) {
+            $datasets = Get-PowerBiDataSets -GroupPath $groupPath
+            foreach ($dataset in $datasets) {
+                if ($dataset.name -eq $datasetName -and !$UpdateAll) {
+                    $updateDataset = $true
+                }
+
+                if ($UpdateAll -or $updateDataset) {
+                    Update-PowerBIDatasetParameter -GroupPath $groupPath -Set $dataset -ParameterJSON $UpdateValue
+                }
+            }
+        }
+    }
+    else {
+        Write-Error "Workspace: $WorkspaceName could not be found"
+    }
+}
+
 Function Invoke-API {
     Param(
         [parameter(Mandatory = $true)][string]$Url,
