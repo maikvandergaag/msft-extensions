@@ -160,8 +160,6 @@ PROCESS {
 		
 			Set-PowerBIDataSetOwnership -WorkspaceName $workspaceName -DatasetName $dataset
 		}
-
-		TakeOwnership
 	}
 	finally {
 		
