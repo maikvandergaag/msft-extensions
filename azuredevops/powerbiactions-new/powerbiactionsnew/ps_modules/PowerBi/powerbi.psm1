@@ -44,7 +44,7 @@ Function Update-PowerBIDatasetParameter {
 
     $body = New-Object PSObject -Property @{            
         updateDetails = $itemValue
-    }
+    } | ConvertTo-Json
 
     Write-Verbose $body
 
