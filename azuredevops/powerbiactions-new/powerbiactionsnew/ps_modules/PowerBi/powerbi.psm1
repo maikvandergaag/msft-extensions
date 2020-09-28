@@ -42,10 +42,14 @@ Function Update-PowerBIDatasetParameter {
     $url = $powerbiUrl + "$GroupPath/datasets/$setId/Default.UpdateParameters"
     $itemValue = ConvertFrom-Json $ParameterJSON
 
-    $body = New-Object PSObject -Property @{            
-        updateDetails = $itemValue
-    } | ConvertTo-Json
+    $json = @" 
+    { "updateDetails": [] }
+"@
+        
+    $objFromJson = $json | ConvertFrom-Json
+    $objFromJson.updateDetails += $itemValue
 
+    $body = ConvertTo-Json $objFromJson
     Write-Verbose $body
 
     Invoke-API -Url $url -Method "Post" -Body $body -ContentType "application/json"
