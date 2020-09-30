@@ -41,18 +41,37 @@ Function Update-PowerBIDatasetParameter {
     $setId = $Set.id
     $url = $powerbiUrl + "$GroupPath/datasets/$setId/Default.UpdateParameters"
     $itemValue = ConvertFrom-Json $ParameterJSON
+    $newItemValue = ""
 
-    $json = @" 
-    { "updateDetails": [] }
-"@
-        
-    $objFromJson = $json | ConvertFrom-Json
-    $objFromJson.updateDetails += $itemValue
+    $datasetParameters = Get-PowerBiParameters -GroupPath $GroupPath -SetId $setId
+    foreach ($datasetParameter in $datasetParameters) {
+        $datasetParameterName = $datasetParameter.name
+  
+        if ($itemValue.name -match $datasetParameterName) {       
+            $newParameterValue = $itemValue | Where-Object name -eq $datasetParameterName
+            $newParameterValue = $newParameterValue.newValue
+            if ($newItemValue -eq "") {
+                $newItemValue = "{
+                                    'name': '$datasetParameterName',
+                                    'newValue': '$newParameterValue'
+                                }"
+            }
+            else {
+                $newItemValue = $newItemValue + "," +
+                "{
+                        'name': '$datasetParameterName',
+                        'newValue': '$newParameterValue'
+                }"
+            }
+        }
+    }
 
-    $body = ConvertTo-Json $objFromJson
-    Write-Verbose $body
-
-    Invoke-API -Url $url -Method "Post" -Body $body -ContentType "application/json"
+    if (!$newItemValue -eq "") {
+        $body = "{ 
+                    'updateDetails': [" + $newItemValue + "]
+                }"
+        Invoke-API -Url $url -Method "Post" -Body $body -ContentType "application/json"
+    }
 }
 
 Function Update-PowerBIDatasetParameters {
@@ -73,6 +92,7 @@ Function Update-PowerBIDatasetParameters {
                 }
 
                 if ($UpdateAll -or $updateDataset) {
+                    Set-PowerBIDataSetOwnership -WorkspaceName $WorkspaceName -DataSetName $dataset.name
                     Update-PowerBIDatasetParameter -GroupPath $groupPath -Set $dataset -ParameterJSON $UpdateValue
                 }
             }
@@ -355,6 +375,19 @@ Function Get-PowerBiDataSets {
     $sets = $result.value
 
     return $sets
+}
+
+Function Get-PowerBiParameters {
+    Param(
+        [parameter(Mandatory = $true)]$GroupPath,
+        [parameter(Mandatory = $true)]$SetId
+    )
+    
+    $url = $powerbiUrl + "$GroupPath/datasets/$SetId/parameters"
+    $result = Invoke-API -Url $url -Method "Get" -Verbose
+    $parameters = $result.value
+
+    return $parameters
 }
 
 Function New-PowerBIWorkSpace {
