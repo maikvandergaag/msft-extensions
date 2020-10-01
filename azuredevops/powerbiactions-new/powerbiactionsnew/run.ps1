@@ -158,7 +158,7 @@ PROCESS {
 
 			Write-Host "Trying to take ownership of the dataset"
 		
-			Set-PowerBIDataSetOwnership -WorkspaceName $workspaceName -DatasetName $dataset
+			Set-PowerBIDataSetOwnership -WorkspaceName $workspaceName -DatasetName $dataset -UpdateAll $updateAll
 		}
 	}
 	finally {

@@ -12,21 +12,34 @@ Content-Type: application/x-zip-compressed
 Function Set-PowerBIDataSetOwnership {
     Param(
         [parameter(Mandatory = $true)]$WorkspaceName,
-        [parameter(Mandatory = $true)]$DataSetName
+        [parameter(Mandatory = $false)]$DataSetName,
+        [parameter(Mandatory = $false)]$UpdateAll = $false
     )
 
     $GroupPath = Get-PowerBIGroupPath -WorkspaceName $WorkspaceName
-    $set = Get-PowerBIDataSet -GroupPath $GroupPath -Name $DatasetName
 
-    if ($set) {
-        $setId = $dataset.id
-        $url = $powerbiUrl + "$GroupPath/datasets/$setId/Default.TakeOver"
-    }
-    else {
-        Write-Error "Dataset: Could not be found"
-    }
+    if ($GroupPath) {
+        if ($UpdateAll) {
+            $datasets = Get-PowerBiDataSets -GroupPath $groupPath
+            foreach ($dataset in $datasets) {
+                if ($dataset.name -eq $datasetName -and !$UpdateAll) {
+                    $updateDataset = $true
+                }
 
-    Invoke-API -Url $url -Method "Post" -Verbose
+                if ($UpdateAll -or $updateDataset) {
+                    if ($dataset) {
+                        $setId = $dataset.id
+                        $url = $powerbiUrl + "$GroupPath/datasets/$setId/Default.TakeOver"
+                    }
+                    else {
+                        Write-Error "Dataset: Could not be found"
+                    }
+                
+                    Invoke-API -Url $url -Method "Post" -Verbose
+                }
+            }
+        }
+    }    
 
     return $true
 }

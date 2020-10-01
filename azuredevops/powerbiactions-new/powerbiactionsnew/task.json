@@ -132,7 +132,7 @@
       "defaultValue": "false",
       "required": false,
       "helpMarkDown": "Should all the datasets be changed?",
-      "visibleRule": "Action = UpdateDatasource || Action = UpdateParameters"
+      "visibleRule": "Action = UpdateDatasource || Action = UpdateParameters || Action = TakeOwnership"
     },
     {
       "name": "DatasetName",
