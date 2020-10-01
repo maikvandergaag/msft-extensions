@@ -175,20 +175,31 @@ Function Invoke-API {
 Function New-DatasetRefresh {
     Param(
         [parameter(Mandatory = $true)][string]$WorkspaceName,
-        [parameter(Mandatory = $true)][string]$DataSetName
+        [parameter(Mandatory = $true)][string]$DataSetName,
+        [parameter(Mandatory = $false)][string]$UpdateAll = $false
     )
-    
-    $GroupPath = Get-PowerBIGroupPath -WorkspaceName $WorkspaceName
-    $set = Get-PowerBIDataSet -GroupPath $GroupPath -Name $DatasetName
 
-    if ($set) {
-        $url = $powerbiUrl + $GroupPath + "/datasets/$($set.id)/refreshes"
-        Invoke-API -Url $url -Method "Post" -ContentType "application/json"
+    $groupPath = Get-PowerBIGroupPath -WorkspaceName $WorkspaceName
+    if ($groupPath) {
+        if ($UpdateAll) {
+            $datasets = Get-PowerBiDataSets -GroupPath $groupPath
+            foreach ($dataset in $datasets) {
+                if ($dataset.name -eq $datasetName -and !$UpdateAll) {
+                    $updateDataset = $true
+                }
+
+                if ($UpdateAll -or $updateDataset) {
+                    if ($dataset) {
+                        $url = $powerbiUrl + $GroupPath + "/datasets/$($dataset.id)/refreshes"
+                        Invoke-API -Url $url -Method "Post" -ContentType "application/json"
+                    }
+                }
+            }
+        }
     }
     else {
-        Write-Warning "The dataset: $DataSetName does not exist."
-    }
-    
+        Write-Error "Workspace: $WorkspaceName could not be found"
+    }   
 }
 Function Get-PowerBIWorkspace {
     Param(

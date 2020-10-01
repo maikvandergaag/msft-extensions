@@ -117,7 +117,7 @@ PROCESS {
 			Write-Debug "Dataset               : $($dataset)";
 
 			Write-Host "Trying to refresh Dataset"
-			New-DatasetRefresh -WorkspaceName $workspaceName -DataSetName $dataset
+			New-DatasetRefresh -WorkspaceName $workspaceName -DataSetName $dataset -UpdateAll $updateAll
 		}
 		elseif ($action -eq "UpdateDatasource") {
 			Write-Debug "Dataset               : $($dataset)";
