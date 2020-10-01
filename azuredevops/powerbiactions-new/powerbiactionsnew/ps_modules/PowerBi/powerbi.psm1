@@ -92,7 +92,6 @@ Function Update-PowerBIDatasetParameters {
                 }
 
                 if ($UpdateAll -or $updateDataset) {
-                    Set-PowerBIDataSetOwnership -WorkspaceName $WorkspaceName -DataSetName $dataset.name
                     Update-PowerBIDatasetParameter -GroupPath $groupPath -Set $dataset -ParameterJSON $UpdateValue
                 }
             }
