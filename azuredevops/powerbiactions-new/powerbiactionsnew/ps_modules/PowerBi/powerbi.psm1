@@ -201,6 +201,7 @@ Function New-DatasetRefresh {
         Write-Error "Workspace: $WorkspaceName could not be found"
     }   
 }
+
 Function Get-PowerBIWorkspace {
     Param(
         [parameter(Mandatory = $true)][string]$WorkspaceName
@@ -582,7 +583,7 @@ Function Publish-PowerBIFile {
 
     $GroupPath = Get-PowerBIGroupPath -WorkspaceName $WorkspaceName -Create $Create
     
-    $searchedFiles = Get-ChildItem $filePattern -Include "*.pbix"
+    $searchedFiles = Get-ChildItem $filePattern
     foreach ($foundFile in $searchedFiles) {
         $directory = $foundFile.DirectoryName
         $file = $foundFile.Name
@@ -599,9 +600,9 @@ Function Publish-PowerBIFile {
         $publish = $true
         $nameConflict = "Abort"
         if ($report) {
-            Write-Verbose "Reports exisits"
+            Write-Verbose "Reports exists"
             if ($Overwrite) {
-                Write-Verbose "Reports exisits and needs to be overwritten"
+                Write-Verbose "Reports exists and needs to be overwritten"
                 $nameConflict = "Overwrite"
             }
             else {
