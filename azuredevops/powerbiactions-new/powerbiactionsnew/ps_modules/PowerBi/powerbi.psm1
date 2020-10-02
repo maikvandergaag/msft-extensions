@@ -8,6 +8,112 @@ Content-Type: application/x-zip-compressed
 
 '@
 
+Function Set-PowerBIDataSetOwnership {
+    Param(
+        [parameter(Mandatory = $true)]$WorkspaceName,
+        [parameter(Mandatory = $false)]$DataSetName,
+        [parameter(Mandatory = $false)]$UpdateAll = $false
+    )
+
+    $GroupPath = Get-PowerBIGroupPath -WorkspaceName $WorkspaceName
+
+    if ($GroupPath) {
+        if ($UpdateAll) {
+            $datasets = Get-PowerBiDataSets -GroupPath $groupPath
+            foreach ($dataset in $datasets) {
+                if ($dataset.name -eq $datasetName -and !$UpdateAll) {
+                    $updateDataset = $true
+                }
+
+                if ($UpdateAll -or $updateDataset) {
+                    if ($dataset) {
+                        $setId = $dataset.id
+                        $url = $powerbiUrl + "$GroupPath/datasets/$setId/Default.TakeOver"
+                    }
+                    else {
+                        Write-Error "Dataset: Could not be found"
+                    }
+                
+                    Invoke-API -Url $url -Method "Post" -Verbose
+                }
+            }
+        }
+    }    
+
+    return $true
+}
+
+Function Update-PowerBIDatasetParameter {
+    Param(
+        [parameter(Mandatory = $true)]$Set,
+        [parameter(Mandatory = $true)]$GroupPath,
+        [parameter(Mandatory = $false)]$ParameterJSON
+    )
+
+    $setId = $Set.id
+    $url = $powerbiUrl + "$GroupPath/datasets/$setId/Default.UpdateParameters"
+    $itemValue = ConvertFrom-Json $ParameterJSON
+    $newItemValue = ""
+
+    $datasetParameters = Get-PowerBiParameters -GroupPath $GroupPath -SetId $setId
+    foreach ($datasetParameter in $datasetParameters) {
+        $datasetParameterName = $datasetParameter.name
+  
+        if ($itemValue.name -match $datasetParameterName) {       
+            $newParameterValue = $itemValue | Where-Object name -eq $datasetParameterName
+            $newParameterValue = $newParameterValue.newValue
+            if ($newItemValue -eq "") {
+                $newItemValue = "{
+                                    'name': '$datasetParameterName',
+                                    'newValue': '$newParameterValue'
+                                }"
+            }
+            else {
+                $newItemValue = $newItemValue + "," +
+                "{
+                        'name': '$datasetParameterName',
+                        'newValue': '$newParameterValue'
+                }"
+            }
+        }
+    }
+
+    if (!$newItemValue -eq "") {
+        $body = "{ 
+                    'updateDetails': [" + $newItemValue + "]
+                }"
+        Invoke-API -Url $url -Method "Post" -Body $body -ContentType "application/json"
+    }
+}
+
+Function Update-PowerBIDatasetParameters {
+    Param(
+        [parameter(Mandatory = $true)]$WorkspaceName,
+        [parameter(Mandatory = $false)]$datasetName,
+        [parameter(Mandatory = $false)]$UpdateAll,
+        [parameter(Mandatory = $false)]$UpdateValue
+    )
+
+    $groupPath = Get-PowerBIGroupPath -WorkspaceName $WorkspaceName
+    if ($groupPath) {
+        if ($UpdateAll) {
+            $datasets = Get-PowerBiDataSets -GroupPath $groupPath
+            foreach ($dataset in $datasets) {
+                if ($dataset.name -eq $datasetName -and !$UpdateAll) {
+                    $updateDataset = $true
+                }
+
+                if ($UpdateAll -or $updateDataset) {
+                    Update-PowerBIDatasetParameter -GroupPath $groupPath -Set $dataset -ParameterJSON $UpdateValue
+                }
+            }
+        }
+    }
+    else {
+        Write-Error "Workspace: $WorkspaceName could not be found"
+    }
+}
+
 Function Invoke-API {
     Param(
         [parameter(Mandatory = $true)][string]$Url,
@@ -68,21 +174,43 @@ Function Invoke-API {
 Function New-DatasetRefresh {
     Param(
         [parameter(Mandatory = $true)][string]$WorkspaceName,
-        [parameter(Mandatory = $true)][string]$DataSetName
+        [parameter(Mandatory = $false)][string]$DataSetName,
+        [parameter(Mandatory = $false)][string]$UpdateAll = $false
     )
-    
-    $GroupPath = Get-PowerBIGroupPath -WorkspaceName $WorkspaceName
-    $set = Get-PowerBIDataSet -GroupPath $GroupPath -Name $DatasetName
 
-    if ($set) {
-        $url = $powerbiUrl + $GroupPath + "/datasets/$($set.id)/refreshes"
-        Invoke-API -Url $url -Method "Post" -ContentType "application/json"
+    $groupPath = Get-PowerBIGroupPath -WorkspaceName $WorkspaceName
+    if ($groupPath) {
+        if ($UpdateAll) {
+            $datasets = Get-PowerBiDataSets -GroupPath $groupPath
+            foreach ($dataset in $datasets) {
+
+                if ($dataset.name -eq $datasetName -and !$UpdateAll) {
+                    $updateDataset = $true
+                }
+
+                if ($UpdateAll -or $updateDataset) {
+                    if ($dataset) {
+
+                        Write-Host "Processing dataset $($dataset.name)"
+                        if ($dataset.isRefreshable -eq $true) {
+                            $url = $powerbiUrl + $GroupPath + "/datasets/$($dataset.id)/refreshes"
+                            Invoke-API -Url $url -Method "Post" -ContentType "application/json"
+                        }
+                        else {
+                            Write-Warning "Dataset: $($dataset.name) cannot be refreshed!"
+                        }
+
+
+                    }
+                }
+            }
+        }
     }
     else {
-        Write-Warning "The dataset: $DataSetName does not exist."
-    }
-    
+        Write-Error "Workspace: $WorkspaceName could not be found"
+    }   
 }
+
 Function Get-PowerBIWorkspace {
     Param(
         [parameter(Mandatory = $true)][string]$WorkspaceName
@@ -282,6 +410,19 @@ Function Get-PowerBiDataSets {
     return $sets
 }
 
+Function Get-PowerBiParameters {
+    Param(
+        [parameter(Mandatory = $true)]$GroupPath,
+        [parameter(Mandatory = $true)]$SetId
+    )
+    
+    $url = $powerbiUrl + "$GroupPath/datasets/$SetId/parameters"
+    $result = Invoke-API -Url $url -Method "Get" -Verbose
+    $parameters = $result.value
+
+    return $parameters
+}
+
 Function New-PowerBIWorkSpace {
     Param(
         [parameter(Mandatory = $true)]$WorkspaceName
@@ -469,9 +610,9 @@ Function Publish-PowerBIFile {
         $publish = $true
         $nameConflict = "Abort"
         if ($report) {
-            Write-Verbose "Reports exisits"
+            Write-Verbose "Reports exists"
             if ($Overwrite) {
-                Write-Verbose "Reports exisits and needs to be overwritten"
+                Write-Verbose "Reports exists and needs to be overwritten"
                 $nameConflict = "Overwrite"
             }
             else {

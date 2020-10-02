@@ -59,6 +59,7 @@ PROCESS {
 		$updateAll = Get-VstsInput -Name UpdateAll -AsBool
 		$servicePrincipalString = Get-VstsInput -Name ServicePrincipals 
 		$connectionString = Get-VstsInput -Name ConnectionString
+		$ParameterInput = Get-VstsInput -Name ParameterInput
 		
 		Write-Debug "WorkspaceName         : $($workspaceName)";
 		Write-Debug "Create                : $($Create)";
@@ -116,7 +117,7 @@ PROCESS {
 			Write-Debug "Dataset               : $($dataset)";
 
 			Write-Host "Trying to refresh Dataset"
-			New-DatasetRefresh -WorkspaceName $workspaceName -DataSetName $dataset
+			New-DatasetRefresh -WorkspaceName $workspaceName -DataSetName $dataset -UpdateAll $updateAll
 		}
 		elseif ($action -eq "UpdateDatasource") {
 			Write-Debug "Dataset               : $($dataset)";
@@ -135,7 +136,30 @@ PROCESS {
 			Write-Host "Trying to update a SQL Direct Query"
 		
 			Update-ConnectionStringDirectQuery -WorkspaceName $workspaceName -DatasetName $dataset -ConnectionString $connectionstring
-		}	
+		}
+		elseif ($action -eq "UpdateParameters") {
+			Write-Debug "Dataset               : $($dataset)";
+			Write-Debug "Update Json     	: $($ParameterInput)";
+
+			try {
+				ConvertFrom-Json $ParameterInput | Out-Null
+			}
+			catch {
+				Write-Error "Supplied json is not in the correct format!"
+			}
+			
+
+			Write-Host "Trying to update the dataset parameters"
+		
+			Update-PowerBIDatasetParameters -WorkspaceName $workspaceName -DatasetName $dataset -UpdateAll $updateAll -UpdateValue $ParameterInput
+		}
+		elseif ($action -eq "TakeOwnership") {
+			Write-Debug "Dataset               : $($dataset)";
+
+			Write-Host "Trying to take ownership of the dataset"
+		
+			Set-PowerBIDataSetOwnership -WorkspaceName $workspaceName -DatasetName $dataset -UpdateAll $updateAll
+		}
 	}
 	finally {
 		

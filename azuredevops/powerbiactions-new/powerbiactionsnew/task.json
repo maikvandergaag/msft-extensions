@@ -43,7 +43,9 @@
         "DataRefresh": "Refresh a Dataset",
         "UpdateDatasource": "Update DataSource connection",
         "Publish": "Upload PowerBI Report",
-        "SQLDirect": "Update SQL Direct Query String"
+        "SQLDirect": "Update SQL Direct Query String",
+        "UpdateParameters": "Update parameters",
+        "TakeOwnership": "Take dataset ownership"
       }
     },
     {
@@ -126,11 +128,11 @@
     {
       "name": "UpdateAll",
       "type": "boolean",
-      "label": "Update all datasources in workspace the datasource name will be ignored",
+      "label": "Update all datasets in workspace the dataset name will be ignored",
       "defaultValue": "false",
       "required": false,
-      "helpMarkDown": "Should all the datasets be overwritten?",
-      "visibleRule": "Action = UpdateDatasource"
+      "helpMarkDown": "Should all the datasets be changed?",
+      "visibleRule": "Action = UpdateDatasource || Action = UpdateParameters || Action = TakeOwnership || Action = DataRefresh"
     },
     {
       "name": "DatasetName",
@@ -139,7 +141,7 @@
       "defaultValue": "",
       "required": false,
       "helpMarkDown": "The name of the dataset",
-      "visibleRule": "Action = DataRefresh || Action = UpdateDatasource || Action = SQLDirect"
+      "visibleRule": "Action = DataRefresh || Action = UpdateDatasource || Action = SQLDirect || Action = UpdateParameters || Action = TakeOwnership"
     },
     {
       "name": "ConnectionString",
@@ -218,6 +220,15 @@
       "required": true,
       "helpMarkDown": "The new url to the source",
       "visibleRule": "DatasourceType = SharePointList || DatasourceType = OData"
+    },
+    {
+      "name": "ParameterInput",
+      "type": "string",
+      "label": "Update parameter json",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "A json value representing the update parameters example [{'name' : 'test', 'newValue' : 'test'}]",
+      "visibleRule": "Action = UpdateParameters"
     }
   ],
   "execution": {
