@@ -175,7 +175,7 @@ Function Invoke-API {
 Function New-DatasetRefresh {
     Param(
         [parameter(Mandatory = $true)][string]$WorkspaceName,
-        [parameter(Mandatory = $true)][string]$DataSetName,
+        [parameter(Mandatory = $false)][string]$DataSetName,
         [parameter(Mandatory = $false)][string]$UpdateAll = $false
     )
 
