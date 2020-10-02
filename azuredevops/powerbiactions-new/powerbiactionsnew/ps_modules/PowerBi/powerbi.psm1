@@ -184,14 +184,25 @@ Function New-DatasetRefresh {
         if ($UpdateAll) {
             $datasets = Get-PowerBiDataSets -GroupPath $groupPath
             foreach ($dataset in $datasets) {
+
+                Write-Host "Processing dataset $($dataset.name)"
                 if ($dataset.name -eq $datasetName -and !$UpdateAll) {
                     $updateDataset = $true
                 }
 
                 if ($UpdateAll -or $updateDataset) {
                     if ($dataset) {
-                        $url = $powerbiUrl + $GroupPath + "/datasets/$($dataset.id)/refreshes"
-                        Invoke-API -Url $url -Method "Post" -ContentType "application/json"
+
+                        Write-Host "Processing dataset $($dataset.name)"
+                        if ($dataset.isRefreshable -eq $true) {
+                            $url = $powerbiUrl + $GroupPath + "/datasets/$($dataset.id)/refreshes"
+                            Invoke-API -Url $url -Method "Post" -ContentType "application/json"
+                        }
+                        else {
+                            Write-Warning "Dataset: $($dataset.name) cannot be refreshed!"
+                        }
+
+
                     }
                 }
             }
