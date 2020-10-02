@@ -1,0 +1,27 @@
+steps:
+- task: TfxInstaller@2
+  displayName: 'Install TFX'
+  inputs:
+    version: 'v0.7.x'
+- task: ms-devlabs.vsts-developer-tools-build-tasks.publish-extension-build-task.PublishExtension@1
+  displayName: 'Publish Extension'
+  inputs:
+    connectedServiceName: 'Visual Studio Marketplace'
+    fileType: vsix
+    vsixFile: '$(Pipeline.Workspace)\triggerpipeline\*.vsix'
+    publisherId: '$(private-marketplace)'
+    extensionTag: Dev
+    extensionName: 'DEV - Trigger Azure DevOps Pipeline'
+    updateTasksVersion: false
+    updateTasksId: true
+    extensionVisibility: private
+    extensionPricing: free
+    shareWith: 'msftplayground-demo'
+- task: ms-devlabs.vsts-developer-tools-build-tasks.install-extension-build-task.InstallExtension@1
+  displayName: 'Install Extension'
+  inputs:
+    connectedServiceName: 'Visual Studio Marketplace'
+    publisherId: '$(private-marketplace)'
+    extensionId: 'maikvandergaag-trigger-pipeline'
+    extensionTag: DEV
+    accounts: 'https://dev.azure.com/msftplayground-demo'

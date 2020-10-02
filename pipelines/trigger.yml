@@ -1,0 +1,41 @@
+
+name: $(buildversion)
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+    - group: "Version Number"
+    - group: "Marketplace"
+
+trigger:
+  paths:
+    include:
+    - azuredevops/triggerpipeline
+
+stages:
+ - stage: build
+   displayName: Build
+   jobs:
+    - job:
+      pool:
+        vmImage: 'windows-latest'
+        demands: azureps
+      continueOnError: false
+      steps:
+       - template: steps/trigger/build.yml
+ - stage : Release
+   displayName : Test
+   condition: ne(variables['Build.Reason'], 'PullRequest')
+   jobs:
+    - deployment: DeployTest
+      displayName: Deploy Extension to Test
+      pool:
+        vmImage: 'windows-latest'
+        demands: azureps
+      environment: 'Extensions test'
+      strategy:
+        runOnce:
+          deploy:
+            steps:
+            - template: steps/trigger/test.yml

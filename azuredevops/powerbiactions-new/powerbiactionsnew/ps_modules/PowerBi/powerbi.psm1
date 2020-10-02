@@ -8,7 +8,6 @@ Content-Type: application/x-zip-compressed
 
 '@
 
-
 Function Set-PowerBIDataSetOwnership {
     Param(
         [parameter(Mandatory = $true)]$WorkspaceName,
@@ -594,6 +593,7 @@ Function Publish-PowerBIFile {
     $GroupPath = Get-PowerBIGroupPath -WorkspaceName $WorkspaceName -Create $Create
     
     $searchedFiles = Get-ChildItem $filePattern
+
     foreach ($foundFile in $searchedFiles) {
         $directory = $foundFile.DirectoryName
         $file = $foundFile.Name
