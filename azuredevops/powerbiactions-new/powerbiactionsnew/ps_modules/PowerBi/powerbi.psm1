@@ -185,7 +185,6 @@ Function New-DatasetRefresh {
             $datasets = Get-PowerBiDataSets -GroupPath $groupPath
             foreach ($dataset in $datasets) {
 
-                Write-Host "Processing dataset $($dataset.name)"
                 if ($dataset.name -eq $datasetName -and !$UpdateAll) {
                     $updateDataset = $true
                 }
