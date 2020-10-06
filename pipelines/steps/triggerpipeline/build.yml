@@ -1,0 +1,36 @@
+steps:
+  - task: TfxInstaller@2
+    displayName: "Install TFX"
+    inputs:
+      version: "v0.7.x"
+  - task: PackageAzureDevOpsExtension@2
+    displayName: "Package extension"
+    inputs:
+      rootFolder: "azuredevops/triggerpipeline"
+      outputVariable: "ExOutputPath"
+      publisherId: "maikvandergaag"
+      extensionTag: "alpha"
+      extensionVersion: "$(Build.Buildnumber)"
+      updateTasksVersion: true
+      extensionVisibility: "private"
+      extensionPricing: "free"
+  - task: PublishPipelineArtifact@1
+    displayName: "Publish artifact"
+    inputs:
+      targetPath: "$(ExOutputPath)"
+      artifact: "triggerpipeline"
+  - task: versioncounter@1
+    displayName: "Update - Version number (develop)"
+    condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+    inputs:
+      VersionVariable: "buildversion"
+      UpdateMinorVersion: false
+      DevOpsPat: "$(devops-pat-versionnumber)"
+  - task: versioncounter@1
+    displayName: "Update - Version number (Pull Request)"
+    condition: and(succeeded(), and(eq(variables['Build.Reason'], 'PullRequest'), eq(variables['System.PullRequest.TargetBranch'], 'refs/heads/master')))
+    inputs:
+      VersionVariable: "buildversion"
+      UpdateMinorVersion: false
+      OnlyUpdateMinor: true
+      DevOpsPat: "$(devops-pat-versionnumber)"

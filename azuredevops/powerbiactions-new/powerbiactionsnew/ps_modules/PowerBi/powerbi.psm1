@@ -8,25 +8,37 @@ Content-Type: application/x-zip-compressed
 
 '@
 
-
 Function Set-PowerBIDataSetOwnership {
     Param(
         [parameter(Mandatory = $true)]$WorkspaceName,
-        [parameter(Mandatory = $true)]$DataSetName
+        [parameter(Mandatory = $false)]$DataSetName,
+        [parameter(Mandatory = $false)]$UpdateAll = $false
     )
 
     $GroupPath = Get-PowerBIGroupPath -WorkspaceName $WorkspaceName
-    $set = Get-PowerBIDataSet -GroupPath $GroupPath -Name $DatasetName
 
-    if ($set) {
-        $setId = $dataset.id
-        $url = $powerbiUrl + "$GroupPath/datasets/$setId/Default.TakeOver"
-    }
-    else {
-        Write-Error "Dataset: Could not be found"
-    }
+    if ($GroupPath) {
+        if ($UpdateAll) {
+            $datasets = Get-PowerBiDataSets -GroupPath $groupPath
+            foreach ($dataset in $datasets) {
+                if ($dataset.name -eq $datasetName -and !$UpdateAll) {
+                    $updateDataset = $true
+                }
 
-    Invoke-API -Url $url -Method "Post" -Verbose
+                if ($UpdateAll -or $updateDataset) {
+                    if ($dataset) {
+                        $setId = $dataset.id
+                        $url = $powerbiUrl + "$GroupPath/datasets/$setId/Default.TakeOver"
+                    }
+                    else {
+                        Write-Error "Dataset: Could not be found"
+                    }
+                
+                    Invoke-API -Url $url -Method "Post" -Verbose
+                }
+            }
+        }
+    }    
 
     return $true
 }
@@ -163,21 +175,43 @@ Function Invoke-API {
 Function New-DatasetRefresh {
     Param(
         [parameter(Mandatory = $true)][string]$WorkspaceName,
-        [parameter(Mandatory = $true)][string]$DataSetName
+        [parameter(Mandatory = $false)][string]$DataSetName,
+        [parameter(Mandatory = $false)][string]$UpdateAll = $false
     )
-    
-    $GroupPath = Get-PowerBIGroupPath -WorkspaceName $WorkspaceName
-    $set = Get-PowerBIDataSet -GroupPath $GroupPath -Name $DatasetName
 
-    if ($set) {
-        $url = $powerbiUrl + $GroupPath + "/datasets/$($set.id)/refreshes"
-        Invoke-API -Url $url -Method "Post" -ContentType "application/json"
+    $groupPath = Get-PowerBIGroupPath -WorkspaceName $WorkspaceName
+    if ($groupPath) {
+        if ($UpdateAll) {
+            $datasets = Get-PowerBiDataSets -GroupPath $groupPath
+            foreach ($dataset in $datasets) {
+
+                if ($dataset.name -eq $datasetName -and !$UpdateAll) {
+                    $updateDataset = $true
+                }
+
+                if ($UpdateAll -or $updateDataset) {
+                    if ($dataset) {
+
+                        Write-Host "Processing dataset $($dataset.name)"
+                        if ($dataset.isRefreshable -eq $true) {
+                            $url = $powerbiUrl + $GroupPath + "/datasets/$($dataset.id)/refreshes"
+                            Invoke-API -Url $url -Method "Post" -ContentType "application/json"
+                        }
+                        else {
+                            Write-Warning "Dataset: $($dataset.name) cannot be refreshed!"
+                        }
+
+
+                    }
+                }
+            }
+        }
     }
     else {
-        Write-Warning "The dataset: $DataSetName does not exist."
-    }
-    
+        Write-Error "Workspace: $WorkspaceName could not be found"
+    }   
 }
+
 Function Get-PowerBIWorkspace {
     Param(
         [parameter(Mandatory = $true)][string]$WorkspaceName
@@ -559,7 +593,8 @@ Function Publish-PowerBIFile {
 
     $GroupPath = Get-PowerBIGroupPath -WorkspaceName $WorkspaceName -Create $Create
     
-    $searchedFiles = Get-ChildItem $filePattern -Include "*.pbix"
+    $searchedFiles = Get-ChildItem $filePattern
+
     foreach ($foundFile in $searchedFiles) {
         $directory = $foundFile.DirectoryName
         $file = $foundFile.Name
@@ -576,9 +611,9 @@ Function Publish-PowerBIFile {
         $publish = $true
         $nameConflict = "Abort"
         if ($report) {
-            Write-Verbose "Reports exisits"
+            Write-Verbose "Reports exists"
             if ($Overwrite) {
-                Write-Verbose "Reports exisits and needs to be overwritten"
+                Write-Verbose "Reports exists and needs to be overwritten"
                 $nameConflict = "Overwrite"
             }
             else {

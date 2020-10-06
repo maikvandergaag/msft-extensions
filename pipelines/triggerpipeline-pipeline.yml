@@ -10,7 +10,7 @@ variables:
 trigger:
   paths:
     include:
-      - azuredevops/powerbiactions
+      - azuredevops/triggerpipeline
 
 stages:
   - stage: build
@@ -22,7 +22,7 @@ stages:
           demands: azureps
         continueOnError: false
         steps:
-          - template: steps/powerbiactions/build.yml
+          - template: steps/triggerpipeline/build.yml
   - stage: Beta
     displayName: Test
     condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
@@ -37,7 +37,7 @@ stages:
           runOnce:
             deploy:
               steps:
-                - template: steps/powerbiactions/test.yml
+                - template: steps/triggerpipeline/test.yml
   - stage: Publish
     displayName: Publish
     condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
@@ -52,4 +52,4 @@ stages:
           runOnce:
             deploy:
               steps:
-                - template: steps/powerbiactions/publish.yml
+                - template: steps/triggerpipeline/publish.yml
