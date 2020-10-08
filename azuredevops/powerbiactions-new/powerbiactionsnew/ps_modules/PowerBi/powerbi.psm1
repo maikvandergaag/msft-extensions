@@ -71,7 +71,10 @@ Function Update-PowerBIDatasetDatasourcesInGroup {
     )
 
     $gateway = Get-PowerBIGateways -GatewayName $GatewayName
+    if (!$gateway) {
         Write-Error "No gateway found! Check if specified gateway $GatewayName' is valid and present"
+    }
+
     $GatewayDataSources = Get-PowerBIDataSourcesInGateway -gateway $gateway
 
     $groupPath = Get-PowerBIGroupPath -WorkspaceName $WorkspaceName
@@ -90,7 +93,7 @@ Function Update-PowerBIDatasetDatasourcesInGroup {
                         Set-PowerBIDatasetToGatewayInGroup -Set $dataset -GroupPath $groupPath -GatewayDataSources $GatewayDataSource
                     }
                     else {
-                        Write-Error "DataSource: $($datasourceInDataset.connectionDetails) present in $($dataset.name) could not be found; ensure the gateway and datasource already exists"
+                        Write-Warning "No action taken! DataSource: '$($datasourceInDataset.connectionDetails)' present in $($dataset.name) could not be found; ensure the gateway and datasource already exists"
                     }
                 }
             }
