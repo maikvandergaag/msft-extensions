@@ -71,6 +71,7 @@ Function Update-PowerBIDatasetDatasourcesInGroup {
     )
 
     $gateway = Get-PowerBIGateways -GatewayName $GatewayName
+        Write-Error "No gateway found! Check if specified gateway $GatewayName' is valid and present"
     $GatewayDataSources = Get-PowerBIDataSourcesInGateway -gateway $gateway
 
     $groupPath = Get-PowerBIGroupPath -WorkspaceName $WorkspaceName
