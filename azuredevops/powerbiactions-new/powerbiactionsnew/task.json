@@ -45,7 +45,8 @@
         "Publish": "Upload PowerBI Report",
         "SQLDirect": "Update SQL Direct Query String",
         "UpdateParameters": "Update parameters",
-        "TakeOwnership": "Take dataset ownership"
+        "TakeOwnership": "Take dataset ownership",
+        "UpdateGateway": "Update Gateway"
       }
     },
     {
@@ -132,7 +133,7 @@
       "defaultValue": "false",
       "required": false,
       "helpMarkDown": "Should all the datasets be changed?",
-      "visibleRule": "Action = UpdateDatasource || Action = UpdateParameters || Action = TakeOwnership || Action = DataRefresh"
+      "visibleRule": "Action = UpdateDatasource || Action = UpdateParameters || Action = TakeOwnership || Action = DataRefresh || Action = UpdateGateway"
     },
     {
       "name": "DatasetName",
@@ -141,7 +142,16 @@
       "defaultValue": "",
       "required": false,
       "helpMarkDown": "The name of the dataset",
-      "visibleRule": "Action = DataRefresh || Action = UpdateDatasource || Action = SQLDirect || Action = UpdateParameters || Action = TakeOwnership"
+      "visibleRule": "Action = DataRefresh || Action = UpdateDatasource || Action = SQLDirect || Action = UpdateParameters || Action = TakeOwnership || Action = UpdateGateway"
+    },
+    {
+      "name": "GatewayName",
+      "type": "string",
+      "label": "Gateway name",
+      "defaultValue": "",
+      "required": false,
+      "helpMarkDown": "The name of the gateway",
+      "visibleRule": "Action = UpdateGateway"
     },
     {
       "name": "ConnectionString",

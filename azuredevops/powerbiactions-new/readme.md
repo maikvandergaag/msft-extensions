@@ -64,3 +64,4 @@ If you like the extension, please leave a review. File an issue when you have su
 | 4.0.0   | Added Service Principal support  |
 | 5.1.0   | Added support for Government environments and consolidated |
 | 5.2.0   | Added support for PowerBi Report transfer ownership and updating parameters in reports|
+| 5.3.0   | Added support for PowerBi Gateway change|

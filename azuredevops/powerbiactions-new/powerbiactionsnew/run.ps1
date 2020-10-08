@@ -60,6 +60,7 @@ PROCESS {
 		$servicePrincipalString = Get-VstsInput -Name ServicePrincipals 
 		$connectionString = Get-VstsInput -Name ConnectionString
 		$ParameterInput = Get-VstsInput -Name ParameterInput
+		$GatewayName = Get-VstsInput -Name GatewayName
 		
 		Write-Debug "WorkspaceName         : $($workspaceName)";
 		Write-Debug "Create                : $($Create)";
@@ -160,9 +161,18 @@ PROCESS {
 		
 			Set-PowerBIDataSetOwnership -WorkspaceName $workspaceName -DatasetName $dataset -UpdateAll $updateAll
 		}
+		elseif ($action -eq "UpdateGateway") {
+			Write-Debug "Dataset               : $($dataset)";
+			Write-Debug "UpdateAll             : $($updateAll)";
+			Write-Debug "GatewayName           : $($GatewayName)";
+
+			Write-Host "Trying to change the Gateway"
+		
+			Update-PowerBIDatasetDatasourcesInGroup -WorkspaceName $workspaceName -DatasetName $dataset -UpdateAll $updateAll -GatewayName $GatewayName
+		}
 	}
 	finally {
-		
+		Write-Output "Done processing Power BI Actions"	
 	}
 }
 END {
