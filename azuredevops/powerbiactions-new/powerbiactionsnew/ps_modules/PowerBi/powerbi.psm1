@@ -75,22 +75,20 @@ Function Update-PowerBIDatasetDatasourcesInGroup {
 
     $groupPath = Get-PowerBIGroupPath -WorkspaceName $WorkspaceName
     if ($groupPath) {
-        if ($UpdateAll) {
-            $datasets = Get-PowerBiDataSets -GroupPath $groupPath
-            foreach ($dataset in $datasets) {
-                if ($dataset.name -eq $datasetName -and !$UpdateAll) {
-                    $updateDataset = $true
-                }
+        $datasets = Get-PowerBiDataSets -GroupPath $groupPath
+        foreach ($dataset in $datasets) {
+            if ($dataset.name -eq $datasetName -and !$UpdateAll) {
+                $updateDataset = $true
+            }
 
-                if ($UpdateAll -or $updateDataset) {
-                    $datasourceInDataset = Get-PowerBIDatasetGatewayDatasourceInGroup -GroupPath $groupPath -Set $dataset
-                    $GatewayDataSource = $GatewayDataSources | Where-Object { $_.connectionDetails -eq $datasourceInDataset.connectionDetails }
-                    if ($GatewayDataSource) {
-                        Set-PowerBIDatasetToGatewayInGroup -Set $dataset -GroupPath $groupPath -GatewayDataSources $GatewayDataSource
-                    }
-                    else {
-                        Write-Error "DataSource: $($datasourceInDataset.connectionDetails) present in $($dataset.name) could not be found; ensure the gateway and datasource already exists"
-                    }
+            if ($UpdateAll -or $updateDataset) {
+                $datasourceInDataset = Get-PowerBIDatasetGatewayDatasourceInGroup -GroupPath $groupPath -Set $dataset
+                $GatewayDataSource = $GatewayDataSources | Where-Object { $_.connectionDetails -eq $datasourceInDataset.connectionDetails }
+                if ($GatewayDataSource) {
+                    Set-PowerBIDatasetToGatewayInGroup -Set $dataset -GroupPath $groupPath -GatewayDataSources $GatewayDataSource
+                }
+                else {
+                    Write-Error "DataSource: $($datasourceInDataset.connectionDetails) present in $($dataset.name) could not be found; ensure the gateway and datasource already exists"
                 }
             }
         }
@@ -144,24 +142,22 @@ Function Set-PowerBIDataSetOwnership {
     $GroupPath = Get-PowerBIGroupPath -WorkspaceName $WorkspaceName
 
     if ($GroupPath) {
-        if ($UpdateAll) {
-            $datasets = Get-PowerBiDataSets -GroupPath $groupPath
-            foreach ($dataset in $datasets) {
-                if ($dataset.name -eq $datasetName -and !$UpdateAll) {
-                    $updateDataset = $true
-                }
+        $datasets = Get-PowerBiDataSets -GroupPath $groupPath
+        foreach ($dataset in $datasets) {
+            if ($dataset.name -eq $datasetName -and !$UpdateAll) {
+                $updateDataset = $true
+            }
 
-                if ($UpdateAll -or $updateDataset) {
-                    if ($dataset) {
-                        $setId = $dataset.id
-                        $url = $powerbiUrl + "$GroupPath/datasets/$setId/Default.TakeOver"
-                    }
-                    else {
-                        Write-Error "Dataset: Could not be found"
-                    }
-                
-                    Invoke-API -Url $url -Method "Post" -Verbose
+            if ($UpdateAll -or $updateDataset) {
+                if ($dataset) {
+                    $setId = $dataset.id
+                    $url = $powerbiUrl + "$GroupPath/datasets/$setId/Default.TakeOver"
                 }
+                else {
+                    Write-Error "Dataset: Could not be found"
+                }
+                
+                Invoke-API -Url $url -Method "Post" -Verbose
             }
         }
     }    
@@ -222,16 +218,14 @@ Function Update-PowerBIDatasetParameters {
 
     $groupPath = Get-PowerBIGroupPath -WorkspaceName $WorkspaceName
     if ($groupPath) {
-        if ($UpdateAll) {
-            $datasets = Get-PowerBiDataSets -GroupPath $groupPath
-            foreach ($dataset in $datasets) {
-                if ($dataset.name -eq $datasetName -and !$UpdateAll) {
-                    $updateDataset = $true
-                }
+        $datasets = Get-PowerBiDataSets -GroupPath $groupPath
+        foreach ($dataset in $datasets) {
+            if ($dataset.name -eq $datasetName -and !$UpdateAll) {
+                $updateDataset = $true
+            }
 
-                if ($UpdateAll -or $updateDataset) {
-                    Update-PowerBIDatasetParameter -GroupPath $groupPath -Set $dataset -ParameterJSON $UpdateValue
-                }
+            if ($UpdateAll -or $updateDataset) {
+                Update-PowerBIDatasetParameter -GroupPath $groupPath -Set $dataset -ParameterJSON $UpdateValue
             }
         }
     }
@@ -306,28 +300,26 @@ Function New-DatasetRefresh {
 
     $groupPath = Get-PowerBIGroupPath -WorkspaceName $WorkspaceName
     if ($groupPath) {
-        if ($UpdateAll) {
-            $datasets = Get-PowerBiDataSets -GroupPath $groupPath
-            foreach ($dataset in $datasets) {
+        $datasets = Get-PowerBiDataSets -GroupPath $groupPath
+        foreach ($dataset in $datasets) {
 
-                if ($dataset.name -eq $datasetName -and !$UpdateAll) {
-                    $updateDataset = $true
-                }
+            if ($dataset.name -eq $datasetName -and !$UpdateAll) {
+                $updateDataset = $true
+            }
 
-                if ($UpdateAll -or $updateDataset) {
-                    if ($dataset) {
+            if ($UpdateAll -or $updateDataset) {
+                if ($dataset) {
 
-                        Write-Host "Processing dataset $($dataset.name)"
-                        if ($dataset.isRefreshable -eq $true) {
-                            $url = $powerbiUrl + $GroupPath + "/datasets/$($dataset.id)/refreshes"
-                            Invoke-API -Url $url -Method "Post" -ContentType "application/json"
-                        }
-                        else {
-                            Write-Warning "Dataset: $($dataset.name) cannot be refreshed!"
-                        }
-
-
+                    Write-Host "Processing dataset $($dataset.name)"
+                    if ($dataset.isRefreshable -eq $true) {
+                        $url = $powerbiUrl + $GroupPath + "/datasets/$($dataset.id)/refreshes"
+                        Invoke-API -Url $url -Method "Post" -ContentType "application/json"
                     }
+                    else {
+                        Write-Warning "Dataset: $($dataset.name) cannot be refreshed!"
+                    }
+
+
                 }
             }
         }
