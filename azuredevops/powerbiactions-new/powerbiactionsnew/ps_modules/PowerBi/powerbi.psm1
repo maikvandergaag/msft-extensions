@@ -83,7 +83,6 @@ Function Update-PowerBIDatasetDatasourcesInGroup {
                 }
 
                 if ($UpdateAll -or $updateDataset) {
-                    Set-PowerBIDataSetOwnership -WorkspaceName $WorkspaceName -DataSetName $dataset.name
                     $datasourceInDataset = Get-PowerBIDatasetGatewayDatasourceInGroup -GroupPath $groupPath -Set $dataset
                     $GatewayDataSource = $GatewayDataSources | Where-Object { $_.connectionDetails -eq $datasourceInDataset.connectionDetails }
                     if ($GatewayDataSource) {
