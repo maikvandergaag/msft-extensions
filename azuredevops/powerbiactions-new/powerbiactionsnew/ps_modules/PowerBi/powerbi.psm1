@@ -8,6 +8,133 @@ Content-Type: application/x-zip-compressed
 
 '@
 
+Function Set-PowerBIDatasetToGatewayInGroup {
+    Param(
+        [parameter(Mandatory = $true)]$Set,
+        [parameter(Mandatory = $true)]$GroupPath,
+        [parameter(Mandatory = $true)]$GatewayDataSources
+    )
+
+    $setId = $Set.id
+    $url = $powerbiUrl + "$GroupPath/datasets/$setId/Default.BindToGateway"
+    $newItemValue = ""
+    $gatewayId = ""
+
+    foreach ($GatewayDataSource in $GatewayDataSources) {
+        if ($newItemValue -eq "") {
+            $newItemValue = "'$($GatewayDataSource.id)'"
+        }
+        else {
+            $newItemValue = $newItemValue + "," + "'$($GatewayDataSource.id)'"
+        }
+
+        if ($gatewayId -eq "") {
+            $gatewayId = $($GatewayDataSource.gatewayId)
+        }
+    }
+
+    if (!$newItemValue -eq "") {
+        $body = "{ 
+                    'gatewayObjectId': '$gatewayId',
+                    'datasourceObjectIds': [" + $newItemValue + "]
+                 }"
+        Invoke-API -Url $url -Method "Post" -Body $body -ContentType "application/json"
+    }
+    else {
+        $body = "@{ 
+                        'gatewayObjectId': '$gatewayId'
+                  }@"
+        Invoke-API -Url $url -Method "Post" -Body $body -ContentType "application/json"
+    }
+}
+
+Function Get-PowerBIDatasetGatewayDatasourceInGroup {
+    Param(
+        [parameter(Mandatory = $true)]$Set,
+        [parameter(Mandatory = $true)]$GroupPath
+    )
+
+    $setId = $Set.id
+    $url = $powerbiUrl + "$GroupPath/datasets/$setId/Default.GetBoundGatewayDatasources"
+    $result = Invoke-API -Url $url -Method "Get" -Verbose
+
+    $datasource = $result.value
+    return $datasource
+}
+
+Function Update-PowerBIDatasetDatasourcesInGroup {
+    Param(
+        [parameter(Mandatory = $true)]$WorkspaceName,
+        [parameter(Mandatory = $true)]$GatewayName,
+        [parameter(Mandatory = $false)]$datasetName,
+        [parameter(Mandatory = $false)]$UpdateAll
+    )
+
+    $gateway = Get-PowerBIGateways -GatewayName $GatewayName
+    $GatewayDataSources = Get-PowerBIDataSourcesInGateway -gateway $gateway
+
+    $groupPath = Get-PowerBIGroupPath -WorkspaceName $WorkspaceName
+    if ($groupPath) {
+        if ($UpdateAll) {
+            $datasets = Get-PowerBiDataSets -GroupPath $groupPath
+            foreach ($dataset in $datasets) {
+                if ($dataset.name -eq $datasetName -and !$UpdateAll) {
+                    $updateDataset = $true
+                }
+
+                if ($UpdateAll -or $updateDataset) {
+                    Set-PowerBIDataSetOwnership -WorkspaceName $WorkspaceName -DataSetName $dataset.name
+                    $datasourceInDataset = Get-PowerBIDatasetGatewayDatasourceInGroup -GroupPath $groupPath -Set $dataset
+                    $GatewayDataSource = $GatewayDataSources | Where-Object { $_.connectionDetails -eq $datasourceInDataset.connectionDetails }
+                    if ($GatewayDataSource) {
+                        Set-PowerBIDatasetToGatewayInGroup -Set $dataset -GroupPath $groupPath -GatewayDataSources $GatewayDataSource
+                    }
+                    else {
+                        Write-Error "DataSource: $($datasourceInDataset.connectionDetails) present in $($dataset.name) could not be found; ensure the gateway and datasource already exists"
+                    }
+                }
+            }
+        }
+    }
+    else {
+        Write-Error "Workspace: $WorkspaceName could not be found"
+    }
+}
+
+Function Get-PowerBIDataSourcesInGateway {
+    Param(
+        [parameter(Mandatory = $true)]$gateway
+    )
+
+    if ($gateway) {
+        $gatewayId = $gateway.id
+        $groupsUrl = $powerbiUrl + "/gateways/$gatewayId/datasources"
+        $result = Invoke-API -Url $groupsUrl -Method "Get" -Verbose
+        $gatewayDataSources = $result.value
+    }
+    else {
+        Write-Error "Gateway: Could not be found"
+    }
+
+    return $gatewayDataSources
+}
+
+Function Get-PowerBIGateways {
+    Param(
+        [parameter(Mandatory = $false)]$GatewayName
+    )
+
+    $groupsUrl = $powerbiUrl + '/gateways'
+    $result = Invoke-API -Url $groupsUrl -Method "Get" -Verbose
+    
+    if ($GatewayName) {
+        $gateways = $result.value | Where-Object { $_.name -eq $GatewayName }
+    }
+    else {
+        $gateways = $result.value
+    }
+    return $gateways
+}
 Function Set-PowerBIDataSetOwnership {
     Param(
         [parameter(Mandatory = $true)]$WorkspaceName,
@@ -104,7 +231,6 @@ Function Update-PowerBIDatasetParameters {
                 }
 
                 if ($UpdateAll -or $updateDataset) {
-                    Set-PowerBIDataSetOwnership -WorkspaceName $WorkspaceName -DataSetName $dataset.name
                     Update-PowerBIDatasetParameter -GroupPath $groupPath -Set $dataset -ParameterJSON $UpdateValue
                 }
             }
