@@ -86,14 +86,14 @@ Function Update-PowerBIDatasetDatasourcesInGroup {
                 $updateDataset = $true
             }
 
-                if ($UpdateAll -or $updateDataset) {
-                    $datasourceInDataset = Get-PowerBIDatasetGatewayDatasourceInGroup -GroupPath $groupPath -Set $dataset
-                    $GatewayDataSource = $GatewayDataSources | Where-Object { $_.connectionDetails -eq $datasourceInDataset.connectionDetails }
-                    if ($GatewayDataSource) {
-                        Set-PowerBIDatasetToGatewayInGroup -Set $dataset -GroupPath $groupPath -GatewayDataSources $GatewayDataSource
-                    }
-                    else {
-                        Write-Warning "No action taken! DataSource: '$($datasourceInDataset.connectionDetails)' present in $($dataset.name) could not be found; ensure the gateway and datasource already exists"
+            if ($UpdateAll -or $updateDataset) {
+                $datasourceInDataset = Get-PowerBIDatasetGatewayDatasourceInGroup -GroupPath $groupPath -Set $dataset
+                $GatewayDataSource = $GatewayDataSources | Where-Object { $_.connectionDetails -eq $datasourceInDataset.connectionDetails }
+                if ($GatewayDataSource) {
+                    Set-PowerBIDatasetToGatewayInGroup -Set $dataset -GroupPath $groupPath -GatewayDataSources $GatewayDataSource
+                }
+                else {
+                    Write-Warning "No action taken! DataSource: '$($datasourceInDataset.connectionDetails)' present in $($dataset.name) could not be found; ensure the gateway and datasource already exists"
                 }
             }
         }
@@ -294,7 +294,6 @@ Function Invoke-API {
             if ($stream) { $stream.Dispose() }
         }       		
     }
-
     return $result
 }
 
@@ -329,7 +328,7 @@ Function New-DatasetRefresh {
         }
         Write-Error "Workspace: $WorkspaceName could not be found"
     }   
-}
+} 
 
 Function Get-PowerBIWorkspace {
     Param(
@@ -750,6 +749,4 @@ Function Publish-PowerBIFile {
 }
 
 
-Export-ModuleMember -Function "*-*" Export-ModuleMember -Function "*-*" 
-Export-ModuleMember -Function "*-*" 
-Export-ModuleMember -Function "*-*" 
+Export-ModuleMember -Function "*-*"
