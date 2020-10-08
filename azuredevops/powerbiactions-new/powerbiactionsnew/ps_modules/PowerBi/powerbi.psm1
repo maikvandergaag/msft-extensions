@@ -77,6 +77,7 @@ Function Update-PowerBIDatasetDatasourcesInGroup {
     if ($groupPath) {
         $datasets = Get-PowerBiDataSets -GroupPath $groupPath
         foreach ($dataset in $datasets) {
+            $updateDataset = $false;
             if ($dataset.name -eq $datasetName -and !$UpdateAll) {
                 $updateDataset = $true
             }
@@ -98,7 +99,7 @@ Function Update-PowerBIDatasetDatasourcesInGroup {
     }
 }
 
-Function Get-PowerBIDataSourcesInGateway {
+Function Get-PowerBIDataSourcesInGateway { 
     Param(
         [parameter(Mandatory = $true)]$gateway
     )
@@ -144,6 +145,7 @@ Function Set-PowerBIDataSetOwnership {
     if ($GroupPath) {
         $datasets = Get-PowerBiDataSets -GroupPath $groupPath
         foreach ($dataset in $datasets) {
+            $updateDataset = $false;
             if ($dataset.name -eq $datasetName -and !$UpdateAll) {
                 $updateDataset = $true
             }
@@ -220,6 +222,7 @@ Function Update-PowerBIDatasetParameters {
     if ($groupPath) {
         $datasets = Get-PowerBiDataSets -GroupPath $groupPath
         foreach ($dataset in $datasets) {
+            $updateDataset = $false;
             if ($dataset.name -eq $datasetName -and !$UpdateAll) {
                 $updateDataset = $true
             }
@@ -302,14 +305,13 @@ Function New-DatasetRefresh {
     if ($groupPath) {
         $datasets = Get-PowerBiDataSets -GroupPath $groupPath
         foreach ($dataset in $datasets) {
-
+            $updateDataset = $false;
             if ($dataset.name -eq $datasetName -and !$UpdateAll) {
                 $updateDataset = $true
             }
 
             if ($UpdateAll -or $updateDataset) {
                 if ($dataset) {
-
                     Write-Host "Processing dataset $($dataset.name)"
                     if ($dataset.isRefreshable -eq $true) {
                         $url = $powerbiUrl + $GroupPath + "/datasets/$($dataset.id)/refreshes"
@@ -318,8 +320,6 @@ Function New-DatasetRefresh {
                     else {
                         Write-Warning "Dataset: $($dataset.name) cannot be refreshed!"
                     }
-
-
                 }
             }
         }
