@@ -39,12 +39,14 @@ Function Set-PowerBIDatasetToGatewayInGroup {
                     'datasourceObjectIds': [" + $newItemValue + "]
                  }"
         Invoke-API -Url $url -Method "Post" -Body $body -ContentType "application/json"
+        Write-Host "Updated Gateway in Dataset- '$($Set.name)' with Datasources"
     }
     else {
         $body = "@{ 
                         'gatewayObjectId': '$gatewayId'
                   }@"
         Invoke-API -Url $url -Method "Post" -Body $body -ContentType "application/json"
+        Write-Host "Updated Gateway in Dataset- '$($Set.name)' without Datasources"
     }
 }
 
@@ -72,7 +74,7 @@ Function Update-PowerBIDatasetDatasourcesInGroup {
 
     $gateway = Get-PowerBIGateways -GatewayName $GatewayName
     if (!$gateway) {
-        Write-Error "No gateway found! Check if specified gateway $GatewayName' is valid and present"
+        Write-Error "No gateway found! Ensure MasterAccount authentication is used and check if specified gateway '$GatewayName' is valid and present"
     }
 
     $GatewayDataSources = Get-PowerBIDataSourcesInGateway -gateway $gateway
@@ -93,7 +95,7 @@ Function Update-PowerBIDatasetDatasourcesInGroup {
                     Set-PowerBIDatasetToGatewayInGroup -Set $dataset -GroupPath $groupPath -GatewayDataSources $GatewayDataSource
                 }
                 else {
-                    Write-Warning "No action taken! DataSource: '$($datasourceInDataset.connectionDetails)' present in '$($dataset.name)' could not be found; ensure the gateway and datasource already exists"
+                    Write-Warning "No action taken! Gateway DataSource- '$($GatewayDataSource.connectionDetails)' for Dataset- '$($dataset.name)' could not be matched; ensure the gateway and datasource already exists"
                 }
             }
         }
@@ -164,6 +166,7 @@ Function Set-PowerBIDataSetOwnership {
                 }
                 
                 Invoke-API -Url $url -Method "Post" -Verbose
+                Write-Host "Ownership taken for Dataset- '$($dataset.name)'"
             }
         }
     }    
@@ -211,6 +214,7 @@ Function Update-PowerBIDatasetParameter {
                     'updateDetails': [" + $newItemValue + "]
                 }"
         Invoke-API -Url $url -Method "Post" -Body $body -ContentType "application/json"
+        Write-Host "Updated parameters in Dataset- '$($Set.name)'"
     }
 }
 
@@ -326,8 +330,10 @@ Function New-DatasetRefresh {
                 }
             }
         }
+    }
+    else {
         Write-Error "Workspace: $WorkspaceName could not be found"
-    }   
+    }  
 } 
 
 Function Get-PowerBIWorkspace {
