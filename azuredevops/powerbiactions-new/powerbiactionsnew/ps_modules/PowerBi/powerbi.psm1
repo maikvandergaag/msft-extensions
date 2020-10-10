@@ -99,12 +99,12 @@ Function Update-PowerBIDatasetDatasourcesInGroup {
     if ($groupPath) {
         if ($UpdateAll) {
             foreach ($dataset in $datasets) {
-                Update-PowerBIDatasetSource -Dataset $dataset -groupPath $groupPath -GatewayDataSources $gatewatDataSources
+                Update-PowerBIDatasetSource -Dataset $dataset -groupPath $groupPath -GatewayDataSources $GatewayDataSources
             }
         }
         else {
             $dataset = Get-PowerBiDataSet -GroupPath $groupPath -Name $datasetName
-            Update-PowerBIDatasetSource -Dataset $dataset -groupPath $groupPath -GatewayDataSources $gatewatDataSources
+            Update-PowerBIDatasetSource -Dataset $dataset -groupPath $groupPath -GatewayDataSources $GatewayDataSources
         }
     }
     else {
@@ -153,6 +153,7 @@ Function Set-DatasetOwnership {
         [parameter(Mandatory = $true)]$GroupPath
     )
 
+    Write-Host "Processing dataset - $($DataSet.name)"
     if ($DataSet) {
         $setId = $DataSet.id
         $url = $powerbiUrl + "$GroupPath/datasets/$setId/Default.TakeOver"
@@ -195,6 +196,8 @@ Function Update-PowerBIDatasetParameter {
         [parameter(Mandatory = $true)]$GroupPath,
         [parameter(Mandatory = $false)]$ParameterJSON
     )
+
+    Write-Host "Processing dataset - $($Set.name)"
 
     $setId = $Set.id
     $url = $powerbiUrl + "$GroupPath/datasets/$setId/Default.UpdateParameters"
@@ -435,7 +438,7 @@ Function Update-PowerBIDatasetDatasource {
     )
 
     if ($set) {
-
+        Write-Host "Processing dataset - $($Set.name)"
         $setId = $dataset.id
         $url = $powerbiUrl + "$GroupPath/datasets/$setId/Default.UpdateDatasources"
 
