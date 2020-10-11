@@ -20,6 +20,8 @@ Function Set-PowerBIDatasetToGatewayInGroup {
     $newItemValue = ""
     $gatewayId = ""
 
+    Write-Host "Processing dataset - $($set.name)"
+
     foreach ($GatewayDataSource in $GatewayDataSources) {
         if ($newItemValue -eq "") {
             $newItemValue = "'$($GatewayDataSource.id)'"
@@ -325,7 +327,7 @@ Function New-DataSetSingleRefresh {
         [parameter(Mandatory = $false)][string]$GroupPath = $false
     )
     if ($dataset) {
-        Write-Host "Processing dataset $($dataset.name)"
+        Write-Host "Processing dataset - $($dataset.name)"
         if ($dataset.isRefreshable -eq $true) {
             $url = $powerbiUrl + $GroupPath + "/datasets/$($dataset.id)/refreshes"
             Invoke-API -Url $url -Method "Post" -ContentType "application/json"
