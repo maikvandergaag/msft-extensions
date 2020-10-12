@@ -60,6 +60,7 @@ PROCESS {
 		$servicePrincipalString = Get-VstsInput -Name ServicePrincipals 
 		$connectionString = Get-VstsInput -Name ConnectionString
 		$ParameterInput = Get-VstsInput -Name ParameterInput
+		$GatewayName = Get-VstsInput -Name GatewayName
 		
 		Write-Debug "WorkspaceName         : $($workspaceName)";
 		Write-Debug "Create                : $($Create)";
@@ -115,6 +116,10 @@ PROCESS {
 		}
 		elseif ($action -eq "DataRefresh") {
 			Write-Debug "Dataset               : $($dataset)";
+			
+			if ($updateAll -eq $false -and $dataset -eq "") {
+				Write-Error "When the update all function isn't checked you need to supply a dataset."
+			}
 
 			Write-Host "Trying to refresh Dataset"
 			New-DatasetRefresh -WorkspaceName $workspaceName -DataSetName $dataset -UpdateAll $updateAll
@@ -148,6 +153,9 @@ PROCESS {
 				Write-Error "Supplied json is not in the correct format!"
 			}
 			
+			if ($updateAll -eq $false -and $dataset -eq "") {
+				Write-Error "When the update all function isn't checked you need to supply a dataset."
+			}
 
 			Write-Host "Trying to update the dataset parameters"
 		
@@ -158,11 +166,24 @@ PROCESS {
 
 			Write-Host "Trying to take ownership of the dataset"
 		
+			if ($updateAll -eq $false -and $dataset -eq "") {
+				Write-Error "When the update all function isn't checked you need to supply a dataset."
+			}
+			
 			Set-PowerBIDataSetOwnership -WorkspaceName $workspaceName -DatasetName $dataset -UpdateAll $updateAll
+		}
+		elseif ($action -eq "UpdateGateway") {
+			Write-Debug "Dataset               : $($dataset)";
+			Write-Debug "UpdateAll             : $($updateAll)";
+			Write-Debug "GatewayName           : $($GatewayName)";
+
+			Write-Host "Trying to change the Gateway"
+		
+			Update-PowerBIDatasetDatasourcesInGroup -WorkspaceName $workspaceName -DatasetName $dataset -UpdateAll $updateAll -GatewayName $GatewayName
 		}
 	}
 	finally {
-		
+		Write-Output "Done processing Power BI Actions"	
 	}
 }
 END {
