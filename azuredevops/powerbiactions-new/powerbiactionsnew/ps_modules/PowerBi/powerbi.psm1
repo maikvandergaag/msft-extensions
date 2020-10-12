@@ -100,6 +100,7 @@ Function Update-PowerBIDatasetDatasourcesInGroup {
     $groupPath = Get-PowerBIGroupPath -WorkspaceName $WorkspaceName
     if ($groupPath) {
         if ($UpdateAll) {
+            $datasets = Get-PowerBiDataSets -GroupPath $groupPath
             foreach ($dataset in $datasets) {
                 Update-PowerBIDatasetSource -Dataset $dataset -groupPath $groupPath -GatewayDataSources $GatewayDataSources
             }
