@@ -180,6 +180,7 @@ Function Set-PowerBIDataSetOwnership {
 
     if ($GroupPath) {
         if ($UpdateAll) {
+            $datasets = Get-PowerBiDataSets -GroupPath $groupPath
             foreach ($dataset in $datasets) {
                 Set-DatasetOwnership -DataSet $dataset -GroupPath $GroupPath
             }
