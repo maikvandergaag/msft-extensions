@@ -88,7 +88,7 @@ if ($ReleaseDefinitions -and $ReleaseDefinitions.count -eq 1) {
 
                         $jsonbody = $stageBody | ConvertTo-Json -Depth 100
 
-                        $Result = Invoke-RestMethod -Uri $RunEnvUri -Method Patch -ContentType "application/json" -Headers $DevOpsHeaders -Body $jsonbody;
+                        $resultSingle = Invoke-RestMethod -Uri $RunEnvUri -Method Patch -ContentType "application/json" -Headers $DevOpsHeaders -Body $jsonbody; 
                     }
                     else {
                         Write-Error "The specified stage could not be found!"
