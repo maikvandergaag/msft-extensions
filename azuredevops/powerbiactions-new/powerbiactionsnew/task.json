@@ -105,7 +105,7 @@
       "label": "Group object Id",
       "defaultValue": "",
       "required": true,
-      "helpMarkDown": "If you want to add multiple groups seperate the ids with ','.",
+      "helpMarkDown": "If you want to add multiple groups separate the ids with ','.",
       "visibleRule": "Action = AddGroup"
     },
     {
@@ -115,7 +115,7 @@
       "defaultValue": "",
       "required": true,
       "helpMarkDown": "Specific permission: Admin, Member, Contributor or Viewer",
-      "visibleRule": "Action = AddUsers || Action = AddSP",
+      "visibleRule": "Action = AddUsers || Action = AddSP || Action = AddGroup",
       "options": {
         "Admin": "Admin",
         "Member": "Member",
