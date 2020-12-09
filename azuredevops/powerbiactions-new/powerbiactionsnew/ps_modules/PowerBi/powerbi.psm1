@@ -761,13 +761,14 @@ Function Publish-PowerBIFile {
         Write-Host "Checking for existing Reports with the name: $fileNamewithoutextension"
     
         $report = Get-PowerBIReport -GroupPath $GroupPath -ReportName $fileNamewithoutextension -Verbose
+        $dataset = Get-PowerBiDataSet -GroupPath $GroupPath -Name $fileNamewithoutextension
         
         $publish = $true
         $nameConflict = "Abort"
-        if ($report) {
-            Write-Verbose "Reports exists"
+        if ($report -or $dataset) {
+            Write-Verbose "Reports or dataset exisits"
             if ($Overwrite) {
-                Write-Verbose "Reports exists and needs to be overwritten"
+                Write-Verbose "Reports or dataset exisits and needs to be overwritten"
                 $nameConflict = "Overwrite"
             }
             else {
