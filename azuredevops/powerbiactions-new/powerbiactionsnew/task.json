@@ -152,7 +152,7 @@
       "defaultValue": "",
       "required": false,
       "helpMarkDown": "The name of the report",
-      "visibleRule": "Action = RemoveReport"
+      "visibleRule": "Action = DeleteReport"
     },
     {
       "name": "GatewayName",
