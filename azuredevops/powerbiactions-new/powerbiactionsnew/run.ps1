@@ -61,7 +61,8 @@ PROCESS {
 		$connectionString = Get-VstsInput -Name ConnectionString
 		$ParameterInput = Get-VstsInput -Name ParameterInput
 		$GatewayName = Get-VstsInput -Name GatewayName
-		$RemoveReport = Get-VstsInput -Name RemoveReport -AsBool
+		$ReportName = Get-VstsInput -Name ReportName
+	
 		
 		Write-Debug "WorkspaceName         : $($workspaceName)";
 		Write-Debug "Create                : $($Create)";
@@ -73,7 +74,7 @@ PROCESS {
 		elseif ($action -eq "Publish") {
 			Write-Debug "File patern             : $($filePattern)";
 			Write-Debug "Remove report           : $($RemoveReport)";
-			Publish-PowerBIFile -WorkspaceName $workspaceName -Create $Create -FilePattern $filePattern -Overwrite $overwrite -RemoveReport $RemoveReport
+			Publish-PowerBIFile -WorkspaceName $workspaceName -Create $Create -FilePattern $filePattern -Overwrite $overwrite
 		}
 		elseif ($action -eq "DeleteWorkspace") {
 			Write-Host "Deleting a Workspace"
@@ -183,6 +184,14 @@ PROCESS {
 		
 			Update-PowerBIDatasetDatasourcesInGroup -WorkspaceName $workspaceName -DatasetName $dataset -UpdateAll $updateAll -GatewayName $GatewayName
 		}
+		elseif ($action -eq "RemoveReport") {
+			Write-Debug "ReportName               : $($ReportName)";
+			
+			Write-Host "Trying to remove a report"
+		
+			Delete-PowerBIReport -WorkspaceName $workspaceName -ReportName $ReportName
+		}
+
 	}
 	finally {
 		Write-Output "Done processing Power BI Actions"	

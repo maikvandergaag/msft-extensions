@@ -46,7 +46,8 @@
         "SQLDirect": "Update SQL Direct Query String",
         "UpdateParameters": "Update parameters",
         "TakeOwnership": "Take dataset ownership",
-        "UpdateGateway": "Update Gateway"
+        "UpdateGateway": "Update Gateway",
+        "DeleteReport": "Delete Report"
       }
     },
     {
@@ -73,15 +74,6 @@
       "defaultValue": "true",
       "required": false,
       "helpMarkDown": "Should the dataset be overwritten?",
-      "visibleRule": "Action = Publish"
-    },
-    {
-      "name": "RemoveReport",
-      "type": "boolean",
-      "label": "Remove report after publish (will keep the dataset)",
-      "defaultValue": "false",
-      "required": false,
-      "helpMarkDown": "Should the report be removed after publishing?",
       "visibleRule": "Action = Publish"
     },
     {
@@ -152,6 +144,15 @@
       "required": false,
       "helpMarkDown": "The name of the dataset",
       "visibleRule": "Action = DataRefresh || Action = UpdateDatasource || Action = SQLDirect || Action = UpdateParameters || Action = TakeOwnership || Action = UpdateGateway"
+    },
+    {
+      "name": "ReportName",
+      "type": "string",
+      "label": "Report name",
+      "defaultValue": "",
+      "required": false,
+      "helpMarkDown": "The name of the report",
+      "visibleRule": "Action = RemoveReport"
     },
     {
       "name": "GatewayName",

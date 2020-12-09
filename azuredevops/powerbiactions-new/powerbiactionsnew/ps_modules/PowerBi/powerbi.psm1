@@ -742,8 +742,7 @@ Function Publish-PowerBIFile {
         [parameter(Mandatory = $true)]$WorkspaceName,
         [parameter(Mandatory = $true)]$FilePattern,
         [parameter()][bool]$Create = $false,
-        [parameter()][bool]$Overwrite = $false,
-        [parameter()][bool]$RemoveReport = $false
+        [parameter()][bool]$Overwrite = $false
     )
 
     $GroupPath = Get-PowerBIGroupPath -WorkspaceName $WorkspaceName -Create $Create
@@ -782,12 +781,6 @@ Function Publish-PowerBIFile {
             #Import PowerBi file
             Write-Host "Importing PowerBI File"
             $result = Import-PowerBiFile -GroupPath $GroupPath -Path $FilePath -Conflict $nameConflict -Verbose
-
-            if ($RemoveReport) {
-                Start-Sleep -Seconds 10
-
-                Delete-PowerBIReport -GroupPath $GroupPath -ReportName $fileNamewithoutextension
-            }
         }        
     }
 }
@@ -795,9 +788,11 @@ Function Publish-PowerBIFile {
 
 function Delete-PowerBIReport {
     Param(
-        [parameter(Mandatory = $true)]$GroupPath,
+        [parameter(Mandatory = $true)]$WorkspaceName,
         [parameter(Mandatory = $true)]$ReportName
     )
+
+    $GroupPath = Get-PowerBIGroupPath -WorkspaceName $WorkspaceName -Create $Create
 
     $report = Get-PowerBIReport -GroupPath $GroupPath -ReportName $ReportName -Verbose
     $url = $powerbiUrl + $GroupPath + "/reports/$($report.id)"
