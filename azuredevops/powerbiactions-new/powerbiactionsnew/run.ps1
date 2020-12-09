@@ -72,6 +72,7 @@ PROCESS {
 		}
 		elseif ($action -eq "Publish") {
 			Write-Debug "File patern             : $($filePattern)";
+			Write-Debug "Remove report           : $($RemoveReport)";
 			Publish-PowerBIFile -WorkspaceName $workspaceName -Create $Create -FilePattern $filePattern -Overwrite $overwrite -RemoveReport $RemoveReport
 		}
 		elseif ($action -eq "DeleteWorkspace") {

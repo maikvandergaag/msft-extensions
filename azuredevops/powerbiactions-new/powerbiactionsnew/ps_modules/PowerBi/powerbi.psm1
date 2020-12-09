@@ -784,6 +784,8 @@ Function Publish-PowerBIFile {
             Import-PowerBiFile -GroupPath $GroupPath -Path $FilePath -Conflict $nameConflict -Verbose
 
             if ($RemoveReport) {
+                Start-Sleep -Seconds 10
+
                 Delete-PowerBIReport -GroupPath $GroupPath -ReportName $fileNamewithoutextension
             }
         }        
