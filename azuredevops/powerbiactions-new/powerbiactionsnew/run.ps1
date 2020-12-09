@@ -61,6 +61,7 @@ PROCESS {
 		$connectionString = Get-VstsInput -Name ConnectionString
 		$ParameterInput = Get-VstsInput -Name ParameterInput
 		$GatewayName = Get-VstsInput -Name GatewayName
+		$RemoveReport = Get-VstsInput -Name RemoveReport -AsBool
 		
 		Write-Debug "WorkspaceName         : $($workspaceName)";
 		Write-Debug "Create                : $($Create)";
@@ -71,7 +72,7 @@ PROCESS {
 		}
 		elseif ($action -eq "Publish") {
 			Write-Debug "File patern             : $($filePattern)";
-			Publish-PowerBIFile -WorkspaceName $workspaceName -Create $Create -FilePattern $filePattern -Overwrite $overwrite
+			Publish-PowerBIFile -WorkspaceName $workspaceName -Create $Create -FilePattern $filePattern -Overwrite $overwrite -RemoveReport $RemoveReport
 		}
 		elseif ($action -eq "DeleteWorkspace") {
 			Write-Host "Deleting a Workspace"

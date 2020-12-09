@@ -76,6 +76,15 @@
       "visibleRule": "Action = Publish"
     },
     {
+      "name": "RemoveReport",
+      "type": "boolean",
+      "label": "Remove report after publish (will keep the dataset)",
+      "defaultValue": "false",
+      "required": false,
+      "helpMarkDown": "Should the report be removed after publishing?",
+      "visibleRule": "Action = Publish"
+    },
+    {
       "name": "Create",
       "type": "boolean",
       "label": "Create if the workspace does not exist",
