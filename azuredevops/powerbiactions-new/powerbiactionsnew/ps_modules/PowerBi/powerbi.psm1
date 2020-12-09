@@ -781,7 +781,7 @@ Function Publish-PowerBIFile {
         if ($publish) {
             #Import PowerBi file
             Write-Host "Importing PowerBI File"
-            Import-PowerBiFile -GroupPath $GroupPath -Path $FilePath -Conflict $nameConflict -Verbose
+            $result = Import-PowerBiFile -GroupPath $GroupPath -Path $FilePath -Conflict $nameConflict -Verbose
 
             if ($RemoveReport) {
                 Start-Sleep -Seconds 10
