@@ -366,28 +366,28 @@ Function New-DatasetRefresh {
     }  
 } 
 
-Function Get-PowerBIWorkspace {
-    Param(
-        [parameter(Mandatory = $true)][string]$WorkspaceName
-    )
-
-    $groupsUrl = $powerbiUrl + '/groups'
-    $result = Invoke-API -Url $groupsUrl -Method "Get" -Verbose
-    $groups = $result.value
-
-    $workspace = $null;
-    if (-not [string]::IsNullOrEmpty($WorkspaceName)) {
-
-        Write-Verbose "Trying to find workspace: $WorkspaceName"		
-        $groups = @($groups | Where-Object name -eq $WorkspaceName)
-    
-        if ($groups.Count -ne 0) {
-            $workspace = $groups[0]		
-        }				
-    }
-
-    return $workspace
-}
+#Function Get-PowerBIWorkspace {
+#    Param(
+#        [parameter(Mandatory = $true)][string]$WorkspaceName
+#    )
+#
+#    $groupsUrl = $powerbiUrl + '/groups'
+#    $result = Invoke-API -Url $groupsUrl -Method "Get" -Verbose
+#    $groups = $result.value
+#
+#    $workspace = $null;
+#    if (-not [string]::IsNullOrEmpty($WorkspaceName)) {
+#
+#        Write-Verbose "Trying to find workspace: $WorkspaceName"		
+#        $groups = @($groups | Where-Object name -eq $WorkspaceName)
+#    
+#        if ($groups.Count -ne 0) {
+#            $workspace = $groups[0]		
+#        }				
+#    }
+#
+#    return $workspace
+#}
 
 Function Update-PowerBIDatasetDatasources {
     Param(
@@ -583,7 +583,7 @@ Function New-PowerBIWorkSpace {
         [parameter(Mandatory = $true)]$WorkspaceName
     )
 
-    $workspace = Get-PowerBIWorkspace -WorkspaceName $WorkspaceName -Verbose
+    $workspace = Get-PowerBIWorkspace -Name $WorkspaceName
 
     if ($workspace) {
         Write-Host "Workspace: $WorkspaceName already exists"
@@ -608,7 +608,7 @@ Function Remove-PowerBIWorkSpace {
         [parameter(Mandatory = $true)]$WorkspaceName
     )
  
-    $workspace = Get-PowerBIWorkspace -WorkspaceName $WorkspaceName -Verbose
+    $workspace = Get-PowerBIWorkspace -Name $WorkspaceName -Verbose
  
     if ($workspace) {
         Write-Host "Workspace: $WorkspaceName exists"
@@ -655,7 +655,7 @@ Function Get-PowerBIGroupPath {
     }
     else {
         Write-Host "Getting Power BI Workspace properties; $WorkspaceName"
-        $workspace = Get-PowerBIWorkspace -WorkspaceName $WorkspaceName -Verbose
+        $workspace = Get-PowerBIWorkspace -Name $WorkspaceName -Verbose
 
         if ($Create -And !$workspace) {
             $workspace = New-PowerBIWorkSpace -WorkspaceName $WorkspaceName
