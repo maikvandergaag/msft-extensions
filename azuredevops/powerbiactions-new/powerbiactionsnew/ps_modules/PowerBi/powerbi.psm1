@@ -746,6 +746,7 @@ Function Publish-PowerBIFile {
     )
 
     $GroupPath = Get-PowerBIGroupPath -WorkspaceName $WorkspaceName -Create $Create
+    $workspace = Get-PowerBIWorkspace -Name $WorkspaceName
     
     $searchedFiles = Get-ChildItem $filePattern
 
@@ -760,28 +761,37 @@ Function Publish-PowerBIFile {
         $fileNamewithoutextension = [IO.Path]::GetFileNameWithoutExtension($filePath)
         Write-Host "Checking for existing Reports with the name: $fileNamewithoutextension"
     
-        $report = Get-PowerBIReport -GroupPath $GroupPath -ReportName $fileNamewithoutextension -Verbose
-        $dataset = Get-PowerBiDataSet -GroupPath $GroupPath -Name $fileNamewithoutextension
-        
-        $publish = $true
-        $nameConflict = "Abort"
-        if ($report -or $dataset) {
-            Write-Verbose "Reports or dataset exisits"
-            if ($Overwrite) {
-                Write-Verbose "Reports or dataset exisits and needs to be overwritten"
-                $nameConflict = "Overwrite"
-            }
-            else {
-                $publish = $false
-                Write-Warning "Report already exists"
-            }
+        if ($Overwrite) {
+            $conflictAction = "CreateOrOverwrite"
         }
+        else {
+            $conflictAction = "Abort"
+        }
+
+        New-PowerBIReport -Path $FilePath -Name $fileNamewithoutextension -Workspace $workspace -ConflictAction $conflictAction
+
+        #$report = Get-PowerBIReport -GroupPath $GroupPath -ReportName $fileNamewithoutextension -Verbose
+        #$dataset = Get-PowerBiDataSet -GroupPath $GroupPath -Name $fileNamewithoutextension
+        
+        #$publish = $true
+        #$nameConflict = "Abort"
+        #if ($report -or $dataset) {
+        #    Write-Verbose "Reports or dataset exisits"
+        #    if ($Overwrite) {
+        #        Write-Verbose "Reports or dataset exisits and needs to be overwritten"
+        #        $nameConflict = "Overwrite"
+        #    }
+        #    else {
+        #        $publish = $false
+        #        Write-Warning "Report already exists"
+        #    }
+        #}
        
-        if ($publish) {
-            #Import PowerBi file
-            Write-Host "Importing PowerBI File"
-            $result = Import-PowerBiFile -GroupPath $GroupPath -Path $FilePath -Conflict $nameConflict -Verbose
-        }        
+        #if ($publish) {
+        #    #Import PowerBi file
+        #    Write-Host "Importing PowerBI File"
+        #    $result = Import-PowerBiFile -GroupPath $GroupPath -Path $FilePath -Conflict $nameConflict -Verbose
+        #}        
     }
 }
 
