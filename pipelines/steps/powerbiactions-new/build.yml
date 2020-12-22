@@ -1,9 +1,9 @@
 steps:
-  - task: TfxInstaller@2
+  - task: TfxInstaller@3
     displayName: "Install TFX"
     inputs:
       version: "v0.7.x"
-  - task: PackageAzureDevOpsExtension@2
+  - task: PackageAzureDevOpsExtension@3
     displayName: "Package extension"
     inputs:
       rootFolder: "azuredevops/powerbiactions-new"

@@ -366,28 +366,28 @@ Function New-DatasetRefresh {
     }  
 } 
 
-Function Get-PowerBIWorkspace {
-    Param(
-        [parameter(Mandatory = $true)][string]$WorkspaceName
-    )
-
-    $groupsUrl = $powerbiUrl + '/groups'
-    $result = Invoke-API -Url $groupsUrl -Method "Get" -Verbose
-    $groups = $result.value
-
-    $workspace = $null;
-    if (-not [string]::IsNullOrEmpty($WorkspaceName)) {
-
-        Write-Verbose "Trying to find workspace: $WorkspaceName"		
-        $groups = @($groups | Where-Object name -eq $WorkspaceName)
-    
-        if ($groups.Count -ne 0) {
-            $workspace = $groups[0]		
-        }				
-    }
-
-    return $workspace
-}
+#Function Get-PowerBIWorkspace {
+#    Param(
+#        [parameter(Mandatory = $true)][string]$WorkspaceName
+#    )
+#
+#    $groupsUrl = $powerbiUrl + '/groups'
+#    $result = Invoke-API -Url $groupsUrl -Method "Get" -Verbose
+#    $groups = $result.value
+#
+#    $workspace = $null;
+#    if (-not [string]::IsNullOrEmpty($WorkspaceName)) {
+#
+#        Write-Verbose "Trying to find workspace: $WorkspaceName"		
+#        $groups = @($groups | Where-Object name -eq $WorkspaceName)
+#    
+#        if ($groups.Count -ne 0) {
+#            $workspace = $groups[0]		
+#        }				
+#    }
+#
+#    return $workspace
+#}
 
 Function Update-PowerBIDatasetDatasources {
     Param(
@@ -583,7 +583,7 @@ Function New-PowerBIWorkSpace {
         [parameter(Mandatory = $true)]$WorkspaceName
     )
 
-    $workspace = Get-PowerBIWorkspace -WorkspaceName $WorkspaceName -Verbose
+    $workspace = Get-PowerBIWorkspace -Name $WorkspaceName
 
     if ($workspace) {
         Write-Host "Workspace: $WorkspaceName already exists"
@@ -608,7 +608,7 @@ Function Remove-PowerBIWorkSpace {
         [parameter(Mandatory = $true)]$WorkspaceName
     )
  
-    $workspace = Get-PowerBIWorkspace -WorkspaceName $WorkspaceName -Verbose
+    $workspace = Get-PowerBIWorkspace -Name $WorkspaceName -Verbose
  
     if ($workspace) {
         Write-Host "Workspace: $WorkspaceName exists"
@@ -655,7 +655,7 @@ Function Get-PowerBIGroupPath {
     }
     else {
         Write-Host "Getting Power BI Workspace properties; $WorkspaceName"
-        $workspace = Get-PowerBIWorkspace -WorkspaceName $WorkspaceName -Verbose
+        $workspace = Get-PowerBIWorkspace -Name $WorkspaceName -Verbose
 
         if ($Create -And !$workspace) {
             $workspace = New-PowerBIWorkSpace -WorkspaceName $WorkspaceName
@@ -746,6 +746,7 @@ Function Publish-PowerBIFile {
     )
 
     $GroupPath = Get-PowerBIGroupPath -WorkspaceName $WorkspaceName -Create $Create
+    $workspace = Get-PowerBIWorkspace -Name $WorkspaceName
     
     $searchedFiles = Get-ChildItem $filePattern
 
@@ -760,29 +761,52 @@ Function Publish-PowerBIFile {
         $fileNamewithoutextension = [IO.Path]::GetFileNameWithoutExtension($filePath)
         Write-Host "Checking for existing Reports with the name: $fileNamewithoutextension"
     
-        $report = Get-PowerBIReport -GroupPath $GroupPath -ReportName $fileNamewithoutextension -Verbose
+        if ($Overwrite) {
+            $conflictAction = "CreateOrOverwrite"
+        }
+        else {
+            $conflictAction = "Abort"
+        }
+
+        New-PowerBIReport -Path $FilePath -Name $fileNamewithoutextension -Workspace $workspace -ConflictAction $conflictAction
+
+        #$report = Get-PowerBIReport -GroupPath $GroupPath -ReportName $fileNamewithoutextension -Verbose
+        #$dataset = Get-PowerBiDataSet -GroupPath $GroupPath -Name $fileNamewithoutextension
         
-        $publish = $true
-        $nameConflict = "Abort"
-        if ($report) {
-            Write-Verbose "Reports exists"
-            if ($Overwrite) {
-                Write-Verbose "Reports exists and needs to be overwritten"
-                $nameConflict = "Overwrite"
-            }
-            else {
-                $publish = $false
-                Write-Warning "Report already exists"
-            }
-        }
+        #$publish = $true
+        #$nameConflict = "Abort"
+        #if ($report -or $dataset) {
+        #    Write-Verbose "Reports or dataset exisits"
+        #    if ($Overwrite) {
+        #        Write-Verbose "Reports or dataset exisits and needs to be overwritten"
+        #        $nameConflict = "Overwrite"
+        #    }
+        #    else {
+        #        $publish = $false
+        #        Write-Warning "Report already exists"
+        #    }
+        #}
        
-        if ($publish) {
-            #Import PowerBi file
-            Write-Host "Importing PowerBI File"
-            Import-PowerBiFile -GroupPath $GroupPath -Path $FilePath -Conflict $nameConflict -Verbose
-        }
+        #if ($publish) {
+        #    #Import PowerBi file
+        #    Write-Host "Importing PowerBI File"
+        #    $result = Import-PowerBiFile -GroupPath $GroupPath -Path $FilePath -Conflict $nameConflict -Verbose
+        #}        
     }
 }
 
+
+function Delete-PowerBIReport {
+    Param(
+        [parameter(Mandatory = $true)]$WorkspaceName,
+        [parameter(Mandatory = $true)]$ReportName
+    )
+
+    $GroupPath = Get-PowerBIGroupPath -WorkspaceName $WorkspaceName -Create $Create
+
+    $report = Get-PowerBIReport -GroupPath $GroupPath -ReportName $ReportName -Verbose
+    $url = $powerbiUrl + $GroupPath + "/reports/$($report.id)"
+    Invoke-API -Url $url -Method "Delete"  -ContentType "application/json" 
+}
 
 Export-ModuleMember -Function "*-*"
