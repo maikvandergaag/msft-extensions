@@ -344,7 +344,7 @@ Function New-DatasetRefresh {
     Param(
         [parameter(Mandatory = $true)][string]$WorkspaceName,
         [parameter(Mandatory = $false)][string]$DataSetName,
-        [parameter(Mandatory = $false)][string]$UpdateAll = $false
+        [parameter(Mandatory = $false)][bool]$UpdateAll = $false
     )
 
     $groupPath = Get-PowerBIGroupPath -WorkspaceName $WorkspaceName
