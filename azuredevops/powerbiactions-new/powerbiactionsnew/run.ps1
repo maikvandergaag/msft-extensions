@@ -186,7 +186,7 @@ PROCESS {
 		
 			Update-PowerBIDatasetDatasourcesInGroup -WorkspaceName $workspaceName -DatasetName $dataset -UpdateAll $updateAll -GatewayName $GatewayName
 		}
-		elseif ($action -eq "RemoveReport") {
+		elseif ($action -eq "DeleteReport") {
 			Write-Debug "ReportName               : $($ReportName)";
 			
 			Write-Host "Trying to remove a report"
