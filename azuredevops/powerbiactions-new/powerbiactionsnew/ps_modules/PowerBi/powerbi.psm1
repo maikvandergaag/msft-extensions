@@ -802,7 +802,7 @@ function Delete-PowerBIReport {
         [parameter(Mandatory = $true)]$ReportName
     )
 
-    $GroupPath = Get-PowerBIGroupPath -WorkspaceName $WorkspaceName -Create $Create
+    $GroupPath = Get-PowerBIGroupPath -WorkspaceName $WorkspaceName -Create $false
 
     $report = Get-PowerBIReport -GroupPath $GroupPath -ReportName $ReportName -Verbose
     $url = $powerbiUrl + $GroupPath + "/reports/$($report.id)"
