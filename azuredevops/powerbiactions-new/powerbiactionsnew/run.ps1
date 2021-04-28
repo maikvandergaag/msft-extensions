@@ -35,10 +35,16 @@ PROCESS {
 			$tenantId = $serviceEndpoint.Auth.Parameters.TenantId	
 			$clientId = $serviceEndpoint.Auth.Parameters.ClientId
 			$plainclientSecret = $serviceEndpoint.Auth.Parameters.ClientSecret
-			$clientSecret = ConvertTo-SecureString $plainclientSecret  -AsPlainText -Force
-			$cred = New-Object System.Management.Automation.PSCredential $clientId, $clientSecret
-	
-			Connect-PowerBIServiceAccount -Environment $organizationType -Tenant $tenantId -Credential $cred -ServicePrincipal | Out-Null
+			$plainclientCertificate = $serviceEndpoint.Auth.Parameters.ClientCertificate
+
+			if($plainclientCertificate){
+				Connect-PowerBIServiceAccount -Environment $organizationType -Tenant $tenantId -CertificateThumbprint -ApplicationId $clientId -ServicePrincipal | Out-Null
+			}else{
+				$clientSecret = ConvertTo-SecureString $plainclientSecret  -AsPlainText -Force
+				$cred = New-Object System.Management.Automation.PSCredential $clientId, $clientSecret
+		
+				Connect-PowerBIServiceAccount -Environment $organizationType -Tenant $tenantId -Credential $cred -ServicePrincipal | Out-Null
+			}
 		}
 	
 		#parameters
