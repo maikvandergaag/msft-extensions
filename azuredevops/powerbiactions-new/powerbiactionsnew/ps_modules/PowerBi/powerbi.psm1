@@ -809,4 +809,51 @@ function Delete-PowerBIReport {
     Invoke-API -Url $url -Method "Delete"  -ContentType "application/json" 
 }
 
+Function Get-PowerBICapacity {
+    Param(
+        [parameter(Mandatory = $true)][string]$CapacityName
+    )
+
+    $capacityUrl = $powerbiUrl + '/myorg/capacities'
+    $result = Invoke-API -Url $capacityUrl -Method "Get" -AccessToken $AccessToken -Verbose
+    $capacities = $result.value
+
+    $capacities = $null;
+    if (-not [string]::IsNullOrEmpty($CapacityName)) {
+
+        Write-Verbose "Trying to find capacity: $CapacityName"		
+        $items = @($capacities | Where-Object name -eq $CapacityName)
+    
+        if ($items.Count -ne 0) {
+            $capacity = $items[0]		
+        }				
+    }
+
+    return $capacity
+}
+
+
+function Set-Capacity {
+    Param(
+        [parameter(Mandatory = $true)]$WorkspaceName,
+        [parameter(Mandatory = $true)]$CapacityName,   
+        [parameter(Mandatory = $false)]$Create = $false
+    )
+
+    $capacity = Get-Capacity -CapacityName $CapacityName
+
+    if (!$capacity) {
+        throw "capacity could not be found!"
+    }
+
+    $GroupPath = Get-PowerBIGroupPath -WorkspaceName $WorkspaceName -Create $Create
+    $url = $powerbiUrl + $GroupPath + "/AssignToCapacity"
+
+    $body = @{
+        capacityId = $capacity.Id
+    } | ConvertTo-Json	
+
+    Invoke-API -Url $url -Method "Post" -Body $body -ContentType "application/json" 
+}
+
 Export-ModuleMember -Function "*-*"

@@ -47,7 +47,8 @@
         "UpdateParameters": "Update parameters",
         "TakeOwnership": "Take dataset ownership",
         "UpdateGateway": "Update Gateway",
-        "DeleteReport": "Delete Report"
+        "DeleteReport": "Delete Report",
+        "SetCapacity": "Workspace set capacity"
       }
     },
     {
@@ -57,6 +58,15 @@
       "defaultValue": "",
       "required": true,
       "helpMarkDown": "The name of the power bi workspace."
+    },
+    {
+      "name": "CapacityName",
+      "type": "string",
+      "label": "Capacity name",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "The name for the capacity.",
+      "visibleRule":"Action = SetCapacity"
     },
     {
       "name": "PowerBIPath",
@@ -83,7 +93,7 @@
       "defaultValue": "true",
       "required": false,
       "helpMarkDown": "Create the workspace when it does not exist",
-      "visibleRule": "Action = Publish || Action = AddUsers || Action = AddSP || Action = AddGroup"
+      "visibleRule": "Action = Publish || Action = AddUsers || Action = AddSP || Action = AddGroup || Action = SetCapacity"
     },
     {
       "name": "Users",

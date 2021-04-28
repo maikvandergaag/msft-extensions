@@ -64,6 +64,7 @@ PROCESS {
 		$ParameterInput = Get-VstsInput -Name ParameterInput
 		$GatewayName = Get-VstsInput -Name GatewayName
 		$ReportName = Get-VstsInput -Name ReportName
+		$CapacityName = Get-VstsInput -Name CapacityName
 	
 		
 		Write-Debug "WorkspaceName         : $($workspaceName)";
@@ -193,7 +194,13 @@ PROCESS {
 		
 			Delete-PowerBIReport -WorkspaceName $workspaceName -ReportName $ReportName
 		}
-
+		elseif ($action -eq "SetCapacity") {
+			Write-Debug "Capacity Name				  : $($CapacityName)"
+			
+			Write-Host "Trying to set the capacity for the workspace"
+		
+			Set-Capacity -WorkspaceName $workspaceName -CapactiyName $CapacityName -Create $Create
+		}
 	}
 	finally {
 		Write-Output "Done processing Power BI Actions"	
