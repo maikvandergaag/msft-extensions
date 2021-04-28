@@ -199,7 +199,7 @@ PROCESS {
 			
 			Write-Host "Trying to set the capacity for the workspace"
 		
-			Set-Capacity -WorkspaceName $workspaceName -CapactiyName $CapacityName -Create $Create
+			Set-Capacity -WorkspaceName $workspaceName -CapacityName $CapacityName -Create $Create
 		}
 	}
 	finally {
