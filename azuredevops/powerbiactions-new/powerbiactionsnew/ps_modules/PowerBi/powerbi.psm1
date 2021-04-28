@@ -814,7 +814,7 @@ Function Get-PowerBICapacity {
         [parameter(Mandatory = $true)][string]$CapacityName
     )
 
-    $capacityUrl = $powerbiUrl + '/myorg/capacities'
+    $capacityUrl = $powerbiUrl + '/capacities'
     $result = Invoke-API -Url $capacityUrl -Method "Get" -Verbose
     $capacities = $result.value
 
