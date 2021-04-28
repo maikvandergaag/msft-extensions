@@ -335,9 +335,8 @@
             ]
           },
           {
-            "type": "ms.vss-endpoint.endpoint-auth-scheme-none",
+            "type": "ms.vss-endpoint.endpoint-auth-scheme-type",
             "displayName": "Service Principal Certificate",
-            "id": "endpoint-serviceprincipal-cert",
             "inputDescriptors": [
               {
                 "id": "TenantId",
