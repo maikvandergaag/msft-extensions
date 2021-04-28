@@ -768,30 +768,19 @@ Function Publish-PowerBIFile {
             $conflictAction = "Abort"
         }
 
-        New-PowerBIReport -Path $FilePath -Name $fileNamewithoutextension -Workspace $workspace -ConflictAction $conflictAction
+        try{
+            New-PowerBIReport -Path $FilePath -Name $fileNamewithoutextension -Workspace $workspace -ConflictAction $conflictAction
+        }        
+        catch { 
 
-        #$report = Get-PowerBIReport -GroupPath $GroupPath -ReportName $fileNamewithoutextension -Verbose
-        #$dataset = Get-PowerBiDataSet -GroupPath $GroupPath -Name $fileNamewithoutextension
-        
-        #$publish = $true
-        #$nameConflict = "Abort"
-        #if ($report -or $dataset) {
-        #    Write-Verbose "Reports or dataset exisits"
-        #    if ($Overwrite) {
-        #        Write-Verbose "Reports or dataset exisits and needs to be overwritten"
-        #        $nameConflict = "Overwrite"
-        #    }
-        #    else {
-        #        $publish = $false
-        #        Write-Warning "Report already exists"
-        #    }
-        #}
-       
-        #if ($publish) {
-        #    #Import PowerBi file
-        #    Write-Host "Importing PowerBI File"
-        #    $result = Import-PowerBiFile -GroupPath $GroupPath -Path $FilePath -Conflict $nameConflict -Verbose
-        #}        
+            if ($_.Exception.Message -ccontains "Sequence contains more than one element") { 
+                Write-Output "More than one report was associated with this dataset. We're ignoring the ""error"" and continuing..." `n
+                $error.Clear()      
+            }  
+            else { 
+                throw      
+            } 
+        } 
     }
 }
 
@@ -887,6 +876,58 @@ Function Rebind-PowerBIReport {
     }
     else {
         Write-Error "Workspace: $WorkspaceName could not be found"
+    }
+}
+
+function Update-BasicSQLDataSourceCredentials{
+    Param(
+        [parameter(Mandatory = $true)]$WorkspaceName,
+        [parameter(Mandatory = $true)]$ReportName,    
+        [Parameter(Mandatory=$true)]$Username,        
+        [Parameter(Mandatory=$true)]$Password
+    )
+
+    $workspace = (Get-PowerBIWorkspace -Scope Organization -Name $WorkspaceName)
+
+    #Retrieve the report
+    $report = (Get-PowerBIReport -Workspace $workspace -Name $ReportName)
+
+    #Retrieve all data sources
+    $datasources = (Get-PowerBIDatasource -DatasetId $report.DatasetId -Scope Organization)
+    
+    foreach ($dataSource in $datasources) { 
+
+        #Store the data source id in a variable (for ease of use later)
+        $dataSourceId = $dataSource.DatasourceId
+    
+        #API url for data source
+        $ApiUrl = "gateways/" + $dataSource.GatewayId + "/datasources/" + $dataSourceId
+    
+        #Format username and password, replacing escape characters for the body of the request
+        $FormattedDataSourceUser = $UserName.Replace("\", "\\")
+        $FormattedDataSourcePassword = $Password.Replace("\", "\\")
+            
+        #Build the request body
+        $ApiRequestBody = @"
+            {
+                "credentialDetails": {
+                    "credentialType": "Basic", 
+                    "credentials": "{\"credentialData\":[{\"name\":\"username\", \"value\":\"$($FormattedDataSourceUser)\"},{\"name\":\"password\", \"value\":\"$($FormattedDataSourcePassword)\"}]}",
+                    "encryptedConnection": "Encrypted",
+                    "encryptionAlgorithm": "None",
+                    "privacyLevel": "Organizational"
+                }
+            }
+"@
+    
+        #If it's a sql server source, change the username/password
+        if ($DataSource.DatasourceType = "Sql") {
+    
+            #Update username & password
+            Invoke-PowerBIRestMethod -Url $ApiUrl -Method Patch -Body ("$ApiRequestBody") 
+    
+            Write-Output "Credentials for data source ""$DataSourceId"" successfully updated..." `n
+        }
     }
 }
 

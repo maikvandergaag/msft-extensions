@@ -71,8 +71,9 @@ PROCESS {
 		$GatewayName = Get-VstsInput -Name GatewayName
 		$ReportName = Get-VstsInput -Name ReportName
 		$CapacityName = Get-VstsInput -Name CapacityName
-	
-		
+		$Username = Get-VstsInput -Name Username
+		$Password = Get-VstsInput -Name Password
+
 		Write-Debug "WorkspaceName         : $($workspaceName)";
 		Write-Debug "Create                : $($Create)";
 
@@ -153,6 +154,9 @@ PROCESS {
 			Write-Host "Trying to update a SQL Direct Query"
 		
 			Update-ConnectionStringDirectQuery -WorkspaceName $workspaceName -DatasetName $dataset -ConnectionString $connectionstring
+		}
+		elseif($action -eq "UpdateSqlCreds"){
+			Update-BasicSQLDataSourceCredentials -WorkspaceName $workspaceName -ReportName $ReportName -Username $userName -Password $password 
 		}
 		elseif ($action -eq "UpdateParameters") {
 			Write-Debug "Dataset               : $($dataset)";

@@ -49,7 +49,8 @@
         "UpdateGateway": "Update Gateway",
         "DeleteReport": "Delete Report",
         "SetCapacity": "Workspace set capacity",
-        "RebindReport": "Rebind Report"
+        "RebindReport": "Rebind Report",
+        "UpdateSqlCreds": "Update SQL Credentials"
       }
     },
     {
@@ -163,7 +164,7 @@
       "defaultValue": "",
       "required": false,
       "helpMarkDown": "The name of the report",
-      "visibleRule": "Action = DeleteReport || Action = RebindReport"
+      "visibleRule": "Action = DeleteReport || Action = RebindReport || Action = UpdateSqlCreds"
     },
     {
       "name": "GatewayName",
@@ -260,6 +261,24 @@
       "required": true,
       "helpMarkDown": "A json value representing the update parameters example [{'name' : 'test', 'newValue' : 'test'}]",
       "visibleRule": "Action = UpdateParameters"
+    },
+    {
+      "name": "Username",
+      "type": "string",
+      "label": "Username",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "The username for the SQL credentials",
+      "visibleRule": "Action = UpdateSqlCreds"
+    },
+    {
+      "name": "Password",
+      "type": "string",
+      "label": "Password",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "The password for the SQL credentials",
+      "visibleRule": "Action = UpdateSqlCreds"
     }
   ],
   "execution": {
