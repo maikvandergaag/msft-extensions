@@ -840,7 +840,7 @@ function Set-Capacity {
         [parameter(Mandatory = $false)]$Create = $false
     )
 
-    $capacity = Get-Capacity -CapacityName $CapacityName
+    $capacity = Get-PowerBICapacity -CapacityName $CapacityName
 
     if (!$capacity) {
         throw "capacity could not be found!"
