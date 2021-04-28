@@ -201,6 +201,11 @@ PROCESS {
 		
 			Set-Capacity -WorkspaceName $workspaceName -CapacityName $CapacityName -Create $Create
 		}
+		elseif($action -eq "RebindReport"){
+			Write-Debug "Dataset Name				  : $($dataset)"
+			Write-Debug "Report Name				  : $($ReportName)"
+			Rebind-PowerBIReport -WorkspaceName $workspaceName -DatasetName $dataset -ReportName $ReportName
+		}
 	}
 	finally {
 		Write-Output "Done processing Power BI Actions"	

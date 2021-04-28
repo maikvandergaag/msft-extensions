@@ -815,7 +815,7 @@ Function Get-PowerBICapacity {
     )
 
     $capacityUrl = $powerbiUrl + '/myorg/capacities'
-    $result = Invoke-API -Url $capacityUrl -Method "Get" -AccessToken $AccessToken -Verbose
+    $result = Invoke-API -Url $capacityUrl -Method "Get" -Verbose
     $capacities = $result.value
 
     $capacities = $null;
@@ -854,6 +854,40 @@ function Set-Capacity {
     } | ConvertTo-Json	
 
     Invoke-API -Url $url -Method "Post" -Body $body -ContentType "application/json" 
+}
+
+Function Rebind-PowerBIReport {
+    Param(
+        [parameter(Mandatory = $true)]$WorkspaceName,
+        [parameter(Mandatory = $true)]$ReportName,
+        [parameter(Mandatory = $true)]$DatasetName
+    )
+
+    $groupPath = Get-PowerBIGroupPath -WorkspaceName $WorkspaceName
+    if ($groupPath) {
+        $dataset = Get-PowerBiDataSet -GroupPath $groupPath -Name $DatasetName
+
+        if (!$dataset) {
+            throw "Could not find dataset"
+        }
+
+        $report = Get-PowerBIReport -GroupPath $groupPath -ReportName $ReportName
+
+        if (!$report) {
+            throw "Could not find report"
+        }
+
+        $url = $powerbiUrl + $GroupPath + "/reports/" + $($report.id) + "/Rebind"
+
+        $body = @{
+            datasetId = $dataset.Id
+        } | ConvertTo-Json	
+
+        Invoke-API -Url $url -Method "Post" -Body $body -ContentType "application/json" 
+    }
+    else {
+        Write-Error "Workspace: $WorkspaceName could not be found"
+    }
 }
 
 Export-ModuleMember -Function "*-*"

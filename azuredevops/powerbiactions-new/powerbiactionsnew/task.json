@@ -48,7 +48,8 @@
         "TakeOwnership": "Take dataset ownership",
         "UpdateGateway": "Update Gateway",
         "DeleteReport": "Delete Report",
-        "SetCapacity": "Workspace set capacity"
+        "SetCapacity": "Workspace set capacity",
+        "RebindReport": "Rebind Report"
       }
     },
     {
@@ -153,7 +154,7 @@
       "defaultValue": "",
       "required": false,
       "helpMarkDown": "The name of the dataset",
-      "visibleRule": "Action = DataRefresh || Action = UpdateDatasource || Action = SQLDirect || Action = UpdateParameters || Action = TakeOwnership || Action = UpdateGateway"
+      "visibleRule": "Action = DataRefresh || Action = UpdateDatasource || Action = SQLDirect || Action = UpdateParameters || Action = TakeOwnership || Action = UpdateGateway || Action = RebindReport"
     },
     {
       "name": "ReportName",
@@ -162,7 +163,7 @@
       "defaultValue": "",
       "required": false,
       "helpMarkDown": "The name of the report",
-      "visibleRule": "Action = DeleteReport"
+      "visibleRule": "Action = DeleteReport || Action = RebindReport"
     },
     {
       "name": "GatewayName",
