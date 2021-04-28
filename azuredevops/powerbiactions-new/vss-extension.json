@@ -328,37 +328,8 @@
                 "inputMode": "passwordbox",
                 "isConfidential": true,
                 "validation": {
-                  "isRequired": true,
+                  "isRequired": false,
                   "dataType": "string"
-                }
-              }
-            ]
-          },
-          {
-            "type": "ms.vss-endpoint.endpoint-auth-scheme-type",
-            "displayName": "Service Principal Certificate",
-            "inputDescriptors": [
-              {
-                "id": "TenantId",
-                "name": "Tenant ID",
-                "description": "Tenant ID",
-                "inputMode": "textbox",
-                "isConfidential": false,
-                "validation": {
-                  "isRequired": true,
-                  "dataType": "guid",
-                  "maxLength": 38
-                }
-              },
-              {
-                "id": "ClientId",
-                "name": "Client ID",
-                "description": "Client ID",
-                "inputMode": "textbox",
-                "isConfidential": false,
-                "validation": {
-                  "isRequired": true,
-                  "dataType": "guid"
                 }
               },
               {
@@ -368,7 +339,7 @@
                 "inputMode": "passwordbox",
                 "isConfidential": true,
                 "validation": {
-                  "isRequired": true,
+                  "isRequired": false,
                   "dataType": "string"
                 }
               }
