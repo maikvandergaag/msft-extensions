@@ -10,7 +10,7 @@ variables:
 trigger:
   paths:
     include:
-    - azuredevops/arm-ttk
+      - azuredevops/arm-ttk
 
 steps:
 - task: TfxInstaller@2
