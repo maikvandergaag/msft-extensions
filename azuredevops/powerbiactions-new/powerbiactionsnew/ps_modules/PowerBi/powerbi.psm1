@@ -73,7 +73,7 @@ Function Update-PowerBIDatasetSource {
         [parameter(Mandatory = $true)]$GatewayDataSources
     )
     $datasourceInDataset = Get-PowerBIDatasetGatewayDatasourceInGroup -GroupPath $groupPath -Set $dataset
-    $GatewayDataSource = $GatewayDataSources | Where-Object { $_.connectionDetails -eq $datasourceInDataset.connectionDetails }
+    $GatewayDataSource = $GatewayDataSources | Where-Object { $_.connectionDetails -in $datasourceInDataset.connectionDetails }
     if ($GatewayDataSource) {
         Set-PowerBIDatasetToGatewayInGroup -Set $dataset -GroupPath $groupPath -GatewayDataSources $GatewayDataSource
     }
