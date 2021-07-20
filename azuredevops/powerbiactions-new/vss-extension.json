@@ -328,7 +328,18 @@
                 "inputMode": "passwordbox",
                 "isConfidential": true,
                 "validation": {
-                  "isRequired": true,
+                  "isRequired": false,
+                  "dataType": "string"
+                }
+              },
+              {
+                "id": "ClientCertificate",
+                "name": "Client Certificate",
+                "description": "Client Certificate",
+                "inputMode": "passwordbox",
+                "isConfidential": true,
+                "validation": {
+                  "isRequired": false,
                   "dataType": "string"
                 }
               }

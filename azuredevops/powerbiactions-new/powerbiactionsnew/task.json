@@ -47,7 +47,10 @@
         "UpdateParameters": "Update parameters",
         "TakeOwnership": "Take dataset ownership",
         "UpdateGateway": "Update Gateway",
-        "DeleteReport": "Delete Report"
+        "DeleteReport": "Delete Report",
+        "SetCapacity": "Workspace set capacity",
+        "RebindReport": "Rebind Report",
+        "UpdateSqlCreds": "Update SQL Credentials"
       }
     },
     {
@@ -57,6 +60,15 @@
       "defaultValue": "",
       "required": true,
       "helpMarkDown": "The name of the power bi workspace."
+    },
+    {
+      "name": "CapacityName",
+      "type": "string",
+      "label": "Capacity name",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "The name for the capacity.",
+      "visibleRule":"Action = SetCapacity"
     },
     {
       "name": "PowerBIPath",
@@ -83,7 +95,7 @@
       "defaultValue": "true",
       "required": false,
       "helpMarkDown": "Create the workspace when it does not exist",
-      "visibleRule": "Action = Publish || Action = AddUsers || Action = AddSP || Action = AddGroup"
+      "visibleRule": "Action = Publish || Action = AddUsers || Action = AddSP || Action = AddGroup || Action = SetCapacity"
     },
     {
       "name": "Users",
@@ -143,7 +155,7 @@
       "defaultValue": "",
       "required": false,
       "helpMarkDown": "The name of the dataset",
-      "visibleRule": "Action = DataRefresh || Action = UpdateDatasource || Action = SQLDirect || Action = UpdateParameters || Action = TakeOwnership || Action = UpdateGateway"
+      "visibleRule": "Action = DataRefresh || Action = UpdateDatasource || Action = SQLDirect || Action = UpdateParameters || Action = TakeOwnership || Action = UpdateGateway || Action = RebindReport"
     },
     {
       "name": "ReportName",
@@ -152,7 +164,7 @@
       "defaultValue": "",
       "required": false,
       "helpMarkDown": "The name of the report",
-      "visibleRule": "Action = DeleteReport"
+      "visibleRule": "Action = DeleteReport || Action = RebindReport || Action = UpdateSqlCreds"
     },
     {
       "name": "GatewayName",
@@ -249,6 +261,24 @@
       "required": true,
       "helpMarkDown": "A json value representing the update parameters example [{'name' : 'test', 'newValue' : 'test'}]",
       "visibleRule": "Action = UpdateParameters"
+    },
+    {
+      "name": "Username",
+      "type": "string",
+      "label": "Username",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "The username for the SQL credentials",
+      "visibleRule": "Action = UpdateSqlCreds"
+    },
+    {
+      "name": "Password",
+      "type": "string",
+      "label": "Password",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "The password for the SQL credentials",
+      "visibleRule": "Action = UpdateSqlCreds"
     }
   ],
   "execution": {

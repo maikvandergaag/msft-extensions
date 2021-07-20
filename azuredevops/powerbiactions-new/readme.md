@@ -11,6 +11,7 @@ The following tasks can be automated when using this extension:
 * Refresh a dataset.
 * Update SQL Direct Query String
 * Update Gateway
+* Set a specific capacity for a workplace
 
 The following organization types are supported from version 5 and higher:
 

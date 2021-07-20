@@ -768,30 +768,19 @@ Function Publish-PowerBIFile {
             $conflictAction = "Abort"
         }
 
-        New-PowerBIReport -Path $FilePath -Name $fileNamewithoutextension -Workspace $workspace -ConflictAction $conflictAction
+        try{
+            New-PowerBIReport -Path $FilePath -Name $fileNamewithoutextension -Workspace $workspace -ConflictAction $conflictAction
+        }        
+        catch { 
 
-        #$report = Get-PowerBIReport -GroupPath $GroupPath -ReportName $fileNamewithoutextension -Verbose
-        #$dataset = Get-PowerBiDataSet -GroupPath $GroupPath -Name $fileNamewithoutextension
-        
-        #$publish = $true
-        #$nameConflict = "Abort"
-        #if ($report -or $dataset) {
-        #    Write-Verbose "Reports or dataset exisits"
-        #    if ($Overwrite) {
-        #        Write-Verbose "Reports or dataset exisits and needs to be overwritten"
-        #        $nameConflict = "Overwrite"
-        #    }
-        #    else {
-        #        $publish = $false
-        #        Write-Warning "Report already exists"
-        #    }
-        #}
-       
-        #if ($publish) {
-        #    #Import PowerBi file
-        #    Write-Host "Importing PowerBI File"
-        #    $result = Import-PowerBiFile -GroupPath $GroupPath -Path $FilePath -Conflict $nameConflict -Verbose
-        #}        
+            if ($_.Exception.Message -ccontains "Sequence contains more than one element") { 
+                Write-Output "More than one report was associated with this dataset. We're ignoring the ""error"" and continuing..." `n
+                $error.Clear()      
+            }  
+            else { 
+                throw      
+            } 
+        } 
     }
 }
 
@@ -807,6 +796,139 @@ function Delete-PowerBIReport {
     $report = Get-PowerBIReport -GroupPath $GroupPath -ReportName $ReportName -Verbose
     $url = $powerbiUrl + $GroupPath + "/reports/$($report.id)"
     Invoke-API -Url $url -Method "Delete"  -ContentType "application/json" 
+}
+
+Function Get-PowerBICapacity {
+    Param(
+        [parameter(Mandatory = $true)][string]$CapacityName
+    )
+
+    $capacityUrl = $powerbiUrl + '/capacities'
+    $result = Invoke-API -Url $capacityUrl -Method "Get" -Verbose
+    $capacities = $result.value
+
+    $capacities = $null;
+    if (-not [string]::IsNullOrEmpty($CapacityName)) {
+
+        Write-Verbose "Trying to find capacity: $CapacityName"		
+        $items = @($capacities | Where-Object name -eq $CapacityName)
+    
+        if ($items.Count -ne 0) {
+            $capacity = $items[0]		
+        }				
+    }
+
+    return $capacity
+}
+
+
+function Set-Capacity {
+    Param(
+        [parameter(Mandatory = $true)]$WorkspaceName,
+        [parameter(Mandatory = $true)]$CapacityName,   
+        [parameter(Mandatory = $false)]$Create = $false
+    )
+
+    $capacity = Get-PowerBICapacity -CapacityName $CapacityName
+
+    if (!$capacity) {
+        throw "capacity could not be found!"
+    }
+
+    $GroupPath = Get-PowerBIGroupPath -WorkspaceName $WorkspaceName -Create $Create
+    $url = $powerbiUrl + $GroupPath + "/AssignToCapacity"
+
+    $body = @{
+        capacityId = $capacity.Id
+    } | ConvertTo-Json	
+
+    Invoke-API -Url $url -Method "Post" -Body $body -ContentType "application/json" 
+}
+
+Function Rebind-PowerBIReport {
+    Param(
+        [parameter(Mandatory = $true)]$WorkspaceName,
+        [parameter(Mandatory = $true)]$ReportName,
+        [parameter(Mandatory = $true)]$DatasetName
+    )
+
+    $groupPath = Get-PowerBIGroupPath -WorkspaceName $WorkspaceName
+    if ($groupPath) {
+        $dataset = Get-PowerBiDataSet -GroupPath $groupPath -Name $DatasetName
+
+        if (!$dataset) {
+            throw "Could not find dataset"
+        }
+
+        $report = Get-PowerBIReport -GroupPath $groupPath -ReportName $ReportName
+
+        if (!$report) {
+            throw "Could not find report"
+        }
+
+        $url = $powerbiUrl + $GroupPath + "/reports/" + $($report.id) + "/Rebind"
+
+        $body = @{
+            datasetId = $dataset.Id
+        } | ConvertTo-Json	
+
+        Invoke-API -Url $url -Method "Post" -Body $body -ContentType "application/json" 
+    }
+    else {
+        Write-Error "Workspace: $WorkspaceName could not be found"
+    }
+}
+
+function Update-BasicSQLDataSourceCredentials{
+    Param(
+        [parameter(Mandatory = $true)]$WorkspaceName,
+        [parameter(Mandatory = $true)]$ReportName,    
+        [Parameter(Mandatory=$true)]$Username,        
+        [Parameter(Mandatory=$true)]$Password
+    )
+
+    $workspace = (Get-PowerBIWorkspace -Scope Organization -Name $WorkspaceName)
+
+    #Retrieve the report
+    $report = (Get-PowerBIReport -Workspace $workspace -Name $ReportName)
+
+    #Retrieve all data sources
+    $datasources = (Get-PowerBIDatasource -DatasetId $report.DatasetId -Scope Organization)
+    
+    foreach ($dataSource in $datasources) { 
+
+        #Store the data source id in a variable (for ease of use later)
+        $dataSourceId = $dataSource.DatasourceId
+    
+        #API url for data source
+        $ApiUrl = "gateways/" + $dataSource.GatewayId + "/datasources/" + $dataSourceId
+    
+        #Format username and password, replacing escape characters for the body of the request
+        $FormattedDataSourceUser = $UserName.Replace("\", "\\")
+        $FormattedDataSourcePassword = $Password.Replace("\", "\\")
+            
+        #Build the request body
+        $ApiRequestBody = @"
+            {
+                "credentialDetails": {
+                    "credentialType": "Basic", 
+                    "credentials": "{\"credentialData\":[{\"name\":\"username\", \"value\":\"$($FormattedDataSourceUser)\"},{\"name\":\"password\", \"value\":\"$($FormattedDataSourcePassword)\"}]}",
+                    "encryptedConnection": "Encrypted",
+                    "encryptionAlgorithm": "None",
+                    "privacyLevel": "Organizational"
+                }
+            }
+"@
+    
+        #If it's a sql server source, change the username/password
+        if ($DataSource.DatasourceType = "Sql") {
+    
+            #Update username & password
+            Invoke-PowerBIRestMethod -Url $ApiUrl -Method Patch -Body ("$ApiRequestBody") 
+    
+            Write-Output "Credentials for data source ""$DataSourceId"" successfully updated..." `n
+        }
+    }
 }
 
 Export-ModuleMember -Function "*-*"

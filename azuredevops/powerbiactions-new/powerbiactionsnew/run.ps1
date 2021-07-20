@@ -35,10 +35,16 @@ PROCESS {
 			$tenantId = $serviceEndpoint.Auth.Parameters.TenantId	
 			$clientId = $serviceEndpoint.Auth.Parameters.ClientId
 			$plainclientSecret = $serviceEndpoint.Auth.Parameters.ClientSecret
-			$clientSecret = ConvertTo-SecureString $plainclientSecret  -AsPlainText -Force
-			$cred = New-Object System.Management.Automation.PSCredential $clientId, $clientSecret
-	
-			Connect-PowerBIServiceAccount -Environment $organizationType -Tenant $tenantId -Credential $cred -ServicePrincipal | Out-Null
+			$plainclientCertificate = $serviceEndpoint.Auth.Parameters.ClientCertificate
+
+			if($plainclientCertificate){
+				Connect-PowerBIServiceAccount -Environment $organizationType -Tenant $tenantId -CertificateThumbprint -ApplicationId $clientId -ServicePrincipal | Out-Null
+			}else{
+				$clientSecret = ConvertTo-SecureString $plainclientSecret  -AsPlainText -Force
+				$cred = New-Object System.Management.Automation.PSCredential $clientId, $clientSecret
+		
+				Connect-PowerBIServiceAccount -Environment $organizationType -Tenant $tenantId -Credential $cred -ServicePrincipal | Out-Null
+			}
 		}
 	
 		#parameters
@@ -64,8 +70,10 @@ PROCESS {
 		$ParameterInput = Get-VstsInput -Name ParameterInput
 		$GatewayName = Get-VstsInput -Name GatewayName
 		$ReportName = Get-VstsInput -Name ReportName
-	
-		
+		$CapacityName = Get-VstsInput -Name CapacityName
+		$Username = Get-VstsInput -Name Username
+		$Password = Get-VstsInput -Name Password
+
 		Write-Debug "WorkspaceName         : $($workspaceName)";
 		Write-Debug "Create                : $($Create)";
 
@@ -147,6 +155,9 @@ PROCESS {
 		
 			Update-ConnectionStringDirectQuery -WorkspaceName $workspaceName -DatasetName $dataset -ConnectionString $connectionstring
 		}
+		elseif($action -eq "UpdateSqlCreds"){
+			Update-BasicSQLDataSourceCredentials -WorkspaceName $workspaceName -ReportName $ReportName -Username $userName -Password $password 
+		}
 		elseif ($action -eq "UpdateParameters") {
 			Write-Debug "Dataset               : $($dataset)";
 			Write-Debug "Update Json     	: $($ParameterInput)";
@@ -193,7 +204,18 @@ PROCESS {
 		
 			Delete-PowerBIReport -WorkspaceName $workspaceName -ReportName $ReportName
 		}
-
+		elseif ($action -eq "SetCapacity") {
+			Write-Debug "Capacity Name				  : $($CapacityName)"
+			
+			Write-Host "Trying to set the capacity for the workspace"
+		
+			Set-Capacity -WorkspaceName $workspaceName -CapacityName $CapacityName -Create $Create
+		}
+		elseif($action -eq "RebindReport"){
+			Write-Debug "Dataset Name				  : $($dataset)"
+			Write-Debug "Report Name				  : $($ReportName)"
+			Rebind-PowerBIReport -WorkspaceName $workspaceName -DatasetName $dataset -ReportName $ReportName
+		}
 	}
 	finally {
 		Write-Output "Done processing Power BI Actions"	
