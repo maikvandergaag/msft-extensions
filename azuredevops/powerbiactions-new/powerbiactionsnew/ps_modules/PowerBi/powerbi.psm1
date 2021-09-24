@@ -887,7 +887,7 @@ function Update-BasicSQLDataSourceCredentials{
         [Parameter(Mandatory=$true)]$Password
     )
 
-    $workspace = (Get-PowerBIWorkspace -Scope Organization -Name $WorkspaceName)
+    $workspace = (Get-PowerBIWorkspace -Scope Individual -Name $WorkspaceName)
 
     #Retrieve the report
     $report = (Get-PowerBIReport -Workspace $workspace -Name $ReportName)
