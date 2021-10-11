@@ -931,4 +931,25 @@ function Update-BasicSQLDataSourceCredentials{
     }
 }
 
+Function Set-RefreshSchedule {
+    Param(
+        [parameter(Mandatory = $true)]$WorkspaceName,
+        [parameter(Mandatory = $true)]$DatasetName,
+        [parameter(Mandatory = $true)]$ScheduleJSON
+    )
+
+    # Retrieve workspace
+    $workspace = (Get-PowerBIWorkspace -Scope Individual -Name $WorkspaceName)
+
+    # Retrieve dataset
+    $dataset = (Get-PowerBIDataSet -Workspace $workspace -Name $DatasetName)
+
+    $url = "groups/$($workspace.id)/datasets/$($dataset.Id)/refreshSchedule"
+
+    $body = $ScheduleJSON | ConvertTo-Json	
+
+    # Set Refresh Schedule
+    Invoke-API -Url $url -Method "Patch" -Body $body -ContentType "application/json" 
+}
+
 Export-ModuleMember -Function "*-*"

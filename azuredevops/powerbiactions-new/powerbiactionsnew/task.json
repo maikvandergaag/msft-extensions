@@ -279,6 +279,15 @@
       "required": true,
       "helpMarkDown": "The password for the SQL credentials",
       "visibleRule": "Action = UpdateSqlCreds"
+    },
+    {
+      "name": "RefreshScheduleInput",
+      "type": "string",
+      "label": "Update refreshschedule json",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "A json value representing the refreshschedule example [{'value': {'days': ['Sunday'],'times': ['07:00'],'localTimeZoneId': 'UTC'}}]",
+      "visibleRule": "Action = SetRefreshSchedule"
     }
   ],
   "execution": {
