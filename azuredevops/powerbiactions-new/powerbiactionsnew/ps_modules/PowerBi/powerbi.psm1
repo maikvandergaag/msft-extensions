@@ -931,4 +931,27 @@ function Update-BasicSQLDataSourceCredentials{
     }
 }
 
+Function Set-RefreshSchedule {
+    Param(
+        [parameter(Mandatory = $true)]$WorkspaceName,
+        [parameter(Mandatory = $true)]$DatasetName,
+        [parameter(Mandatory = $true)]$ScheduleJSON
+    )
+
+    # Retrieve workspace
+    Write-Host "Fetching workspace $($WorkspaceName)..." `n
+    $workspace = (Get-PowerBIWorkspace -Scope Individual -Name $WorkspaceName)
+
+    # Retrieve dataset
+    Write-Host "Fetching dataset $($DatasetName)..." `n
+    $dataset = (MicrosoftPowerBIMgmt.Data\Get-PowerBIDataset -Workspace $workspace -Name $DatasetName)
+
+    $url = "groups/$($workspace.id)/datasets/$($dataset.id)/refreshSchedule"
+	
+    # Set Refresh Schedule
+    Write-Host "Updating dataset $($DatasetName)..." `n
+    Invoke-PowerBIRestMethod -Url $url -Method Patch -Body $ScheduleJSON
+    Write-Host "Refresh schedule updated for dataset $($DatasetName)..." `n
+}
+
 Export-ModuleMember -Function "*-*"

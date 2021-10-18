@@ -13,8 +13,8 @@
   "demands": [],
   "version": {
     "Major": "4",
-    "Minor": "1",
-    "Patch": "19"
+    "Minor": "2",
+    "Patch": "0"
   },
   "minimumAgentVersion": "1.95.0",
   "instanceNameFormat": "Power BI Action: $(Action)",
@@ -50,7 +50,8 @@
         "DeleteReport": "Delete Report",
         "SetCapacity": "Workspace set capacity",
         "RebindReport": "Rebind Report",
-        "UpdateSqlCreds": "Update SQL Credentials"
+        "UpdateSqlCreds": "Update SQL Credentials",
+        "SetRefreshSchedule" : "Set Refresh Schedule"
       }
     },
     {
@@ -155,7 +156,7 @@
       "defaultValue": "",
       "required": false,
       "helpMarkDown": "The name of the dataset",
-      "visibleRule": "Action = DataRefresh || Action = UpdateDatasource || Action = SQLDirect || Action = UpdateParameters || Action = TakeOwnership || Action = UpdateGateway || Action = RebindReport"
+      "visibleRule": "Action = DataRefresh || Action = UpdateDatasource || Action = SQLDirect || Action = UpdateParameters || Action = TakeOwnership || Action = UpdateGateway || Action = RebindReport || Action = SetRefreshSchedule"
     },
     {
       "name": "ReportName",
@@ -279,6 +280,15 @@
       "required": true,
       "helpMarkDown": "The password for the SQL credentials",
       "visibleRule": "Action = UpdateSqlCreds"
+    },
+    {
+      "name": "RefreshScheduleInput",
+      "type": "string",
+      "label": "Set refreshschedule json",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "A json value representing the refreshschedule example: {'value': {'days': ['Sunday'],'times': ['07:00'],'localTimeZoneId': 'UTC'}}",
+      "visibleRule": "Action = SetRefreshSchedule"
     }
   ],
   "execution": {

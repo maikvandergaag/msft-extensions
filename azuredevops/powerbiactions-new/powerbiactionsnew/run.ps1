@@ -9,6 +9,7 @@ BEGIN {
 	Import-Module $PSScriptRoot\ps_modules\MicrosoftPowerBIMgmt.Profile
 	Import-Module $PSScriptRoot\ps_modules\MicrosoftPowerBIMgmt.Workspaces
 	Import-Module $PSScriptRoot\ps_modules\MicrosoftPowerBIMgmt.Reports
+	Import-Module $PSScriptRoot\ps_modules\MicrosoftPowerBIMgmt.Data
 
 	Write-Host "### Trying to import the incorporated module for PowerBI" 
 	Import-Module $PSScriptRoot\ps_modules\PowerBi
@@ -73,6 +74,7 @@ PROCESS {
 		$CapacityName = Get-VstsInput -Name CapacityName
 		$Username = Get-VstsInput -Name Username
 		$Password = Get-VstsInput -Name Password
+		$RefreshScheduleInput = Get-VstsInput -Name RefreshScheduleInput
 
 		Write-Debug "WorkspaceName         : $($workspaceName)";
 		Write-Debug "Create                : $($Create)";
@@ -215,6 +217,20 @@ PROCESS {
 			Write-Debug "Dataset Name				  : $($dataset)"
 			Write-Debug "Report Name				  : $($ReportName)"
 			Rebind-PowerBIReport -WorkspaceName $workspaceName -DatasetName $dataset -ReportName $ReportName
+		}
+		elseif($action -eq "SetRefreshSchedule"){
+			Write-Debug "Dataset Name				  : $($dataset)"
+			Write-Debug "Update Json     			  : $($RefreshScheduleInput)"
+
+			try {
+				ConvertFrom-Json $RefreshScheduleInput | Out-Null
+			}
+			catch {
+				Write-Error "Supplied json is not in the correct format!"
+			}
+			
+			Write-Host "Trying to update the dataset refresh schedule"
+			Set-RefreshSchedule -WorkspaceName $workspaceName -DatasetName $dataset -ScheduleJSON $RefreshScheduleInput
 		}
 	}
 	finally {
