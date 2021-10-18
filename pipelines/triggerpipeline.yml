@@ -10,7 +10,7 @@ variables:
 trigger:
   paths:
     include:
-      - azuredevops/triggerpipeline
+      - azuredevops/triggerpipeline/
 
 stages:
   - stage: build
