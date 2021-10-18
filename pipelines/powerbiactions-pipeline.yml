@@ -10,7 +10,7 @@ variables:
 trigger:
   paths:
     include:
-      - azuredevops/powerbiactions
+      - azuredevops/powerbiactions/
 
 stages:
   - stage: build
