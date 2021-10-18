@@ -9,6 +9,7 @@ BEGIN {
 	Import-Module $PSScriptRoot\ps_modules\MicrosoftPowerBIMgmt.Profile
 	Import-Module $PSScriptRoot\ps_modules\MicrosoftPowerBIMgmt.Workspaces
 	Import-Module $PSScriptRoot\ps_modules\MicrosoftPowerBIMgmt.Reports
+	Import-Module $PSScriptRoot\ps_modules\MicrosoftPowerBIMgmt.Data
 
 	Write-Host "### Trying to import the incorporated module for PowerBI" 
 	Import-Module $PSScriptRoot\ps_modules\PowerBi
@@ -219,7 +220,7 @@ PROCESS {
 		}
 		elseif($action -eq "SetRefreshSchedule"){
 			Write-Debug "Dataset Name				  : $($dataset)"
-			Write-Debug "Update Json     	: $($RefreshScheduleInput)"
+			Write-Debug "Update Json     			  : $($RefreshScheduleInput)"
 
 			try {
 				ConvertFrom-Json $RefreshScheduleInput | Out-Null

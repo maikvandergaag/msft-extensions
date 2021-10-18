@@ -939,17 +939,19 @@ Function Set-RefreshSchedule {
     )
 
     # Retrieve workspace
+    Write-Host "Fetching workspace $($WorkspaceName)..." `n
     $workspace = (Get-PowerBIWorkspace -Scope Individual -Name $WorkspaceName)
 
     # Retrieve dataset
-    $dataset = (Get-PowerBIDataSet -Workspace $workspace -Name $DatasetName)
+    Write-Host "Fetching dataset $($DatasetName)..." `n
+    $dataset = (MicrosoftPowerBIMgmt.Data\Get-PowerBIDataset -Workspace $workspace -Name $DatasetName)
 
-    $url = "groups/$($workspace.id)/datasets/$($dataset.Id)/refreshSchedule"
-
-    $body = $ScheduleJSON | ConvertTo-Json	
-
+    $url = "groups/$($workspace.id)/datasets/$($dataset.id)/refreshSchedule"
+	
     # Set Refresh Schedule
-    Invoke-API -Url $url -Method "Patch" -Body $body -ContentType "application/json" 
+    Write-Host "Updating dataset $($DatasetName)..." `n
+    Invoke-PowerBIRestMethod -Url $url -Method Patch -Body $ScheduleJSON
+    Write-Host "Refresh schedule updated for dataset $($DatasetName)..." `n
 }
 
 Export-ModuleMember -Function "*-*"
