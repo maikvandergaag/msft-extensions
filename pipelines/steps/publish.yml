@@ -8,9 +8,9 @@ steps:
     inputs:
       connectedServiceName: "Visual Studio Marketplace"
       fileType: vsix
-      vsixFile: '$(Pipeline.Workspace)\powerbiactions\*.vsix'
+      vsixFile: '$(Pipeline.Workspace)\$(artifactName)\*.vsix'
       publisherId: "$(production-marketplace)"
-      extensionName: "Power BI Actions"
+      extensionName: "$(extensionNamePrd)"
       updateTasksVersion: false
       extensionVisibility: public
       extensionPricing: free

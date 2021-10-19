@@ -1,26 +1,12 @@
-
-name: $(buildversion)
-
-pool:
-  vmImage: 'windows-latest'
-
-variables:
-    - group: "Version Number"
-
-trigger:
-  paths:
-    include:
-      - azuredevops/arm-ttk/
-
 steps:
 - task: TfxInstaller@2
   displayName: 'Install TFX'
   inputs:
-    version: 'v0.6.x'
+    version: 'v0.7.x'
 - task: PackageAzureDevOpsExtension@2
   displayName: 'Package extension'
   inputs:
-    rootFolder: 'azuredevops/arm-ttk'
+    rootFolder: '$(rootfolder)'
     outputVariable: 'ExOutputPath'
     publisherId: 'maikvandergaag'
     extensionTag: 'alpha'
@@ -28,11 +14,11 @@ steps:
     updateTasksVersion: true
     extensionVisibility: 'private'
     extensionPricing: 'free'
-- task: PublishBuildArtifacts@1
-  displayName: 'Publish Artifact: arm-ttk'
+- task: PublishPipelineArtifact@1
+  displayName: 'Publish artifact'
   inputs:
-    PathtoPublish: '$(ExOutputPath)'
-    ArtifactName: arm-ttk
+    targetPath: '$(ExOutputPath)'
+    artifact: '$(artifactName)'
 - task: versioncounter@1
   displayName: 'Update - Version number (develop)'
   condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
