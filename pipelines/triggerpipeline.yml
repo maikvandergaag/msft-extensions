@@ -1,16 +1,18 @@
 name: $(buildversion)
 
-pool:
-  vmImage: "windows-latest"
-
-variables:
-  - group: "Version Number"
-  - group: "Marketplace"
-
 trigger:
+  branches:
+    include:
+    - master
+    - features/*
   paths:
     include:
       - azuredevops/triggerpipeline
+
+variables:
+  - group: "Version Number"
+  - group: "Marketplace"   
+  - template: steps/variables/triggerpipeline.variables.yml
 
 stages:
   - stage: build
@@ -22,7 +24,7 @@ stages:
           demands: azureps
         continueOnError: false
         steps:
-          - template: steps/triggerpipeline/build.yml
+          - template: steps/build/build.yml
   - stage: Beta
     displayName: Test
     condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
@@ -37,7 +39,7 @@ stages:
           runOnce:
             deploy:
               steps:
-                - template: steps/triggerpipeline/test.yml
+                - template: steps/test.yml
   - stage: Publish
     displayName: Publish
     condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
@@ -52,4 +54,4 @@ stages:
           runOnce:
             deploy:
               steps:
-                - template: steps/triggerpipeline/publish.yml
+                - template: steps/publish.yml

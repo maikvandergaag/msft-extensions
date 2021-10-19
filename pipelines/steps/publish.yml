@@ -1,16 +1,16 @@
 steps:
-  - task: TfxInstaller@2
+  - task: TfxInstaller@3
     displayName: "Install TFX"
     inputs:
-      version: "v0.7.x"
-  - task: ms-devlabs.vsts-developer-tools-build-tasks.publish-extension-build-task.PublishExtension@1
+      checkLatest: true
+  - task: ms-devlabs.vsts-developer-tools-build-tasks.publish-extension-build-task.PublishExtension@3
     displayName: "Publish Extension"
     inputs:
       connectedServiceName: "Visual Studio Marketplace"
       fileType: vsix
-      vsixFile: '$(Pipeline.Workspace)\powerbiactions\*.vsix'
+      vsixFile: '$(Pipeline.Workspace)\$(artifactName)\*.vsix'
       publisherId: "$(production-marketplace)"
-      extensionName: "Power BI Actions"
+      extensionName: "$(extensionNamePrd)"
       updateTasksVersion: false
       extensionVisibility: public
       extensionPricing: free

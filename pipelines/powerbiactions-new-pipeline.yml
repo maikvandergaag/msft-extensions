@@ -1,16 +1,19 @@
 name: $(buildversion)
 
-pool:
-  vmImage: "windows-latest"
+trigger:
+  branches:
+    include:
+    - master
+    - features/*
+  paths:
+    include:
+    - azuredevops/powerbiactions-new
 
 variables:
   - group: "Marketplace"
-
-trigger:
-  paths:
-    include:
-      - azuredevops/powerbiactions-new
-
+  - group: "Version Number"
+  - template: variables/powerbiaction-new.variables.yml
+  
 stages:
   - stage: build
     displayName: Build
@@ -21,7 +24,7 @@ stages:
           demands: azureps
         continueOnError: false
         steps:
-          - template: steps/powerbiactions-new/build.yml
+          - template: steps/build.yml
   - stage: Beta
     displayName: Test
     condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
@@ -36,7 +39,7 @@ stages:
           runOnce:
             deploy:
               steps:
-                - template: steps/powerbiactions-new/test.yml
+                - template: steps/test.yml
   - stage: Publish
     displayName: Publish
     condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
@@ -51,4 +54,4 @@ stages:
           runOnce:
             deploy:
               steps:
-                - template: steps/powerbiactions-new/publish.yml
+                - template: steps/publish.yml
