@@ -3,7 +3,7 @@ steps:
   displayName: "Install TFX"
   inputs:
     checkLatest: true
-- task: PackageAzureDevOpsExtension@2
+- task: PackageAzureDevOpsExtension@3
   displayName: 'Package extension'
   inputs:
     rootFolder: '$(rootfolder)'
