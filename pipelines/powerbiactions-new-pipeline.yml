@@ -11,6 +11,7 @@ trigger:
 
 variables:
   - group: "Marketplace"
+  - group: "Version Number"
   - template: variables/powerbiaction-new.variables.yml
   
 stages:
