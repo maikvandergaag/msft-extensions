@@ -3,7 +3,7 @@ steps:
     displayName: "Install TFX"
     inputs:
       version: "v0.7.x"
-  - task: ms-devlabs.vsts-developer-tools-build-tasks.publish-extension-build-task.PublishExtension@1
+  - task: ms-devlabs.vsts-developer-tools-build-tasks.publish-extension-build-task.PublishExtension@3
     displayName: "Publish Extension"
     inputs:
       connectedServiceName: "Visual Studio Marketplace"
