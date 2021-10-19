@@ -12,7 +12,7 @@ trigger:
 variables:
   - group: "Version Number"
   - group: "Marketplace"   
-  - template: steps/variables/triggerpipeline.variables.yml
+  - template: variables/triggerpipeline.variables.yml
 
 stages:
   - stage: build
@@ -24,7 +24,7 @@ stages:
           demands: azureps
         continueOnError: false
         steps:
-          - template: steps/build/build.yml
+          - template: steps/build.yml
   - stage: Beta
     displayName: Test
     condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
