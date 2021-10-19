@@ -8,6 +8,7 @@ trigger:
   paths:
     include:
     - azuredevops/powerbiactions-new
+    - pipelines/powerbiactions-new-pipeline.yml
 
 variables:
   - group: "Marketplace"

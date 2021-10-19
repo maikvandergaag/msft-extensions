@@ -8,6 +8,7 @@ trigger:
   paths:
     include:
       - azuredevops/powerbiactions
+      - pipelines/powerbiactions-pipeline.yml
 
 variables:
   - group: "Version Number"
