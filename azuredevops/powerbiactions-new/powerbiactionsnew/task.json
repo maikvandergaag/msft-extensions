@@ -55,12 +55,40 @@
       }
     },
     {
+      "name": "CrossWorkspaceRebinding",
+      "type": "boolean",
+      "label": "Cross Workspace Rebinding?",
+      "defaultValue": "false",
+      "required": false,
+      "helpMarkDown": "Will rebinding happen cross workspaces?",
+      "visibleRule": "Action = RebindReport"
+    },
+    {
       "name": "WorkspaceName",
       "type": "string",
       "label": "Workspace Name",
       "defaultValue": "",
       "required": true,
-      "helpMarkDown": "The name of the power bi workspace."
+      "helpMarkDown": "The name of the power bi workspace.",
+      "visibleRule": "CrossWorkspaceRebinding = false"
+    },
+    {
+      "name": "DatasetWorkspaceName",
+      "type": "string",
+      "label": "Dataset Workspace Name",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "The name of the power bi workspace where the dataset resides.",
+      "visibleRule":"Action = RebindReport && CrossWorkspaceRebinding = true"
+    },
+    {
+      "name": "ReportWorkspaceName",
+      "type": "string",
+      "label": "Report Workspace Name",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "The name of the power bi workspace where the report resides.",
+      "visibleRule":"Action = RebindReport && CrossWorkspaceRebinding = true"
     },
     {
       "name": "CapacityName",
