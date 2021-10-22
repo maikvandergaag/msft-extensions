@@ -879,6 +879,56 @@ Function Rebind-PowerBIReport {
     }
 }
 
+Function Rebind-PowerBIReportCrossWorkspace {
+    Param(
+        [parameter(Mandatory = $true)]$DatasetWorkspaceName,
+        [parameter(Mandatory = $true)]$ReportWorkspaceName,
+        [parameter(Mandatory = $true)]$ReportName,
+        [parameter(Mandatory = $true)]$DatasetName
+    )
+    # Retrieve workspaces
+    Write-Host "Fetching dataset workspace $($DatasetWorkspaceName)..." `n
+    $datasetWorkspace = (Get-PowerBIWorkspace -Scope Individual -Name $DatasetWorkspaceName)
+
+    if (!$datasetWorkspace) {
+        throw "Could not find dataset workspace"
+    }
+
+    Write-Host "Fetching report workspace $($ReportWorkspaceName)..." `n
+    $reportWorkspace = (Get-PowerBIWorkspace -Scope Individual -Name $ReportWorkspaceName)
+
+    if (!$reportWorkspace) {
+        throw "Could not find report workspace"
+    }
+
+    # Retrieve dataset
+    Write-Host "Fetching dataset $($DatasetName)..." `n
+    $dataset = (MicrosoftPowerBIMgmt.Data\Get-PowerBIDataset -Workspace $datasetWorkspace -Name $DatasetName)
+
+    if (!$dataset) {
+        throw "Could not find dataset"
+    }
+
+    # Retrieve report
+    Write-Host "Fetching report $($ReportName)..." `n
+    $report = (MicrosoftPowerBIMgmt.Reports\Get-PowerBIReport -Workspace $reportWorkspace -Name $ReportName)
+
+    if (!$report) {
+        throw "Could not find report"
+    }
+
+    $body = @{
+        datasetId = $dataset.Id
+    } | ConvertTo-Json	
+
+    $url = "groups/$($reportWorkspace.id)/reports/$($report.id)/Rebind"
+	
+    # Set Report Bindings Schedule
+    Write-Host "Updating report bindings $($ReportName)..." `n
+    Invoke-PowerBIRestMethod -Url $url -Method POST -Body $body
+
+}
+
 function Update-BasicSQLDataSourceCredentials{
     Param(
         [parameter(Mandatory = $true)]$WorkspaceName,
