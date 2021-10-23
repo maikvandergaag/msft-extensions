@@ -3,7 +3,7 @@ name: $(buildversion)
 trigger:
   branches:
     include:
-    - master
+    - main
     - features/*
   paths:
     include:
@@ -43,7 +43,7 @@ stages:
                 - template: steps/test.yml
   - stage: Publish
     displayName: Publish
-    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
     jobs:
       - deployment: DeployPRD
         displayName: Deploy Extension to Public Publisher
