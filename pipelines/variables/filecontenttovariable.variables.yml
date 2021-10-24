@@ -1,0 +1,11 @@
+variables:
+- name: rootfolder
+  value: azuredevops/filecontenttovariable
+- name: artifactName
+  value: filecontenttovariable
+- name: extensionId
+  value: maikvandergaag-file-to-variable
+- name: extensionName
+  value: DEV - File Content to Variable
+- name: extensionNamePrd
+  value: File Content to Variable
