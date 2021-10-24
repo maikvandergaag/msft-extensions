@@ -1,0 +1,11 @@
+variables:
+- name: rootfolder
+  value: azuredevops/versioncounter
+- name: artifactName
+  value: versioncounter
+- name: extensionId
+  value: maikvandergaag-versioncounter
+- name: extensionName
+  value: DEV - Version number counter
+- name: extensionNamePrd
+  value: Version number counter
