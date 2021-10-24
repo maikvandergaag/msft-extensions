@@ -1,0 +1,11 @@
+variables:
+- name: rootfolder
+  value: azuredevops/publishstreamanalyticstransformation
+- name: artifactName
+  value: publishstreamanalyticstransformation
+- name: extensionId
+  value: maikvandergaag-publish-stream-analytics
+- name: extensionName
+  value: DEV - Publish Stream Analytics Transformation
+- name: extensionNamePrd
+  value: Publish Stream Analytics Transformation
