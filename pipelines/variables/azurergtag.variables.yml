@@ -1,0 +1,11 @@
+variables:
+- name: rootfolder
+  value: azuredevops/azurergtag
+- name: artifactName
+  value: azurergtag
+- name: extensionId
+  value: maikvandergaag-azurergtag
+- name: extensionName
+  value: DEV - Azure Resource Group Tagging
+- name: extensionNamePrd
+  value: Azure Resource Group Tagging
