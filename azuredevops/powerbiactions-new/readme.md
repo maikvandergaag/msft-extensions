@@ -1,6 +1,6 @@
-Power BI Actions is a Build and Release Task for Azure Pipelines. With this tasks you can automate specific tasks within Power BI.
+Power BI Actions is a task for Azure Pipelines. With this tasks you can automate specific tasks for Power BI.
 
-The following tasks can be automated when using this extension:
+The following tasks can be automated by using this extension:
 * Upload / Import Power BI dashboard (pbix file).
 * Create a Power BI workspace.
 * Remove a Power BI workspace.
@@ -12,6 +12,8 @@ The following tasks can be automated when using this extension:
 * Update SQL Direct Query String
 * Update Gateway
 * Set a specific capacity for a workplace
+* Rebind Report
+* Set Refresh Schedule
 
 The following organization types are supported from version 5 and higher:
 
@@ -35,7 +37,9 @@ For the service connection to work with a Username password combination you need
 
 ### Service Principal
 
-To configure a Service Principal with PowerBI you will have to go through this guide:[Service principal with Power BI](https://docs.microsoft.com/en-us/power-bi/developer/embed-service-principal)
+To configure a Service Principal with PowerBI you will have to go through this guide:
+
+[Service principal with Power BI](https://docs.microsoft.com/en-us/power-bi/developer/embed-service-principal)
 
 * ClientId: The client id of the Azure Active Directory application. This application should have the appropriate rights in order to use the Power BI Api.
 * ClientSecret: The client secret of the application
@@ -67,3 +71,5 @@ If you like the extension, please leave a review. File an issue when you have su
 | 5.1.0   | Added support for Government environments and consolidated |
 | 5.2.0   | Added support for PowerBi Report transfer ownership and updating parameters in reports|
 | 5.3.0   | Added support for PowerBi Gateway change |
+| 5.4.0   | Added support for Report rebinding and refresh schedule |
+
