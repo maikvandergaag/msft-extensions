@@ -1,0 +1,11 @@
+variables:
+- name: rootfolder
+  value: azuredevops/azurerbac
+- name: artifactName
+  value: azurerbac
+- name: extensionId
+  value: maikvandergaag-azurerbac
+- name: extensionName
+  value: DEV - Azure Role Based Access Control
+- name: extensionNamePrd
+  value: Azure Role Based Access Control
