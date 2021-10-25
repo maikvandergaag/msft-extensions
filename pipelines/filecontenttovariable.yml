@@ -8,6 +8,16 @@ trigger:
   paths:
     include:
       - azuredevops/filecontenttovariable
+      - pipelines/filecontenttovariable.yml
+
+pr:
+  branches:
+    include:
+      - '*'
+  paths:
+    include:
+      - azuredevops/filecontenttovariable
+      - pipelines/filecontenttovariable.yml
 
 variables:
   - group: "Version Number"

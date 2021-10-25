@@ -8,6 +8,16 @@ trigger:
   paths:
     include:
       - azuredevops/azurergtag
+      - pipelines/azurergtag.yml
+
+pr:
+  branches:
+    include:
+      - '*'
+  paths:
+    include:
+      - azuredevops/azurergtag
+      - pipelines/azurergtag.yml
 
 variables:
   - group: "Version Number"

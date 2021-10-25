@@ -3,11 +3,21 @@ name: $(buildversion)
 trigger:
   branches:
     include:
-    - main
-    - features/*
+      - main
+      - features/*
   paths:
     include:
       - azuredevops/azurekeyvault
+      - pipelines/azurekeyvault.yml
+
+pr:
+  branches:
+    include:
+      - '*'
+  paths:
+    include:
+      - azuredevops/azurekeyvault
+      - pipelines/azurekeyvault.yml
 
 variables:
   - group: "Version Number"

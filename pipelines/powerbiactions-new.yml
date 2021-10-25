@@ -3,23 +3,28 @@ name: $(buildversion)
 trigger:
   branches:
     include:
-    - main
-    - features/*
+      - main
+      - features/*
   paths:
     include:
-      - azuredevops/powerbiactions
-      - pipelines/powerbiactions-pipeline.yml
+      - azuredevops/powerbiactions-new
+      - pipelines/powerbiactions-new.yml
+
+pr:
+  branches:
+    include:
+      - main
+      - features/*
+  paths:
+    include:
+      - azuredevops/powerbiactions-new
+      - pipelines/powerbiactions-new.yml
 
 variables:
-  - group: "Version Number"
   - group: "Marketplace"
-  - template: variables/powerbiaction.variables.yml
-
-variables:
   - group: "Version Number"
-  - group: "Marketplace"
-  - template: variables/powerbiaction.variables.yml
-
+  - template: variables/powerbiaction-new.variables.yml
+  
 stages:
   - stage: build
     displayName: Build

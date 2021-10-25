@@ -3,11 +3,21 @@ name: $(buildversion)
 trigger:
   branches:
     include:
-    - main
-    - features/*
+      - main
+      - features/*
   paths:
     include:
       - azuredevops/versioncounter
+      - pipelines/versioncounter.yml
+
+pr:
+  branches:
+    include:
+      - '*'
+  paths:
+    include:
+      - azuredevops/versioncounter
+      - pipelines/versioncounter.yml
 
 variables:
   - group: "Version Number"
