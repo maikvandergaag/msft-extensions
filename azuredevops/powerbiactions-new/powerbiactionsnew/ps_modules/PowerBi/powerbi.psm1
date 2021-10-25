@@ -925,8 +925,17 @@ Function Rebind-PowerBIReportCrossWorkspace {
 	
     # Set Report Bindings Schedule
     Write-Host "Updating report bindings $($ReportName)..." `n
-    Invoke-PowerBIRestMethod -Url $url -Method POST -Body $body
+    
+    try {
+        Invoke-PowerBIRestMethod -Url $url -Method POST -Body $body
+    }
+    catch {
+        $err = Resolve-PowerBIError -Last
+        $message = $err.Message
+        throw $message 
+    }
 
+    Write-Host "Report bindings $($ReportName) updated..." `n
 }
 
 function Update-BasicSQLDataSourceCredentials{
@@ -992,15 +1001,32 @@ Function Set-RefreshSchedule {
     Write-Host "Fetching workspace $($WorkspaceName)..." `n
     $workspace = (Get-PowerBIWorkspace -Scope Individual -Name $WorkspaceName)
 
+    if (!$workspace) {
+        throw "Could not find workspace"
+    }
+
     # Retrieve dataset
     Write-Host "Fetching dataset $($DatasetName)..." `n
     $dataset = (MicrosoftPowerBIMgmt.Data\Get-PowerBIDataset -Workspace $workspace -Name $DatasetName)
+
+    if (!$dataset) {
+        throw "Could not find dataset"
+    }
 
     $url = "groups/$($workspace.id)/datasets/$($dataset.id)/refreshSchedule"
 	
     # Set Refresh Schedule
     Write-Host "Updating dataset $($DatasetName)..." `n
-    Invoke-PowerBIRestMethod -Url $url -Method Patch -Body $ScheduleJSON
+
+    try {
+        Invoke-PowerBIRestMethod -Url $url -Method Patch -Body $ScheduleJSON
+    }
+    catch {
+        $err = Resolve-PowerBIError -Last
+        $message = $err.Message
+        throw $message
+    }
+    
     Write-Host "Refresh schedule updated for dataset $($DatasetName)..." `n
 }
 
