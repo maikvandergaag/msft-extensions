@@ -888,22 +888,22 @@ Function Rebind-PowerBIReportCrossWorkspace {
     )
     # Retrieve workspaces
     Write-Host "Fetching dataset workspace $($DatasetWorkspaceName)..." `n
-    $datasetWorkspace = (Get-PowerBIWorkspace -Scope Individual -Name $DatasetWorkspaceName)
+    $datasetGroupPath = Get-PowerBIGroupPath -WorkspaceName $DatasetWorkspaceName
 
-    if (!$datasetWorkspace) {
+    if (!$datasetGroupPath) {
         throw "Could not find dataset workspace"
     }
 
     Write-Host "Fetching report workspace $($ReportWorkspaceName)..." `n
-    $reportWorkspace = (Get-PowerBIWorkspace -Scope Individual -Name $ReportWorkspaceName)
+    $reportGroupPath = Get-PowerBIGroupPath -WorkspaceName $ReportWorkspaceName
 
-    if (!$reportWorkspace) {
+    if (!$reportGroupPath) {
         throw "Could not find report workspace"
     }
 
     # Retrieve dataset
     Write-Host "Fetching dataset $($DatasetName)..." `n
-    $dataset = (MicrosoftPowerBIMgmt.Data\Get-PowerBIDataset -Workspace $datasetWorkspace -Name $DatasetName)
+    $dataset = Get-PowerBiDataSet -GroupPath $datasetGroupPath -Name $DatasetName
 
     if (!$dataset) {
         throw "Could not find dataset"
@@ -911,7 +911,7 @@ Function Rebind-PowerBIReportCrossWorkspace {
 
     # Retrieve report
     Write-Host "Fetching report $($ReportName)..." `n
-    $report = (MicrosoftPowerBIMgmt.Reports\Get-PowerBIReport -Workspace $reportWorkspace -Name $ReportName)
+    $report = Get-PowerBIReport -GroupPath $reportGroupPath -ReportName $ReportName
 
     if (!$report) {
         throw "Could not find report"
@@ -921,19 +921,12 @@ Function Rebind-PowerBIReportCrossWorkspace {
         datasetId = $dataset.Id
     } | ConvertTo-Json	
 
-    $url = "groups/$($reportWorkspace.id)/reports/$($report.id)/Rebind"
+    $url = $powerbiUrl + $reportGroupPath + "/reports/" + $($report.id) + "/Rebind"
 	
     # Set Report Bindings Schedule
     Write-Host "Updating report bindings $($ReportName)..." `n
     
-    try {
-        Invoke-PowerBIRestMethod -Url $url -Method POST -Body $body
-    }
-    catch {
-        $err = Resolve-PowerBIError -Last
-        $message = $err.Message
-        throw $message 
-    }
+    Invoke-API -Url $url -Method "Post" -Body $body -ContentType "application/json" 
 
     Write-Host "Report bindings $($ReportName) updated..." `n
 }

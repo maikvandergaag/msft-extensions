@@ -14,7 +14,7 @@
   "version": {
     "Major": "4",
     "Minor": "3",
-    "Patch": "1"
+    "Patch": "2"
   },
   "minimumAgentVersion": "1.95.0",
   "instanceNameFormat": "Power BI Action: $(Action)",
