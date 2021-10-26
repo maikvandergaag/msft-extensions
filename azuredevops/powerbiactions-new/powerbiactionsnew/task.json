@@ -67,7 +67,7 @@
     {
       "name": "WorkspaceName",
       "type": "string",
-      "label": "Workspace Name / In case of rebind report action the dataset workspace name",
+      "label": "Workspace Name",
       "defaultValue": "",
       "required": true,
       "helpMarkDown": "The name of the Power BI workspace. In case of the rebind report action this will be the dataset workspace.",
