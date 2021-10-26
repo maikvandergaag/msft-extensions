@@ -66,6 +66,7 @@ PROCESS {
 		$users = Get-VstsInput -Name Users
 		$datasourceType = Get-VstsInput -Name DatasourceType
 		$updateAll = Get-VstsInput -Name UpdateAll -AsBool
+		$skipReport = Get-VstsInput -Name SkipReport -AsBool
 		$servicePrincipalString = Get-VstsInput -Name ServicePrincipals 
 		$connectionString = Get-VstsInput -Name ConnectionString
 		$ParameterInput = Get-VstsInput -Name ParameterInput
@@ -85,14 +86,15 @@ PROCESS {
 			Write-Host "Creating a new Workspace"
 			New-PowerBIWorkSpace -WorkspaceName $workspaceName
 		}
-		elseif ($action -eq "PublishandSkipReport") {
-			Write-Debug "File patern             : $($filePattern)";
-			Publish-PowerBIFile -WorkspaceName $workspaceName -Create $Create -FilePattern $filePattern -Overwrite $overwrite -SkipReport $true
-		}
 		elseif ($action -eq "Publish") {
 			Write-Debug "File patern             : $($filePattern)";
 			Write-Debug "Remove report           : $($RemoveReport)";
-			Publish-PowerBIFile -WorkspaceName $workspaceName -Create $Create -FilePattern $filePattern -Overwrite $overwrite
+
+			if($SkipReport){
+				Publish-PowerBIFileApi -WorkspaceName $workspaceName -Create $Create -FilePattern $filePattern -Overwrite $overwrite -SkipReport $true
+			}else{
+				Publish-PowerBIFile -WorkspaceName $workspaceName -Create $Create -FilePattern $filePattern -Overwrite $overwrite
+			}
 		}
 		elseif ($action -eq "DeleteWorkspace") {
 			Write-Host "Deleting a Workspace"
