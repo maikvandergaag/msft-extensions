@@ -76,7 +76,6 @@ PROCESS {
 		$Password = Get-VstsInput -Name Password
 		$RefreshScheduleInput = Get-VstsInput -Name RefreshScheduleInput
 		$CrossWorkspaceRebinding = Get-VstsInput -Name CrossWorkspaceRebinding
-		$DatasetWorkspaceName = Get-VstsInput -Name DatasetWorkspaceName
 		$ReportWorkspaceName = Get-VstsInput -Name ReportWorkspaceName
 
 		Write-Debug "WorkspaceName         : $($workspaceName)";
@@ -227,7 +226,7 @@ PROCESS {
 			if ($CrossWorkspaceRebinding = $false) {
 				Rebind-PowerBIReport -WorkspaceName $workspaceName -DatasetName $dataset -ReportName $ReportName
 			} else {
-				Rebind-PowerBIReportCrossWorkspace -DatasetWorkspaceName $DatasetWorkspaceName -ReportWorkspaceName $ReportWorkspaceName -DatasetName $dataset -ReportName $ReportName
+				Rebind-PowerBIReportCrossWorkspace -DatasetWorkspaceName $workspaceName -ReportWorkspaceName $ReportWorkspaceName -DatasetName $dataset -ReportName $ReportName
 			}
 		}
 		elseif($action -eq "SetRefreshSchedule"){

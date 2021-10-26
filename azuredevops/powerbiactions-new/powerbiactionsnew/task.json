@@ -67,20 +67,11 @@
     {
       "name": "WorkspaceName",
       "type": "string",
-      "label": "Workspace Name",
+      "label": "Workspace Name / In case of rebind report action the dataset workspace name",
       "defaultValue": "",
       "required": true,
-      "helpMarkDown": "The name of the power bi workspace.",
-      "visibleRule": "Action = Workspace || Action = DeleteWorkspace || Action = AddUsers || Action = AddSP || Action = AddGroup || Action = DataRefresh|| Action = UpdateDatasource|| Action = Publish|| Action = PublishandSkipReport|| Action = SQLDirect|| Action = UpdateParameters|| Action = TakeOwnership || Action = UpdateGateway || Action = DeleteReport|| Action = SetCapacity|| Action = RebindReport && CrossWorkspaceRebinding = false || Action = UpdateSqlCreds || Action = SetRefreshSchedule"
-    },
-    {
-      "name": "DatasetWorkspaceName",
-      "type": "string",
-      "label": "Dataset Workspace Name",
-      "defaultValue": "",
-      "required": true,
-      "helpMarkDown": "The name of the power bi workspace where the dataset resides.",
-      "visibleRule":"Action = RebindReport && CrossWorkspaceRebinding = true"
+      "helpMarkDown": "The name of the Power BI workspace. In case of the rebind report action this will be the dataset workspace.",
+      "visibleRule": ""
     },
     {
       "name": "ReportWorkspaceName",
