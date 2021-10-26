@@ -71,7 +71,7 @@
       "defaultValue": "",
       "required": true,
       "helpMarkDown": "The name of the power bi workspace.",
-      "visibleRule": "CrossWorkspaceRebinding = false"
+      "visibleRule": "Action = Workspace || Action = DeleteWorkspace || Action = AddUsers || Action = AddSP || Action = AddGroup || Action = DataRefresh|| Action = UpdateDatasource|| Action = Publish|| Action = PublishandSkipReport|| Action = SQLDirect|| Action = UpdateParameters|| Action = TakeOwnership || Action = UpdateGateway || Action = DeleteReport|| Action = SetCapacity|| Action = RebindReport && CrossWorkspaceRebinding = false || Action = UpdateSqlCreds || Action = SetRefreshSchedule"
     },
     {
       "name": "DatasetWorkspaceName",

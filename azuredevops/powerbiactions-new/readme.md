@@ -2,6 +2,7 @@ Power BI Actions is a task for Azure Pipelines. With this tasks you can automate
 
 The following tasks can be automated by using this extension:
 * Upload / Import Power BI dashboard (pbix file).
+* Upload / Import Power BI dashboard and skip report (pbix file).
 * Create a Power BI workspace.
 * Remove a Power BI workspace.
 * Add a new Admin user to a Power BI workspace.
@@ -72,4 +73,5 @@ If you like the extension, please leave a review. File an issue when you have su
 | 5.2.0   | Added support for PowerBi Report transfer ownership and updating parameters in reports|
 | 5.3.0   | Added support for PowerBi Gateway change |
 | 5.4.0   | Added support for Report rebinding and refresh schedule |
+| 5.4.2   | Added skip report functionality |
 
