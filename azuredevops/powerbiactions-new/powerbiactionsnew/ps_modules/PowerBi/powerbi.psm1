@@ -625,7 +625,8 @@ Function Import-PowerBIFile {
     Param(
         [parameter(Mandatory = $true)]$GroupPath,
         [parameter(Mandatory = $true)]$Conflict,
-        [parameter(Mandatory = $true)]$Path
+        [parameter(Mandatory = $true)]$Path,
+        [parameter()][bool]$SkipReport = $true
     )
 
     $fileName = [IO.Path]::GetFileName($Path)
@@ -633,7 +634,7 @@ Function Import-PowerBIFile {
     $fileBytes = [System.IO.File]::ReadAllBytes($Path)
     $encoding = [System.Text.Encoding]::GetEncoding("iso-8859-1")
     $encodedFileName = [System.Web.HttpUtility]::UrlEncode($fileName) 
-    $url = $powerbiUrl + "$GroupPath/imports?datasetDisplayName=$encodedFileName&nameConflict=$Conflict"
+    $url = $powerbiUrl + "$GroupPath/imports?datasetDisplayName=$encodedFileName&nameConflict=$Conflict&skipReport=$SkipReport"
 
     $body = $powerBiBodyTemplate -f $boundary, $fileName, $encoding.GetString($fileBytes)
  
@@ -644,6 +645,7 @@ Function Import-PowerBIFile {
 
     return $result
 }
+
 Function Get-PowerBIGroupPath {
     Param(
         [parameter(Mandatory = $true)]$WorkspaceName,
@@ -781,6 +783,54 @@ Function Publish-PowerBIFile {
                 throw      
             } 
         } 
+    }
+}
+
+Function Publish-PowerBIFileApi {
+    Param(
+        [parameter(Mandatory = $true)]$WorkspaceName,
+        [parameter(Mandatory = $true)]$FilePattern,
+        [parameter()][bool]$Create = $false,
+        [parameter()][bool]$Overwrite = $false,
+        [parameter()][bool]$SkipReport = $true
+    )
+
+    $GroupPath = Get-PowerBIGroupPath -WorkspaceName $WorkspaceName -Create $Create
+    
+    $searchedFiles = Get-ChildItem $filePattern
+
+    foreach ($foundFile in $searchedFiles) {
+        $directory = $foundFile.DirectoryName
+        $file = $foundFile.Name
+    
+        $filePath = "$directory\$file"
+        Write-Host "Trying to publish PowerBI File: $FilePath"
+    
+        #Check for exisiting report
+        $fileNamewithoutextension = [IO.Path]::GetFileNameWithoutExtension($filePath)
+        Write-Host "Checking for existing Reports with the name: $fileNamewithoutextension"
+    
+        $report = Get-PowerBIReport -GroupPath $GroupPath -ReportName $fileNamewithoutextension -Verbose
+        
+        $publish = $true
+        $nameConflict = "Abort"
+        if ($report) {
+            Write-Verbose "Reports exists"
+            if ($Overwrite) {
+                Write-Verbose "Reports exists and needs to be overwritten"
+                $nameConflict = "Overwrite"
+            }
+            else {
+                $publish = $false
+                Write-Warning "Report already exists"
+            }
+        }
+       
+        if ($publish) {
+            #Import PowerBi file
+            Write-Host "Importing PowerBI File"
+            Import-PowerBiFile -GroupPath $GroupPath -Path $FilePath -Conflict $nameConflict -SkipReport $SkipReport -Verbose
+        }
     }
 }
 

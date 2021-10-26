@@ -86,6 +86,10 @@ PROCESS {
 			Write-Host "Creating a new Workspace"
 			New-PowerBIWorkSpace -WorkspaceName $workspaceName
 		}
+		elseif ($action -eq "PublishandSkipReport") {
+			Write-Debug "File patern             : $($filePattern)";
+			Publish-PowerBIFile -WorkspaceName $workspaceName -Create $Create -FilePattern $filePattern -Overwrite $overwrite -SkipReport $true
+		}
 		elseif ($action -eq "Publish") {
 			Write-Debug "File patern             : $($filePattern)";
 			Write-Debug "Remove report           : $($RemoveReport)";

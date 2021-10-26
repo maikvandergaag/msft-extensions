@@ -42,7 +42,8 @@
         "AddGroup": "Add a security group to an Workspace",
         "DataRefresh": "Refresh a Dataset",
         "UpdateDatasource": "Update DataSource connection",
-        "Publish": "Upload PowerBI Report",
+        "Publish": "Upload Power BI Report",
+        "PublishandSkipReport": "Upload Power BI file and skip report",
         "SQLDirect": "Update SQL Direct Query String",
         "UpdateParameters": "Update parameters",
         "TakeOwnership": "Take dataset ownership",
@@ -106,7 +107,7 @@
       "defaultValue": "",
       "required": true,
       "helpMarkDown": "Absolute path of the file.",
-      "visibleRule": "Action = Publish"
+      "visibleRule": "Action = Publish || Action = PublishandSkipReport"
     },
     {
       "name": "Overwrite",
@@ -115,7 +116,7 @@
       "defaultValue": "true",
       "required": false,
       "helpMarkDown": "Should the dataset be overwritten?",
-      "visibleRule": "Action = Publish"
+      "visibleRule": "Action = Publish || Action = PublishandSkipReport"
     },
     {
       "name": "Create",
@@ -124,7 +125,7 @@
       "defaultValue": "true",
       "required": false,
       "helpMarkDown": "Create the workspace when it does not exist",
-      "visibleRule": "Action = Publish || Action = AddUsers || Action = AddSP || Action = AddGroup || Action = SetCapacity"
+      "visibleRule": "Action = Publish || Action = PublishandSkipReport || Action = AddUsers || Action = AddSP || Action = AddGroup || Action = SetCapacity"
     },
     {
       "name": "Users",
