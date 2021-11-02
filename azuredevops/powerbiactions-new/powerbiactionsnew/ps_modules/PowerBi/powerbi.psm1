@@ -302,12 +302,14 @@ Function Invoke-API {
                 Write-Warning "User already exists. Updating an existing user is not supported"
             }
             else {
-                $message = $errorContent.error.message
+                $message = $errorContent.error.code
                 if ($message) {
                     Write-Error $message
+                    exit
                 }
                 else {
                     Write-Error -Exception $ex
+                    exit
                 }               
             }
         }
@@ -835,7 +837,7 @@ Function Publish-PowerBIFileApi {
 }
 
 
-function Delete-PowerBIReport {
+function Remove-PowerBIReport {
     Param(
         [parameter(Mandatory = $true)]$WorkspaceName,
         [parameter(Mandatory = $true)]$ReportName
@@ -895,7 +897,7 @@ function Set-Capacity {
     Invoke-API -Url $url -Method "Post" -Body $body -ContentType "application/json" 
 }
 
-Function Rebind-PowerBIReport {
+Function Redo-PowerBIReport {
     Param(
         [parameter(Mandatory = $true)]$WorkspaceName,
         [parameter(Mandatory = $true)]$ReportName,
@@ -929,7 +931,7 @@ Function Rebind-PowerBIReport {
     }
 }
 
-Function Rebind-PowerBIReportCrossWorkspace {
+Function Redo-PowerBIReportCrossWorkspace {
     Param(
         [parameter(Mandatory = $true)]$DatasetWorkspaceName,
         [parameter(Mandatory = $true)]$ReportWorkspaceName,

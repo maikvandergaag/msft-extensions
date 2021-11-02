@@ -12,7 +12,7 @@ BEGIN {
 	Import-Module $PSScriptRoot\ps_modules\MicrosoftPowerBIMgmt.Data
 
 	Write-Host "### Trying to import the incorporated module for PowerBI" 
-	Import-Module $PSScriptRoot\ps_modules\PowerBi
+	Import-Module $PSScriptRoot\ps_modules\PowerBI
 }
 PROCESS {
 	
@@ -212,7 +212,7 @@ PROCESS {
 			
 			Write-Host "Trying to remove a report"
 		
-			Delete-PowerBIReport -WorkspaceName $workspaceName -ReportName $ReportName
+			Remove-PowerBIReport -WorkspaceName $workspaceName -ReportName $ReportName
 		}
 		elseif ($action -eq "SetCapacity") {
 			Write-Debug "Capacity Name				  : $($CapacityName)"
@@ -225,10 +225,10 @@ PROCESS {
 			Write-Debug "Dataset Name				  : $($dataset)"
 			Write-Debug "Report Name				  : $($ReportName)"
 
-			if ($CrossWorkspaceRebinding = $false) {
-				Rebind-PowerBIReport -WorkspaceName $workspaceName -DatasetName $dataset -ReportName $ReportName
+			if ($CrossWorkspaceRebinding == $false) {
+				Redo-PowerBIReport -WorkspaceName $workspaceName -DatasetName $dataset -ReportName $ReportName
 			} else {
-				Rebind-PowerBIReportCrossWorkspace -DatasetWorkspaceName $workspaceName -ReportWorkspaceName $ReportWorkspaceName -DatasetName $dataset -ReportName $ReportName
+				Redo-PowerBIReportCrossWorkspace -DatasetWorkspaceName $workspaceName -ReportWorkspaceName $ReportWorkspaceName -DatasetName $dataset -ReportName $ReportName
 			}
 		}
 		elseif($action -eq "SetRefreshSchedule"){
