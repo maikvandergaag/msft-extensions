@@ -991,10 +991,12 @@ function Update-BasicSQLDataSourceCredentials{
         [Parameter(Mandatory=$true)]$Password
     )
 
-    $workspace = (Get-PowerBIWorkspace -Scope Individual -Name $WorkspaceName)
+    $GroupPath = Get-PowerBIGroupPath -WorkspaceName $WorkspaceName -Create $false
+    $report = Get-PowerBIReport -GroupPath $GroupPath -ReportName $ReportName -Verbose
 
-    #Retrieve the report
-    $report = (Get-PowerBIReport -Workspace $workspace -Name $ReportName)
+    #old part
+    #$workspace = (Get-PowerBIWorkspace -Scope Individual -Name $WorkspaceName)
+    #$report = (Get-PowerBIReport -Workspace $workspace -Name $ReportName)
 
     #Retrieve all data sources
     $datasources = (Get-PowerBIDatasource -DatasetId $report.DatasetId -Scope Organization)
