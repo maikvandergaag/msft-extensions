@@ -999,7 +999,7 @@ function Update-BasicSQLDataSourceCredentials{
     #$report = (Get-PowerBIReport -Workspace $workspace -Name $ReportName)
 
     #Retrieve all data sources
-    $datasources = (Get-PowerBIDatasource -DatasetId $report.DatasetId -Scope Organization)
+    $datasources = (Get-PowerBIDatasource -DatasetId $report.DatasetId -Scope Individual)
     
     foreach ($dataSource in $datasources) { 
 
