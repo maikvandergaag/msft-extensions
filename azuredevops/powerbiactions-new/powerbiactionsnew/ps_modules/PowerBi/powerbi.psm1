@@ -1046,21 +1046,21 @@ Function Set-RefreshSchedule {
 
     # Retrieve workspace
     Write-Host "Fetching workspace $($WorkspaceName)..." `n
-    $workspace = (Get-PowerBIWorkspace -Scope Individual -Name $WorkspaceName)
+    $groupPath = Get-PowerBIGroupPath -WorkspaceName $WorkspaceName
 
-    if (!$workspace) {
+    if (!$groupPath) {
         throw "Could not find workspace"
     }
 
     # Retrieve dataset
     Write-Host "Fetching dataset $($DatasetName)..." `n
-    $dataset = (MicrosoftPowerBIMgmt.Data\Get-PowerBIDataset -Workspace $workspace -Name $DatasetName)
+    $dataset = Get-PowerBIDataset -GroupPath $groupPath -Name $dataset
 
     if (!$dataset) {
         throw "Could not find dataset"
     }
 
-    $url = "groups/$($workspace.id)/datasets/$($dataset.id)/refreshSchedule"
+    $url = "$($groupPath)/datasets/$($dataset.id)/refreshSchedule"
 	
     # Set Refresh Schedule
     Write-Host "Updating dataset $($DatasetName)..." `n
