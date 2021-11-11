@@ -999,7 +999,7 @@ function Update-BasicSQLDataSourceCredentials{
     #$report = (Get-PowerBIReport -Workspace $workspace -Name $ReportName)
 
     #Retrieve all data sources
-    $datasources = (Get-PowerBIDatasource -DatasetId $report.DatasetId -Scope Individual)
+    $datasources = (Get-PowerBIDatasource -DatasetId $report.DatasetId -Scope Organization)
     
     foreach ($dataSource in $datasources) { 
 
@@ -1054,7 +1054,7 @@ Function Set-RefreshSchedule {
 
     # Retrieve dataset
     Write-Host "Fetching dataset $($DatasetName)..." `n
-    $dataset = Get-PowerBIDataset -GroupPath $groupPath -Name $dataset
+    $dataset = Get-PowerBIDataset -GroupPath $groupPath -Name $DatasetName
 
     if (!$dataset) {
         throw "Could not find dataset"
