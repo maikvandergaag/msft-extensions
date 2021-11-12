@@ -1053,7 +1053,7 @@ Function Set-RefreshSchedule {
     Param(
         [parameter(Mandatory = $true)]$WorkspaceName,
         [parameter(Mandatory = $true)]$DatasetName,
-        [parameter(Mandatory = $true)]$ScheduleJSON,
+        [parameter(Mandatory = $true)]$ScheduleJSON
     )
 
     # Retrieve workspace
