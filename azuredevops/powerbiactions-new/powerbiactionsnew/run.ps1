@@ -82,7 +82,7 @@ PROCESS {
 		$ReportWorkspaceName = Get-VstsInput -Name ReportWorkspaceName
 
 		$individual = $false
-		if($individualString == "Individual"){
+		if($individualString -eq "Individual"){
 			$individual = $true
 		}
 
@@ -232,7 +232,7 @@ PROCESS {
 			Write-Debug "Dataset Name				  : $($dataset)"
 			Write-Debug "Report Name				  : $($ReportName)"
 
-			if ($CrossWorkspaceRebinding == $false) {
+			if (!$CrossWorkspaceRebinding) {
 				Redo-PowerBIReport -WorkspaceName $workspaceName -DatasetName $dataset -ReportName $ReportName
 			} else {
 				Redo-PowerBIReportCrossWorkspace -DatasetWorkspaceName $workspaceName -ReportWorkspaceName $ReportWorkspaceName -DatasetName $dataset -ReportName $ReportName
@@ -261,5 +261,3 @@ END {
 	Write-Output "Done running Power BI Actions extension."
 	Trace-VstsLeavingInvocation $MyInvocation
 }
-
-
