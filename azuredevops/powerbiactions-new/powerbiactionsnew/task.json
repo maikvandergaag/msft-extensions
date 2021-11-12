@@ -154,6 +154,19 @@
       "visibleRule": "Action = AddGroup"
     },
     {
+      "name": "Scope",
+      "type": "picklist",
+      "label": "Scope",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "Individual is used to access entities that belong to the current user. Organization is used to access entities across the entire company. Only Power BI tenant admins are allowed to use.",
+      "visibleRule": "Action = AddUsers || Action = AddSP || Action = AddGroup",
+      "options": {
+        "Individual": "Individual",
+        "Organization": "Organization"
+      }
+    },
+    {
       "name": "Permission",
       "type": "picklist",
       "label": "Permission",
