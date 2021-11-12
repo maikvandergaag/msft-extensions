@@ -645,7 +645,7 @@ Function Import-PowerBIFile {
     $reportId = $result.Id
     $reportId = $result.Name
     Write-Host "##vso[task.setvariable variable=PowerBIActions.ReportId]$reportId"
-    Write-Host "##vso[task.setvariable variable=PowerBIActions.ReportId]$reportName"
+    Write-Host "##vso[task.setvariable variable=PowerBIActions.ReportName]$reportName"
 
     return $result
 }
@@ -781,9 +781,10 @@ Function Publish-PowerBIFile {
         try{
             if($fileToPublish.EndsWith(".rdl")){
                 Publish-PowerBIFileApi -WorkspaceName $WorkspaceName -FilePattern $filePath -Create $Create -Overwrite $Overwrite -SkipReport $false
+            }else{
+                $report = New-PowerBIReport -Path $filePath -Name $fileToPublish -Workspace $workspace -ConflictAction $conflictAction
+                Write-Host "##vso[task.setvariable variable=PowerBIActions.ReportName]$($report.name)"
             }
-            $report = New-PowerBIReport -Path $filePath -Name $fileToPublish -Workspace $workspace -ConflictAction $conflictAction
-            Write-Host "##vso[task.setvariable variable=PowerBIActions.ReportName]$($report.name)"
         }
         catch {
 
