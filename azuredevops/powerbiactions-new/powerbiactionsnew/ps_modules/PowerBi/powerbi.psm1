@@ -761,12 +761,16 @@ Function Publish-PowerBIFile {
         $file = $foundFile.Name
 
         $filePath = "$directory\$file"
-        Write-Host "Trying to publish PowerBI File: $FilePath"
+        Write-Host "Trying to publish PowerBI File: $filePath"
+
+        $fileToPublish = $file
+        $extension = [IO.Path]::GetExtension($filePath)
+        if($extension -ne ".rdl"){
+            $fileToPublish = [IO.Path]::GetFileNameWithoutExtension($filePath)
+            Write-Host "Checking for existing Reports with the name: $fileToPublish"
+        }
 
         #Check for exisiting report
-        $fileNamewithoutextension = [IO.Path]::GetFileNameWithoutExtension($filePath)
-        Write-Host "Checking for existing Reports with the name: $fileNamewithoutextension"
-
         if ($Overwrite) {
             $conflictAction = "CreateOrOverwrite"
         }
@@ -775,8 +779,11 @@ Function Publish-PowerBIFile {
         }
 
         try{
-            $report = New-PowerBIReport -Path $FilePath -Name $fileNamewithoutextension -Workspace $workspace -ConflictAction $conflictAction
-            Write-Host "##vso[task.setvariable variable=PowerBIActions.ReportName]$(report.name)"
+            if($fileToPublish.EndsWith(".rdl")){
+                Publish-PowerBIFileApi -WorkspaceName $WorkspaceName -FilePattern $filePath -Create $Create -Overwrite $Overwrite -SkipReport $false
+            }
+            $report = New-PowerBIReport -Path $filePath -Name $fileToPublish -Workspace $workspace -ConflictAction $conflictAction
+            Write-Host "##vso[task.setvariable variable=PowerBIActions.ReportName]$($report.name)"
         }
         catch {
 
@@ -811,11 +818,14 @@ Function Publish-PowerBIFileApi {
         $filePath = "$directory\$file"
         Write-Host "Trying to publish PowerBI File: $FilePath"
 
-        #Check for exisiting report
-        $fileNamewithoutextension = [IO.Path]::GetFileNameWithoutExtension($filePath)
-        Write-Host "Checking for existing Reports with the name: $fileNamewithoutextension"
+        $fileToPublish = $file
+        $extension = [IO.Path]::GetExtension($filePath)
+        if($extension -ne ".rdl"){
+            $fileToPublish = [IO.Path]::GetFileNameWithoutExtension($filePath)
+            Write-Host "Checking for existing Reports with the name: $fileToPublish"
+        }
 
-        $report = Get-PowerBIReport -GroupPath $GroupPath -ReportName $fileNamewithoutextension -Verbose
+        $report = Get-PowerBIReport -GroupPath $GroupPath -ReportName $fileToPublish -Verbose
 
         $publish = $true
         $nameConflict = "Abort"
