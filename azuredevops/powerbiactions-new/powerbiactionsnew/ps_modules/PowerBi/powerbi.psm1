@@ -1073,7 +1073,7 @@ Function Set-RefreshSchedule {
     }
 
     $url = "$($groupPath)/datasets/$($dataset.id)/refreshSchedule"
-	
+
     # Set Refresh Schedule
     Write-Host "Updating dataset $($DatasetName)..." `n
 
