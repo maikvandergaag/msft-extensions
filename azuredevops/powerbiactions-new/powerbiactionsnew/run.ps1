@@ -82,7 +82,7 @@ PROCESS {
 		$ReportWorkspaceName = Get-VstsInput -Name ReportWorkspaceName
 
 		$individual = $false
-		if($individualString == "Individual"){
+		if ($individualString -eq "Individual") {
 			$individual = $true
 		}
 
