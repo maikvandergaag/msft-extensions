@@ -160,7 +160,7 @@
       "defaultValue": "",
       "required": true,
       "helpMarkDown": "Individual is used to access entities that belong to the current user. Organization is used to access entities across the entire company. Only Power BI tenant admins are allowed to use.",
-      "visibleRule": "Action = AddUsers || Action = AddSP || Action = AddGroup",
+      "visibleRule": "Action = UpdateSqlCreds || Action = SetRefreshSchedule",
       "options": {
         "Individual": "Individual",
         "Organization": "Organization"
