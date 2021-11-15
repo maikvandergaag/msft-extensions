@@ -13,8 +13,8 @@
   "demands": [],
   "version": {
     "Major": "4",
-    "Minor": "3",
-    "Patch": "2"
+    "Minor": "4",
+    "Patch": "0"
   },
   "minimumAgentVersion": "1.95.0",
   "instanceNameFormat": "Power BI Action: $(Action)",
@@ -43,6 +43,7 @@
         "DataRefresh": "Refresh a dataset",
         "UpdateDatasource": "Update dataSource connection",
         "Publish": "Upload Power BI report",
+        "DeployTabularModel": "Upload Tabular Model",
         "SQLDirect": "Update SQL direct query string",
         "UpdateParameters": "Update parameters",
         "TakeOwnership": "Take dataset ownership",
@@ -106,7 +107,7 @@
       "defaultValue": "",
       "required": true,
       "helpMarkDown": "Absolute path of the file.",
-      "visibleRule": "Action = Publish || Action = PublishandSkipReport"
+      "visibleRule": "Action = Publish || Action = PublishandSkipReport || Action = DeployTabularModel"
     },
     {
       "name": "Overwrite",
@@ -330,6 +331,15 @@
       "required": true,
       "helpMarkDown": "A json value representing the refreshschedule example: {'value': {'days': ['Sunday'],'times': ['07:00'],'localTimeZoneId': 'UTC'}}",
       "visibleRule": "Action = SetRefreshSchedule"
+    },
+    {
+      "name": "TabularEditorArguments",
+      "type": "string",
+      "label": "Tabular Editor Arguments",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "Arguments to be provided to the Tabular Editor CLI on deployment, for more info click [here](https://docs.tabulareditor.com/te2/Command-line-Options.html)",
+      "visibleRule": "Action = DeployTabularModel"
     }
   ],
   "execution": {
