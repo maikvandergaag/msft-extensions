@@ -555,6 +555,18 @@ Function Get-PowerBiDataSet {
     return $set
 }
 
+Function Get-PowerBiDataSetDataSources {
+    Param(
+        [parameter(Mandatory = $true)]$GroupPath,
+        [parameter(Mandatory = $true)]$DataSetId
+    )
+
+    $url = $powerbiUrl + "$GroupPath/datasets/$($DataSetId)/datasources"
+    $result = Invoke-API -Url $url -Method "Get" -Verbose
+    $sets = $result.value
+    return $sets
+}
+
 Function Get-PowerBiDataSets {
     Param(
         [parameter(Mandatory = $true)]$GroupPath
@@ -820,13 +832,14 @@ Function Publish-PowerBIFileApi {
         Write-Host "Trying to publish PowerBI File: $FilePath"
 
         $fileToPublish = $file
+        $reportName = [IO.Path]::GetFileNameWithoutExtension($filePath)
         $extension = [IO.Path]::GetExtension($filePath)
         if($extension -ne ".rdl"){
             $fileToPublish = [IO.Path]::GetFileNameWithoutExtension($filePath)
             Write-Host "Checking for existing Reports with the name: $fileToPublish"
         }
 
-        $report = Get-PowerBIReport -GroupPath $GroupPath -ReportName $fileToPublish -Verbose
+        $report = Get-PowerBIReport -GroupPath $GroupPath -ReportName $reportName -Verbose
 
         $publish = $true
         $nameConflict = "Abort"
@@ -1010,11 +1023,13 @@ function Update-BasicSQLDataSourceCredentials{
     $GroupPath = Get-PowerBIGroupPath -WorkspaceName $WorkspaceName -Create $false
     $report = Get-PowerBIReport -GroupPath $GroupPath -ReportName $ReportName -Verbose
 
-    if($Individual){
-        $datasources = (Get-PowerBIDatasource -DatasetId $report.DatasetId -Scope Individual)
-    }else {
-        $datasources = (Get-PowerBIDatasource -DatasetId $report.DatasetId -Scope Organization)
-    }
+    $datasources = Get-PowerBiDataSetDataSources -GroupPath $GroupPath -DataSetId $report.DatasetId
+
+    #if($Individual){
+    #    $datasources =  (Get-PowerBIDatasource -DatasetId $report.DatasetId -Scope Individual)
+    #}else {
+    #    $datasources = (Get-PowerBIDatasource -DatasetId $report.DatasetId -Scope Organization)
+    #}
 
     foreach ($dataSource in $datasources) {
 
