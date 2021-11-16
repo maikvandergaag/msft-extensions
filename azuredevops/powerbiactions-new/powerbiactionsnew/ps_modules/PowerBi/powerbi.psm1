@@ -1105,4 +1105,47 @@ Function Set-RefreshSchedule {
     Write-Host "Refresh schedule updated for dataset $($DatasetName)..." `n
 }
 
+Function Publish-TabularEditor {
+    Param(
+        [parameter(Mandatory = $true)]$WorkspaceName,
+        [parameter(Mandatory = $true)]$FilePattern,
+        [parameter(Mandatory = $true)]$TabularEditorArguments
+    )
+
+    $searchedFiles = Get-ChildItem $filePattern
+
+    if (!$searchedFiles){
+        throw "Could not find files matching file pattern!"
+    }
+
+    # Format TabularEditorArguments
+    $TabularEditorArguments = "$($TabularEditorArguments.replace('"', '`"'))"
+
+    # Installing Portable Tabular Editor
+    $tabularDownload = 'https://github.com/TabularEditor/TabularEditor/releases/download/2.16.4/TabularEditor.Portable.zip'
+
+    # Download destination (root of PowerShell script execution path):
+    $downloadDestination = join-path (get-location) "TabularEditor.zip"
+
+    # Download from GitHub:
+    Invoke-WebRequest -Uri $tabularDownload -OutFile $downloadDestination
+
+    # Unzip Tabular Editor portable, and then delete the zip file:
+    Expand-Archive -Path $downloadDestination -DestinationPath (get-location).Path
+    Remove-Item $downloadDestination
+
+    # Checking if files are found
+    foreach ($foundFile in $searchedFiles) {
+        $directory = $foundFile.DirectoryName
+        $file = $foundFile.Name
+
+        $filePath = "$directory\$file"
+        Write-Host "Trying to publish file: $filePath"
+
+        Start-Process -filePath .\TabularEditor.exe -Wait -NoNewWindow -PassThru -ArgumentList "`"$filepath`" $TabularEditorArguments"
+    }
+}
+
+ 
+
 Export-ModuleMember -Function "*-*"

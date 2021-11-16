@@ -80,6 +80,7 @@ PROCESS {
 		$RefreshScheduleInput = Get-VstsInput -Name RefreshScheduleInput
 		$CrossWorkspaceRebinding = Get-VstsInput -Name CrossWorkspaceRebinding
 		$ReportWorkspaceName = Get-VstsInput -Name ReportWorkspaceName
+		$tabularEditorArguments = Get-VstsInput -Name TabularEditorArguments
 
 		$individual = $false
 		if($individualString -eq "Individual"){
@@ -95,8 +96,8 @@ PROCESS {
 		}
 		elseif ($action -eq "Publish") {
 			Write-Debug "File patern             : $($filePattern)";
-			Write-Debug "Remove report           : $($RemoveReport)";
-
+			Write-Debug "Remove report           : $($SkipReport)";
+			
 			if($SkipReport){
 				Publish-PowerBIFileApi -WorkspaceName $workspaceName -Create $Create -FilePattern $filePattern -Overwrite $overwrite -SkipReport $true
 			}else{
@@ -251,6 +252,10 @@ PROCESS {
 
 			Write-Host "Trying to update the dataset refresh schedule"
 			Set-RefreshSchedule -WorkspaceName $workspaceName -DatasetName $dataset -ScheduleJSON $RefreshScheduleInput -Individual $individual
+		}
+		elseif($action -eq "DeployTabularModel"){
+			Write-Debug "Tabular Editor Args          : $($tabularEditorArguments)"
+			Publish-TabularEditor -WorkspaceName $workspaceName -FilePattern $filePattern -TabularEditorArguments $tabularEditorArguments
 		}
 	}
 	finally {
