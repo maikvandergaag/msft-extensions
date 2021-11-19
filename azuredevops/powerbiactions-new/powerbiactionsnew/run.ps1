@@ -78,7 +78,7 @@ PROCESS {
 		$Username = Get-VstsInput -Name Username
 		$Password = Get-VstsInput -Name Password
 		$RefreshScheduleInput = Get-VstsInput -Name RefreshScheduleInput
-		$CrossWorkspaceRebinding = Get-VstsInput -Name CrossWorkspaceRebinding
+		$CrossWorkspaceRebinding = Get-VstsInput -Name CrossWorkspaceRebinding -AsBool
 		$ReportWorkspaceName = Get-VstsInput -Name ReportWorkspaceName
 		$tabularEditorArguments = Get-VstsInput -Name TabularEditorArguments
 
