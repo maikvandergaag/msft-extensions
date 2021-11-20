@@ -158,10 +158,10 @@
       "name": "Scope",
       "type": "picklist",
       "label": "Scope",
-      "defaultValue": "",
+      "defaultValue": "Individual",
       "required": true,
       "helpMarkDown": "Individual is used to access entities that belong to the current user. Organization is used to access entities across the entire company. Only Power BI tenant admins are allowed to use.",
-      "visibleRule": "Action = UpdateSqlCreds || Action = SetRefreshSchedule",
+      "visibleRule": "Action = UpdateSqlCreds",
       "options": {
         "Individual": "Individual",
         "Organization": "Organization"

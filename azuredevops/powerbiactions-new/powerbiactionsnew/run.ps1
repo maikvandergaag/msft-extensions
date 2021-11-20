@@ -251,7 +251,7 @@ PROCESS {
 			}
 
 			Write-Host "Trying to update the dataset refresh schedule"
-			Set-RefreshSchedule -WorkspaceName $workspaceName -DatasetName $dataset -ScheduleJSON $RefreshScheduleInput -Individual $individual
+			Set-RefreshSchedule -WorkspaceName $workspaceName -DatasetName $dataset -ScheduleJSON $RefreshScheduleInput
 		}
 		elseif($action -eq "DeployTabularModel"){
 			Write-Debug "Tabular Editor Args          : $($tabularEditorArguments)"

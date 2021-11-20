@@ -1025,11 +1025,11 @@ function Update-BasicSQLDataSourceCredentials{
 
     $datasources = Get-PowerBiDataSetDataSources -GroupPath $GroupPath -DataSetId $report.DatasetId
 
-    #if($Individual){
-    #    $datasources =  (Get-PowerBIDatasource -DatasetId $report.DatasetId -Scope Individual)
-    #}else {
-    #    $datasources = (Get-PowerBIDatasource -DatasetId $report.DatasetId -Scope Organization)
-    #}
+    if($Individual){
+        $level =  "Individual"
+    }else {
+        $level = "Organizational"
+    }
 
     foreach ($dataSource in $datasources) {
 
@@ -1050,7 +1050,7 @@ function Update-BasicSQLDataSourceCredentials{
                     "credentials": "{\"credentialData\":[{\"name\":\"username\", \"value\":\"$($FormattedDataSourceUser)\"},{\"name\":\"password\", \"value\":\"$($FormattedDataSourcePassword)\"}]}",
                     "encryptedConnection": "Encrypted",
                     "encryptionAlgorithm": "None",
-                    "privacyLevel": "Organizational"
+                    "privacyLevel": "$($level)"
                 }
             }
 "@
