@@ -1094,7 +1094,7 @@ Function Set-RefreshSchedule {
     Write-Host "Updating dataset $($DatasetName)..." `n
 
     try {
-        Invoke-PowerBIRestMethod -Url $url -Method Patch -Body $ScheduleJSON
+        Invoke-PowerBIRestMethod -Url $url -Method Patch -Body ("$ScheduleJSON")
     }
     catch {
         $err = Resolve-PowerBIError -Last
