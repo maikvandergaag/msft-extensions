@@ -891,7 +891,7 @@ Function Get-PowerBICapacity {
     if (-not [string]::IsNullOrEmpty($CapacityName)) {
 
         Write-Verbose "Trying to find capacity: $CapacityName"
-        $items = @($capacities | Where-Object name -eq $CapacityName)
+        $items = @($capacities | Where-Object displayName -eq $CapacityName)
 
         if ($items.Count -ne 0) {
             $capacity = $items[0]
