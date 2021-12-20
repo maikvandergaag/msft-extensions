@@ -887,7 +887,6 @@ Function Get-PowerBICapacity {
     $result = Invoke-API -Url $capacityUrl -Method "Get" -Verbose
     $capacities = $result.value
 
-    $capacities = $null;
     if (-not [string]::IsNullOrEmpty($CapacityName)) {
 
         Write-Verbose "Trying to find capacity: $CapacityName"
