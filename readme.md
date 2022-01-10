@@ -1,6 +1,10 @@
 # Extensions
 This repository is used for posting several types of extensions.
 
+To help me support these extensions you can buy me a coffee.
+
+[Buy me a coffee](https://www.buymeacoffee.com/maikvandergaag)
+
 ## Azure DevOps Extensions
 
 * [Azure Role Based Access Control](azuredevops/azurerbac)
