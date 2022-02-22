@@ -10,6 +10,10 @@ assignees: maikvandergaag
 **Describe the issue**
 A clear and concise description of what the issue is.
 
+**Extension **
+ - Extension: [Name of the extension]
+ - Version: [Version of the extension]
+
 **To Reproduce**
 Steps to reproduce the behavior:
 1. Go to '...'
@@ -21,7 +25,7 @@ Steps to reproduce the behavior:
 A clear and concise description of what you expected to happen.
 
 **Situation (please complete the following information):**
- - Extension: 
+
  - Agent type: 
  - Autentication:
  - Extension Version: 
