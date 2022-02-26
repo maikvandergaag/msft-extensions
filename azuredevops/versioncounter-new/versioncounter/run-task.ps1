@@ -39,7 +39,7 @@ if($UseSystemAccessToken){
 
 Write-Host "Invoking rest method 'Get' for the url: $($buildUri)."
 $buildDef = Invoke-RestMethod -Uri $buildUri -Method Get -ContentType "application/json" -Headers $devOpsHeader
-
+Write-Host "##[debug]$($buildDef)"
 if ($buildDef) {
     $definitionId = $buildDef.definition.id
     Write-Host "Working with definition id: $($definitionId)"
