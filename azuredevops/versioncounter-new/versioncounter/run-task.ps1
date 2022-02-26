@@ -6,11 +6,12 @@ $MaxValuePatchVersion = Get-VstsInput -Name MaxValuePatchVersion
 $MaxValueMinorVersion = Get-VstsInput -Name MaxValueMinorVersion
 $UpdateMajorVersion = Get-VstsInput -Name UpdateMajorVersion
 $OnlyUpdateMinor = Get-VstsInput -Name OnlyUpdateMinor -AsBool
-$DevOpsPat = Get-VstsInput -Name DevOpsPat -Require
+$DevOpsPat = Get-VstsInput -Name DevOpsPat
+$UseSystemAccessToken = Get-VstsInput -Name UseSystemAccessToken -AsBool
 
 $devOpsUri = $env:SYSTEM_TEAMFOUNDATIONSERVERURI
 $projectName = $env:SYSTEM_TEAMPROJECT
-$projectId = $env:SYSTEM_TEAMPROJECTID 
+$projectId = $env:SYSTEM_TEAMPROJECTID
 $buildId = $env:BUILD_BUILDID
 
 Write-Output "VersionVariable      : $($VersionVariable)";
@@ -25,18 +26,23 @@ Write-Output "Project Id           : $($projectId)";
 Write-Output "Only Update Minor    : $($OnlyUpdateMinor)";
 Write-Output "BuildId              : $($buildId)";
 
-$buildUri = "$($devOpsUri)$($projectName)/_apis/build/builds/$($buildId)?api-version=4.1"
+$buildUri = "$($devOpsUri)$($projectName)/_apis/build/builds/$($buildId)?api-version=6.0"
 
-# enconding PAT
-$base64AuthInfo = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(("{0}:{1}" -f "", $DevOpsPAT)))
-$devOpsHeader = @{Authorization = ("Basic {0}" -f $base64AuthInfo)}
+if($UseSystemAccessToken){
+    $devOpsHeader = @{Authorization = ("Bearer {0}" -f $env:SYSTEM_ACCESSTOKEN)}
+}else{
+    # enconding PAT
+    $base64AuthInfo = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(("{0}:{1}" -f "", $DevOpsPAT)))
+    $devOpsHeader = @{Authorization = ("Basic {0}" -f $base64AuthInfo)}
+}
 
 Write-Host "Invoking rest method 'Get' for the url: $($buildUri)."
 $buildDef = Invoke-RestMethod -Uri $buildUri -Method Get -ContentType "application/json" -Headers $devOpsHeader
 
 if ($buildDef) {
     $definitionId = $buildDef.definition.id
-    $defUri = "$($devOpsUri)$($projectName)/_apis/build/definitions/$($definitionId)?api-version=4.1"
+    Write-Information "Working with definition id: $($definitionId)"
+    $defUri = "$($devOpsUri)$($projectName)/_apis/build/definitions/$($definitionId)?api-version=6.0"
 
     Write-Host "Trying to retrieve the build definition with the url: $($defUri)."
     $definition = Invoke-RestMethod -Method Get -Uri $defUri -Headers $devOpsHeader -ContentType "application/json"
@@ -58,14 +64,13 @@ if ($buildDef) {
             $patchVersionVar = $items[2]
             $minorVersionVar = $items[1]
             $majorVersionVar = $items[0]
-        
+
             Write-Host "Current version Major: $($majorVersionVar), Minor $($minorVersionVar), Patch $($patchVersionVar)"
-  
+
             $minorVersion = [convert]::ToInt32($minorVersionVar, 10)
             $majorVersion = [convert]::ToInt32($majorVersionVar, 10)
             $patchVersion = [convert]::ToInt32($patchVersionVar, 10)
-            
-            
+
             $updatedMinorVersion = $minorVersion
             $updatedMajorVersion = $majorVersion
 
@@ -76,7 +81,6 @@ if ($buildDef) {
                 $updatedPatchVersion = $patchVersion + 1
 			}
 
-
             if($UpdateMinorVersion -eq $true){
                 if (($MaxValuePatchVersion -ne 0) -and ($updatedPatchVersion -gt $MaxValuePatchVersion)) {
                     Write-Host "Automatically updating minor version number: $($updatedMinorVersion)"
@@ -85,7 +89,7 @@ if ($buildDef) {
 
                 }
             }
-            
+
             if($UpdateMajorVersion -eq $true){
                 if (($MaxValueMinorVersion -ne 0) -and ($updatedMinorVersion -gt $MaxValueMinorVersion)) {
                     Write-Host "Automatically updating major version numer: $($updatedMajorVersion)"
@@ -103,7 +107,7 @@ if ($buildDef) {
 
             Write-Verbose "Updating Project Build number with URL: $($defUri)"
             Invoke-RestMethod -Method Put -Uri $defUri -Headers $devOpsHeader -ContentType "application/json" -Body ([System.Text.Encoding]::UTF8.GetBytes($definitionJson)) | Out-Null
-        }        
+        }
     }
     else {
         Write-Error "The variables can not be found on the definition: $($MajorVersionVariable), $($MinorVersionVariable), $($PatchVersionVariable)"
