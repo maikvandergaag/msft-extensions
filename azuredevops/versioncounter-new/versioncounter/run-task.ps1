@@ -9,7 +9,7 @@ $OnlyUpdateMinor = Get-VstsInput -Name OnlyUpdateMinor -AsBool
 $DevOpsPat = Get-VstsInput -Name DevOpsPat
 $UseSystemAccessToken = Get-VstsInput -Name UseSystemAccessToken -AsBool
 
-$devOpsUri = $env:SYSTEM_TEAMFOUNDATIONSERVERURI
+$devOpsUri = $env:SYSTEM_TEAMFOUNDATIONCOLLECTIONURI
 $projectName = $env:SYSTEM_TEAMPROJECT
 $projectId = $env:SYSTEM_TEAMPROJECTID
 $buildId = $env:BUILD_BUILDID
@@ -39,10 +39,10 @@ if($UseSystemAccessToken){
 
 Write-Host "Invoking rest method 'Get' for the url: $($buildUri)."
 $buildDef = Invoke-RestMethod -Uri $buildUri -Method Get -ContentType "application/json" -Headers $devOpsHeader
-Write-Host "##[debug]$($buildDef)"
+
 if ($buildDef) {
     $definitionId = $buildDef.definition.id
-    Write-Host "Working with definition id: $($definitionId)"
+    Write-Host "##[debug]Working with definition id: $($definitionId)"
     $defUri = "$($devOpsUri)$($projectName)/_apis/build/definitions/$($definitionId)?api-version=$($apiverion)"
 
     Write-Host "Trying to retrieve the build definition with the url: $($defUri)."
