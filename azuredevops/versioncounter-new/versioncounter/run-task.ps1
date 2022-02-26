@@ -13,6 +13,7 @@ $devOpsUri = $env:SYSTEM_TEAMFOUNDATIONSERVERURI
 $projectName = $env:SYSTEM_TEAMPROJECT
 $projectId = $env:SYSTEM_TEAMPROJECTID
 $buildId = $env:BUILD_BUILDID
+$apiverion = "6.0"
 
 Write-Output "VersionVariable      : $($VersionVariable)";
 Write-Output "UpdateMinorVersion   : $($UpdateMinorVersion)";
@@ -26,7 +27,7 @@ Write-Output "Project Id           : $($projectId)";
 Write-Output "Only Update Minor    : $($OnlyUpdateMinor)";
 Write-Output "BuildId              : $($buildId)";
 
-$buildUri = "$($devOpsUri)$($projectName)/_apis/build/builds/$($buildId)?api-version=6.0"
+$buildUri = "$($devOpsUri)$($projectName)/_apis/build/builds/$($buildId)?api-version=$($apiverion)"
 
 if($UseSystemAccessToken){
     $devOpsHeader = @{Authorization = ("Bearer {0}" -f $env:SYSTEM_ACCESSTOKEN)}
@@ -42,7 +43,7 @@ $buildDef = Invoke-RestMethod -Uri $buildUri -Method Get -ContentType "applicati
 if ($buildDef) {
     $definitionId = $buildDef.definition.id
     Write-Information "Working with definition id: $($definitionId)"
-    $defUri = "$($devOpsUri)$($projectName)/_apis/build/definitions/$($definitionId)?api-version=6.0"
+    $defUri = "$($devOpsUri)$($projectName)/_apis/build/definitions/$($definitionId)?api-version=$($apiverion)"
 
     Write-Host "Trying to retrieve the build definition with the url: $($defUri)."
     $definition = Invoke-RestMethod -Method Get -Uri $defUri -Headers $devOpsHeader -ContentType "application/json"
