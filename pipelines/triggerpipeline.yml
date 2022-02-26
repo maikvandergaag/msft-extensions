@@ -7,7 +7,7 @@ trigger:
       - features/*
   paths:
     include:
-      - azuredevops/triggerpipeline
+      - azuredevops/triggerpipeline-new
       - pipelines/triggerpipeline.yml
 
 pr:
@@ -16,7 +16,7 @@ pr:
       - '*'
   paths:
     include:
-      - azuredevops/triggerpipeline
+      - azuredevops/triggerpipeline-new
       - pipelines/triggerpipeline.yml
 
 variables:

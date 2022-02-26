@@ -1,6 +1,6 @@
 variables:
 - name: rootfolder
-  value: azuredevops/triggerpipeline
+  value: azuredevops/triggerpipeline-new
 - name: artifactName
   value: triggerpipeline
 - name: extensionId
