@@ -42,8 +42,9 @@ $buildDef = Invoke-RestMethod -Uri $buildUri -Method Get -ContentType "applicati
 
 if ($buildDef) {
     $definitionId = $buildDef.definition.id
-    Write-Information "Working with definition id: $($definitionId)"
-    $defUri = "$($devOpsUri)$($projectName)/_apis/build/definitions/$($definitionId)?api-version=$($apiverion)"
+    Write-Host "Working with definition id: $($definitionId)"
+    #$defUri = "$($devOpsUri)$($projectName)/_apis/build/definitions/$($definitionId)?api-version=$($apiverion)"
+    $defUri = $buildDef.definition.url
 
     Write-Host "Trying to retrieve the build definition with the url: $($defUri)."
     $definition = Invoke-RestMethod -Method Get -Uri $defUri -Headers $devOpsHeader -ContentType "application/json"
