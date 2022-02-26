@@ -1,0 +1,113 @@
+{
+  "id": "84F23C57-8C65-4709-BC94-5CBD44E96A99",
+  "name": "versioncounter",
+  "friendlyName": "Version number counter",
+  "description": "Build and release task for a version number counter",
+  "author": "Maik van der Gaag",
+  "helpMarkDown": "",
+  "category": "Utility",
+  "visibility": [
+    "Build"
+  ],
+  "demands": [],
+  "version": {
+    "Major": "2",
+    "Minor": "0",
+    "Patch": "0"
+  },
+  "minimumAgentVersion": "2.117.0",
+  "instanceNameFormat": "Version number counter",
+  "groups": [
+    {
+      "name": "version",
+      "displayName": "Versioning",
+      "isExpanded": true
+    },
+    {
+      "name": "authentication",
+      "displayName": "Authentication",
+      "isExpanded": true
+    }],
+  "inputs": [
+    {
+      "name": "VersionVariable",
+      "label": "The saved version variable",
+      "type": "string",
+      "required": true,
+      "groupName": "version",
+      "helpMarkDown": "The name of the saved variable. The value should be in the format '1.6.3'."
+    },
+    {
+      "name": "UpdateMinorVersion",
+      "label": "Automatically update minor number",
+      "type": "boolean",
+      "defaultValue": "false",
+      "required": false,
+      "groupName": "version",
+      "helpMarkDown": "Automatically update the minor version number when the maximum value of the patch number is reached."
+    },
+    {
+      "name": "MaxValuePatchVersion",
+      "label": "Maximum value of the patch number",
+      "type": "string",
+      "required": false,
+      "groupName": "version",
+      "defaultValue": "0",
+      "helpMarkDown": "The maximum value to the path number",
+      "visibleRule": "UpdateMinorVersion=true"
+    },
+    {
+      "name": "UpdateMajorVersion",
+      "label": "Automatically update major number",
+      "type": "boolean",
+      "defaultValue": "false",
+      "required": false,
+      "groupName": "version",
+      "helpMarkDown": "Automatically update the major version number when the maximum value of the patch number is reached.",
+      "visibleRule": "UpdateMinorVersion=true"
+    },
+    {
+      "name": "MaxValueMinorVersion",
+      "label": "Maximum value of the minor number",
+      "type": "string",
+      "required": false,
+      "defaultValue": "0",
+      "groupName": "version",
+      "helpMarkDown": "The maximum value to the minor number",
+      "visibleRule": "UpdateMajorVersion=true"
+    },
+    {
+      "name": "OnlyUpdateMinor",
+      "label": "Update Minor version",
+      "type": "boolean",
+      "required": false,
+      "defaultValue": "false",
+      "groupName": "version",
+      "helpMarkDown": "Only update the Minor. The rest will go as configured."
+    },
+    {
+      "name": "UseSystemAccessToken",
+      "label": "Use system OAuth token",
+      "type": "boolean",
+      "required": false,
+      "defaultValue": "false",
+      "groupName": "authentication",
+      "helpMarkDown": "Make use of the system OAuth token to authenticate, leaving this false will use the DevOps Pat specified."
+    },
+    {
+      "name": "DevOpsPat",
+      "label": "Azure DevOps Personal Access Token",
+      "type": "string",
+      "required": false,
+      "groupName": "authentication",
+      "helpMarkDown": "The personal access token for Azure DevOps",
+      "visibleRule": "UseSystemAccessToken=false"
+    }
+  ],
+  "dataSourceBindings": [],
+  "execution": {
+    "PowerShell3": {
+      "target": "run-task.ps1"
+    }
+  }
+}
