@@ -7,7 +7,7 @@ trigger:
       - features/*
   paths:
     include:
-      - azuredevops/versioncounter
+      - azuredevops/versioncounter-new
       - pipelines/versioncounter.yml
 
 pr:
@@ -16,12 +16,12 @@ pr:
       - '*'
   paths:
     include:
-      - azuredevops/versioncounter
+      - azuredevops/versioncounter-new
       - pipelines/versioncounter.yml
 
 variables:
   - group: "Version Number"
-  - group: "Marketplace"   
+  - group: "Marketplace"
   - template: variables/versioncounter.variables.yml
 
 stages:

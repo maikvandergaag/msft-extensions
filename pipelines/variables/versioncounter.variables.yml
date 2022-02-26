@@ -1,6 +1,6 @@
 variables:
 - name: rootfolder
-  value: azuredevops/versioncounter
+  value: azuredevops/versioncounter-new
 - name: artifactName
   value: versioncounter
 - name: extensionId

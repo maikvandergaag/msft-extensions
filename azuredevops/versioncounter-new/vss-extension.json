@@ -1,0 +1,80 @@
+{
+  "manifestVersion": 1,
+  "id": "maikvandergaag-versioncounter",
+  "name": "Version number counter",
+  "version": "2.0.0",
+  "publisher": "maikvandergaag",
+  "public": true,
+  "targets": [
+    {
+      "id": "Microsoft.VisualStudio.Services"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "uri": "https://github.com/MaikvanderGaag/msft-extensions/tree/master/azuredevops/versioncounter"
+  },
+  "links": {
+    "getstarted": {
+      "uri": "https://github.com/MaikvanderGaag/msft-extensions/wiki"
+    },
+    "repository": {
+      "uri": "https://github.com/MaikvanderGaag/msft-extensions/"
+    },
+    "issues": {
+      "uri": "https://github.com/MaikvanderGaag/msft-extensions/issues"
+    }
+  },
+  "scope": [
+    "vso.build"
+  ],
+  "description": "Build and Release task for a version number counter",
+  "categories": [
+    "Azure Pipelines"
+  ],
+  "tags": [
+    "Build",
+    "Version",
+    "Counter",
+    "3fifty",
+    "Pipeline",
+    "Azure DevOps"
+  ],
+  "content": {
+    "license": {
+      "path": "license.txt"
+    },
+    "details": {
+      "path": "readme.md"
+    }
+  },
+  "icons": {
+    "default": "icon.png"
+  },
+  "contributions": [
+    {
+      "id": "versioncounter",
+      "type": "ms.vss-distributed-task.task",
+      "targets": [
+        "ms.vss-distributed-task.tasks"
+      ],
+      "properties": {
+        "name": "versioncounter"
+      }
+    }
+  ],
+  "files": [
+    {
+      "path": "versioncounter/run-task.ps1"
+    },
+    {
+      "path": "versioncounter/task.json"
+    },
+    {
+      "path": "versioncounter/icon.png"
+    },
+    {
+      "path": "versioncounter/ps_modules/vststasksdk"
+    }
+  ]
+}
