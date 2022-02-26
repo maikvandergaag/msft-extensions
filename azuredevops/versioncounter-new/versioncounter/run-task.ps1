@@ -13,7 +13,7 @@ $devOpsUri = $env:SYSTEM_TEAMFOUNDATIONCOLLECTIONURI
 $projectName = $env:SYSTEM_TEAMPROJECT
 $projectId = $env:SYSTEM_TEAMPROJECTID
 $buildId = $env:BUILD_BUILDID
-$apiverion = "6.0"
+$apiverion = "7.1-preview.7"
 
 Write-Output "VersionVariable      : $($VersionVariable)";
 Write-Output "UpdateMinorVersion   : $($UpdateMinorVersion)";
