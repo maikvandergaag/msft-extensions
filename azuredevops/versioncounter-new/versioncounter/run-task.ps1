@@ -1,5 +1,35 @@
 Trace-VstsEnteringInvocation $MyInvocation
 
+function Invoke-CustomWebRequest () {
+    param(
+        [Parameter(Mandatory = $true)][String]$Url,
+        [Parameter(Mandatory = $true)][System.Collections.IDictionary]$Headers,
+        [Parameter(Mandatory = $true)][Microsoft.PowerShell.Commands.WebRequestMethod]$Method,
+        [Parameter(Mandatory = $false)][String]$ContentType = "application/json",
+        [Parameter(Mandatory = $false)][String]$Body
+    )
+    try {
+
+        if($Method -eq 'Post' -or $Method -eq 'Put'){
+            $response = Invoke-WebRequest -Uri $Url -ContentType $ContentType -Headers $Headers -Method $Method -Body $Body
+        }
+        else{
+            $response = Invoke-WebRequest -Uri $Url -ContentType $ContentType -Headers $Headers -Method $Method
+        }
+
+        if ($response.StatusCode -lt 300){
+           return ConvertFrom-Json $([String]::new($response.Content))
+        }
+        else {
+           Write-Host $response.StatusCode
+           Write-Host $response.StatusDescription
+        }
+     }
+     catch {
+        Write-Host $_.Exception.Response.StatusDescription
+     }
+}
+
 $VersionVariable = Get-VstsInput -Name VersionVariable -Require
 $UpdateMinorVersion = Get-VstsInput -Name UpdateMinorVersion -Require
 $MaxValuePatchVersion = Get-VstsInput -Name MaxValuePatchVersion
@@ -38,7 +68,7 @@ if($UseSystemAccessToken){
 }
 
 Write-Host "Invoking rest method 'Get' for the url: $($buildUri)."
-$buildDef = Invoke-RestMethod -Uri $buildUri -Method Get -ContentType "application/json" -Headers $devOpsHeader
+$buildDef = Invoke-CustomWebRequest -Url $buildUri -Method Get -ContentType "application/json" -Headers $devOpsHeader
 
 if ($buildDef) {
     $definitionId = $buildDef.definition.id
@@ -46,9 +76,9 @@ if ($buildDef) {
     $defUri = "$($devOpsUri)$($projectName)/_apis/build/definitions/$($definitionId)?api-version=$($apiverion)"
 
     Write-Host "Trying to retrieve the build definition with the url: $($defUri)."
-    $definition = Invoke-RestMethod -Method Get -Uri $defUri -Headers $devOpsHeader -ContentType "application/json"
+    $definition = Invoke-CustomWebRequest -Method Get -Uri $defUri -Headers $devOpsHeader -ContentType "application/json"
 
-    if ($definition.variables.$VersionVariable) {
+    if ($definition -and $definition.variables.$VersionVariable) {
         Write-Host "Value of the Major Version Variable: $($definition.variables.$VersionVariable.Value)"
         $version = $definition.variables.$VersionVariable.Value
 
@@ -107,7 +137,7 @@ if ($buildDef) {
             $definitionJson = $definition | ConvertTo-Json -Depth 50 -Compress
 
             Write-Verbose "Updating Project Build number with URL: $($defUri)"
-            Invoke-RestMethod -Method Put -Uri $defUri -Headers $devOpsHeader -ContentType "application/json" -Body ([System.Text.Encoding]::UTF8.GetBytes($definitionJson)) | Out-Null
+            Invoke-CustomWebRequest -Method Put -Uri $defUri -Headers $devOpsHeader -ContentType "application/json" -Body ([System.Text.Encoding]::UTF8.GetBytes($definitionJson)) | Out-Null
         }
     }
     else {
