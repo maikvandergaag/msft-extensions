@@ -6,7 +6,7 @@ function Invoke-CustomWebRequest () {
         [Parameter(Mandatory = $true)][System.Collections.IDictionary]$Headers,
         [Parameter(Mandatory = $true)][Microsoft.PowerShell.Commands.WebRequestMethod]$Method,
         [Parameter(Mandatory = $false)][String]$ContentType = "application/json",
-        [Parameter(Mandatory = $false)][String]$Body
+        [Parameter(Mandatory = $false)][Object]$Body
     )
     try {
 
