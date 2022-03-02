@@ -2,7 +2,7 @@ Trace-VstsEnteringInvocation $MyInvocation
 
 function Invoke-CustomWebRequest () {
     param(
-        [Parameter(Mandatory = $true)][String]$Url,
+        [Parameter(Mandatory = $true)][String]$Uri,
         [Parameter(Mandatory = $true)][System.Collections.IDictionary]$Headers,
         [Parameter(Mandatory = $true)][Microsoft.PowerShell.Commands.WebRequestMethod]$Method,
         [Parameter(Mandatory = $false)][String]$ContentType = "application/json",
@@ -11,10 +11,10 @@ function Invoke-CustomWebRequest () {
     try {
 
         if($Method -eq 'Post' -or $Method -eq 'Put'){
-            $response = Invoke-WebRequest -Uri $Url -ContentType $ContentType -Headers $Headers -Method $Method -Body $Body
+            $response = Invoke-WebRequest -Uri $Uri -ContentType $ContentType -Headers $Headers -Method $Method -Body $Body
         }
         else{
-            $response = Invoke-WebRequest -Uri $Url -ContentType $ContentType -Headers $Headers -Method $Method
+            $response = Invoke-WebRequest -Uri $Uri -ContentType $ContentType -Headers $Headers -Method $Method
         }
 
         if ($response.StatusCode -lt 300){
@@ -68,7 +68,7 @@ if($UseSystemAccessToken){
 }
 
 Write-Host "Invoking rest method 'Get' for the url: $($buildUri)."
-$buildDef = Invoke-CustomWebRequest -Url $buildUri -Method Get -ContentType "application/json" -Headers $devOpsHeader
+$buildDef = Invoke-CustomWebRequest -Uri $buildUri -Method Get -ContentType "application/json" -Headers $devOpsHeader
 
 if ($buildDef) {
     $definitionId = $buildDef.definition.id
