@@ -23,6 +23,8 @@ try {
 	$Branch = Get-VstsInput -Name Branch
 	$BuildNumber = Get-VstsInput -Name BuildNumber
 	$Stages = Get-VstsInput -Name Stages
+	$buildapiversion = Get-VstsInput -Name buildapiversion
+	$releaseapiversion = Get-VstsInput -Name releaseapiversion
 
 	Write-Host "******************************"
 	Write-Host "** Service Connection: $($connectedServiceName)"
@@ -37,13 +39,15 @@ try {
 	Write-Host "** Branch: $($Branch)"
 	Write-Host "** BuildNumber: $($BuildNumber)"
 	Write-Host "** Stages: $($Stages)"
+	Write-Host "** Build Api Version: $($buildapiversion)"
+	Write-Host "** Release Api Version: $($releaseapiversion)"
 	Write-Host "******************************"
 
 	if ($Pipeline -eq "Build") {
-		.\run-build.ps1 -OrganizationUrl $organizationUrl -AzureDevOpsProjectName $AzureDevOpsProjectName -UseSystemAccessToken $false -DevOpsPAT $token -PipelineName $BuildPipelineName -Description $Description -Branch $Branch
+		.\run-build.ps1 -OrganizationUrl $organizationUrl -AzureDevOpsProjectName $AzureDevOpsProjectName -UseSystemAccessToken $false -DevOpsPAT $token -PipelineName $BuildPipelineName -Description $Description -Branch $Branch -BuildApi $buildapiversion
 	}
 	elseif ($Pipeline -eq "Release") {
-		.\run-release.ps1 -OrganizationUrl $organizationUrl -ReleaseUrl $releaseUrl -UseSystemAccessToken $false -AzureDevOpsProjectName $AzureDevOpsProjectName -DevOpsPAT $token -PipelineName $ReleasePipelineName -Description $Description -BuildNumber $BuildNumber -Stage $Stages
+		.\run-release.ps1 -OrganizationUrl $organizationUrl -ReleaseUrl $releaseUrl -UseSystemAccessToken $false -AzureDevOpsProjectName $AzureDevOpsProjectName -DevOpsPAT $token -PipelineName $ReleasePipelineName -Description $Description -BuildNumber $BuildNumber -Stage $Stages -BuildApi $buildapiversion -ReleaseApi $releaseapiversion
 	}
 }
 finally {

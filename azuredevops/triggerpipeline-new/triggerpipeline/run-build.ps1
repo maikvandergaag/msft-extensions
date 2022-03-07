@@ -6,15 +6,15 @@ Param (
     [Parameter(Mandatory = $false)][Bool]$UseSystemAccessToken,
     [Parameter(Mandatory = $true)][String]$PipelineName,
     [Parameter(Mandatory = $false)][String]$Branch,
-    [Parameter(Mandatory = $false)][String]$Description = "Automatically triggered release"
+    [Parameter(Mandatory = $false)][String]$Description = "Automatically triggered release",
+    [Parameter(Mandatory = $false)][String]$BuildApi
 )
 
 $ErrorActionPreference = 'Stop';
-$apiVersionBuild = "7.1-preview.7"
 #uri
 $baseUri = "$($OrganizationUrl)/$($AzureDevOpsProjectName)/";
 $getUri = "_apis/build/definitions?name=$(${PipelineName})";
-$runBuild = "_apis/build/builds?api-version=$($apiVersionBuild)"
+$runBuild = "_apis/build/builds?api-version=$($BuildApi)"
 
 $buildUri = "$($baseUri)$($getUri)"
 $runBuildUri = "$($baseUri)$($runBuild)"

@@ -18,6 +18,17 @@
   },
   "minimumAgentVersion": "1.95.0",
   "instanceNameFormat": "Trigger Azure DevOps Pipeline: $(Pipeline)",
+  "groups": [
+    {
+      "name": "pipeline",
+      "displayName": "Pipeline",
+      "isExpanded": true
+    },
+    {
+      "name": "advanced",
+      "displayName": "Advanced",
+      "isExpanded": false
+    }],
   "inputs": [
     {
       "name": "connectedServiceName",
@@ -28,7 +39,8 @@
       "label": "Azure DevOps service connection",
       "defaultValue": "",
       "required": "true",
-      "helpMarkDown": "Select the Azure DevOps Organization service connection that should be used to connect to Azure DevOps"
+      "helpMarkDown": "Select the Azure DevOps Organization service connection.",
+      "groupName": "pipeline"
     },
     {
       "name": "project",
@@ -36,7 +48,8 @@
       "label": "Project",
       "defaultValue": "",
       "required": true,
-      "helpMarkDown": "Select the name of the team project were the pipeline resides.",
+      "helpMarkDown": "Select the name of the team project where the pipeline resides.",
+      "groupName": "pipeline",
       "properties": {
         "EditableOptions": "True"
       }
@@ -48,6 +61,7 @@
       "required": true,
       "helpMarkDown": "Select the type of pipeline",
       "defaultValue": "Release",
+      "groupName": "pipeline",
       "options": {
         "Release": "Release",
         "Build": "Build"
@@ -59,6 +73,7 @@
       "label": "Build Definition",
       "defaultValue": "",
       "required": true,
+      "groupName": "pipeline",
       "helpMarkDown": "Select the name of the Build to trigger.",
       "visibleRule": "Pipeline = Build",
       "properties": {
@@ -73,6 +88,7 @@
       "required": true,
       "helpMarkDown": "Select the name of the Release to trigger.",
       "visibleRule": "Pipeline = Release",
+      "groupName": "pipeline",
       "properties": {
         "EditableOptions": "True"
       }
@@ -82,6 +98,7 @@
       "type": "string",
       "label": "Release description",
       "required": false,
+      "groupName": "pipeline",
       "helpMarkDown": "The description of the release",
       "visibleRule": "Pipeline = Release"
     },
@@ -90,7 +107,8 @@
       "type": "string",
       "label": "Branch",
       "required": false,
-      "helpMarkDown": "The name of the branch to build. When kept empty the default branch of the build will be used.",
+      "groupName": "pipeline",
+      "helpMarkDown": "The name of the branch to build. When kept empty, the default branch is used.",
       "visibleRule": "Pipeline = Build"
     },
     {
@@ -99,17 +117,49 @@
       "label": "Build Number",
       "defaultValue": "",
       "required": false,
-      "helpMarkDown": "The succeeded build number to release of the primary artifact. When kept empty the latest version is used.",
+      "groupName": "pipeline",
+      "helpMarkDown": "The succeeded build number to release the primary artifact. When kept empty, the latest version is used.",
       "visibleRule": "Pipeline = Release"
     },
     {
       "name": "Stages",
       "type": "string",
-      "label": "Stages (, seperated)",
+      "label": "Stages (, separated)",
       "defaultValue": "",
       "required": false,
-      "helpMarkDown": "The stages you would like to trigger seperated by : , ",
+      "groupName": "pipeline",
+      "helpMarkDown": "The stages you would like to trigger separated by : , ",
       "visibleRule": "Pipeline = Release"
+    },
+    {
+      "name": "buildapiversion",
+      "label": "Build - API Version",
+      "type": "picklist",
+      "required": true,
+      "helpMarkDown": "Select the API Version that is used for the build API's.",
+      "defaultValue": "6.0",
+      "groupName": "advanced",
+      "options": {
+        "5.1": "5.1",
+        "6.0": "6.0",
+        "7.1-preview.7": "7.1-preview.7"
+      }
+    },
+    {
+      "name": "releaseapiversion",
+      "label": "Release - API Version",
+      "type": "picklist",
+      "required": true,
+      "helpMarkDown": "Select the API Version that is used for the Release API's.",
+      "defaultValue": "6.0",
+      "groupName": "advanced",
+      "visibleRule": "Pipeline = Release",
+      "options": {
+        "5.0": "5.0",
+        "5.1": "5.1",
+        "6.0": "6.0",
+        "7.1-preview.8": "7.1-preview.8"
+      }
     }
   ],
   "dataSourceBindings": [

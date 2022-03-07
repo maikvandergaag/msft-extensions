@@ -8,18 +8,18 @@ Param (
     [Parameter(Mandatory = $true)][String]$PipelineName,
     [Parameter(Mandatory = $false)][String]$BuildNumber,
     [Parameter(Mandatory = $false)][String]$Stage,
-    [Parameter(Mandatory = $false)][String]$Description = "Automatically triggered release"
+    [Parameter(Mandatory = $false)][String]$Description = "Automatically triggered release",
+    [Parameter(Mandatory = $false)][String]$BuildApi,
+    [Parameter(Mandatory = $false)][String]$ReleaseApi
 )
 
 $ErrorActionPreference = 'Stop';
 
-$apiVersion = "7.1-preview.8"
-$apiVersionBuild = "7.1-preview.7"
 #uri
 $baseBuildUri = "$($OrganizationUrl)/$($AzureDevOpsProjectName)/"
 $baseReleaseUri = "$($ReleaseUrl)/$($AzureDevOpsProjectName)/";
 $getUri = "_apis/release/definitions?searchText=$($PipelineName)&`$expand=environments&isExactNameMatch=true";
-$runRelease = "_apis/release/releases?api-version=$($apiVersion)"
+$runRelease = "_apis/release/releases?api-version=$($ReleaseApi)"
 
 
 $ReleaseUri = "$($baseReleaseUri)$($getUri)"
@@ -43,7 +43,7 @@ if ($ReleaseDefinitions -and $ReleaseDefinitions.count -eq 1) {
     if ($BuildNumber) {
         foreach ($artifact in $Definition.artifacts) {
             if ($artifact.isPrimary) {
-                $buildUri = "$($baseBuildUri)_apis/build/builds?definitions=$($artifact.definitionReference.definition.id)&resultfilter=succeeded&buildNumber=$($BuildNumber)&statusFilter=completed&api-version=$($apiVersionBuild)"
+                $buildUri = "$($baseBuildUri)_apis/build/builds?definitions=$($artifact.definitionReference.definition.id)&resultfilter=succeeded&buildNumber=$($BuildNumber)&statusFilter=completed&api-version=$($BuildApi)"
                 $buildResult = Invoke-RestMethod -Uri $buildUri -Method Get -ContentType "application/json" -Headers $DevOpsHeaders;
 
                 if ($buildResult -and $buildResult.count -eq 1) {
@@ -84,7 +84,7 @@ if ($ReleaseDefinitions -and $ReleaseDefinitions.count -eq 1) {
 
                     if ($environment) {
                         $envId = $environment.id
-                        $runRelease = "_apis/release/releases/$($releaseId)/environments/$($envId)?api-version=$($apiVersion)"
+                        $runRelease = "_apis/release/releases/$($releaseId)/environments/$($envId)?api-version=$($ReleaseApi)"
                         $RunEnvUri = "$($baseReleaseUri)$($runRelease)"
 
                         $stageBody = New-Object PSObject -Property @{
