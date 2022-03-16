@@ -1054,7 +1054,7 @@ function Update-BasicSQLDataSourceCredentials{
             }
 "@
         #If it's a sql server source, change the username/password
-        if ($DataSource.DatasourceType = "Sql") {
+        if ($dataSource.DatasourceType -eq "Sql") {
 
             #Update username & password
             Invoke-PowerBIRestMethod -Url $ApiUrl -Method Patch -Body ("$ApiRequestBody")
