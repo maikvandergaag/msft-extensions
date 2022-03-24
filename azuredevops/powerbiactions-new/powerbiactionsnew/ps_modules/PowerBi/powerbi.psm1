@@ -794,7 +794,7 @@ Function Publish-PowerBIFile {
             if($fileToPublish.EndsWith(".rdl")){
                 Publish-PowerBIFileApi -WorkspaceName $WorkspaceName -FilePattern $filePath -Create $Create -Overwrite $Overwrite -SkipReport $false
             }else{
-                $report = New-PowerBIReport -Path $filePath -Name $fileToPublish -Workspace $workspace -ConflictAction $conflictAction -Timeout 120
+                $report = New-PowerBIReport -Path $filePath -Name $fileToPublish -Workspace $workspace -ConflictAction $conflictAction -Timeout 300
                 Write-Host "##vso[task.setvariable variable=PowerBIActions.ReportName]$($report.name)"
             }
         }

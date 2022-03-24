@@ -1,0 +1,216 @@
+<Objs Version="1.1.0.1" xmlns="http://schemas.microsoft.com/powershell/2004/04">
+  <Obj RefId="0">
+    <TN RefId="0">
+      <T>Microsoft.PowerShell.Commands.PSRepositoryItemInfo</T>
+      <T>System.Management.Automation.PSCustomObject</T>
+      <T>System.Object</T>
+    </TN>
+    <MS>
+      <S N="Name">MicrosoftPowerBIMgmt</S>
+      <S N="Version">1.2.1077</S>
+      <S N="Type">Module</S>
+      <S N="Description">Microsoft Power BI PowerShell - All cmdlets for Microsoft Power BI</S>
+      <S N="Author">Microsoft Corporation</S>
+      <S N="CompanyName">PowerBI-PowerShell</S>
+      <S N="Copyright">Copyright (c) Microsoft Corporation. All rights reserved.</S>
+      <DT N="PublishedDate">2021-10-27T18:37:06+02:00</DT>
+      <Nil N="InstalledDate" />
+      <Nil N="UpdatedDate" />
+      <URI N="LicenseUri">https://github.com/Microsoft/powerbi-powershell/blob/master/LICENSE</URI>
+      <URI N="ProjectUri">https://github.com/Microsoft/powerbi-powershell</URI>
+      <Nil N="IconUri" />
+      <Obj N="Tags" RefId="1">
+        <TN RefId="1">
+          <T>System.Object[]</T>
+          <T>System.Array</T>
+          <T>System.Object</T>
+        </TN>
+        <LST>
+          <S>PowerBI</S>
+        </LST>
+      </Obj>
+      <Obj N="Includes" RefId="2">
+        <TN RefId="2">
+          <T>System.Collections.Hashtable</T>
+          <T>System.Object</T>
+        </TN>
+        <DCT>
+          <En>
+            <S N="Key">RoleCapability</S>
+            <Obj N="Value" RefId="3">
+              <TNRef RefId="1" />
+              <LST />
+            </Obj>
+          </En>
+          <En>
+            <S N="Key">Function</S>
+            <Ref N="Value" RefId="3" />
+          </En>
+          <En>
+            <S N="Key">Cmdlet</S>
+            <Ref N="Value" RefId="3" />
+          </En>
+          <En>
+            <S N="Key">Workflow</S>
+            <Ref N="Value" RefId="3" />
+          </En>
+          <En>
+            <S N="Key">Command</S>
+            <Ref N="Value" RefId="3" />
+          </En>
+          <En>
+            <S N="Key">DscResource</S>
+            <Ref N="Value" RefId="3" />
+          </En>
+        </DCT>
+      </Obj>
+      <Nil N="PowerShellGetFormatVersion" />
+      <S N="ReleaseNotes">update output of Get-PowerBIWorkspace for users to inlclude identifier and principaltype_x000D__x000A_Support -Type &lt;WorkspaceType&gt; parameter for Get-PowerBIWorkspace</S>
+      <Obj N="Dependencies" RefId="4">
+        <TNRef RefId="1" />
+        <LST>
+          <Obj RefId="5">
+            <TN RefId="3">
+              <T>System.Collections.Specialized.OrderedDictionary</T>
+              <T>System.Object</T>
+            </TN>
+            <DCT>
+              <En>
+                <S N="Key">Name</S>
+                <S N="Value">MicrosoftPowerBIMgmt.Admin</S>
+              </En>
+              <En>
+                <S N="Key">MinimumVersion</S>
+                <S N="Value">1.2.1077</S>
+              </En>
+              <En>
+                <S N="Key">CanonicalId</S>
+                <S N="Value">nuget:MicrosoftPowerBIMgmt.Admin/1.2.1077</S>
+              </En>
+            </DCT>
+          </Obj>
+          <Obj RefId="6">
+            <TNRef RefId="3" />
+            <DCT>
+              <En>
+                <S N="Key">Name</S>
+                <S N="Value">MicrosoftPowerBIMgmt.Capacities</S>
+              </En>
+              <En>
+                <S N="Key">MinimumVersion</S>
+                <S N="Value">1.2.1077</S>
+              </En>
+              <En>
+                <S N="Key">CanonicalId</S>
+                <S N="Value">nuget:MicrosoftPowerBIMgmt.Capacities/1.2.1077</S>
+              </En>
+            </DCT>
+          </Obj>
+          <Obj RefId="7">
+            <TNRef RefId="3" />
+            <DCT>
+              <En>
+                <S N="Key">Name</S>
+                <S N="Value">MicrosoftPowerBIMgmt.Data</S>
+              </En>
+              <En>
+                <S N="Key">MinimumVersion</S>
+                <S N="Value">1.2.1077</S>
+              </En>
+              <En>
+                <S N="Key">CanonicalId</S>
+                <S N="Value">nuget:MicrosoftPowerBIMgmt.Data/1.2.1077</S>
+              </En>
+            </DCT>
+          </Obj>
+          <Obj RefId="8">
+            <TNRef RefId="3" />
+            <DCT>
+              <En>
+                <S N="Key">Name</S>
+                <S N="Value">MicrosoftPowerBIMgmt.Profile</S>
+              </En>
+              <En>
+                <S N="Key">MinimumVersion</S>
+                <S N="Value">1.2.1077</S>
+              </En>
+              <En>
+                <S N="Key">CanonicalId</S>
+                <S N="Value">nuget:MicrosoftPowerBIMgmt.Profile/1.2.1077</S>
+              </En>
+            </DCT>
+          </Obj>
+          <Obj RefId="9">
+            <TNRef RefId="3" />
+            <DCT>
+              <En>
+                <S N="Key">Name</S>
+                <S N="Value">MicrosoftPowerBIMgmt.Reports</S>
+              </En>
+              <En>
+                <S N="Key">MinimumVersion</S>
+                <S N="Value">1.2.1077</S>
+              </En>
+              <En>
+                <S N="Key">CanonicalId</S>
+                <S N="Value">nuget:MicrosoftPowerBIMgmt.Reports/1.2.1077</S>
+              </En>
+            </DCT>
+          </Obj>
+          <Obj RefId="10">
+            <TNRef RefId="3" />
+            <DCT>
+              <En>
+                <S N="Key">Name</S>
+                <S N="Value">MicrosoftPowerBIMgmt.Workspaces</S>
+              </En>
+              <En>
+                <S N="Key">MinimumVersion</S>
+                <S N="Value">1.2.1077</S>
+              </En>
+              <En>
+                <S N="Key">CanonicalId</S>
+                <S N="Value">nuget:MicrosoftPowerBIMgmt.Workspaces/1.2.1077</S>
+              </En>
+            </DCT>
+          </Obj>
+        </LST>
+      </Obj>
+      <S N="RepositorySourceLocation">https://www.powershellgallery.com/api/v2</S>
+      <S N="Repository">PSGallery</S>
+      <S N="PackageManagementProvider">NuGet</S>
+      <Obj N="AdditionalMetadata" RefId="11">
+        <TN RefId="4">
+          <T>System.Management.Automation.PSCustomObject</T>
+          <T>System.Object</T>
+        </TN>
+        <MS>
+          <S N="copyright">Copyright (c) Microsoft Corporation. All rights reserved.</S>
+          <S N="description">Microsoft Power BI PowerShell - All cmdlets for Microsoft Power BI</S>
+          <S N="requireLicenseAcceptance">False</S>
+          <S N="releaseNotes">update output of Get-PowerBIWorkspace for users to inlclude identifier and principaltype_x000D__x000A_Support -Type &lt;WorkspaceType&gt; parameter for Get-PowerBIWorkspace</S>
+          <S N="isLatestVersion">True</S>
+          <S N="isAbsoluteLatestVersion">True</S>
+          <S N="versionDownloadCount">147273</S>
+          <S N="downloadCount">558874</S>
+          <S N="packageSize">17366</S>
+          <S N="published">27-10-2021 18:37:06 +02:00</S>
+          <S N="created">27-10-2021 18:37:06 +02:00</S>
+          <S N="lastUpdated">24-3-2022 08:13:40 +01:00</S>
+          <S N="tags">PowerBI</S>
+          <S N="developmentDependency">False</S>
+          <S N="updated">2022-03-24T08:13:40Z</S>
+          <S N="NormalizedVersion">1.2.1077</S>
+          <S N="Authors">Microsoft Corporation</S>
+          <S N="IsPrerelease">false</S>
+          <S N="ItemType">Module</S>
+          <S N="FileList">MicrosoftPowerBIMgmt.nuspec|MicrosoftPowerBIMgmt.cat|MicrosoftPowerBIMgmt.psd1</S>
+          <S N="GUID">39807486-1a62-4a5b-a8f5-163634463c23</S>
+          <S N="PowerShellVersion">3.0</S>
+          <S N="CompanyName">Microsoft Corporation</S>
+        </MS>
+      </Obj>
+      <S N="InstalledLocation">C:\Modules\MicrosoftPowerBIMgmt\1.2.1077</S>
+    </MS>
+  </Obj>
+</Objs>
