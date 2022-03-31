@@ -8,11 +8,11 @@ try {
     $token = ""
     $BuildPipelineName = "Trigger with Variable"
     $ReleasePipelineName = "Trigger with Variable"
-    $Pipeline = "Release"
+    $Pipeline = "Build"
     $Description = "Test"
     $Branch = ""
     $BuildNumber = ""
-    $Variables = "{'Test': 'Test', 'Tesffft1': 'Test1'}"
+    $Variables = "{'Test': 'Test', 'Test1': 'Test1'}"
 
     if ($Pipeline -eq "Build") {
         .\run-build.ps1 -OrganizationUrl $organizationUrl -AzureDevOpsProjectName $AzureDevOpsProjectName -DevOpsPAT $token -PipelineName $BuildPipelineName -Description $Description -Branch $Branch -BuildApi "6.0"  -Parameters $Variables

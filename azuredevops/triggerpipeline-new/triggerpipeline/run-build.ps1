@@ -19,9 +19,16 @@ catch {
 }
 
 $ErrorActionPreference = 'Stop';
+
+$id = $PipelineName -as [int]
+if($id){
+    $getUri = "_apis/build/definitions/$($id)";
+}else{
+    $getUri = "_apis/build/definitions?name=$(${PipelineName})";
+}
+
 #uri
 $baseUri = "$($OrganizationUrl)/$($AzureDevOpsProjectName)/";
-$getUri = "_apis/build/definitions?name=$(${PipelineName})";
 $runBuild = "_apis/build/builds?api-version=$($BuildApi)"
 
 $buildUri = "$($baseUri)$($getUri)"
@@ -37,8 +44,13 @@ if($UseSystemAccessToken){
 
 $BuildDefinitions = Invoke-RestMethod -Uri $buildUri -Method Get -ContentType "application/json" -Headers $DevOpsHeaders;
 
-if ($BuildDefinitions -and $BuildDefinitions.count -eq 1) {
-    $specificUri = $BuildDefinitions.value[0].url
+if ($BuildDefinitions) {
+    if($id){
+        $specificUri = $BuildDefinitions.url
+    }else{
+        $specificUri = $BuildDefinitions.value[0].url
+    }
+
     $Definition = Invoke-RestMethod -Uri $specificUri -Method Get -ContentType "application/json" -Headers $DevOpsHeaders;
 
     if ($Definition) {

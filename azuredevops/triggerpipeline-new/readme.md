@@ -47,4 +47,5 @@ If you like the extension, please leave a review. File an issue when you have su
 | 1.0.1   | Initial version                     |
 | 1.0.3   | Updated documentation               |
 | 2.0.3   | Added variable support              |
+| 2.0.4   | Breaking change task now refers to Id and not name    |
 

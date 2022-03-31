@@ -23,12 +23,17 @@ catch {
 
 $ErrorActionPreference = 'Stop';
 
+$id = $PipelineName -as [int]
+if($id){
+    $getUri = "_apis/release/definitions/$($id)";
+}else{
+    $getUri = "_apis/release/definitions?searchText=$($PipelineName)&`$expand=environments&isExactNameMatch=true";
+}
+
 #uri
 $baseBuildUri = "$($OrganizationUrl)/$($AzureDevOpsProjectName)/"
 $baseReleaseUri = "$($ReleaseUrl)/$($AzureDevOpsProjectName)/";
-$getUri = "_apis/release/definitions?searchText=$($PipelineName)&`$expand=environments&isExactNameMatch=true";
 $runRelease = "_apis/release/releases?api-version=$($ReleaseApi)"
-
 
 $ReleaseUri = "$($baseReleaseUri)$($getUri)"
 $RunReleaseUri = "$($baseReleaseUri)$($runRelease)"
@@ -44,8 +49,13 @@ if($UseSystemAccessToken){
 
 $ReleaseDefinitions = Invoke-RestMethod -Uri $ReleaseUri -Method Get -ContentType "application/json" -Headers $DevOpsHeaders;
 
-if ($ReleaseDefinitions -and $ReleaseDefinitions.count -eq 1) {
-    $specificUri = $ReleaseDefinitions.value[0].url
+if ($ReleaseDefinitions) {
+
+    if($id){
+        $specificUri = $ReleaseDefinitions.url
+    }else{
+        $specificUri = $ReleaseDefinitions.value[0].url
+    }
     $Definition = Invoke-RestMethod -Uri $specificUri -Method Get -ContentType "application/json" -Headers $DevOpsHeaders;
 
     if ($BuildNumber) {
