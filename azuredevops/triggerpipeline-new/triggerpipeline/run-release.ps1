@@ -84,13 +84,18 @@ if ($ReleaseDefinitions) {
     if ($Definition) {
 
         $variableItems = $Definition.variables
-
+        $variableItemsNew = New-Object PSCustomObject
         foreach ($property in $variablesObject.PSObject.Properties) {
             $name = $property.Name
             $value = $property.Value
 
             if($variableItems.PSobject.Properties.name -match $name){
                 $variableItems.$name.Value = $value
+                $item = New-Object PSObject -Property @{
+                    value = $value
+                    allowOverride = $variableItems.$name.allowOverride
+                }
+                Add-Member -InputObject $variableItemsNew -NotePropertyName $name -NotePropertyValue $item
             }else{
                 Write-Warning "Variable with the name: $($name) does not exist on the definition!"
             }
@@ -101,7 +106,7 @@ if ($ReleaseDefinitions) {
             isDraft      = $false
             description  = $Description
             artifacts    = $artifactsItem
-            variables    = $variableItems
+            variables    = $variableItemsNew
         }
 
         $jsonbody = $Release | ConvertTo-Json -Depth 100

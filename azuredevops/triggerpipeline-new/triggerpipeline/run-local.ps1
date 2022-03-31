@@ -8,7 +8,7 @@ try {
     $token = ""
     $BuildPipelineName = "Trigger with Variable"
     $ReleasePipelineName = "Trigger with Variable"
-    $Pipeline = "Build"
+    $Pipeline = "Release"
     $Description = "Test"
     $Branch = ""
     $BuildNumber = ""
