@@ -167,7 +167,7 @@
       "groupName": "pipeline",
       "label": "Release variable json",
       "defaultValue": "",
-      "required": true,
+      "required": false,
       "helpMarkDown": "A json value representing the variables example: {'name' : 'test', 'newValue' : 'test'}"
     }
   ],
