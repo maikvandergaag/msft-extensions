@@ -48,7 +48,7 @@ if ($BuildDefinitions -and $BuildDefinitions.count -eq 1) {
             }
             sourceBranch = $Branch
             reason = "userCreated"
-            parameters = $parametersObject
+            parameters = $Parameters
         }
 
         $jsonbody = $Build | ConvertTo-Json -Depth 100

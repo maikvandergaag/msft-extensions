@@ -136,7 +136,7 @@
       "label": "Build - API Version",
       "type": "picklist",
       "required": true,
-      "helpMarkDown": "Select the API Version that is used for the build API's.",
+      "helpMarkDown": "Select the API Version that will be used for the build APIs.",
       "defaultValue": "6.0",
       "groupName": "advanced",
       "options": {
@@ -150,7 +150,7 @@
       "label": "Release - API Version",
       "type": "picklist",
       "required": true,
-      "helpMarkDown": "Select the API Version that is used for the Release API's.",
+      "helpMarkDown": "Select the API Version that will be for the Release APIs.",
       "defaultValue": "6.0",
       "groupName": "advanced",
       "visibleRule": "Pipeline = Release",
@@ -162,21 +162,13 @@
       }
     },
     {
-      "name": "ParameterInput",
-      "type": "string",
-      "label": "Build parameter json",
-      "defaultValue": "",
-      "required": true,
-      "helpMarkDown": "A json value representing the parameters example [{'name' : 'test', 'newValue' : 'test'}]",
-    },
-    {
       "name": "VariableInput",
       "type": "string",
+      "groupName": "pipeline",
       "label": "Release variable json",
       "defaultValue": "",
       "required": true,
-      "helpMarkDown": "A json value representing the parameters example [{'name' : 'test', 'newValue' : 'test'}]",
-      "visibleRule": "Pipeline = Release"
+      "helpMarkDown": "A json value representing the variables example: {'name' : 'test', 'newValue' : 'test'}"
     }
   ],
   "dataSourceBindings": [

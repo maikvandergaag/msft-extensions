@@ -72,12 +72,26 @@ if ($ReleaseDefinitions -and $ReleaseDefinitions.count -eq 1) {
     }
 
     if ($Definition) {
+
+        $variableItems = $Definition.variables
+
+        foreach ($property in $variablesObject.PSObject.Properties) {
+            $name = $property.Name
+            $value = $property.Value
+
+            if($variableItems.PSobject.Properties.name -match $name){
+                $variableItems.$name.Value = $value
+            }else{
+                Write-Warning "Variable with the name: $($name) does not exist on the definition!"
+            }
+        }
+
         $Release = New-Object PSObject -Property @{
             definitionId = $Definition.id
             isDraft      = $false
             description  = $Description
             artifacts    = $artifactsItem
-            variables    = $variablesObject
+            variables    = $variableItems
         }
 
         $jsonbody = $Release | ConvertTo-Json -Depth 100
