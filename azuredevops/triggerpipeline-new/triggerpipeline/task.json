@@ -160,6 +160,23 @@
         "6.0": "6.0",
         "7.1-preview.8": "7.1-preview.8"
       }
+    },
+    {
+      "name": "ParameterInput",
+      "type": "string",
+      "label": "Build parameter json",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "A json value representing the parameters example [{'name' : 'test', 'newValue' : 'test'}]",
+    },
+    {
+      "name": "VariableInput",
+      "type": "string",
+      "label": "Release variable json",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "A json value representing the parameters example [{'name' : 'test', 'newValue' : 'test'}]",
+      "visibleRule": "Pipeline = Release"
     }
   ],
   "dataSourceBindings": [

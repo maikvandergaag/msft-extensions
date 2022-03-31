@@ -7,8 +7,16 @@ Param (
     [Parameter(Mandatory = $true)][String]$PipelineName,
     [Parameter(Mandatory = $false)][String]$Branch,
     [Parameter(Mandatory = $false)][String]$Description = "Automatically triggered release",
-    [Parameter(Mandatory = $false)][String]$BuildApi
+    [Parameter(Mandatory = $false)][String]$BuildApi,
+    [Parameter(Mandatory = $false)][String]$Parameters
 )
+
+try {
+    $parametersObject = ConvertFrom-Json $Parameters
+}
+catch {
+    Write-Error "Supplied json for the variables is not in the correct format!"
+}
 
 $ErrorActionPreference = 'Stop';
 #uri
@@ -40,6 +48,7 @@ if ($BuildDefinitions -and $BuildDefinitions.count -eq 1) {
             }
             sourceBranch = $Branch
             reason = "userCreated"
+            parameters = $parametersObject
         }
 
         $jsonbody = $Build | ConvertTo-Json -Depth 100
