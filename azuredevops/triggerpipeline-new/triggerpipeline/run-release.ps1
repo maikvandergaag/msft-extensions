@@ -10,8 +10,16 @@ Param (
     [Parameter(Mandatory = $false)][String]$Stage,
     [Parameter(Mandatory = $false)][String]$Description = "Automatically triggered release",
     [Parameter(Mandatory = $false)][String]$BuildApi,
-    [Parameter(Mandatory = $false)][String]$ReleaseApi
+    [Parameter(Mandatory = $false)][String]$ReleaseApi,
+    [Parameter(Mandatory = $false)][String]$Variables
 )
+
+try {
+    $variablesObject = ConvertFrom-Json $Variables
+}
+catch {
+    Write-Error "Supplied json for the variables is not in the correct format!"
+}
 
 $ErrorActionPreference = 'Stop';
 
@@ -69,6 +77,7 @@ if ($ReleaseDefinitions -and $ReleaseDefinitions.count -eq 1) {
             isDraft      = $false
             description  = $Description
             artifacts    = $artifactsItem
+            variables    = $variablesObject
         }
 
         $jsonbody = $Release | ConvertTo-Json -Depth 100
