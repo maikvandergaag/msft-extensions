@@ -27,6 +27,11 @@
       "name": "authentication",
       "displayName": "Authentication",
       "isExpanded": true
+    },
+    {
+      "name": "advanced",
+      "displayName": "Advanced",
+      "isExpanded": true
     }],
   "inputs": [
     {
@@ -102,6 +107,21 @@
       "groupName": "authentication",
       "helpMarkDown": "The personal access token for Azure DevOps",
       "visibleRule": "UseSystemAccessToken=false"
+    },
+    {
+      "name": "buildapiversion",
+      "label": "API Version",
+      "type": "picklist",
+      "required": true,
+      "helpMarkDown": "Select the API Version that will be used for the build APIs.",
+      "defaultValue": "6.0",
+      "groupName": "advanced",
+      "options": {
+        "4.1": "4.1",
+        "5.1": "5.1",
+        "6.0": "6.0",
+        "7.1-preview.7": "7.1-preview.7"
+      }
     }
   ],
   "dataSourceBindings": [],

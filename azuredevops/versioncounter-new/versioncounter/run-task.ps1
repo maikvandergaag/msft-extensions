@@ -38,12 +38,13 @@ $UpdateMajorVersion = Get-VstsInput -Name UpdateMajorVersion
 $OnlyUpdateMinor = Get-VstsInput -Name OnlyUpdateMinor -AsBool
 $DevOpsPat = Get-VstsInput -Name DevOpsPat
 $UseSystemAccessToken = Get-VstsInput -Name UseSystemAccessToken -AsBool
+$buildapiversion = Get-VstsInput -Name buildapiversion
 
 $devOpsUri = $env:SYSTEM_TEAMFOUNDATIONCOLLECTIONURI
 $projectName = $env:SYSTEM_TEAMPROJECT
 $projectId = $env:SYSTEM_TEAMPROJECTID
 $buildId = $env:BUILD_BUILDID
-$apiverion = "7.1-preview.7"
+$apiversion = $buildapiversion
 
 Write-Output "VersionVariable      : $($VersionVariable)";
 Write-Output "UpdateMinorVersion   : $($UpdateMinorVersion)";
@@ -55,9 +56,10 @@ Write-Output "DevOps Uri           : $($devOpsUri)";
 Write-Output "Project Name         : $($projectName)";
 Write-Output "Project Id           : $($projectId)";
 Write-Output "Only Update Minor    : $($OnlyUpdateMinor)";
+Write-Output "API Version          : $($apiversion)";
 Write-Output "BuildId              : $($buildId)";
 
-$buildUri = "$($devOpsUri)$($projectName)/_apis/build/builds/$($buildId)?api-version=$($apiverion)"
+$buildUri = "$($devOpsUri)$($projectName)/_apis/build/builds/$($buildId)?api-version=$($apiversion)"
 
 if($UseSystemAccessToken){
     $devOpsHeader = @{Authorization = ("Bearer {0}" -f $env:SYSTEM_ACCESSTOKEN)}
@@ -73,7 +75,7 @@ $buildDef = Invoke-CustomWebRequest -Uri $buildUri -Method Get -ContentType "app
 if ($buildDef) {
     $definitionId = $buildDef.definition.id
     Write-Host "##[debug]Working with definition id: $($definitionId)"
-    $defUri = "$($devOpsUri)$($projectName)/_apis/build/definitions/$($definitionId)?api-version=$($apiverion)"
+    $defUri = "$($devOpsUri)$($projectName)/_apis/build/definitions/$($definitionId)?api-version=$($apiversion)"
 
     Write-Host "Trying to retrieve the build definition with the url: $($defUri)."
     $definition = Invoke-CustomWebRequest -Method Get -Uri $defUri -Headers $devOpsHeader -ContentType "application/json"
