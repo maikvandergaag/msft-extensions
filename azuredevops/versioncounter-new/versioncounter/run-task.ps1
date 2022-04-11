@@ -59,7 +59,7 @@ Write-Output "Only Update Minor    : $($OnlyUpdateMinor)";
 Write-Output "API Version          : $($apiversion)";
 Write-Output "BuildId              : $($buildId)";
 
-$buildUri = "$($devOpsUri)$($projectName)/_apis/build/builds/$($buildId)?api-version=$($apiversion)"
+$buildUri = "$($devOpsUri)$($projectName.replace(" ", "%20"))/_apis/build/builds/$($buildId)?api-version=$($apiversion)"
 
 if($UseSystemAccessToken){
     $devOpsHeader = @{Authorization = ("Bearer {0}" -f $env:SYSTEM_ACCESSTOKEN)}
