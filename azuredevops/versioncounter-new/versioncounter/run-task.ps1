@@ -11,10 +11,10 @@ function Invoke-CustomWebRequest () {
     try {
 
         if($Method -eq 'Post' -or $Method -eq 'Put'){
-            $response = Invoke-WebRequest -Uri $Uri -ContentType $ContentType -Headers $Headers -Method $Method -Body $Body
+            $response = Invoke-WebRequest -Uri $Uri -ContentType $ContentType -Headers $Headers -Method $Method -Body $Body -UseBasicParsing
         }
         else{
-            $response = Invoke-WebRequest -Uri $Uri -ContentType $ContentType -Headers $Headers -Method $Method
+            $response = Invoke-WebRequest -Uri $Uri -ContentType $ContentType -Headers $Headers -Method $Method -UseBasicParsing
         }
 
         if ($response.StatusCode -lt 300){
@@ -42,6 +42,7 @@ $buildapiversion = Get-VstsInput -Name buildapiversion
 
 $devOpsUri = $env:SYSTEM_TEAMFOUNDATIONCOLLECTIONURI
 $projectName = $env:SYSTEM_TEAMPROJECT
+$projectUriName = $projectName.replace(" ", "%20")
 $projectId = $env:SYSTEM_TEAMPROJECTID
 $buildId = $env:BUILD_BUILDID
 $apiversion = $buildapiversion
@@ -59,7 +60,7 @@ Write-Output "Only Update Minor    : $($OnlyUpdateMinor)";
 Write-Output "API Version          : $($apiversion)";
 Write-Output "BuildId              : $($buildId)";
 
-$buildUri = "$($devOpsUri)$($projectName.replace(" ", "%20"))/_apis/build/builds/$($buildId)?api-version=$($apiversion)"
+$buildUri = "$($devOpsUri)$($projectUriName)/_apis/build/builds/$($buildId)?api-version=$($apiversion)"
 
 if($UseSystemAccessToken){
     $devOpsHeader = @{Authorization = ("Bearer {0}" -f $env:SYSTEM_ACCESSTOKEN)}
@@ -75,7 +76,7 @@ $buildDef = Invoke-CustomWebRequest -Uri $buildUri -Method Get -ContentType "app
 if ($buildDef) {
     $definitionId = $buildDef.definition.id
     Write-Host "##[debug]Working with definition id: $($definitionId)"
-    $defUri = "$($devOpsUri)$($projectName)/_apis/build/definitions/$($definitionId)?api-version=$($apiversion)"
+    $defUri = "$($devOpsUri)$($projectUriName)/_apis/build/definitions/$($definitionId)?api-version=$($apiversion)"
 
     Write-Host "Trying to retrieve the build definition with the url: $($defUri)."
     $definition = Invoke-CustomWebRequest -Method Get -Uri $defUri -Headers $devOpsHeader -ContentType "application/json"
