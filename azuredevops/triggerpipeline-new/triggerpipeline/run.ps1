@@ -44,6 +44,14 @@ try {
 	Write-Host "** Release Api Version: $($releaseapiversion)"
 	Write-Host "******************************"
 
+	try {
+		# Force powershell to use TLS 1.2 for all communications.
+		[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor [System.Net.SecurityProtocolType]::Tls12 -bor [System.Net.SecurityProtocolType]::Tls11 -bor [System.Net.SecurityProtocolType]::Tls10;
+	}
+	catch {
+		Write-Warning $error
+	}
+
 	if ($Pipeline -eq "Build") {
 		.\run-build.ps1 -OrganizationUrl $organizationUrl -AzureDevOpsProjectName $AzureDevOpsProjectName -UseSystemAccessToken $false -DevOpsPAT $token -PipelineName $BuildPipelineName -Description $Description -Branch $Branch -BuildApi $buildapiversion -Parameters $variableInput
 	}
