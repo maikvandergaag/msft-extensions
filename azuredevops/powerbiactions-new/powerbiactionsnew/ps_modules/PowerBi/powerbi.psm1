@@ -1057,7 +1057,7 @@ function Update-BasicSQLDataSourceCredentials{
         if ($dataSource.DatasourceType -eq "Sql") {
 
             #Update username & password
-            Invoke-PowerBIRestMethod -Url $ApiUrl -Method Patch -Body ("$ApiRequestBody")
+            Invoke-PowerBIRestMethod -Url $ApiUrl -Method Patch -Body "$ApiRequestBody"
 
             Write-Output "Credentials for data source ""$DataSourceId"" successfully updated..." `n
         }
@@ -1093,7 +1093,7 @@ Function Set-RefreshSchedule {
     Write-Host "Updating dataset $($DatasetName)..." `n
 
     try {
-        Invoke-PowerBIRestMethod -Url $url -Method Patch -Body ("$ScheduleJSON")
+        Invoke-PowerBIRestMethod -Url $url -Method Patch -Body "$ScheduleJSON"
     }
     catch {
         $err = Resolve-PowerBIError -Last
