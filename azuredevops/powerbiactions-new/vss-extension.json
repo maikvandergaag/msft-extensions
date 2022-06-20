@@ -2,7 +2,7 @@
   "manifestVersion": 1,
   "id": "maikvandergaag-power-bi-actions",
   "name": "Power BI Actions",
-  "version": "3.3.0",
+  "version": "3.4.0",
   "publisher": "maikvandergaag",
   "description": "Build and Release Management tasks for Power BI.",
   "public": true,
