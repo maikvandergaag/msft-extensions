@@ -17,6 +17,7 @@ The following tasks can be automated by using this extension:
 * Set a specific capacity for a workplace
 * Rebind Report
 * Set Refresh Schedule
+* Set Dataset Permissions
 
 The following organization types are supported from version 5 and higher:
 
