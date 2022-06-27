@@ -135,7 +135,7 @@
       "defaultValue": "",
       "required": true,
       "helpMarkDown": "If you want to add multiple users seperate them with ','.",
-      "visibleRule": "Action = AddUsers || Action = SetDatasetPermissions"
+      "visibleRule": "Action = AddUsers || Action = SetDatasetPermissions && PrincipalType = User"
     },
     {
       "name": "ServicePrincipals",
@@ -153,7 +153,7 @@
       "defaultValue": "",
       "required": true,
       "helpMarkDown": "If you want to add multiple groups separate the ids with ','.",
-      "visibleRule": "Action = AddGroup || Action = SetDatasetPermissions"
+      "visibleRule": "Action = AddGroup || Action = SetDatasetPermissions && PrincipalType = Group"
     },
     {
       "name": "Scope",
@@ -356,12 +356,30 @@
       }
     },
     {
+      "name": "DatasetPermissionsUsers",
+      "type": "string",
+      "label": "Users (e-mail)",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "If you want to add multiple users seperate them with ','.",
+      "visibleRule": "Action = SetDatasetPermissions && PrincipalType = User"
+    },
+    {
+      "name": "DatasetPermissionsGroupObjectIds",
+      "type": "string",
+      "label": "Group object Id",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "If you want to add multiple groups separate the ids with ','.",
+      "visibleRule": "Action = SetDatasetPermissions && PrincipalType = Group"
+    },
+    {
       "name": "DatasetAccessRight",
       "type": "picklist",
       "label": "Permission",
       "defaultValue": "",
       "required": true,
-      "helpMarkDown": "Specific permission: None, Read, Build (Explore) and Reshare. More [information](https://docs.microsoft.com/en-us/power-bi/developer/embedded/datasets-permissions).",
+      "helpMarkDown": "Specific permission: None, Read, Build (Explore) and Reshare. More [information](https://docs.microsoft.com/en-us/power-bi/developer/embedded/datasets-permissions#dataset-permissions-and-rest-apis).",
       "visibleRule": "Action = SetDatasetPermissions",
       "options": {
         "None": "None",
