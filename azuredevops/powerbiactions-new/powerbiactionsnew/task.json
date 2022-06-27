@@ -356,6 +356,19 @@
       "visibleRule": "Action = DeployTabularModel"
     },
     {
+      "name": "PrincipalType",
+      "type": "picklist",
+      "label": "Principal Type",
+      "defaultValue": "User",
+      "required": true,
+      "helpMarkDown": "The type for setting the permissions",
+      "visibleRule": "Action = SetDatasetPermissions",
+      "options": {
+        "User": "User",
+        "Group": "Group"
+      }
+    },
+    {
       "name": "DatasetAccessRight",
       "type": "picklist",
       "label": "Permission",
