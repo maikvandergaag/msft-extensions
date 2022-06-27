@@ -148,7 +148,7 @@
       "defaultValue": "",
       "required": true,
       "helpMarkDown": "If you want to add multiple users seperate them with ','.",
-      "visibleRule": "Action = AddUsers || Action = SetDatasetPermissions && PrincipalType = User"
+      "visibleRule": "Action = AddUsers"
     },
     {
       "name": "ServicePrincipals",
@@ -166,7 +166,7 @@
       "defaultValue": "",
       "required": true,
       "helpMarkDown": "If you want to add multiple groups separate the ids with ','.",
-      "visibleRule": "Action = AddGroup || Action = SetDatasetPermissions && PrincipalType = Group"
+      "visibleRule": "Action = AddGroup"
     },
     {
       "name": "Scope",
