@@ -129,13 +129,26 @@
       "visibleRule": "Action = Publish || Action = PublishandSkipReport || Action = AddUsers || Action = AddSP || Action = AddGroup || Action = SetCapacity"
     },
     {
+      "name": "PrincipalType",
+      "type": "picklist",
+      "label": "Principal Type",
+      "defaultValue": "User",
+      "required": true,
+      "helpMarkDown": "The type for setting the permissions",
+      "visibleRule": "Action = SetDatasetPermissions",
+      "options": {
+        "User": "User",
+        "Group": "Group"
+      }
+    },
+    {
       "name": "Users",
       "type": "string",
       "label": "Users (e-mail)",
       "defaultValue": "",
       "required": true,
       "helpMarkDown": "If you want to add multiple users seperate them with ','.",
-      "visibleRule": "Action = AddUsers || Action = SetDatasetPermissions"
+      "visibleRule": "Action = AddUsers || Action = SetDatasetPermissions && PrincipalType = User"
     },
     {
       "name": "ServicePrincipals",
@@ -153,7 +166,7 @@
       "defaultValue": "",
       "required": true,
       "helpMarkDown": "If you want to add multiple groups separate the ids with ','.",
-      "visibleRule": "Action = AddGroup || Action = SetDatasetPermissions"
+      "visibleRule": "Action = AddGroup || Action = SetDatasetPermissions && PrincipalType = Group"
     },
     {
       "name": "Scope",
