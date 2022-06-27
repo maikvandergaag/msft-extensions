@@ -277,7 +277,7 @@ PROCESS {
 			Write-Debug "Permissions					: $($datasetAccessRight)"
 
 			if ($principalType -eq "User") {
-				if($datasetPermissionsUsers -eq "") {        
+				if($datasetPermissionsUsers -eq "") {
 					Write-Error "When the Principal Type User is chosen you have to supply User(s)."
 				} else {
 					$users = $datasetPermissionsUsers.Split(",")
@@ -291,12 +291,12 @@ PROCESS {
 					Write-Error "When the Principal Type Group is chosen you have to supply Group Object Id(s)."
 				}
 				else {
-					$groups = $datasetPermissionsGroupObjectIds.Split(",")      
+					$groups = $datasetPermissionsGroupObjectIds.Split(",")
 
 					Add-PowerBIDatasetPermissions -WorkspaceName $workspaceName -DatasetName $dataset -PrincipalType $principalType -Identifiers $groups -AccessRight $datasetAccessRight
 				}
-			}          
-		}    
+			}
+		}
 	}
 	finally {
 		Write-Output "Done processing Power BI Actions"
