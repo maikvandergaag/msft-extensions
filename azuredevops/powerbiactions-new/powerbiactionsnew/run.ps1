@@ -90,6 +90,8 @@ PROCESS {
 		$ReportWorkspaceName = Get-VstsInput -Name ReportWorkspaceName
 		$tabularEditorArguments = Get-VstsInput -Name TabularEditorArguments
 		$principalType = Get-VstsInput -Name PrincipalType
+		$datasetPermissionsUsers = Get-VstsInput -Name DatasetPermissionsUsers
+		$datasetPermissionsGroupObjectIds = Get-VstsInput -Name DatasetPermissionsGroupObjectIds
 		$datasetAccessRight = Get-VstsInput -Name DatasetAccessRight
 
 		$individual = $false
@@ -268,33 +270,33 @@ PROCESS {
 			Publish-TabularEditor -WorkspaceName $workspaceName -FilePattern $filePattern -TabularEditorArguments $tabularEditorArguments
 		}
 		elseif($action -eq "SetDatasetPermissions"){
-			Write-Debug "Users								: $($users)"
-			Write-Debug "Group Ids						: $($groupObjectIds)"
+			Write-Debug "Users								: $($datasetPermissionsUsers)"
+			Write-Debug "Group Ids						: $($datasetPermissionsGroupObjectIds)"
 			Write-Debug "Dataset Name					: $($dataset)"
 			Write-Debug "Principal Type				: $($principalType)"
 			Write-Debug "Permissions					: $($datasetAccessRight)"
 
 			if ($principalType -eq "User") {
-				if($users -eq "") {        
+				if($datasetPermissionsUsers -eq "") {
 					Write-Error "When the Principal Type User is chosen you have to supply User(s)."
 				} else {
-					$users = $users.Split(",")
+					$users = $datasetPermissionsUsers.Split(",")
 
 					Add-PowerBIDatasetPermissions -WorkspaceName $workspaceName -DatasetName $dataset -PrincipalType $principalType -Identifiers $users -AccessRight $datasetAccessRight
 				}
 			}      
 
 			if ($principalType -eq "Group") {
-				if($groupObjectIds -eq "") {
+				if($datasetPermissionsGroupObjectIds -eq "") {
 					Write-Error "When the Principal Type Group is chosen you have to supply Group Object Id(s)."
 				}
 				else {
-					$groups = $groupObjectIds.Split(",")      
+					$groups = $datasetPermissionsGroupObjectIds.Split(",")
 
 					Add-PowerBIDatasetPermissions -WorkspaceName $workspaceName -DatasetName $dataset -PrincipalType $principalType -Identifiers $groups -AccessRight $datasetAccessRight
 				}
-			}          
-		}    
+			}
+		}
 	}
 	finally {
 		Write-Output "Done processing Power BI Actions"
