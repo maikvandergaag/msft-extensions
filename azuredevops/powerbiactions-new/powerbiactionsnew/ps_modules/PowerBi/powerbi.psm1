@@ -1145,6 +1145,65 @@ Function Publish-TabularEditor {
     }
 }
 
- 
+Function Add-PowerBIDatasetPermissions {
+    Param(
+        [parameter(Mandatory = $true)]$WorkspaceName,
+        [parameter(Mandatory = $true)]$DatasetName,
+        [parameter(Mandatory = $true)][ValidateSet("User", "Group", IgnoreCase = $false)]$PrincipalType = "User",
+        [parameter(Mandatory = $true)]$Identifiers,
+        [parameter(Mandatory = $true)][ValidateSet("None", "Read", "ReadExplore", "ReadReshare", "ReadReshareExplore", IgnoreCase = $false)]$AccessRight
+    )
+    # Retrieve workspace
+    Write-Host "Fetching workspace $($WorkspaceName)..." `n
+    $groupPath = Get-PowerBIGroupPath -WorkspaceName $WorkspaceName
+
+    if (!$groupPath) {
+        throw "Could not find workspace"
+    }
+
+    # Retrieve dataset
+    Write-Host "Fetching dataset $($DatasetName)..." `n
+    $dataset = Get-PowerBIDataset -GroupPath $groupPath -Name $DatasetName
+
+    if (!$dataset) {
+        throw "Could not find dataset"
+    }
+
+    $existingUsers = Get-PowerBiDatasetUsers -GroupPath $GroupPath -DataSetId $dataset.id | Where-Object {$_.principalType -eq $PrincipalType} | Select-Object -ExpandProperty identifier
+
+    $url = $powerbiUrl + "$($groupPath)/datasets/$($dataset.id)/users"    
+
+    foreach ($identifier in $identifiers) {
+        Write-Host "Setting permissions for $($identifier) to $($AccessRight)..." `n
+
+        # The PUT endpoint is unable to downgrade rights and the POST endpoint is unable to assign the first right
+        if($existingUsers -contains $identifier -OR $AccessRight -eq "None" ) {
+            $method = 'Put'
+        } 
+        else {
+            $method = 'Post'
+        }
+
+        $body = @{
+            identifier             = $identifier
+            principalType          = $PrincipalType
+            datasetUserAccessRight = $AccessRight
+        } | ConvertTo-Json
+
+        Invoke-API -Url $url -Method $method -Body $body -ContentType "application/json" -Verbose
+    }
+}
+
+Function Get-PowerBiDatasetUsers {
+  Param(
+      [parameter(Mandatory = $true)]$GroupPath,
+      [parameter(Mandatory = $true)]$DataSetId
+  )
+
+  $url = $powerbiUrl + "$GroupPath/datasets/$($DataSetId)/users"
+  $result = Invoke-API -Url $url -Method "Get" -Verbose
+  $users = $result.value
+  return $users
+}
 
 Export-ModuleMember -Function "*-*"

@@ -89,6 +89,10 @@ PROCESS {
 		$CrossWorkspaceRebinding = Get-VstsInput -Name CrossWorkspaceRebinding -AsBool
 		$ReportWorkspaceName = Get-VstsInput -Name ReportWorkspaceName
 		$tabularEditorArguments = Get-VstsInput -Name TabularEditorArguments
+		$principalType = Get-VstsInput -Name PrincipalType
+		$datasetPermissionsUsers = Get-VstsInput -Name DatasetPermissionsUsers
+		$datasetPermissionsGroupObjectIds = Get-VstsInput -Name DatasetPermissionsGroupObjectIds
+		$datasetAccessRight = Get-VstsInput -Name DatasetAccessRight
 
 		$individual = $false
 		if($individualString -eq "Individual"){
@@ -264,6 +268,34 @@ PROCESS {
 		elseif($action -eq "DeployTabularModel"){
 			Write-Debug "Tabular Editor Args          : $($tabularEditorArguments)"
 			Publish-TabularEditor -WorkspaceName $workspaceName -FilePattern $filePattern -TabularEditorArguments $tabularEditorArguments
+		}
+		elseif($action -eq "SetDatasetPermissions"){
+			Write-Debug "Users								: $($datasetPermissionsUsers)"
+			Write-Debug "Group Ids						: $($datasetPermissionsGroupObjectIds)"
+			Write-Debug "Dataset Name					: $($dataset)"
+			Write-Debug "Principal Type				: $($principalType)"
+			Write-Debug "Permissions					: $($datasetAccessRight)"
+
+			if ($principalType -eq "User") {
+				if($datasetPermissionsUsers -eq "") {
+					Write-Error "When the Principal Type User is chosen you have to supply User(s)."
+				} else {
+					$users = $datasetPermissionsUsers.Split(",")
+
+					Add-PowerBIDatasetPermissions -WorkspaceName $workspaceName -DatasetName $dataset -PrincipalType $principalType -Identifiers $users -AccessRight $datasetAccessRight
+				}
+			}      
+
+			if ($principalType -eq "Group") {
+				if($datasetPermissionsGroupObjectIds -eq "") {
+					Write-Error "When the Principal Type Group is chosen you have to supply Group Object Id(s)."
+				}
+				else {
+					$groups = $datasetPermissionsGroupObjectIds.Split(",")
+
+					Add-PowerBIDatasetPermissions -WorkspaceName $workspaceName -DatasetName $dataset -PrincipalType $principalType -Identifiers $groups -AccessRight $datasetAccessRight
+				}
+			}
 		}
 	}
 	finally {
