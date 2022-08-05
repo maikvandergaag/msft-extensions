@@ -329,7 +329,7 @@
       "label": "Set refreshschedule json",
       "defaultValue": "",
       "required": true,
-      "helpMarkDown": "A json value representing the refreshschedule example: {'value': {'days': ['Sunday'],'times': ['07:00'],'localTimeZoneId': 'UTC'}}",
+      "helpMarkDown": "A json value representing the refreshschedule example: {'value': {'notifyOption':'NoNotification', 'enabled': true, 'days': ['Monday'],'times': ['07:00'],'localTimeZoneId': 'UTC'}}",
       "visibleRule": "Action = SetRefreshSchedule"
     },
     {
