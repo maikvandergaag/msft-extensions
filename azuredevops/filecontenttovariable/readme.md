@@ -1,4 +1,4 @@
-File Content To Variable is a Build and Release Task for wihtin your Build / Release pipeline.
+File Content To Variable is a Build and Release Task for within your Build / Release pipeline.
 
 With this tasks you can save the content of a file to a variable. 
 
