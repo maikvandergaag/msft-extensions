@@ -1130,7 +1130,7 @@ Function Publish-TabularEditor {
     Invoke-WebRequest -Uri $tabularDownload -OutFile $downloadDestination
 
     # Unzip Tabular Editor portable, and then delete the zip file:
-    Expand-Archive -Path $downloadDestination -DestinationPath (get-location).Path
+    Expand-Archive -Path $downloadDestination -DestinationPath (get-location).Path -Force
     Remove-Item $downloadDestination
 
     # Checking if files are found
