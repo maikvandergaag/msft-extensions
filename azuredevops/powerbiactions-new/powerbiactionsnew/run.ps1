@@ -227,6 +227,38 @@ PROCESS {
 
 			Update-PowerBIDatasetDatasourcesInGroup -WorkspaceName $workspaceName -DatasetName $dataset -UpdateAll $updateAll -GatewayName $GatewayName
 		}
+		elseif ($action -eq "BindToGateway") {
+			Write-Debug "Dataset               : $($dataset)";
+			Write-Debug "UpdateAll             : $($updateAll)";
+			#Write-Debug "GatewayName           : $($GatewayName)";
+			Write-Host "Trying to bind to Gateway"
+			$groupPath = Get-PowerBIGroupPath -WorkspaceName $WorkspaceName
+			if ($groupPath) {
+				if ($UpdateAll) {
+					$sets = Get-PowerBiDataSets -GroupPath $groupPath
+					foreach ($set in $sets) {
+						$gatewayDatasources = Get-PowerBIDatasetGatewayDatasourceInGroup -Set $set -GroupPath $groupPath #GetBoundGatewayDatasources
+						#$result = Invoke-API "$powerbiUrl/datasets/$($set.id)/Default.DiscoverGateways" -Method "Get" -Verbose
+						#write-host "Discovered Gateways:" $result.value.Name
+						Update-PowerBIDatasetSource -dataset $set -groupPath $groupPath -GatewayDataSources $gatewayDatasources #BindToGateway
+					}
+				}
+				else {
+					$set = Get-PowerBiDataSet -GroupPath $groupPath -Name $Dataset
+					if ($set) {
+						$gatewayDatasources = Get-PowerBIDatasetGatewayDatasourceInGroup -Set $set -GroupPath $groupPath #GetBoundGatewayDatasources
+						Update-PowerBIDatasetSource -dataset $set -groupPath $groupPath -GatewayDataSources $gatewayDatasources
+					}
+					else {
+						Write-Warning "Dataset $Dataset could not be found."
+					}
+				}
+			}
+			else {
+				Write-Error "Workspace: $WorkspaceName could not be found..."
+			}
+
+		}
 		elseif ($action -eq "DeleteReport") {
 			Write-Debug "ReportName               : $($ReportName)";
 

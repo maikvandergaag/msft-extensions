@@ -48,6 +48,7 @@
         "UpdateParameters": "Update parameters",
         "TakeOwnership": "Take dataset ownership",
         "UpdateGateway": "Update gateway",
+        "BindToGateway": "Bind to gateway",
         "DeleteReport": "Delete report",
         "SetCapacity": "Set workspace capacity",
         "RebindReport": "Rebind report",
@@ -190,7 +191,7 @@
       "defaultValue": "false",
       "required": false,
       "helpMarkDown": "Should all the datasets be changed?",
-      "visibleRule": "Action = UpdateDatasource || Action = UpdateParameters || Action = TakeOwnership || Action = DataRefresh || Action = UpdateGateway"
+      "visibleRule": "Action = UpdateDatasource || Action = UpdateParameters || Action = TakeOwnership || Action = DataRefresh || Action = UpdateGateway || Action = BindToGateway"
     },
     {
       "name": "DatasetName",
@@ -199,7 +200,7 @@
       "defaultValue": "",
       "required": false,
       "helpMarkDown": "The name of the dataset",
-      "visibleRule": "Action = DataRefresh || Action = UpdateDatasource || Action = SQLDirect || Action = UpdateParameters || Action = TakeOwnership || Action = UpdateGateway || Action = RebindReport || Action = SetRefreshSchedule || Action = SetDatasetPermissions"
+      "visibleRule": "Action = DataRefresh || Action = UpdateDatasource || Action = SQLDirect || Action = UpdateParameters || Action = TakeOwnership || Action = UpdateGateway || Action = BindToGateway || Action = RebindReport || Action = SetRefreshSchedule || Action = SetDatasetPermissions"
     },
     {
       "name": "ReportName",
