@@ -1121,7 +1121,7 @@ Function Publish-TabularEditor {
     $TabularEditorArguments = "$($TabularEditorArguments.replace('"', '`"'))"
 
     # Installing Portable Tabular Editor
-    $tabularDownload = 'https://github.com/TabularEditor/TabularEditor/releases/download/2.16.4/TabularEditor.Portable.zip'
+    $tabularDownload = 'https://github.com/TabularEditor/TabularEditor/releases/download/2.20.0/TabularEditor.Portable.zip'
 
     # Download destination (root of PowerShell script execution path):
     $downloadDestination = join-path (get-location) "TabularEditor.zip"
