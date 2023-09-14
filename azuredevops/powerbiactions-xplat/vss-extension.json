@@ -1,0 +1,233 @@
+{
+  "manifestVersion": 1,
+  "id": "maikvandergaag-power-bi-actionsDev",
+  "name": "DEV - Power BI Actions",
+  "version": "6.1.12",
+  "publisher": "Development-vanderGaag",
+  "description": "Build and Release Management tasks for Power BI.",
+  "public": false,
+  "targets": [
+    {
+      "id": "Microsoft.VisualStudio.Services"
+    }
+  ],
+  "icons": {
+    "default": "images/icon.png"
+  },
+  "categories": [
+    "Azure Pipelines"
+  ],
+  "tags": [
+    "Release",
+    "Build",
+    "PowerBI",
+    "Power BI",
+    "pbix",
+    "DirectQuery",
+    "Dataset",
+    "3fifty"
+  ],
+  "screenshots": [
+    {
+      "path": "images/screenshot-1.png"
+    },
+    {
+      "path": "images/screenshot-2.png"
+    },
+    {
+      "path": "images/screenshot-3.png"
+    }
+  ],
+  "content": {
+    "license": {
+      "path": "license.md"
+    },
+    "details": {
+      "path": "readme.md"
+    }
+  },
+  "links": {
+    "getstarted": {
+      "uri": "https://github.com/maikvandergaag/msft-extensions/tree/master/azuredevops/powerbiactions-new"
+    },
+    "repository": {
+      "uri": "https://github.com/MaikvanderGaag/msft-extensions/"
+    },
+    "issues": {
+      "uri": "https://github.com/MaikvanderGaag/msft-extensions/issues"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "uri": "https://github.com/maikvandergaag/msft-extensions/tree/master/azuredevops/powerbiactions"
+  },
+  "branding": {
+    "color": "rgb(0, 171, 236)",
+    "theme": "light"
+  },
+  "contributions": [
+    {
+      "id": "PowerBIActions",
+      "type": "ms.vss-distributed-task.task",
+      "targets": [
+        "ms.vss-distributed-task.tasks"
+      ],
+      "properties": {
+        "name": "PowerBIActionsXplat"
+      }
+    },
+    {
+      "id": "powerbi-endpoint-type-consolidated",
+      "description": "Power BI",
+      "type": "ms.vss-endpoint.service-endpoint-type",
+      "icons": {
+        "default": "images/connection-icon.png",
+        "large": "images/icon.png"
+      },
+      "targets": [
+        "ms.vss-endpoint.endpoint-types"
+      ],
+      "properties": {
+        "name": "PowerBINew",
+        "displayName": "Power BI Service Connection",
+        "url": {
+          "isVisible": "false",
+          "dependsOn": {
+            "input": "OrganizationType",
+            "map": [
+              {
+                "key": "Public",
+                "value": "https://api.powerbi.com/v1.0/myorg"
+              },
+              {
+                "key": "USGov",
+                "value": "https://api.powerbigov.us/v1.0/myorg"
+              },
+              {
+                "key": "USGovHigh",
+                "value": "https://api.high.powerbigov.us/v1.0/myorg"
+              },
+              {
+                "key": "USGovMil",
+                "value": "https://api.mil.powerbigov.us/v1.0/myorg"
+              },
+              {
+                "key": "China",
+                "value": "https://api.powerbi.cn/v1.0/myorg"
+              },
+              {
+                "key": "Germany",
+                "value": "https://api.powerbi.de/v1.0/myorg"
+              }
+            ]
+          }
+        },
+        "inputDescriptors": [
+          {
+            "id": "OrganizationType",
+            "name": "Organization type",
+            "description": "The type of organization (Government / regular)",
+            "inputMode": "combo",
+            "isConfidential": false,
+            "validation": {
+              "isRequired": true,
+              "dataType": "string"
+            },
+            "values": {
+              "inputId": "OrganizationValues",
+              "defaultValue": "regular",
+              "possibleValues": [
+                {
+                  "displayValue": "Commercial (Public)",
+                  "value": "Public"
+                },
+                {
+                  "displayValue": "Microsoft 365 Government Community Cloud (US)",
+                  "value": "USGov"
+                },
+                {
+                  "displayValue": "Microsoft 365 Government Community Cloud High (US)",
+                  "value": "USGovHigh"
+                },
+                {
+                  "displayValue": "US Department of Defense",
+                  "value": "USGovMil"
+                },
+                {
+                  "displayValue": "Microsoft Cloud China",
+                  "value": "China"
+                },
+                {
+                  "displayValue": "Microsoft Cloud Germany",
+                  "value": "Germany"
+                }
+              ]
+            }
+          }
+        ],
+        "authenticationSchemes": [
+          {
+            "type": "ms.vss-endpoint.endpoint-auth-scheme-basic",
+            "displayName": "Username/Password"
+          },
+          {
+            "type": "ms.vss-endpoint.endpoint-auth-scheme-none",
+            "displayName": "Service Principal",
+            "inputDescriptors": [
+              {
+                "id": "TenantId",
+                "name": "Tenant ID",
+                "description": "Tenant ID",
+                "inputMode": "textbox",
+                "isConfidential": false,
+                "validation": {
+                  "isRequired": true,
+                  "dataType": "guid",
+                  "maxLength": 38
+                }
+              },
+              {
+                "id": "ClientId",
+                "name": "Client ID",
+                "description": "Client ID",
+                "inputMode": "textbox",
+                "isConfidential": false,
+                "validation": {
+                  "isRequired": true,
+                  "dataType": "guid"
+                }
+              },
+              {
+                "id": "ClientSecret",
+                "name": "Client Secret",
+                "description": "Client Secret",
+                "inputMode": "passwordbox",
+                "isConfidential": true,
+                "validation": {
+                  "isRequired": false,
+                  "dataType": "string"
+                }
+              },
+              {
+                "id": "ClientCertificate",
+                "name": "Client Certificate",
+                "description": "Client Certificate",
+                "inputMode": "passwordbox",
+                "isConfidential": true,
+                "validation": {
+                  "isRequired": false,
+                  "dataType": "string"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "files": [
+    {
+      "path": "powerbiactionsxplat"
+    }
+  ]
+}

@@ -276,8 +276,7 @@ Function Invoke-API {
 
     $apiHeaders = Get-PowerBIAccessToken
 
-    Write-Verbose "Trying to invoke api: $Url"
-
+    Write-Host "Trying to invoke api: $Url"
     try {
         if ($Body) {
             $result = Invoke-RestMethod -Uri $Url -Headers $apiHeaders -Method $Method -ContentType $ContentType -Body $Body
@@ -672,7 +671,7 @@ Function Get-PowerBIGroupPath {
         $groupsPath = "/"
     }
     else {
-        Write-Host "Getting Power BI Workspace properties; $WorkspaceName"
+        Write-Host "Getting Power BI Workspace properties: $WorkspaceName"
         $workspace = Get-PowerBIWorkspace -Name $WorkspaceName -Verbose
 
         if ($Create -And !$workspace) {
@@ -772,7 +771,7 @@ Function Publish-PowerBIFile {
         $directory = $foundFile.DirectoryName
         $file = $foundFile.Name
 
-        $filePath = "$directory\$file"
+        $filePath = "$directory/$file"
         Write-Host "Trying to publish PowerBI File: $filePath"
 
         $fileToPublish = $file
@@ -828,7 +827,7 @@ Function Publish-PowerBIFileApi {
         $directory = $foundFile.DirectoryName
         $file = $foundFile.Name
 
-        $filePath = "$directory\$file"
+        $filePath = "$directory/$file"
         Write-Host "Trying to publish PowerBI File: $FilePath"
 
         $fileToPublish = $file
@@ -1121,7 +1120,7 @@ Function Publish-TabularEditor {
     $TabularEditorArguments = "$($TabularEditorArguments.replace('"', '`"'))"
 
     # Installing Portable Tabular Editor
-    $tabularDownload = 'https://github.com/TabularEditor/TabularEditor/releases/download/2.20.0/TabularEditor.Portable.zip'
+    $tabularDownload = 'https://github.com/TabularEditor/TabularEditor/releases/download/2.16.4/TabularEditor.Portable.zip'
 
     # Download destination (root of PowerShell script execution path):
     $downloadDestination = join-path (get-location) "TabularEditor.zip"

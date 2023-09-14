@@ -1,0 +1,160 @@
+<Objs Version="1.1.0.1" xmlns="http://schemas.microsoft.com/powershell/2004/04">
+  <Obj RefId="0">
+    <TN RefId="0">
+      <T>Microsoft.PowerShell.Commands.PSRepositoryItemInfo</T>
+      <T>System.Management.Automation.PSCustomObject</T>
+      <T>System.Object</T>
+    </TN>
+    <MS>
+      <S N="Name">MicrosoftPowerBIMgmt.Reports</S>
+      <S N="Version">1.2.1111</S>
+      <S N="Type">Module</S>
+      <S N="Description">Microsoft Power BI PowerShell - Reports cmdlets for Microsoft Power BI</S>
+      <S N="Author">Microsoft Corporation</S>
+      <S N="CompanyName">PowerBI-PowerShell</S>
+      <S N="Copyright">Copyright (c) Microsoft Corporation. All rights reserved.</S>
+      <DT N="PublishedDate">2022-11-15T00:42:13+01:00</DT>
+      <Nil N="InstalledDate" />
+      <Nil N="UpdatedDate" />
+      <URI N="LicenseUri">https://github.com/Microsoft/powerbi-powershell/blob/master/LICENSE</URI>
+      <URI N="ProjectUri">https://github.com/Microsoft/powerbi-powershell</URI>
+      <Nil N="IconUri" />
+      <Obj N="Tags" RefId="1">
+        <TN RefId="1">
+          <T>System.Object[]</T>
+          <T>System.Array</T>
+          <T>System.Object</T>
+        </TN>
+        <LST>
+          <S>PowerBI</S>
+          <S>Reports</S>
+        </LST>
+      </Obj>
+      <Obj N="Includes" RefId="2">
+        <TN RefId="2">
+          <T>System.Collections.Hashtable</T>
+          <T>System.Object</T>
+        </TN>
+        <DCT>
+          <En>
+            <S N="Key">Workflow</S>
+            <Obj N="Value" RefId="3">
+              <TNRef RefId="1" />
+              <LST />
+            </Obj>
+          </En>
+          <En>
+            <S N="Key">DscResource</S>
+            <Ref N="Value" RefId="3" />
+          </En>
+          <En>
+            <S N="Key">Cmdlet</S>
+            <Obj N="Value" RefId="4">
+              <TNRef RefId="1" />
+              <LST>
+                <S>Get-PowerBIReport</S>
+                <S>New-PowerBIReport</S>
+                <S>Export-PowerBIReport</S>
+                <S>Get-PowerBIDashboard</S>
+                <S>Get-PowerBITile</S>
+                <S>Get-PowerBIImport</S>
+                <S>Copy-PowerBIReport</S>
+                <S>New-PowerBIDashboard</S>
+                <S>Copy-PowerBITile</S>
+                <S>Remove-PowerBIReport</S>
+              </LST>
+            </Obj>
+          </En>
+          <En>
+            <S N="Key">RoleCapability</S>
+            <Ref N="Value" RefId="3" />
+          </En>
+          <En>
+            <S N="Key">Function</S>
+            <Ref N="Value" RefId="3" />
+          </En>
+          <En>
+            <S N="Key">Command</S>
+            <Obj N="Value" RefId="5">
+              <TNRef RefId="1" />
+              <LST>
+                <S>Get-PowerBIReport</S>
+                <S>New-PowerBIReport</S>
+                <S>Export-PowerBIReport</S>
+                <S>Get-PowerBIDashboard</S>
+                <S>Get-PowerBITile</S>
+                <S>Get-PowerBIImport</S>
+                <S>Copy-PowerBIReport</S>
+                <S>New-PowerBIDashboard</S>
+                <S>Copy-PowerBITile</S>
+                <S>Remove-PowerBIReport</S>
+              </LST>
+            </Obj>
+          </En>
+        </DCT>
+      </Obj>
+      <Nil N="PowerShellGetFormatVersion" />
+      <S N="ReleaseNotes">Update Microsoft.Identity.Client version to 4.27.0</S>
+      <Obj N="Dependencies" RefId="6">
+        <TNRef RefId="1" />
+        <LST>
+          <Obj RefId="7">
+            <TN RefId="3">
+              <T>System.Collections.Specialized.OrderedDictionary</T>
+              <T>System.Object</T>
+            </TN>
+            <DCT>
+              <En>
+                <S N="Key">Name</S>
+                <S N="Value">MicrosoftPowerBIMgmt.Profile</S>
+              </En>
+              <En>
+                <S N="Key">MinimumVersion</S>
+                <S N="Value">1.2.1111</S>
+              </En>
+              <En>
+                <S N="Key">CanonicalId</S>
+                <S N="Value">nuget:MicrosoftPowerBIMgmt.Profile/1.2.1111</S>
+              </En>
+            </DCT>
+          </Obj>
+        </LST>
+      </Obj>
+      <S N="RepositorySourceLocation">https://www.powershellgallery.com/api/v2</S>
+      <S N="Repository">PSGallery</S>
+      <S N="PackageManagementProvider">NuGet</S>
+      <Obj N="AdditionalMetadata" RefId="8">
+        <TN RefId="4">
+          <T>System.Management.Automation.PSCustomObject</T>
+          <T>System.Object</T>
+        </TN>
+        <MS>
+          <S N="copyright">Copyright (c) Microsoft Corporation. All rights reserved.</S>
+          <S N="description">Microsoft Power BI PowerShell - Reports cmdlets for Microsoft Power BI</S>
+          <S N="requireLicenseAcceptance">False</S>
+          <S N="releaseNotes">Update Microsoft.Identity.Client version to 4.27.0</S>
+          <S N="isLatestVersion">True</S>
+          <S N="isAbsoluteLatestVersion">True</S>
+          <S N="versionDownloadCount">498366</S>
+          <S N="downloadCount">1476737</S>
+          <S N="packageSize">3270597</S>
+          <S N="published">15/11/2022 00:42:13 +01:00</S>
+          <S N="created">15/11/2022 00:42:13 +01:00</S>
+          <S N="lastUpdated">15/08/2023 06:14:02 +02:00</S>
+          <S N="tags">PowerBI Reports PSCmdlet_Get-PowerBIReport PSCommand_Get-PowerBIReport PSCmdlet_New-PowerBIReport PSCommand_New-PowerBIReport PSCmdlet_Export-PowerBIReport PSCommand_Export-PowerBIReport PSCmdlet_Get-PowerBIDashboard PSCommand_Get-PowerBIDashboard PSCmdlet_Get-PowerBITile PSCommand_Get-PowerBITile PSCmdlet_Get-PowerBIImport PSCommand_Get-PowerBIImport PSCmdlet_Copy-PowerBIReport PSCommand_Copy-PowerBIReport PSCmdlet_New-PowerBIDashboard PSCommand_New-PowerBIDashboard PSCmdlet_Copy-PowerBITile PSCommand_Copy-PowerBITile PSCmdlet_Remove-PowerBIReport PSCommand_Remove-PowerBIReport PSIncludes_Cmdlet</S>
+          <S N="developmentDependency">False</S>
+          <S N="updated">2023-08-15T06:14:02Z</S>
+          <S N="NormalizedVersion">1.2.1111</S>
+          <S N="Authors">Microsoft Corporation</S>
+          <S N="IsPrerelease">false</S>
+          <S N="ItemType">Module</S>
+          <S N="FileList">MicrosoftPowerBIMgmt.Reports.nuspec|MicrosoftPowerBIMgmt.Reports.cat|MicrosoftPowerBIMgmt.Reports.psd1|lib\netstandard2.0\Microsoft.PowerBI.Api.dll|lib\netstandard2.0\Microsoft.PowerBI.Commands.Common.dll|lib\netstandard2.0\Microsoft.PowerBI.Commands.Profile.dll|lib\netstandard2.0\Microsoft.PowerBI.Commands.Reports.dll|lib\netstandard2.0\Microsoft.PowerBI.Common.Abstractions.dll|lib\netstandard2.0\Microsoft.PowerBI.Common.Api.dll|lib\netstandard2.0\Microsoft.PowerBI.Common.Authentication.dll|lib\netstandard2.0\Microsoft.PowerBI.Common.Client.dll|lib\netstandard2.0\Microsoft.PowerBI.Common.Dependencies.dll|lib\netstandard2.0\Microsoft.Rest.ClientRuntime.dll|lib\netstandard2.0\Microsoft.Win32.Primitives.dll|lib\netstandard2.0\netstandard.dll|lib\netstandard2.0\Newtonsoft.Json.dll|lib\netstandard2.0\settings.json|lib\netstandard2.0\System.AppContext.dll|lib\netstandard2.0\System.Collections.Concurrent.dll|lib\netstandard2.0\System.Collections.dll|lib\netstandard2.0\System.Collections.NonGeneric.dll|lib\netstandard2.0\System.Collections.Specialized.dll|lib\netstandard2.0\System.ComponentModel.Composition.dll|lib\netstandard2.0\System.ComponentModel.dll|lib\netstandard2.0\System.ComponentModel.EventBasedAsync.dll|lib\netstandard2.0\System.ComponentModel.Primitives.dll|lib\netstandard2.0\System.ComponentModel.TypeConverter.dll|lib\netstandard2.0\System.Console.dll|lib\netstandard2.0\System.Core.dll|lib\netstandard2.0\System.Data.Common.dll|lib\netstandard2.0\System.Data.dll|lib\netstandard2.0\System.Diagnostics.Contracts.dll|lib\netstandard2.0\System.Diagnostics.Debug.dll|lib\netstandard2.0\System.Diagnostics.FileVersionInfo.dll|lib\netstandard2.0\System.Diagnostics.Process.dll|lib\netstandard2.0\System.Diagnostics.StackTrace.dll|lib\netstandard2.0\System.Diagnostics.TextWriterTraceListener.dll|lib\netstandard2.0\System.Diagnostics.Tools.dll|lib\netstandard2.0\System.Diagnostics.TraceSource.dll|lib\netstandard2.0\System.Diagnostics.Tracing.dll|lib\netstandard2.0\System.dll|lib\netstandard2.0\System.Drawing.dll|lib\netstandard2.0\System.Drawing.Primitives.dll|lib\netstandard2.0\System.Dynamic.Runtime.dll|lib\netstandard2.0\System.Globalization.Calendars.dll|lib\netstandard2.0\System.Globalization.dll|lib\netstandard2.0\System.Globalization.Extensions.dll|lib\netstandard2.0\System.IO.Compression.dll|lib\netstandard2.0\System.IO.Compression.FileSystem.dll|lib\netstandard2.0\System.IO.Compression.ZipFile.dll|lib\netstandard2.0\System.IO.dll|lib\netstandard2.0\System.IO.FileSystem.dll|lib\netstandard2.0\System.IO.FileSystem.DriveInfo.dll|lib\netstandard2.0\System.IO.FileSystem.Primitives.dll|lib\netstandard2.0\System.IO.FileSystem.Watcher.dll|lib\netstandard2.0\System.IO.IsolatedStorage.dll|lib\netstandard2.0\System.IO.MemoryMappedFiles.dll|lib\netstandard2.0\System.IO.Pipes.dll|lib\netstandard2.0\System.IO.UnmanagedMemoryStream.dll|lib\netstandard2.0\System.Linq.dll|lib\netstandard2.0\System.Linq.Expressions.dll|lib\netstandard2.0\System.Linq.Parallel.dll|lib\netstandard2.0\System.Linq.Queryable.dll|lib\netstandard2.0\System.Management.Automation.dll|lib\netstandard2.0\System.Net.dll|lib\netstandard2.0\System.Net.Http.dll|lib\netstandard2.0\System.Net.NameResolution.dll|lib\netstandard2.0\System.Net.NetworkInformation.dll|lib\netstandard2.0\System.Net.Ping.dll|lib\netstandard2.0\System.Net.Primitives.dll|lib\netstandard2.0\System.Net.Requests.dll|lib\netstandard2.0\System.Net.Security.dll|lib\netstandard2.0\System.Net.Sockets.dll|lib\netstandard2.0\System.Net.WebHeaderCollection.dll|lib\netstandard2.0\System.Net.WebSockets.Client.dll|lib\netstandard2.0\System.Net.WebSockets.dll|lib\netstandard2.0\System.Numerics.dll|lib\netstandard2.0\System.ObjectModel.dll|lib\netstandard2.0\System.Reflection.dll|lib\netstandard2.0\System.Reflection.Extensions.dll|lib\netstandard2.0\System.Reflection.Primitives.dll|lib\netstandard2.0\System.Resources.Reader.dll|lib\netstandard2.0\System.Resources.ResourceManager.dll|lib\netstandard2.0\System.Resources.Writer.dll|lib\netstandard2.0\System.Runtime.CompilerServices.VisualC.dll|lib\netstandard2.0\System.Runtime.dll|lib\netstandard2.0\System.Runtime.Extensions.dll|lib\netstandard2.0\System.Runtime.Handles.dll|lib\netstandard2.0\System.Runtime.InteropServices.dll|lib\netstandard2.0\System.Runtime.InteropServices.RuntimeInformation.dll|lib\netstandard2.0\System.Runtime.Numerics.dll|lib\netstandard2.0\System.Runtime.Serialization.dll|lib\netstandard2.0\System.Runtime.Serialization.Formatters.dll|lib\netstandard2.0\System.Runtime.Serialization.Json.dll|lib\netstandard2.0\System.Runtime.Serialization.Primitives.dll|lib\netstandard2.0\System.Runtime.Serialization.Xml.dll|lib\netstandard2.0\System.Security.Claims.dll|lib\netstandard2.0\System.Security.Cryptography.Algorithms.dll|lib\netstandard2.0\System.Security.Cryptography.Csp.dll|lib\netstandard2.0\System.Security.Cryptography.Encoding.dll|lib\netstandard2.0\System.Security.Cryptography.Primitives.dll|lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll|lib\netstandard2.0\System.Security.Cryptography.X509Certificates.dll|lib\netstandard2.0\System.Security.Principal.dll|lib\netstandard2.0\System.Security.SecureString.dll|lib\netstandard2.0\System.ServiceModel.Web.dll|lib\netstandard2.0\System.Text.Encoding.dll|lib\netstandard2.0\System.Text.Encoding.Extensions.dll|lib\netstandard2.0\System.Text.RegularExpressions.dll|lib\netstandard2.0\System.Threading.dll|lib\netstandard2.0\System.Threading.Overlapped.dll|lib\netstandard2.0\System.Threading.Tasks.dll|lib\netstandard2.0\System.Threading.Tasks.Parallel.dll|lib\netstandard2.0\System.Threading.Thread.dll|lib\netstandard2.0\System.Threading.ThreadPool.dll|lib\netstandard2.0\System.Threading.Timer.dll|lib\netstandard2.0\System.Transactions.dll|lib\netstandard2.0\System.ValueTuple.dll|lib\netstandard2.0\System.Web.dll|lib\netstandard2.0\System.Windows.dll|lib\netstandard2.0\System.Xml.dll|lib\netstandard2.0\System.Xml.Linq.dll|lib\netstandard2.0\System.Xml.ReaderWriter.dll|lib\netstandard2.0\System.Xml.Serialization.dll|lib\netstandard2.0\System.Xml.XDocument.dll|lib\netstandard2.0\System.Xml.XmlDocument.dll|lib\netstandard2.0\System.Xml.XmlSerializer.dll|lib\netstandard2.0\System.Xml.XPath.dll|lib\netstandard2.0\System.Xml.XPath.XDocument.dll|lib\netstandard2.0\MSAL\net45\Microsoft.Identity.Client.dll|lib\netstandard2.0\MSAL\net45\Microsoft.Identity.Client.Extensions.Msal.dll|lib\netstandard2.0\MSAL\netcoreapp2.1\Microsoft.Identity.Client.dll|lib\netstandard2.0\MSAL\netcoreapp2.1\Microsoft.Identity.Client.Extensions.Msal.dll</S>
+          <S N="GUID">dc5af656-715d-465d-8b57-e167cd6fce39</S>
+          <S N="PowerShellVersion">3.0</S>
+          <S N="CompanyName">Microsoft Corporation</S>
+        </MS>
+      </Obj>
+      <S N="InstalledLocation">D:\source\github\msft-extensions\azuredevops\powerbiactions-xplat\powerbiactionsxplat\ps_modules\MicrosoftPowerBIMgmt.Reports\1.2.1111</S>
+    </MS>
+  </Obj>
+</Objs>

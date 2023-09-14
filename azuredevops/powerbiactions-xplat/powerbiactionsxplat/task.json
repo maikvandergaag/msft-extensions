@@ -1,0 +1,399 @@
+{
+    "$schema": "https://raw.githubusercontent.com/Microsoft/azure-pipelines-task-lib/master/tasks.schema.json",
+    "id": "D5B7FEC6-2B25-4742-905B-0DAD97687DF5",
+    "name": "DEV - Power BI Actions",
+    "friendlyName": "Power BI Actions XPLAT",
+    "description": "Cross Platform Power BI Extension",
+    "author": "Maik van der Gaag",
+    "helpMarkDown": "",
+    "category": "Utility",
+    "visibility": [
+        "Build",
+        "Release"
+    ],
+    "demands": [],
+    "version": {
+        "Major": "6",
+        "Minor": "1",
+        "Patch": "12"
+    },
+    "minimumAgentVersion": "1.95.0",
+    "instanceNameFormat": "Power BI Action: $(Action)",
+    "inputs": [
+        {
+            "name": "PowerBIServiceEndpoint",
+            "type": "connectedService:PowerBINew",
+            "label": "Power BI service connection",
+            "defaultValue": "",
+            "required": "true",
+            "helpMarkDown": "Select a service connection that should be used to authenticate to Power BI."
+        },
+        {
+            "name": "Action",
+            "label": "Action",
+            "type": "pickList",
+            "required": true,
+            "helpMarkDown": "Select the action you would like to perform",
+            "defaultValue": "Publish",
+            "options": {
+                "Workspace": "Create a new workspace",
+                "DeleteWorkspace": "Delete an existing workspace",
+                "AddUsers": "Add a new user to an workspace",
+                "AddSP": "Add a service principal to an workspace",
+                "AddGroup": "Add a security group to an workspace",
+                "DataRefresh": "Refresh a dataset",
+                "UpdateDatasource": "Update dataSource connection",
+                "Publish": "Upload Power BI report",
+                "DeployTabularModel": "Upload Tabular Model",
+                "SQLDirect": "Update SQL direct query string",
+                "UpdateParameters": "Update parameters",
+                "TakeOwnership": "Take dataset ownership",
+                "UpdateGateway": "Update gateway",
+                "DeleteReport": "Delete report",
+                "SetCapacity": "Set workspace capacity",
+                "RebindReport": "Rebind report",
+                "UpdateSqlCreds": "Update SQL credentials",
+                "SetRefreshSchedule": "Set refresh schedule",
+                "SetDatasetPermissions": "Set dataset permissions"
+            }
+        },
+        {
+            "name": "CrossWorkspaceRebinding",
+            "type": "boolean",
+            "label": "Cross workspace rebinding?",
+            "defaultValue": "false",
+            "required": false,
+            "helpMarkDown": "Will rebinding happen cross workspaces?",
+            "visibleRule": "Action = RebindReport"
+        },
+        {
+            "name": "SkipReport",
+            "type": "boolean",
+            "label": "Skip report uploading?",
+            "defaultValue": "false",
+            "required": false,
+            "helpMarkDown": "Will skip the report when uploading",
+            "visibleRule": "Action = Publish"
+        },
+        {
+            "name": "WorkspaceName",
+            "type": "string",
+            "label": "Workspace name",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "The name of the Power BI workspace. In case of the rebind report action this will be the dataset workspace.",
+            "visibleRule": ""
+        },
+        {
+            "name": "ReportWorkspaceName",
+            "type": "string",
+            "label": "Report workspace name",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "The name of the power bi workspace where the report resides.",
+            "visibleRule": "Action = RebindReport && CrossWorkspaceRebinding = true"
+        },
+        {
+            "name": "CapacityName",
+            "type": "string",
+            "label": "Capacity name",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "The name for the capacity.",
+            "visibleRule": "Action = SetCapacity"
+        },
+        {
+            "name": "PowerBIPath",
+            "type": "filePath",
+            "label": "Source file",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "Absolute path of the file.",
+            "visibleRule": "Action = Publish || Action = PublishandSkipReport || Action = DeployTabularModel"
+        },
+        {
+            "name": "Overwrite",
+            "type": "boolean",
+            "label": "Overwrite Power BI file",
+            "defaultValue": "true",
+            "required": false,
+            "helpMarkDown": "Should the dataset be overwritten?",
+            "visibleRule": "Action = Publish || Action = PublishandSkipReport"
+        },
+        {
+            "name": "Create",
+            "type": "boolean",
+            "label": "Create if the workspace does not exist",
+            "defaultValue": "true",
+            "required": false,
+            "helpMarkDown": "Create the workspace when it does not exist",
+            "visibleRule": "Action = Publish || Action = PublishandSkipReport || Action = AddUsers || Action = AddSP || Action = AddGroup || Action = SetCapacity"
+        },
+        {
+            "name": "Users",
+            "type": "string",
+            "label": "Users (e-mail)",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "If you want to add multiple users seperate them with ','.",
+            "visibleRule": "Action = AddUsers"
+        },
+        {
+            "name": "ServicePrincipals",
+            "type": "string",
+            "label": "Service principals (ClientID)",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "If you want to add multiple service principals seperate them with ','.",
+            "visibleRule": "Action = AddSP"
+        },
+        {
+            "name": "GroupObjectIds",
+            "type": "string",
+            "label": "Group object Id",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "If you want to add multiple groups separate the ids with ','.",
+            "visibleRule": "Action = AddGroup"
+        },
+        {
+            "name": "Scope",
+            "type": "picklist",
+            "label": "Scope",
+            "defaultValue": "Individual",
+            "required": true,
+            "helpMarkDown": "Individual is used to access entities that belong to the current user. Organization is used to access entities across the entire company. Only Power BI tenant admins are allowed to use.",
+            "visibleRule": "Action = UpdateSqlCreds",
+            "options": {
+                "Individual": "Individual",
+                "Organization": "Organization"
+            }
+        },
+        {
+            "name": "Permission",
+            "type": "picklist",
+            "label": "Permission",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "Specific permission: Admin, Member, Contributor or Viewer",
+            "visibleRule": "Action = AddUsers || Action = AddSP || Action = AddGroup",
+            "options": {
+                "Admin": "Admin",
+                "Member": "Member",
+                "Contributor": "Contributor",
+                "Viewer": "Viewer"
+            }
+        },
+        {
+            "name": "UpdateAll",
+            "type": "boolean",
+            "label": "Update all datasets in workspace the dataset name will be ignored",
+            "defaultValue": "false",
+            "required": false,
+            "helpMarkDown": "Should all the datasets be changed?",
+            "visibleRule": "Action = UpdateDatasource || Action = UpdateParameters || Action = TakeOwnership || Action = DataRefresh || Action = UpdateGateway"
+        },
+        {
+            "name": "DatasetName",
+            "type": "string",
+            "label": "Dataset name",
+            "defaultValue": "",
+            "required": false,
+            "helpMarkDown": "The name of the dataset",
+            "visibleRule": "Action = DataRefresh || Action = UpdateDatasource || Action = SQLDirect || Action = UpdateParameters || Action = TakeOwnership || Action = UpdateGateway || Action = RebindReport || Action = SetRefreshSchedule || Action = SetDatasetPermissions"
+        },
+        {
+            "name": "ReportName",
+            "type": "string",
+            "label": "Report name",
+            "defaultValue": "",
+            "required": false,
+            "helpMarkDown": "The name of the report",
+            "visibleRule": "Action = DeleteReport || Action = RebindReport || Action = UpdateSqlCreds"
+        },
+        {
+            "name": "GatewayName",
+            "type": "string",
+            "label": "Gateway name",
+            "defaultValue": "",
+            "required": false,
+            "helpMarkDown": "The name of the gateway",
+            "visibleRule": "Action = UpdateGateway"
+        },
+        {
+            "name": "ConnectionString",
+            "type": "string",
+            "label": "Connectionstring",
+            "defaultValue": "",
+            "required": false,
+            "helpMarkDown": "The SQL connection string",
+            "visibleRule": "Action = SQLDirect"
+        },
+        {
+            "name": "DatasourceType",
+            "label": "Datasource type",
+            "type": "pickList",
+            "required": true,
+            "helpMarkDown": "Select the type of datasource",
+            "defaultValue": "Sql",
+            "options": {
+                "Sql": "Sql",
+                "AnalysisServices": "Analysis Services",
+                "SharePointList": "SharePoint",
+                "OData": "OData"
+            },
+            "visibleRule": "Action = UpdateDatasource"
+        },
+        {
+            "name": "OldServer",
+            "type": "string",
+            "label": "Old server",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "The name the old server",
+            "visibleRule": "DatasourceType = SQL || DatasourceType = AnalysisServices"
+        },
+        {
+            "name": "NewServer",
+            "type": "string",
+            "label": "New server",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "The name the new server",
+            "visibleRule": "DatasourceType = SQL || DatasourceType = AnalysisServices"
+        },
+        {
+            "name": "OldDatabase",
+            "type": "string",
+            "label": "Old database",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "The old database the new server",
+            "visibleRule": "DatasourceType = SQL || DatasourceType = AnalysisServices"
+        },
+        {
+            "name": "NewDatabase",
+            "type": "string",
+            "label": "New database",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "The new database",
+            "visibleRule": "DatasourceType = SQL || DatasourceType = AnalysisServices"
+        },
+        {
+            "name": "OldUrl",
+            "type": "string",
+            "label": "Old url",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "The old url",
+            "visibleRule": "DatasourceType = SharePointList || DatasourceType = OData"
+        },
+        {
+            "name": "NewUrl",
+            "type": "string",
+            "label": "New url",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "The new url to the source",
+            "visibleRule": "DatasourceType = SharePointList || DatasourceType = OData"
+        },
+        {
+            "name": "ParameterInput",
+            "type": "string",
+            "label": "Update parameter json",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "A json value representing the update parameters example [{'name' : 'test', 'newValue' : 'test'}]",
+            "visibleRule": "Action = UpdateParameters"
+        },
+        {
+            "name": "Username",
+            "type": "string",
+            "label": "Username",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "The username for the SQL credentials",
+            "visibleRule": "Action = UpdateSqlCreds"
+        },
+        {
+            "name": "Password",
+            "type": "string",
+            "label": "Password",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "The password for the SQL credentials",
+            "visibleRule": "Action = UpdateSqlCreds"
+        },
+        {
+            "name": "RefreshScheduleInput",
+            "type": "string",
+            "label": "Set refreshschedule json",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "A json value representing the refreshschedule example: {'value': {'notifyOption':'NoNotification', 'enabled': true, 'days': ['Monday'],'times': ['07:00'],'localTimeZoneId': 'UTC'}}",
+            "visibleRule": "Action = SetRefreshSchedule"
+        },
+        {
+            "name": "TabularEditorArguments",
+            "type": "string",
+            "label": "Tabular Editor Arguments",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "Arguments to be provided to the Tabular Editor CLI on deployment, for more info click [here](https://docs.tabulareditor.com/te2/Command-line-Options.html)",
+            "visibleRule": "Action = DeployTabularModel"
+        },
+        {
+            "name": "PrincipalType",
+            "type": "picklist",
+            "label": "Principal Type",
+            "defaultValue": "User",
+            "required": true,
+            "helpMarkDown": "The type for setting the permissions",
+            "visibleRule": "Action = SetDatasetPermissions",
+            "options": {
+                "User": "User",
+                "Group": "Group"
+            }
+        },
+        {
+            "name": "DatasetPermissionsUsers",
+            "type": "string",
+            "label": "Users (e-mail)",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "If you want to add multiple users seperate them with ','.",
+            "visibleRule": "Action = SetDatasetPermissions && PrincipalType = User"
+        },
+        {
+            "name": "DatasetPermissionsGroupObjectIds",
+            "type": "string",
+            "label": "Group object Id",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "If you want to add multiple groups separate the ids with ','.",
+            "visibleRule": "Action = SetDatasetPermissions && PrincipalType = Group"
+        },
+        {
+            "name": "DatasetAccessRight",
+            "type": "picklist",
+            "label": "Permission",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "Specific permission: None, Read, Build (Explore) and Reshare. More [information](https://docs.microsoft.com/en-us/power-bi/developer/embedded/datasets-permissions#dataset-permissions-and-rest-apis).",
+            "visibleRule": "Action = SetDatasetPermissions",
+            "options": {
+                "None": "None",
+                "Read": "Read",
+                "ReadExplore": "Read and Build",
+                "ReadReshare": "Read and Reshare",
+                "ReadReshareExplore": "Read, Reshare and Build"
+            }
+        }
+    ],
+    "execution": {
+        "Node": {
+            "target": "index.js"
+        }
+    }
+}
