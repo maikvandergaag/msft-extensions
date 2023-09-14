@@ -110,5 +110,5 @@ if ($buildDef) {
     }
 }
 else {
-    Write-Error "Unable to find a build definition for Project $($ProjectName) with the build id: $($buildId)."
+    Write-Error "Unable to find a build definition for Project $($ProjectName) with the build id: $($buildId) or the permissions are not satisfied."
 }
