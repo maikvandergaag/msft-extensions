@@ -1,0 +1,11 @@
+variables:
+- name: rootfolder
+  value: azuredevops/powerbiactions-xplat
+- name: artifactName
+  value: powerbiactions
+- name: extensionId
+  value: maikvandergaag-power-bi-actions
+- name: extensionName
+  value: DEV - Power BI Actions
+- name: extensionNamePrd
+  value: Power BI Actions
