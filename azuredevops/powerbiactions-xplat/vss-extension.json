@@ -1,7 +1,7 @@
 {
   "manifestVersion": 1,
-  "id": "maikvandergaag-power-bi-actionsDev",
-  "name": "DEV - Power BI Actions",
+  "id": "maikvandergaag-power-bi-actions",
+  "name": "Power BI Actions",
   "version": "6.1.12",
   "publisher": "Development-vanderGaag",
   "description": "Build and Release Management tasks for Power BI.",
