@@ -35,7 +35,9 @@ stages:
           demands: azureps
         continueOnError: false
         steps:
-          - template: steps/build.yml
+          - template: steps/build-node.yml
+            parameters:
+              extensiondirectory: "azuredevops/powerbiactions-xplat/powerbiactionsxplat"
   - stage: Beta
     displayName: Test
     condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))

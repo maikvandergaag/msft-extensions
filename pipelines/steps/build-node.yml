@@ -1,0 +1,51 @@
+parameters:
+- name: extensiondirectory
+  type: string
+
+steps:
+- task: TfxInstaller@4
+  displayName: "Install TFX"
+  inputs:
+    checkLatest: true
+- task: Npm@1
+  inputs:
+    command: 'install'
+    workingDir: '${{ parameters.extensiondirectory }}'
+- task: Bash@3
+  displayName: Compile Javascript
+  inputs:
+    targetType: "inline"
+    script: |
+      cd '${{ parameters.extensiondirectory }}'
+      tsc
+- task: PackageAzureDevOpsExtension@4
+  displayName: 'Package extension'
+  inputs:
+    rootFolder: '$(rootfolder)'
+    outputVariable: 'ExOutputPath'
+    publisherId: 'maikvandergaag'
+    extensionTag: 'alpha'
+    extensionVersion: '$(Build.Buildnumber)'
+    updateTasksVersion: true
+    extensionVisibility: 'private'
+    extensionPricing: 'free'
+- task: PublishPipelineArtifact@1
+  displayName: 'Publish artifact'
+  inputs:
+    targetPath: '$(ExOutputPath)'
+    artifact: '$(artifactName)'
+- task: versioncounter@1
+  displayName: 'Update - Version number (develop)'
+  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+  inputs:
+    VersionVariable: 'buildversion'
+    UpdateMinorVersion: false
+    DevOpsPat: '$(devops-pat-versionnumber)'
+- task: versioncounter@1
+  displayName: 'Update - Version number (Pull Request)'
+  condition: and(succeeded(), and(eq(variables['Build.Reason'], 'PullRequest'), eq(variables['System.PullRequest.TargetBranch'], 'refs/heads/master')))
+  inputs:
+    VersionVariable: 'buildversion'
+    UpdateMinorVersion: false
+    OnlyUpdateMinor: true
+    DevOpsPat: '$(devops-pat-versionnumber)'

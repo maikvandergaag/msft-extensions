@@ -1,11 +1,12 @@
 steps:
-  - task: TfxInstaller@3
+  - task: TfxInstaller@4
     displayName: "Install TFX"
     inputs:
       checkLatest: true
-  - task: ms-devlabs.vsts-developer-tools-build-tasks.publish-extension-build-task.PublishExtension@3
+  - task: PublishAzureDevOpsExtension@4
     displayName: "Publish Extension"
     inputs:
+      connectTo: 'VsTeam'
       connectedServiceName: "Visual Studio Marketplace"
       fileType: vsix
       vsixFile: '$(Pipeline.Workspace)\$(artifactName)\*.vsix'
