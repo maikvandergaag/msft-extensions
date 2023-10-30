@@ -18,7 +18,7 @@ steps:
       extensionVisibility: private
       extensionPricing: free
       shareWith: "msftplayground-demo"
-  - task: ms-devlabs.vsts-developer-tools-build-tasks.install-extension-build-task.InstallExtension@3
+  - task: InstallAzureDevOpsExtension@4
     displayName: "Install Extension"
     inputs:
       connectedServiceName: "Visual Studio Marketplace"
