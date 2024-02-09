@@ -76,7 +76,7 @@ PROCESS {
 		$datasourceType = Get-VstsInput -Name DatasourceType
 		$updateAll = Get-VstsInput -Name UpdateAll -AsBool
 		$skipReport = Get-VstsInput -Name SkipReport -AsBool
-		$individualString = Get-VstsInput -Name Individual
+		$scope = Get-VstsInput -Name Scope
 		$servicePrincipalString = Get-VstsInput -Name ServicePrincipals
 		$connectionString = Get-VstsInput -Name ConnectionString
 		$ParameterInput = Get-VstsInput -Name ParameterInput
@@ -94,11 +94,7 @@ PROCESS {
 		$datasetPermissionsGroupObjectIds = Get-VstsInput -Name DatasetPermissionsGroupObjectIds
 		$datasetAccessRight = Get-VstsInput -Name DatasetAccessRight
 
-		$individual = $false
-		if($individualString -eq "Individual"){
-			$individual = $true
-		}
-
+		
 		Write-Debug "WorkspaceName         : $($workspaceName)";
 		Write-Debug "Create                : $($Create)";
 
@@ -186,7 +182,7 @@ PROCESS {
 			Update-ConnectionStringDirectQuery -WorkspaceName $workspaceName -DatasetName $dataset -ConnectionString $connectionstring
 		}
 		elseif($action -eq "UpdateSqlCreds"){
-			Update-BasicSQLDataSourceCredentials -WorkspaceName $workspaceName -ReportName $ReportName -Username $userName -Password $password -Individual $individual
+			Update-BasicSQLDataSourceCredentials -WorkspaceName $workspaceName -ReportName $ReportName -Username $userName -Password $password -Scope $scope
 		}
 		elseif ($action -eq "UpdateParameters") {
 			Write-Debug "Dataset               : $($dataset)";
