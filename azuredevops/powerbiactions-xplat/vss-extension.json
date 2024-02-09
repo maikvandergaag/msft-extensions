@@ -88,7 +88,7 @@
         "ms.vss-endpoint.endpoint-types"
       ],
       "properties": {
-        "name": "PowerBINew",
+        "name": "PowerBINewXPLAT",
         "displayName": "Power BI Service Connection",
         "url": {
           "isVisible": "false",
