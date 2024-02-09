@@ -1,5 +1,7 @@
 [!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/maikvandergaag)
 
+This tasks does more or less the same as the Power BI Actions tasks. This task is also able to un on linux agents.
+
 Power BI Actions is a task for Azure Pipelines. With this tasks you can automate specific tasks for Power BI.
 
 The following tasks can be automated by using this extension:
@@ -69,12 +71,3 @@ If you like the extension, please leave a review. File an issue when you have su
 | Version | Remarks                             |  
 |---------|-------------------------------------|
 | 1.0.0   | Initial version                     |
-| 2.0.0   | Added support for: - Groups that do not exist. - The 'me' workspace. - Updating datasets |
-| 3.2.6   | Small bug fix |
-| 4.0.0   | Added Service Principal support  |
-| 5.1.0   | Added support for Government environments and consolidated |
-| 5.2.0   | Added support for PowerBi Report transfer ownership and updating parameters in reports|
-| 5.3.0   | Added support for PowerBi Gateway change |
-| 5.4.0   | Added support for Report rebinding and refresh schedule |
-| 5.4.2   | Added skip report functionality |
-

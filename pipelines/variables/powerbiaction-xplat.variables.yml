@@ -4,8 +4,8 @@ variables:
 - name: artifactName
   value: powerbiactions
 - name: extensionId
-  value: maikvandergaag-power-bi-actions
+  value: maikvandergaag-power-bi-actions-xplat
 - name: extensionName
-  value: DEV - Power BI Actions
+  value: DEV - Power BI Actions XPLAT
 - name: extensionNamePrd
-  value: Power BI Actions
+  value: Power BI Actions XPLAT
