@@ -1,7 +1,7 @@
 {
     "$schema": "https://raw.githubusercontent.com/Microsoft/azure-pipelines-task-lib/master/tasks.schema.json",
-    "id": "D5B7FEC6-2B25-4742-905B-0DAD97687DF5",
-    "name": "DEV - Power BI Actions",
+    "id": "D5B7FEC6-2B25-4742-905B-0DAD97687DF6",
+    "name": "DEV - Power BI Actions XPLAT",
     "friendlyName": "Power BI Actions XPLAT",
     "description": "Cross Platform Power BI Extension",
     "author": "Maik van der Gaag",
@@ -13,9 +13,9 @@
     ],
     "demands": [],
     "version": {
-        "Major": "6",
-        "Minor": "2",
-        "Patch": "1"
+        "Major": "1",
+        "Minor": "0",
+        "Patch": "0"
     },
     "minimumAgentVersion": "1.95.0",
     "instanceNameFormat": "Power BI Action: $(Action)",
@@ -160,13 +160,15 @@
             "name": "Scope",
             "type": "picklist",
             "label": "Scope",
-            "defaultValue": "Individual",
+            "defaultValue": "Private",
             "required": true,
-            "helpMarkDown": "Individual is used to access entities that belong to the current user. Organization is used to access entities across the entire company. Only Power BI tenant admins are allowed to use.",
+            "helpMarkDown": "Data sources set to Private contain sensitive or confidential information. Visibility can be restricted to authorized users. Data from a private data source won't fold in to other data sources, including other private data sources. Data sources set to Organizational can fold in to private and other organizational data sources. They can't fold in to public data sources. Visibility is set to a trusted group. Files, internet data sources, and workbook data can be set to Public. Data can fold in to other data sources. Visibility is available to everyone.",
             "visibleRule": "Action = UpdateSqlCreds",
             "options": {
-                "Individual": "Individual",
-                "Organization": "Organization"
+              "Public": "Public",
+              "Organizational": "Organizational",
+              "Private": "Private",
+              "None": "None"
             }
         },
         {

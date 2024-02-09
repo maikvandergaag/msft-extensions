@@ -3,7 +3,7 @@ param(
     [string]$WorkspaceName, [string]$Action, [string]$Scheme, [string]$Username, [string]$PassWord, [string]$TenantId, [string]$ClientId, [string]$ClientSecret,
     [string]$ClientCertificate, [string]$OrganizationType, [string]$FilePattern, [bool]$Overwrite, [bool]$Create, [string]$Dataset, [string]$OldUrl, [string]$NewUrl,
     [string]$OldServer, [string]$NewServer, [string]$OldDatabase, [string]$GroupObjectIds, [string]$NewDatabase, [string]$AccessRight, [string]$Users, [string]$DatasourceType,
-    [bool]$UpdateAll, [bool]$SkipReport, [string]$IndividualString, [string]$ServicePrincipalString, [string]$ConnectionString, [string]$ParameterInput,
+    [bool]$UpdateAll, [bool]$SkipReport, [string]$ScopeString, [string]$ServicePrincipalString, [string]$ConnectionString, [string]$ParameterInput,
     [string]$GatewayName, [string]$ReportName, [string]$CapacityName, [string]$InputUsername, [string]$InputPassword, [string]$RefreshScheduleInput,
     [bool]$CrossWorkspaceRebinding, [string]$ReportWorkspaceName, [string]$TabularEditorArguments, [string]$PrincipalType, [string]$DatasetPermissionsUsers,
     [string]$DatasetPermissionsGroupObjectIds, [string]$DatasetAccessRight, [string]$EndpointUrl
@@ -46,12 +46,6 @@ PROCESS {
 				Connect-PowerBIServiceAccount -Environment $OrganizationType -Tenant $TenantId -CertificateThumbprint $ClientCertificate -ApplicationId $ClientId -ServicePrincipal | Out-Null
 			}
 		}
-
-		$individual = $false
-		if($IndividualString -eq "Individual"){
-			$individual = $true
-		}
-
 
 		if ($Action -eq "Workspace") {
 			Write-Host "Creating a new Workspace"
@@ -137,7 +131,7 @@ PROCESS {
 			Update-ConnectionStringDirectQuery -WorkspaceName $WorkspaceName -DatasetName $Dataset -ConnectionString $Connectionstring
 		}
 		elseif($Action -eq "UpdateSqlCreds"){
-			Update-BasicSQLDataSourceCredentials -WorkspaceName $WorkspaceName -ReportName $ReportName -Username $InputUsername -Password $InputPassword -Individual $individual
+			Update-BasicSQLDataSourceCredentials -WorkspaceName $WorkspaceName -ReportName $ReportName -Username $InputUsername -Password $InputPassword -Scope $SxopeString
 		}
 		elseif ($Action -eq "UpdateParameters") {
 			Write-Debug "Dataset               : $($Dataset)";

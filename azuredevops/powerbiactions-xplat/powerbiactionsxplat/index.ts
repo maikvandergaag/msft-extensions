@@ -272,7 +272,7 @@ export async function run() {
             powershell.arg(skipReport ? "1" : "0");
         }
         if (scope) {
-            powershell.arg("-IndividualString");
+            powershell.arg("-ScopeString");
             powershell.arg(scope);
         }
         if (servicePrincipals) {
