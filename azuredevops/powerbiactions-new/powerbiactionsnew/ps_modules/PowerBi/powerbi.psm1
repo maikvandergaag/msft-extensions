@@ -211,23 +211,22 @@ Function Update-PowerBIDatasetParameter {
     $datasetParameters = Get-PowerBiParameters -GroupPath $GroupPath -SetId $setId
     foreach ($datasetParameter in $datasetParameters) {
         $datasetParameterName = $datasetParameter.name
-
-        if ($itemValue.name -match $datasetParameterName) {
-            $newParameterValue = $itemValue | Where-Object name -eq $datasetParameterName
-            $newParameterValue = $newParameterValue.newValue
-            if ($newItemValue -eq "") {
-                $newItemValue = "{
-                                    'name': '$datasetParameterName',
-                                    'newValue': '$newParameterValue'
-                                }"
-            }
-            else {
-                $newItemValue = $newItemValue + "," +
-                "{
-                        'name': '$datasetParameterName',
-                        'newValue': '$newParameterValue'
-                }"
-            }
+            $newParameter = $itemValue | Where-Object name -eq $datasetParameterName
+            if($newParameter){
+                $newParameterValue = $newParameter.newValue
+                if ($newItemValue -eq "") {
+                    $newItemValue = "{
+                                        'name': '$datasetParameterName',
+                                        'newValue': '$newParameterValue'
+                                    }"
+                }
+                else {
+                    $newItemValue = $newItemValue + "," +
+                    "{
+                            'name': '$datasetParameterName',
+                            'newValue': '$newParameterValue'
+                    }"
+                }
         }
     }
 
