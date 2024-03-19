@@ -93,6 +93,11 @@ PROCESS {
 		$datasetPermissionsUsers = Get-VstsInput -Name DatasetPermissionsUsers
 		$datasetPermissionsGroupObjectIds = Get-VstsInput -Name DatasetPermissionsGroupObjectIds
 		$datasetAccessRight = Get-VstsInput -Name DatasetAccessRight
+		$serverName = Get-VstsInput -Name Server
+		$databaseName = Get-VstsInput -Name Database
+		$tenantID = Get-VstsInput -Name TenantID		
+		$servicePrincipalID = Get-VstsInput -Name ServicePrincipalID
+		$servicePrincipalKey = Get-VstsInput -Name ServicePrincipalKey
 
 		
 		Write-Debug "WorkspaceName         : $($workspaceName)";
@@ -324,6 +329,19 @@ PROCESS {
 					Add-PowerBIDatasetPermissions -WorkspaceName $workspaceName -DatasetName $dataset -PrincipalType $principalType -Identifiers $groups -AccessRight $datasetAccessRight
 				}
 			}
+		}
+		elseif ($action -eq "SetSQLDatasourceSPCredentials") {
+			Write-Debug "DatasetName         : $($dataset)";			
+			Write-Debug "ServerName          : $($serverName)";
+			Write-Debug "DatabaseName        : $($databaseName)";
+			Write-Debug "TenantID            : $($tenantID)";
+			Write-Debug "ServicePrincipalID  : $($servicePrincipalID)";
+			Write-Debug "ServicePrincipalKey : $($servicePrincipalKey)";
+			Write-Debug "Scope               : $($scope)";
+
+			Write-Host "Trying to set Service Principal credentials of SQL datasource"
+
+			Set-PowerBIDatasourceCredentials -WorkspaceName $workspaceName -DatasetName $dataset -DatasourceType "Sql" -ServerName $serverName -DatabaseName $databaseName -CredentialType "ServicePrincipal" -TenantID $tenantId -ServicePrincipalID $servicePrincipalID -ServicePrincipalKey $servicePrincipalKey -Scope $scope
 		}
 	}
 	finally {
