@@ -36,21 +36,21 @@ stages:
         continueOnError: false
         steps:
           - template: steps/build.yml
-#  - stage: Beta
-#    displayName: Test
-#    condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
-#    jobs:
-#      - deployment: DeployTest
-#        displayName: Deploy Extension to Test
-#        pool:
-#          vmImage: "windows-latest"
-#          demands: azureps
-#        environment: "Extensions test"
-#        strategy:
-#          runOnce:
-#            deploy:
-#              steps:
-#                - template: steps/test.yml
+  - stage: Beta
+    displayName: Test
+    condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+    jobs:
+      - deployment: DeployTest
+        displayName: Deploy Extension to Test
+        pool:
+          vmImage: "windows-latest"
+          demands: azureps
+        environment: "Extensions test"
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - template: steps/test.yml
   - stage: Publish
     displayName: Publish
     condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
