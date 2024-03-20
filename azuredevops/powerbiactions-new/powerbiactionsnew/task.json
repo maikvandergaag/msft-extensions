@@ -164,7 +164,7 @@
       "defaultValue": "Private",
       "required": true,
       "helpMarkDown": "Data sources set to Private contain sensitive or confidential information. Visibility can be restricted to authorized users. Data from a private data source won't fold in to other data sources, including other private data sources. Data sources set to Organizational can fold in to private and other organizational data sources. They can't fold in to public data sources. Visibility is set to a trusted group. Files, internet data sources, and workbook data can be set to Public. Data can fold in to other data sources. Visibility is available to everyone.",
-      "visibleRule": "Action = UpdateSqlCreds | Action = SetSQLDatasourceSPCredentials",
+      "visibleRule": "Action = UpdateSqlCreds || Action = SetSQLDatasourceSPCredentials",
       "options": {
         "Public": "Public",
         "Organizational": "Organizational",
