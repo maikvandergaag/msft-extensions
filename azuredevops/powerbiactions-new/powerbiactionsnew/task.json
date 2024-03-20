@@ -55,7 +55,7 @@
         "UpdateSqlCreds": "Update SQL credentials",
         "SetRefreshSchedule" : "Set refresh schedule",
         "SetDatasetPermissions" : "Set dataset permissions",
-        "SetSQLDatasourceSPCredentials ": "Set SQL datasource Service Principal credentials"
+        "SetSQLDatasourceSPCredentials": "Set SQL datasource Service Principal credentials"
       }
     },
     {
