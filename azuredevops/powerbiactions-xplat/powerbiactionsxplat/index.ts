@@ -138,6 +138,21 @@ export async function run() {
         var datasetPermissionsGroupObjectIds = tl.getInput('DatasetPermissionsGroupObjectIds', false) as string;
         logDebug(`Dataset permissions group object ids: ${datasetPermissionsGroupObjectIds}`);
 
+        var server = tl.getInput('Server', false) as string;
+        logDebug(`Server: ${server}`);
+
+        var database = tl.getInput('Database', false) as string;
+        logDebug(`Database: ${database}`);
+
+        var tenantIdTask = tl.getInput('TenantIDTask', false) as string;
+        logDebug(`TenantId: ${tenantIdTask}`);
+
+        var serviceprincipalId = tl.getInput('ServicePrincipalID', false) as string;
+        logDebug(`Service principal Id: ${serviceprincipalId}`);
+
+        var servicePrincipalKey = tl.getInput('ServicePrincipalKey', false) as string;
+        logDebug(`Service principal key: ${servicePrincipalKey}`);
+
         var datasetAccessRight = tl.getInput('DatasetAccessRight', false) as string;
         logDebug(`Data access right: ${datasetAccessRight}`);
 
@@ -358,6 +373,30 @@ export async function run() {
             powershell.arg("-DatasetAccessRight");
             powershell.arg(datasetAccessRight);
         }
+
+        ///
+        if (database) {
+            powershell.arg("-Database");
+            powershell.arg(database);
+        }
+        if (server) {
+            powershell.arg("-Server");
+            powershell.arg(server);
+        }
+        if (tenantIdTask) {
+            powershell.arg("-TenantIdTask");
+            powershell.arg(tenantIdTask);
+        }
+        if (serviceprincipalId) {
+            powershell.arg("-ServicePrincipalld");
+            powershell.arg(serviceprincipalId);
+        }
+
+        if (servicePrincipalKey) {
+            powershell.arg("-ServicePrincipalKey");
+            powershell.arg(servicePrincipalKey);
+        }
+
 
         if (isDebugEnabled) {
             powershell.arg("-Verbose");

@@ -6,7 +6,7 @@ param(
     [bool]$UpdateAll, [bool]$SkipReport, [string]$ScopeString, [string]$ServicePrincipalString, [string]$ConnectionString, [string]$ParameterInput,
     [string]$GatewayName, [string]$ReportName, [string]$CapacityName, [string]$InputUsername, [string]$InputPassword, [string]$RefreshScheduleInput,
     [bool]$CrossWorkspaceRebinding, [string]$ReportWorkspaceName, [string]$TabularEditorArguments, [string]$PrincipalType, [string]$DatasetPermissionsUsers,
-    [string]$DatasetPermissionsGroupObjectIds, [string]$DatasetAccessRight, [string]$EndpointUrl
+    [string]$DatasetPermissionsGroupObjectIds, [string]$DatasetAccessRight, [string]$EndpointUrl, [string]$Server, [string]$Database, [string]$TenantIdTask, [string]$ServicePrincipalId, [string]$ServicePrincipalKey
 )
 BEGIN {
     Write-Host "### The required modules for this action need to be imported. Importing now..."
@@ -241,6 +241,19 @@ PROCESS {
 					Add-PowerBIDatasetPermissions -WorkspaceName $WorkspaceName -DatasetName $Dataset -PrincipalType $PrincipalType -Identifiers $groups -AccessRight $DatasetAccessRight
 				}
 			}
+		}
+		elseif ($Action -eq "SetSQLDatasourceSPCredentials") {
+			Write-Debug "DatasetName         : $($Dataset)";			
+			Write-Debug "ServerName          : $($Server)";
+			Write-Debug "DatabaseName        : $($Database)";
+			Write-Debug "TenantID            : $($TenantIdTask)";
+			Write-Debug "ServicePrincipalID  : $($ServicePrincipalId)";
+			Write-Debug "ServicePrincipalKey : $($ServicePrincipalKey)";
+			Write-Debug "Scope               : $($ScopeString)";
+
+			Write-Host "Trying to set Service Principal credentials of SQL datasource"
+
+			Set-PowerBIDatasourceCredentials -WorkspaceName $WorkspaceName -DatasetName $Dataset -DatasourceType "Sql" -ServerName $Server -DatabaseName $Database -CredentialType "ServicePrincipal" -TenantID $TenantIdTask -ServicePrincipalID $ServicePrincipalID -ServicePrincipalKey $ServicePrincipalKey -Scope $ScopeString
 		}
 	}
 	finally {
