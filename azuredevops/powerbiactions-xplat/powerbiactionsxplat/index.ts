@@ -374,7 +374,6 @@ export async function run() {
             powershell.arg(datasetAccessRight);
         }
 
-        ///
         if (database) {
             powershell.arg("-Database");
             powershell.arg(database);
