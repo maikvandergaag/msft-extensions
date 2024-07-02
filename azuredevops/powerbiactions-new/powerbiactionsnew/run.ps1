@@ -98,6 +98,7 @@ PROCESS {
 		$tenantID = Get-VstsInput -Name TenantID		
 		$servicePrincipalID = Get-VstsInput -Name ServicePrincipalID
 		$servicePrincipalKey = Get-VstsInput -Name ServicePrincipalKey
+		$timeout = Get-VstsInput -Name TaskTimeout
 
 		
 		Write-Debug "WorkspaceName         : $($workspaceName)";
@@ -112,9 +113,9 @@ PROCESS {
 			Write-Debug "Remove report           : $($SkipReport)";
 			
 			if($SkipReport){
-				Publish-PowerBIFileApi -WorkspaceName $workspaceName -Create $Create -FilePattern $filePattern -Overwrite $overwrite -SkipReport $true
+				Publish-PowerBIFileApi -WorkspaceName $workspaceName -Create $Create -FilePattern $filePattern -Overwrite $overwrite -Timeout $timeout -SkipReport $true
 			}else{
-				Publish-PowerBIFile -WorkspaceName $workspaceName -Create $Create -FilePattern $filePattern -Overwrite $overwrite
+				Publish-PowerBIFile -WorkspaceName $workspaceName -Create $Create -FilePattern $filePattern -Overwrite $overwrite -Timeout $timeout
 			}
 		}
 		elseif ($action -eq "DeleteWorkspace") {
