@@ -10,7 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "azure-pipelines-task-lib": "^4.4.0",
+    "azure-pipelines-task-lib": "^4.13.0",
     "winston": "^2.4.7"
   },
   "devDependencies": {
