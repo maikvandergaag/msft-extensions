@@ -60,7 +60,7 @@ if ($BuildDefinitions) {
             }
             sourceBranch = $Branch
             reason = "userCreated"
-            parameters = $Parameters
+            templateParameters = $Parameters
         }
 
         $jsonbody = $Build | ConvertTo-Json -Depth 100
