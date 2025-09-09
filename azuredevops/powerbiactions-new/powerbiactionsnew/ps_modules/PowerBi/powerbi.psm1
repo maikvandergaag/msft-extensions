@@ -760,7 +760,8 @@ Function Publish-PowerBIFile {
         [parameter(Mandatory = $true)]$WorkspaceName,
         [parameter(Mandatory = $true)]$FilePattern,
         [parameter()][bool]$Create = $false,
-        [parameter()][bool]$Overwrite = $false
+        [parameter()][bool]$Overwrite = $false,
+        [parameter()][int]$Timeout = 300
     )
 
     $GroupPath = Get-PowerBIGroupPath -WorkspaceName $WorkspaceName -Create $Create
@@ -794,7 +795,7 @@ Function Publish-PowerBIFile {
             if($fileToPublish.EndsWith(".rdl")){
                 Publish-PowerBIFileApi -WorkspaceName $WorkspaceName -FilePattern $filePath -Create $Create -Overwrite $Overwrite -SkipReport $false
             }else{
-                $report = New-PowerBIReport -Path $filePath -Name $fileToPublish -Workspace $workspace -ConflictAction $conflictAction -Timeout 300
+                $report = New-PowerBIReport -Path $filePath -Name $fileToPublish -Workspace $workspace -ConflictAction $conflictAction -Timeout $Timeout
                 Write-Host "##vso[task.setvariable variable=PowerBIActions.ReportName]$($report.name)"
             }
         }

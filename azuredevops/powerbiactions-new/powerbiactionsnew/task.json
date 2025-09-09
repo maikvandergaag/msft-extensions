@@ -77,6 +77,15 @@
       "visibleRule": "Action = Publish"
     },
     {
+      "name": "Timeout",
+      "type": "string",
+      "label": "Timeout (in seconds)",
+      "defaultValue": "300",
+      "required": false,
+      "helpMarkDown": "The timeout for the upload operation",
+      "visibleRule": "Action = Publish"
+    },    
+    {
       "name": "WorkspaceName",
       "type": "string",
       "label": "Workspace name",
@@ -120,7 +129,7 @@
       "required": false,
       "helpMarkDown": "Should the dataset be overwritten?",
       "visibleRule": "Action = Publish || Action = PublishandSkipReport"
-    },
+    },    
     {
       "name": "Create",
       "type": "boolean",
