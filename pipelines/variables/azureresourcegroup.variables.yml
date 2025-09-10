@@ -6,6 +6,6 @@ variables:
 - name: extensionId
   value: maikvandergaag-azureresourcegroup
 - name: extensionName
-  value: DEV - Azure Resource Group with Tags and Lock
+  value: DEV - Resource Group with Tags and Lock
 - name: extensionNamePrd
-  value: Azure Resource Group with Tags and Lock
+  value: Resource Group with Tags and Lock

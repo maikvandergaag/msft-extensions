@@ -6,6 +6,6 @@ variables:
 - name: extensionId
   value: maikvandergaag-azurekeyvault
 - name: extensionName
-  value: DEV - Azure Key Vault actions
+  value: DEV - Key Vault actions
 - name: extensionNamePrd
-  value: Azure Key Vault actions
+  value: Key Vault actions

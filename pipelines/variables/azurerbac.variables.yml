@@ -6,6 +6,6 @@ variables:
 - name: extensionId
   value: maikvandergaag-azurerbac
 - name: extensionName
-  value: DEV - Azure Role Based Access Control
+  value: DEV - Role Based Access Control
 - name: extensionNamePrd
-  value: Azure Role Based Access Control
+  value: Role Based Access Control
