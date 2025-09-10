@@ -1,7 +1,7 @@
 {
   "id": "567F7830-5655-4D11-B4C5-BADA59A88896",
   "name": "azureresourcegroup",
-  "friendlyName": "Azure Resource Group with Tags and Lock",
+  "friendlyName": "Resource Group with Tags and Lock",
   "description": "Build and Release Task for the creation of a Azure Resource Group with specific tags and a delete lock",
   "author": "Maik van der Gaag",
   "helpMarkDown": "",
