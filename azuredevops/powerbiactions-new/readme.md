@@ -77,4 +77,4 @@ If you like the extension, please leave a review. File an issue when you have su
 | 5.3.0   | Added support for PowerBi Gateway change |
 | 5.4.0   | Added support for Report rebinding and refresh schedule |
 | 5.4.2   | Added skip report functionality |
-
+| 5.4.3   | Added timeout on publish report |

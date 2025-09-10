@@ -61,6 +61,7 @@ PROCESS {
 		$filePattern = Get-VstsInput -Name PowerBIPath
 		$workspaceName = Get-VstsInput -Name WorkspaceName
 		$overwrite = Get-VstsInput -Name OverWrite -AsBool
+		$timeout = Get-VstsInput -Name Timeout
 		$create = Get-VstsInput -Name Create -AsBool
 		$action = Get-VstsInput -Name Action -Require
 		$dataset = Get-VstsInput -Name DatasetName
@@ -114,7 +115,7 @@ PROCESS {
 			if($SkipReport){
 				Publish-PowerBIFileApi -WorkspaceName $workspaceName -Create $Create -FilePattern $filePattern -Overwrite $overwrite -SkipReport $true
 			}else{
-				Publish-PowerBIFile -WorkspaceName $workspaceName -Create $Create -FilePattern $filePattern -Overwrite $overwrite
+				Publish-PowerBIFile -WorkspaceName $workspaceName -Create $Create -FilePattern $filePattern -Overwrite $overwrite -Timeout $timeout
 			}
 		}
 		elseif ($action -eq "DeleteWorkspace") {
