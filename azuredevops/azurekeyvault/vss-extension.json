@@ -1,7 +1,7 @@
 {
   "manifestVersion": 1,
   "id": "maikvandergaag-azurekeyvault",
-  "name": "Azure KeyVault Actions", 
+  "name": "Key Vault Actions", 
   "version": "1.0.0",
   "publisher": "maikvandergaag",
   "public": true,

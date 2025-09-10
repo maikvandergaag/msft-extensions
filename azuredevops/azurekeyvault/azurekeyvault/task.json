@@ -1,7 +1,7 @@
 {
   "id": "84F23C57-8C65-4709-BC94-5CBD44E96A54",
   "name": "azurekeyvaultactions",
-  "friendlyName": "Azure Key Vault Actions",
+  "friendlyName": "Key Vault Actions",
   "description": "Task to perform specific actions on the Azure Key Vault",
   "author": "Maik van der Gaag",
   "helpMarkDown": "",

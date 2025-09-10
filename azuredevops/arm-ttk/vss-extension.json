@@ -1,7 +1,7 @@
 {
   "manifestVersion": 1,
   "id": "maikvandergaag-arm-ttk",
-  "name": "Azure Resource Manager Template testing",
+  "name": "Resource Manager Template testing",
   "version": "1.2.4",
   "publisher": "maikvandergaag",
   "public": true,

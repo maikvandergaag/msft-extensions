@@ -1,7 +1,7 @@
 {
   "id": "84F23C57-8C65-4709-BC94-5CBD44E96A77",
   "name": "arm-ttk",
-  "friendlyName": "Azure Resource Manager Template Tester",
+  "friendlyName": "Resource Manager Template Tester",
   "description": "Task for testing Azure Resource Manager (ARM) templates",
   "author": "Maik van der Gaag",
   "helpMarkDown": "",

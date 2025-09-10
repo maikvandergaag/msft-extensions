@@ -1,7 +1,7 @@
 {
   "manifestVersion": 1,
   "id": "maikvandergaag-azureresourcegroup",
-  "name": "Azure Resource Group with Tags and Lock",
+  "name": "Resource Group with Tags and Lock",
   "version": "0.0.13",
   "publisher": "Development-vanderGaag",
   "public": false,
