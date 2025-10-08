@@ -1,8 +1,8 @@
 {
     "$schema": "https://raw.githubusercontent.com/Microsoft/azure-pipelines-task-lib/master/tasks.schema.json",
     "id": "D5B7FEC6-2B25-4742-905B-0DAD97687DF6",
-    "name": "DEV - Power BI Actions XPLAT",
-    "friendlyName": "Power BI Actions XPLAT",
+    "name": "DEV - BI Reporting Actions XPLAT",
+    "friendlyName": "BI Reporting Actions XPLAT",
     "description": "Cross Platform Power BI Extension",
     "author": "Maik van der Gaag",
     "helpMarkDown": "",
@@ -18,7 +18,7 @@
         "Patch": "0"
     },
     "minimumAgentVersion": "1.95.0",
-    "instanceNameFormat": "Power BI Action: $(Action)",
+    "instanceNameFormat": "BI Reporting Action: $(Action)",
     "inputs": [
         {
             "name": "PowerBIServiceEndpoint",

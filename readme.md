@@ -7,7 +7,7 @@ This repository is used for posting several types of extensions.
 * [Azure Resource Group Tagging](azuredevops/azurergtag)
 * [Azure Resource Group with Tags and Lock](azuredevops/azureresourcegroup)
 * [File content to Variable](azuredevops/filecontenttovariable)
-* [Power BI Actions](azuredevops/powerbiactions-new)
+* [BI Reporting Actions](azuredevops/powerbiactions-new)
 * [Publish PowerBI file](azuredevops/publishpowerbifile)
 * [Publish Stream Analytics Transformation](azuredevops/publishstreamanalyticstransformation)
 * [Version number counter](azuredevops/versioncounter)

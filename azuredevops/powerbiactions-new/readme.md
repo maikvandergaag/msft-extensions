@@ -1,6 +1,6 @@
 [!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/maikvandergaag)
 
-Power BI Actions is a task for Azure Pipelines. With this tasks you can automate specific tasks for Power BI.
+BI Reporting Actions is a task for Azure Pipelines. With this tasks you can automate specific tasks for Power BI.
 
 The following tasks can be automated by using this extension:
 * Upload / Import Power BI dashboard (pbix file).

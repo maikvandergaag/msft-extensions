@@ -6,6 +6,6 @@ variables:
 - name: extensionId
   value: maikvandergaag-power-bi-actions
 - name: extensionName
-  value: DEV - Power BI Actions
+  value: DEV - BI Reporting Actions
 - name: extensionNamePrd
-  value: Power BI Actions
+  value: BI Reporting Actions

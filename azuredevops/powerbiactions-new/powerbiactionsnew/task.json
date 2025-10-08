@@ -1,7 +1,7 @@
 {
   "id": "D5B7FEC6-2B25-4742-905B-0DAD97687DF5",
   "name": "PowerBIActions",
-  "friendlyName": "Power BI Actions",
+  "friendlyName": "BI Reporting Actions",
   "description": "Release Task Power BI Actions",
   "author": "Maik van der Gaag",
   "helpMarkDown": "",
@@ -17,7 +17,7 @@
     "Patch": "0"
   },
   "minimumAgentVersion": "1.95.0",
-  "instanceNameFormat": "Power BI Action: $(Action)",
+  "instanceNameFormat": "BI Reporting Action: $(Action)",
   "inputs": [
     {
       "name": "PowerBIServiceEndpoint",

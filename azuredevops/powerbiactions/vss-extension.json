@@ -1,7 +1,7 @@
 {
   "manifestVersion": 1,
   "id": "maikvandergaag-power-bi-actions",
-  "name": "Power BI Actions",
+  "name": "BI Reporting Actions",
   "version": "3.0.0",
   "publisher": "maikvandergaag",
   "description": "Build and Release Management tasks for PowerBI.",

@@ -2,7 +2,7 @@
 param()
 
 BEGIN {
-	Write-Output "Starting Power BI Actions extension"
+	Write-Output "Starting BI Reporting Actions extension"
 	Trace-VstsEnteringInvocation $MyInvocation
 
 	Write-Output "### Required Module is needed. Importing now..."
@@ -346,10 +346,10 @@ PROCESS {
 		}
 	}
 	finally {
-		Write-Output "Done processing Power BI Actions"
+		Write-Output "Done processing BI Reporting Actions"
 	}
 }
 END {
-	Write-Output "Done running Power BI Actions extension."
+	Write-Output "Done running BI Reporting Actions extension."
 	Trace-VstsLeavingInvocation $MyInvocation
 }

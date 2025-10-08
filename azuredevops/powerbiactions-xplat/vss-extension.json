@@ -1,7 +1,7 @@
 {
   "manifestVersion": 1,
   "id": "maikvandergaag-power-bi-actions-xplat",
-  "name": "Power BI Actions - XPLAT",
+  "name": "BI Reporting Actions - XPLAT",
   "version": "1.0.0",
   "publisher": "Development-vanderGaag",
   "description": "Build and Release Management tasks for Power BI, that works on windows an linux agents",
