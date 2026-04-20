@@ -655,7 +655,7 @@ Function Import-PowerBIFile {
     $result = Invoke-API -Url $url -Method "Post" -Body $body -ContentType "multipart/form-data; boundary=--$boundary"
 
     $reportId = $result.Id
-    $reportId = $result.Name
+    $reportName = $result.Name
     Write-Host "##vso[task.setvariable variable=PowerBIActions.ReportId]$reportId"
     Write-Host "##vso[task.setvariable variable=PowerBIActions.ReportName]$reportName"
 
@@ -852,7 +852,7 @@ Function Publish-PowerBIFileApi {
             }
             else {
                 $publish = $false
-                Write-Host "##vso[task.setvariable variable=PowerBIActions.ReportName]$(report.name)"
+                Write-Host "##vso[task.setvariable variable=PowerBIActions.ReportName]$($report.name)"
                 Write-Warning "Report already exists"
             }
         }
