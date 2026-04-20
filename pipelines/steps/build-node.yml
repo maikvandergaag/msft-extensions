@@ -16,6 +16,7 @@ steps:
   inputs:
     targetType: "inline"
     script: |
+      npm install -g typescript 
       cd '${{ parameters.extensiondirectory }}'
       tsc
 - task: PackageAzureDevOpsExtension@4
